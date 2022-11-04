@@ -1,3 +1,5 @@
+cd ~
+
 # macos thing
 xcode-select --install
 
@@ -9,9 +11,11 @@ brew upgrade
 
 
 # sync dot files
-brew install python@3.9
-# assumes the location of this directory
-python3 ~/projects/.files/main.py
+brew install git
+git clone https://github.com/chiply/.zetta.d
+
+brew intall python
+python3 ~/.files/main.py
 
 
 # install bundle
