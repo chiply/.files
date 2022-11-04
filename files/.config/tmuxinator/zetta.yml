@@ -1,0 +1,7 @@
+name: zetta
+root: ~/
+
+attach: false
+
+windows:
+  - zetta: /opt/homebrew/opt/emacs-plus@29/bin/emacs --with-profile zetta --debug-init

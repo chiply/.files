@@ -1,0 +1,23 @@
+# python
+alias p="python3"
+alias pi="pip3 install"
+alias ip="ipython"
+
+# django
+alias pm="python3 manage.py"
+alias sl="sqlite3"
+
+# virtualenv
+alias pv="python3 -m venv"
+
+# tmux
+alias tk="tmux kill-session -t"
+alias tn="tmux new-session -t"
+alias tl="tmux ls"
+alias td="tmux detach"
+alias ta="tmux attach-session -t"
+alias tc="tmuxNewCmd" #udf
+
+# tmuxinator
+alias tx="tmuxinator"
+
