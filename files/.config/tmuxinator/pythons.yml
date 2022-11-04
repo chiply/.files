@@ -1,0 +1,8 @@
+name: pythons
+root: ~/
+
+
+windows:
+  - ipython: ipython
+  - python: python3
+  - notebook: jupyter notebook

@@ -1,0 +1,35 @@
+####### emacs
+# raw emacs and emacsclient commands
+alias emacs="/opt/homebrew/opt/emacs-plus@29/bin/emacs"
+alias emacsclient="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient"
+
+# default profile 
+alias cmacs="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=default --with-profile default"
+alias ec="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s default"
+
+# default profile 
+alias zetta="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=zetta --with-profile zetta"
+alias zc="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s zetta"
+
+alias zistro="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=zistro --with-profile zistro"
+alias zic="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s zistro"
+
+# emacs -Q
+alias qmacs="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=qmacs --with-profile qmacs"
+alias qc="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s qmacs"
+
+# spacemacs
+alias spacemacs="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=spacemacs --with-profile spacemacs"
+alias sc="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s spacemacs"
+
+# doom
+alias doom-emacs="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=doom --with-profile doom"
+alias dc="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s doom"
+
+# prelude
+alias prelude="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=prelude --with-profile prelude"
+alias pc="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s prelude"
+
+# centaur
+alias centaur="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=centaur --with-profile centaur"
+alias cc="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s centaur"
