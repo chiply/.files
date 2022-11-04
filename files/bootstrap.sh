@@ -12,7 +12,7 @@ brew upgrade
 
 # sync dot files
 brew install git
-git clone https://github.com/chiply/.zetta.d
+#git clone https://github.com/chiply/.zetta.d
 
 brew intall python
 python3 ~/.files/main.py
