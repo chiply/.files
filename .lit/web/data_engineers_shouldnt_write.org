@@ -1,0 +1,242 @@
+* [[https://towardsdatascience.com/data-engineers-shouldnt-write-airflow-dags-b885d57737ce][Data Engineers Shouldn’t Write Airflow Dags — Part 1 | by Antony Henao | Towards Data Science]] :website:
+
+[2022-01-03 Mon 02:15]
+
+** Article
+
+**** Opinion
+
+*** Data Engineers Shouldn't Write Airflow Dags --- Part 1
+
+**** It's time for a better way to use Apache Airflow
+
+[[https://ajhenaor.medium.com/?source=post_page-----b885d57737ce-----------------------------------][]]
+
+[[data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdib3g9IjAgMCAzNiAzNiI+IDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTggMS44N2MtNi42MyAwLTEyLjQgNC4xNC0xNS4yMSAxMC4yMUwyIDExLjcxQzQuOTQgNS4zNyAxMSAxIDE4IDFzMTMuMDYgNC4zNyAxNiAxMC43MWwtLjc5LjM3QzMwLjQgNi4wMSAyNC42MyAxLjg4IDE4IDEuODh6TTIuNzkgMjMuOTJjMi44MSA2LjA3IDguNTggMTAuMiAxNS4yMSAxMC4yIDYuNjMgMCAxMi40LTQuMTMgMTUuMjEtMTAuMmwuNzkuMzdDMzEuMDYgMzAuNjMgMjUgMzUgMTggMzVTNC45NCAzMC42MyAyIDI0LjI5bC43OS0uMzd6Ij48L3BhdGg+PC9zdmc+]]
+
+[[https://miro.medium.com/fit/c/56/56/2*o4FbEeaoGp5WGAMhXzk7WQ.jpeg]]
+
+[[https://ajhenaor.medium.com/?source=post_page-----b885d57737ce-----------------------------------][]]
+
+Antony Henao
+
+[[/data-engineers-shouldnt-write-airflow-dags-b885d57737ce?source=post_page-----b885d57737ce-----------------------------------][]]
+
+May 29, 2021 ·7 min read [[data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iamcgamggamkiIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgdmlld2JveD0iMCAwIDE1IDE1IiBhcmlhLWxhYmVsPSJNZW1iZXIgb25seSBjb250ZW50Ij4gPHBhdGggZD0iTTcuNDQgMi4zMmMuMDMtLjEuMDktLjEuMTIgMGwxLjIgMy41M2EuMjkuMjkgMCAwIDAgLjI2LjJoMy44OGMuMTEgMCAuMTMuMDQuMDQuMUw5LjggOC4zM2EuMjcuMjcgMCAwIDAtLjEuMjlsMS4yIDMuNTNjLjAzLjEtLjAxLjEzLS4xLjA3bC0zLjE0LTIuMThhLjMuMyAwIDAgMC0uMzIgMEw0LjIgMTIuMjJjLS4xLjA2LS4xNC4wMy0uMS0uMDdsMS4yLTMuNTNhLjI3LjI3IDAgMCAwLS4xLS4zTDIuMDYgNi4xNmMtLjEtLjA2LS4wNy0uMTIuMDMtLjEyaDMuODlhLjI5LjI5IDAgMCAwIC4yNi0uMTlsMS4yLTMuNTJ6Ij48L3BhdGg+PC9zdmc+]]
+
+[[data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUiIGhlaWdodD0iMjUiIGNsYXNzPSJyIj4gPGcgZmlsbC1ydWxlPSJldmVub2RkIj4gPHBhdGggZD0iTTE1LjYgNWEuNDIuNDIgMCAwIDAgLjE3LS4zLjQyLjQyIDAgMCAwLS4xMi0uMzNsLTIuOC0yLjc5YS41LjUgMCAwIDAtLjcgMGwtMi44IDIuOGEuNC40IDAgMCAwLS4xLjMyYzAgLjEyLjA3LjIzLjE2LjNoLjAyYS40NS40NSAwIDAgMCAuNTctLjA0bDItMlYxMGMwIC4yOC4yMy41LjUuNXMuNS0uMjIuNS0uNVYyLjkzbDIuMDIgMi4wMmMuMDguMDcuMTguMTIuMy4xMy4xMS4wMS4yMS0uMDIuMy0uMDh2LjAxIj48L3BhdGg+IDxwYXRoIGQ9Ik0xOCA3aC0xLjVhLjUuNSAwIDAgMCAwIDFoMS42Yy41IDAgLjkuNC45Ljl2MTAuMmMwIC41LS40LjktLjkuOUg2LjlhLjkuOSAwIDAgMS0uOS0uOVY4LjljMC0uNS40LS45LjktLjloMS42YS41LjUgMCAwIDAgLjM1LS4xNUEuNS41IDAgMCAwIDkgNy41YS41LjUgMCAwIDAtLjE1LS4zNUEuNS41IDAgMCAwIDguNSA3SDdhMiAyIDAgMCAwLTIgMnYxMGMwIDEuMS45IDIgMiAyaDExYTIgMiAwIDAgMCAyLTJWOWEyIDIgMCAwIDAtMi0yIj48L3BhdGg+PC9nPjwvc3ZnPg==]]
+
+[[https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2Fb885d57737ce&operation=register&redirect=https%3A%2F%2Ftowardsdatascience.com%2Fdata-engineers-shouldnt-write-airflow-dags-b885d57737ce&source=post_actions_header--------------------------bookmark_preview--------------][[[data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUiIGhlaWdodD0iMjUiIHZpZXdib3g9IjAgMCAyNSAyNSIgZmlsbD0ibm9uZSIgY2xhc3M9Imp2Ij4gPHBhdGggZD0iTTE4IDIuNWEuNS41IDAgMCAxIDEgMFY1aDIuNWEuNS41IDAgMCAxIDAgMUgxOXYyLjVhLjUuNSAwIDEgMS0xIDBWNmgtMi41YS41LjUgMCAwIDEgMC0xSDE4VjIuNXpNNyA3YTEgMSAwIDAgMSAxLTFoMy41YS41LjUgMCAwIDAgMC0xSDhhMiAyIDAgMCAwLTIgMnYxNGEuNS41IDAgMCAwIC44LjRsNS43LTQuNCA1LjcgNC40YS41LjUgMCAwIDAgLjgtLjR2LTguNWEuNS41IDAgMCAwLTEgMHY3LjQ4bC01LjItNGEuNS41IDAgMCAwLS42IDBsLTUuMiA0Vjd6IiBmaWxsPSIjMjkyOTI5Ij48L3BhdGg+PC9zdmc+]]]]
+
+#+caption: Photo by [[https://unsplash.com/@ripato?utm_source=medium&utm_medium=referral][Ricardo Gomez Angel]] on [[https://unsplash.com?utm_source=medium&utm_medium=referral][Unsplash]]
+[[https://miro.medium.com/max/60/0*JBMs3F64d-5W07WV?q=20]]
+
+I believe data engineers shouldn't write Airflow DAGs. **
+Instead, *Data Engineers should build frameworks automating
+the way those DAGs are created*.
+
+There's nothing more boring than doing the same thing over
+and over again. And that's exactly what you do when you
+write a DAG. You are doing the same thing over and over
+again. After a while, the job gets repetitive and *your
+skills start being underutilized*.
+
+Jeff Magnusson, VP Data Platform at Stitch Fix, wrote a
+couple of years back an [[https://multithreaded.stitchfix.com/blog/2016/03/16/engineers-shouldnt-write-etl/][article]] where he stated that
+*/engineers shouldn't write ETL/* /./ The point he made was
+that *the job of a data engineer is not to write ETLs but to
+generalize and abstract the way those ETLs are made*.
+
+I believe that is exactly what we are doing wrong with
+Airflow. *Instead of building frameworks for generalizing
+and abstracting the way DAGs are created, we are just
+writing DAGs*. Which gets repetitive and it's not fun to do
+after you have done it for a while.
+
+Furthermore, repeating code is not a clever way to write
+maintainable code. There's a reason why the [[https://en.wikipedia.org/wiki/Don%27t_repeat_yourself][DRY]] ( /Don't
+Repeat Yourself/) principle exists, /i.e./, to write
+maintainable code.
+
+This post aims to share with you some of the lessons I've
+learned after writing Airflow DAGs for two years. I hope
+this is something the community will find useful and benefit
+from it. I believe it's time for a better way to use Apache
+Airflow and improve how we do data engineering.
+
+#+begin_quote
+  *TL;DR* --- build frameworks, don't write DAGs. The way you can do that is by using Dynamic DAGs, OOP, and software design patterns.
+#+end_quote
+
+*** The responsibility of a Data Engineer
+
+The main responsibility of a Data Engineer is not to write
+ETLs. Likewise, when it comes to Apache Airflow, the
+responsibility of a Data Engineer is not to write DAGs. Why?
+It's simple.
+
+#+begin_quote
+  “Engineers excel in a world of abstraction, generalization, and finding efficient solutions in the places where they are needed.” Jeff Magnusson
+#+end_quote
+
+I believe data engineering can be seen as a specialization
+of software engineering. The main purpose of software
+engineering is to write *reliable, scalable, and
+maintainable code*. I think that's something we should
+strive for as Data Engineers too.
+
+One of the ways you can achieve this is through generalizing
+and abstracting things. That's our job. To build things
+through generalization and abstraction, so we can empower
+data analysts and data scientists to do their jobs.
+
+#+begin_quote
+  “So, then, what is the role of an engineer in this new,
+  horizontal world? To sum it up, engineers must deploy
+  platforms, services, abstractions, and frameworks that
+  allow the data scientists to conceive of, develop, and
+  deploy their ideas with autonomy (such as a tool,
+  framework, or service used to build, schedule, and execute
+  ETL).” Jeff Magnusson
+#+end_quote
+
+*** Data Engineers shouldn't write DAGs
+
+The first thing you need to learn is *to identify when to
+write a DAG and when not to do it.*
+
+I don't want you to go to your job and start generalizing
+and abstracting things like crazy. Over-engineering and
+over-generalization are a [[https://medium.com/@rdsubhas/10-modern-software-engineering-mistakes-bc67fbef4fc8][problem]] too. You should strive for
+balance.
+
+*Here you have 4 lessons I have learned while writing
+DAGs*. I hope this brings you some guidance on how to stop
+writing DAGs and start building more frameworks!
+
+**** 1. DAG writing can be sometimes repetitive
+
+The first DAG I wrote was an ELT process for a MySQL
+database. The task was simple. I would have to extract the
+data given some constraints. Load it into AWS S3. Finally,
+transform the data using SQL-based transformations. That was
+it. So, I just wrote a DAG file using a couple of
+[[https://airflow.apache.org/docs/apache-airflow/stable/howto/operator/python.html][PythonOperators]].
+
+After that integration, I was asked to integrate two more
+databases. One was another MySQL database and the other one
+a MongoDB database.
+
+Easy peasy. Another task like the first one. So, *I copied
+some code from the first DAG file and replicated that code
+into several DAG files*. I did the same thing for a couple
+of more integrations. Nothing too big. Only like 5 or 6 more
+data sources.
+
+After a couple of months, we decided to change the way we
+were using airflow operators. We migrated from
+PythonOperators to [[https://airflow.apache.org/docs/apache-airflow-providers-cncf-kubernetes/stable/operators.html][KubernetesPodOperators]]. Guess what? I
+found out *I had almost the same code in all DAG files. So,
+I had to make the same change in all DAG files*.
+
+That's when I realized I was doing things wrong. So, we
+started using [[https://www.astronomer.io/guides/dynamically-generating-dags][Dynamic DAGs]]. Then, we improved that approach
+using Object-Oriented Programming (OOP). Particularly, we
+built a custom DAG Factory. The factory allowed us to create
+multiples DAGs from one unique piece of code. This made
+things a lot easier!
+
+This was the *first lesson* I learned. *You* *can use
+Dynamic DAGs and an OOP approach to build your DAGs.* But,
+be careful, Dynamic DAGs can generate problems when they are
+massively used. Read more [[https://www.astronomer.io/guides/dynamically-generating-dags][here]].
+
+Check these articles for more information about it.
+
+[[https://www.astronomer.io/guides/dynamically-generating-dags][]]
+
+**** Dynamically Generating DAGs in Airflow | Apache Airflow Guides
+
+***** The simplest way of creating a DAG in Airflow is to define it in the DAGs folder. Anything with a .py suffix will be...
+
+www.astronomer.io
+
+[[/how-to-build-a-dag-factory-on-airflow-9a19ab84084c][]]
+
+**** How to build a DAG Factory on Airflow
+
+***** A guide to building efficient DAGs with half of the code
+
+towardsdatascience.com
+
+**** 2. Build interfaces allowing people to interact with your DAGs
+
+After we started dynamically generating DAGs it was awesome. Writing a new DAG for integrating new data sources could take 5 minutes. *Only if you knew where to put the code.*
+
+This was my *second lesson.* You don't build things for yourself, but for other people to use them.
+
+I would have Data Analysts wanting to write their own DAGs, but they couldn't because it was too difficult. That's when we came out with the idea of writing a framework to load data sources based on YAML files. Nothing to fancy, but functional.
+
+The bottom line here is to build interfaces allowing people to interact with your DAGs. In our case was a simple YAML file. But, the sky is the limit. You could even build a web UI to do so if that is what you need.
+
+[[/generalizing-data-load-processes-with-airflow-a4931788a61f][]]
+
+**** Generalizing data load processes with Airflow
+
+***** Data load processes should not be written twice, they should be generalized
+
+towardsdatascience.com
+
+**** 3. An Airflow Operator Factory is necessary
+
+I loved migrating from Airflow 1.10 to 2.0. But, you know what? I hated changing all the code lines where I was using the KubernetesPodOperator.
+
+In Airflow 2.0 the KubernetesPodOperator changed a lot. Here's a shortlist of the things that affected us:
+
+- *Port has migrated from a List[Port] to a List[V1ContainerPort]*
+- *env_vars has migrated from a Dict to a List[V1EnvVar]*
+- *Resources have migrated from a Dict to a V1ResourceRequirements*
+- *Resources have migrated from a Dict to a V1ResourceRequirements*
+- ... See the full list of changes [[https://airflow.apache.org/docs/apache-airflow/2.0.0/upgrading-to-2.html#changed-parameters-for-the-kubernetespodoperator][here]]
+
+That was my *third lesson*. You don't only need a DAG Factory, but you also need an Operator Factory.
+
+After the migration, we built our own Operator Factory. We are now prepared if the KubernetesPodOperator changes again. The next time changes are going to be introduced *in one file, not in 10 different files.*
+
+**** 4. Dynamic DAGs and OOP are not enough
+
+Now you know we love Dynamic DAGs and OOP, let tell you another thing. Everything was fine until we started growing and adopting new use cases. We realized that *Dynamic DAGs and OOP were not enough to solve our problems*.
+
+We realized *we built tightly coupled modules.* We did it so badly that our DAG Factory would only generate DAGs if two specific types of tasks were included. Those two types were extractions and transformations. We had a use case where we wanted to generate a *DAG only with extractions tasks.* And, we couldn't do it because our DAG Factory didn't allow it. It was expected that we *included both an extraction and a transformation task.*
+
+This was my *fourth lesson*. You have to be careful about how you generalize and abstract things. You cannot just go through life throwing random generalizations and abstractions everywhere.
+
+*The way we solved our code tightness was by using* [[https://en.wikipedia.org/wiki/Software_design_pattern][*software design patterns*]] *.* The DAG factory and Operator factory follow the [[https://en.wikipedia.org/wiki/Factory_method_pattern][Factory Method pattern]]. It is one of the most known design patterns, but you should know there are [[https://www.youtube.com/watch?v=v9ejT8FO-7I&list=PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc][a lot more]]! We also find it useful following the [[https://refactoring.guru/design-patterns/strategy][Strategy pattern]] and the [[https://refactoring.guru/design-patterns/template-method][Template pattern]].
+
+*** Conclusion
+
+I know some of the statements I'm making in this article can be strong and controversial. Please, let me know your thoughts about it!
+
+Be careful with the principles I'm suggesting in the article. Don't over-generalize and over-engineer things!
+
+#+begin_quote
+  /“duplication is far cheaper than the wrong abstraction” Sandi Metz/
+#+end_quote
+
+Thanks for reading!
+
+Finally, thanks to [[https://medium.jfgomez.me/][Juan Felipe Gómez]] who also made this possible.
+
+#+begin_quote
+  *UPDATE:* The second part of this article is now available
+#+end_quote
+
+[[/data-engineers-shouldnt-write-airflow-dags-part-2-8dee642493fb][]]
+
+**** Data Engineers Shouldn't Write Airflow Dags --- Part 2
+
+***** A framework proposal for Apache Airflow
+
+towardsdatascience.com
+
+/If you want to stay updated with my work,/ */please join my/* [[https://metadatacommunity.substack.com/][*/newsletter/*]] */!/* /Once in a while, I share some stuff with my readers. I'll appreciate it if you join :)/
