@@ -1,0 +1,13 @@
+(use-package helm
+  :straight t
+
+  :general
+  (
+   :keymaps 'helm-map
+   "C-j" 'helm-next-line
+   "C-k" 'helm-previous-line
+   "C-S-j" 'helm-next-source
+   "C-S-k" 'helm-previous-source
+   "C-M-e" 'z-helm-ag-edit
+   )
+  )

@@ -1,0 +1,5 @@
+#+TITLE: Documentation for /Users/redacted/.zetta.d/source/extension/dired.el
+#+OPTIONS: toc:nil
+* Variables
+* Functions
+
