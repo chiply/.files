@@ -1,0 +1,39 @@
+(use-package dogears
+  :config
+  ;; function
+  (setq dogears-functions
+        '(
+          ;; NOTHING -- eg only the manual dogears
+          find-file
+          consult-buffer 
+          switch-buffer
+          z-projectile-find-file
+          projectile-find-file
+          ;;ace-window
+          ;;tab-line-switch-to-next-tab
+          ;;tab-line-switch-to-prev-tab
+          evil-search-forward
+          ;;windmove-up
+          ;;windmove-down
+          ;;windmove-left
+          ;;windmove-right
+          )
+        ;; turn off the idle timer
+        dogears-idle nil
+        )
+
+  (dogears-mode 1)
+  (add-to-list 'desktop-globals-to-save 'dogears-list)
+
+  :display
+  (z-side "^\\*Dogears List*" 'right -11 0.20 0.25)
+
+  :general
+  (
+   :keymaps 'override
+   "s-!" 'dogears-remember
+   )
+
+  :hook (dogears-list-mode . (lambda () (text-scale-set -2)))
+  )
+
