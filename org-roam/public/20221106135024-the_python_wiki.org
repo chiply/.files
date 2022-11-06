@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       2553A7A1-5706-464F-96F3-F05C3BEB28F5
+:ROAM_REFS: https://wiki.python.org/moin/
+:mtime:    20221106135202 20221106135034
+:ctime:    20221106135024
+:END:
+#+title: The Python Wiki
+Has very deep articles on python features and techniques, eg 
+

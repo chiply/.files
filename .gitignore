@@ -1,4 +1,8 @@
 # zetta
+#for now
+.zetta.d/source/extension
+logview-cache.extmap
+.dap-breakpoints
 .zetta.d/detached/
 var/
 request/
