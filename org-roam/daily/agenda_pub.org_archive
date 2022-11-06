@@ -1,0 +1,87 @@
+
+Archived entries from file /Users/redacted/org-roam/agenda_pub.org
+
+
+* CODING Clean
+:PROPERTIES:
+:ARCHIVE_TIME: 2022-05-08 Sun 12:01
+:ARCHIVE_FILE: ~/org-roam/agenda_pub.org
+:ARCHIVE_CATEGORY: >
+:ARCHIVE_TODO: CODING
+:END:
+:LOGBOOK:
+- State "CODING"     from              [2022-05-08 Sun 12:01]
+:END:
+
+* CLOSED private/public org-roam and agenda
+:PROPERTIES:
+:received: 2022-05-05 Thu 09:37
+:ID:       C6EEC134-BDC2-4FF4-BE01-4942AD1B1683
+:mtime:    20220708223609 20220708211148
+:ctime:    20220708211148
+:ARCHIVE_TIME: 2022-10-27 Thu 10:35
+:ARCHIVE_FILE: ~/org-roam/daily/agenda_pub.org
+:ARCHIVE_CATEGORY: 
+:ARCHIVE_TODO: CLOSED
+:END:
+:LOGBOOK:
+- State "CLOSED"     from "SPEEDBAR"   [2022-07-08 Fri 21:11:48]
+- State "SPEEDBAR"   from "CODING"     [2022-05-05 Thu 09:38]
+- State "CODING"     from "INBOX"      [2022-05-05 Thu 09:38]
+:END:
+
+
+* INBOX [#A] Airflow tutorial
+:PROPERTIES:
+:received: 2022-05-04 Wed 10:58
+:ID:       8E3303D1-9707-4FBF-9586-E8B62D5A2879
+:ARCHIVE_TIME: 2022-10-27 Thu 10:35
+:ARCHIVE_FILE: ~/org-roam/daily/agenda_pub.org
+:ARCHIVE_CATEGORY: 
+:ARCHIVE_TODO: INBOX
+:END:
+:LOGBOOK:
+- Refiled on [2022-05-08 Sun 12:16]
+- Refiled on [2022-05-08 Sun 12:16]
+:END:
+- This is hwot o run locally, then move onto tutorial ([[https://airflow.apache.org/docs/apache-airflow/stable/start/local.html][here]])
+
+
+* INBOX GitHub Actions tutorial
+:PROPERTIES:
+:received: 2022-05-04 Wed 10:58
+:ID:       A7093E62-0DC0-4EF3-8F6B-8E556DF6AD70
+:ARCHIVE_TIME: 2022-10-27 Thu 10:35
+:ARCHIVE_FILE: ~/org-roam/daily/agenda_pub.org
+:ARCHIVE_CATEGORY: 
+:ARCHIVE_TODO: INBOX
+:END:
+:LOGBOOK:
+- Refiled on [2022-05-08 Sun 12:20]
+:END:
+
+* INBOX Postgres UDFs
+:PROPERTIES:
+:received: 2022-05-02 Mon 06:55
+:ID:       97A7EAEA-AF41-42E7-A99C-D7E83459A3AE
+:ARCHIVE_TIME: 2022-10-27 Thu 10:35
+:ARCHIVE_FILE: ~/org-roam/daily/agenda_pub.org
+:ARCHIVE_CATEGORY: 
+:ARCHIVE_TODO: INBOX
+:END:
+:LOGBOOK:
+- Refiled on [2022-05-08 Sun 12:21]
+:END:
+
+* INBOX Read [[https://medium.com/swlh/structuring-a-robust-data-pipeline-24ff67783782][Structuring a Robust Data Pipeline]]
+:PROPERTIES:
+:received: 2022-05-05 Thu 12:45
+:ID:       E886983E-D9BB-478C-B93A-4FC50B709A84
+:ARCHIVE_TIME: 2022-10-27 Thu 10:35
+:ARCHIVE_FILE: ~/org-roam/daily/agenda_pub.org
+:ARCHIVE_CATEGORY: 
+:ARCHIVE_TODO: INBOX
+:END:
+:LOGBOOK:
+- Refiled on [2022-05-08 Sun 12:21]
+:END:

@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       7A5EAFBB-0304-4C55-A499-C54611AE2F74
+:mtime:    20220217055517 20220213140847 20220213140648 20220213140558
+:ctime:    20220213140523
+:END:
+#+title: Open Access Datasets for Machine Learning
+- [[id:D3F6867D-E7F2-4CFA-8A39-F35ECA9AF502][Kaggle]]
+- [[id:0C942730-180A-46B5-A1A2-73B7BB74A6B6][OpenML]]
+- [[id:8FA0F9B4-C13B-4A44-AD37-DA141825FF73][Quandl]]
+- Library datasets: [[id:6D5AA06A-DCA7-4EB3-8DFF-0A39EB3CFD03][sklearn]].  There are datasets that come
+  with [[id:6D5AA06A-DCA7-4EB3-8DFF-0A39EB3CFD03][sklearn]], and there are fetch moethods on
+  sklearn.datasets, eg for [[id:0C942730-180A-46B5-A1A2-73B7BB74A6B6][OpenML]]
+

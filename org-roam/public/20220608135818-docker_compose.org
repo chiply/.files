@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       19F810A1-E47D-4E87-B71F-A3BA98368E05
+:mtime:    20220608135953 20220608135855 20220608135819
+:ctime:    20220608135818
+:ROAM_REFS: https://docs.docker.com/compose/
+:END:
+#+title: Docker Compose
+Compose is a tool for defining and running multi-container
+[[id:B83C9CAD-ED25-4D38-84E6-3E1F057F7F8C][Docker]] applications.
+
+Can have extension fields, any key that starts with x-

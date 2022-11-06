@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       37034077-EE42-47F8-9004-208815B5BC9E
+:ROAM_REFS: https://github.com/OHDSI/Genomic-CDM
+:mtime:    20220622072628
+:ctime:    20220622072550
+:END:
+#+title: OHDSI/Genomic-CDM
+Github repo for [[id:9BFAE5EE-F0B5-4AD2-9897-EE8B6C809769][OHDSI]] Genomic-CDM project

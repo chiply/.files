@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       21AAA15B-739C-408D-A0FE-F933217429DD
+:mtime:    20220207153450 20220207152955 20220207152053
+:ctime:    20220207151542
+:END:
+#+title: AutoFE
+Automated Feature Engineering, or the process by which
+adding features to training data is made easier and more
+scaleable.
+
+Approaches include [[id:8B433483-0EFC-43A3-BAB2-CF427E878C83][Deep Feature Synthesis]].
+
+

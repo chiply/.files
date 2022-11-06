@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       0475EB38-11F3-4E45-827B-868C92C613D0
+:ROAM_REFS: https://hypothesis.readthedocs.io/en/latest/index.html
+:mtime:    20221018205217
+:ctime:    20221018205209
+:END:
+#+title: Hypothesis
+

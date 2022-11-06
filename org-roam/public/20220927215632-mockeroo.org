@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       86D52B67-C546-4028-A607-667F652F384C
+:ROAM_REFS: https://www.mockaroo.com/
+:mtime:    20220927215724
+:ctime:    20220927215632
+:END:
+#+title: Mockeroo
+A very effective data faking library

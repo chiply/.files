@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID:       97B2255D-4141-4AFC-8ABB-6CE927DC34A2
+:ROAM_REFS: https://aws.amazon.com/blogs/containers/deploy-applications-on-amazon-ecs-using-docker-compose/
+:mtime:    20220608135647 20220608133426 20220608133333
+:ctime:    20220608133249
+:END:
+#+title: Deploy applications on Amazon ECS using Docker Compose
+* Quotes
+If you are curious about the nature of these x-aws Docker
+Compose extensions, please refer to the last section of this
+blog. In a nutshell, x-aws-role allows the developer to
+assign an in-line IAM policy that will bind to the
+application (as an ECS task role).
+
+#+BEGIN_SRC yaml
+  services:
+    ecsworker-in-region:
+      environment: 
+          - SQS_QUEUE_URL=https://sqs.us-east-1.amazonaws.com/123456789/main-queue
+          - EFS_SOURCE_FOLDER=/data/sourcefolder/             
+          - EFS_DESTINATION_FOLDER=/data/destinationfolder/              
+          - AWS_REGION=us-east-1
+      image: 123456789.dkr.ecr.us-east-1.amazonaws.com/ecsworker:amd64-slim 
+      volumes:
+          - efs-share:/data
+      x-aws-role:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action: sqs:*
+            Resource: arn:aws:sqs:us-east-1:123456789:main-queue
+  volumes:
+    efs-share:
+#+END_SRC
+
+
+
+
+

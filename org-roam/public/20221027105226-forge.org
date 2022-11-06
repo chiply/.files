@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       023AA94E-1FF7-409E-82B9-CB06E78CF9EE
+:mtime:    20221027105513
+:ctime:    20221027105226
+:END:
+#+title: forge
+A counterpart to [[id:6DDD23D5-C112-4E6F-8E8C-93EAC16CD7FC][magit]] for [[id:376B2B9B-8251-44D8-BD5A-F409C30C5B97][Github]].  Lets the end user interact with 'topics' such as issues, pull requests, etc... It isn't a true replacement for the web ui, but it can enable workflows like opening a PR and mergin a PR within-the-editor. 

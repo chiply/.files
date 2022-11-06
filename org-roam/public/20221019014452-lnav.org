@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       43783BB0-1314-4C8F-88BC-40715C2888F2
+:ROAM_REFS: https://docs.lnav.org/en/latest/index.html
+:mtime:    20221019014457
+:ctime:    20221019014452
+:END:
+#+title: lnav
+

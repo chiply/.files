@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       C6FA1437-8C7D-42FC-A4EA-AD541D5D8B9D
+:ROAM_REFS: https://syedmisbah.github.io/datascienceinterviewsoverview.html
+:mtime:    20220225110733 20220225102714
+:ctime:    20220225102704
+:END:
+#+title: Data Science Interviews
+Usefule resource not only for interviewing, but also for
+understanding what the modern data scientist is responsible
+for knowing.
+
