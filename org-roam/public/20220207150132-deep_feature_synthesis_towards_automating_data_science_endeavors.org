@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       050539CA-00AD-4402-BF51-4DC7BBCB7F36
+:ROAM_REFS: cite:kanter-2015-deep
+:mtime:    20220207150413
+:END:
+#+title: Deep feature synthesis: towards automating data science endeavors
+

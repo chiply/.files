@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       0F5C3261-2FAE-45F6-AD6A-6CC5DECED96F
+:ROAM_REFS: https://github.com/rothgar/awesome-tmux
+:mtime:    20221102143035
+:ctime:    20221102143027
+:END:
+#+title: awesome-tmux
+

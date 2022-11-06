@@ -1,5 +1,5 @@
+# zetta
 .zetta.d/detached/
-
 var/
 request/
 url/
@@ -27,7 +27,6 @@ history
 .emacs.desktop*
 dtache.db
 org-persist
-
 forge-database.sqlite
 eww-bookmarks
  \*Minibuf*
@@ -39,3 +38,21 @@ build-cache.el
 keybindings.org
 .snippets.org
 eln-cache/
+
+
+# org-roam
+README*
+# roam nodes created and not filed yet
+org-roam/2*
+org-roam/private/
+org-roam/daily/2*
+org-roam/daily/agenda.org
+org-roam/daily/agenda.org_archive
+org-roam/daily/sprint.org
+org-roam/daily/sprint.org_archive
+
+
+# .lit
+
+
+# files

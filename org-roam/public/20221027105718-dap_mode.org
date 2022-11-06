@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       5237F779-453B-41AA-9925-2888764FF05E
+:mtime:    20221027105737
+:ctime:    20221027105718
+:END:
+#+title: dap-mode
+An [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] library for the debug adapter protocol.

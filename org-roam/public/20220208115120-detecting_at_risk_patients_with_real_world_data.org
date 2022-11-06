@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       D1CDF406-006D-46B9-B38C-BDF22D75ECFC
+:ROAM_REFS: https://databricks.com/blog/2020/10/20/detecting-at-risk-patients-with-real-world-data.html
+:mtime:    20220213104442 20220210131959 20220208120626 20220208115139
+:ctime:    20220208115120
+:END:
+#+title: Detecting At-risk Patients with Real World Data
+A [[id:89E57CED-BD6E-4E65-AE77-8F05062B5568][Databricks]] article.
+
+

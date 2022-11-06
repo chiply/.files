@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       EBFAE1DD-D519-4907-8816-9909ED420A26
+:mtime:    20220213101639 20220208125458
+:ctime:    20220208125413
+:END:
+#+title: D-tale
+An [[id:7FCB6D1E-341F-4EF9-BA92-DF3C83357665][AutoEDA]] solution.
+
+"D-Tale is a recently created library (end of February 2020)
+that allows us to visualize a Pandas DataFrame." ([[https://towardsdatascience.com/introduction-to-d-tale-5eddd81abe3f][medium post]])
+

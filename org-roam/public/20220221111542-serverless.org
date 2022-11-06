@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       BAA96DEB-839F-46E2-B927-6308EC125749
+:mtime:    20220221111543
+:ctime:    20220221111542
+:END:
+#+title: serverless
+

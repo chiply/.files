@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       6C4CA3C9-C448-471C-8CA3-E4F29E4F3D7C
+:ROAM_REFS: https://github.com/cpitclaudel/biblio.el
+:mtime:    20220207143339 20220207142158 20220207142008
+:ctime:    20220207141526
+:END:
+#+title: biblio
+Efficient browsing of bibliographic references within [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]].
+Outputs [[id:288895DE-319D-4ADE-BC73-F4384F258FF0][BibTeX]], making it play nicely with the rest of the
+manuscripting framework.
+
+
+"biblio.el makes it easy to browse and gather bibliographic
+references and publications from various sources, by
+keywords or by DOI. References are automatically fetched
+from well-curated sources, and formatted as BibTeX."
+
+

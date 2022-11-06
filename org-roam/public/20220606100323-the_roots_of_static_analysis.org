@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       8FA6B59C-CD08-4C27-A8F9-04B284738D32
+:ROAM_REFS: https://codeclimate.com/blog/the-roots-of-static-analysis/
+:mtime:    20220606100755
+:ctime:    20220606100323
+:END:
+#+title: The Roots of Static Analysis
+A [[id:616E85A6-80B8-4B59-940E-A5EF7AA7001A][Code Climate]] blog post which discusses static
+analsysi, specifically the paper [[id:DA8E7AC6-DDC9-4FEA-851C-C1505F99F902][A Complexity Measure]]

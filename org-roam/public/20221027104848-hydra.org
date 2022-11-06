@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       8187C1BE-176B-4C8C-8F90-19D5862E9D1B
+:mtime:    20221027105135
+:ctime:    20221027104848
+:END:
+#+title: hydra
+An [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] framework for modal key-user-interfaces.  Similar to [[id:0BC0C266-FFE9-4731-908C-B82A49A7AEA4][transient]], but IMO is more commonly implemented by the community and is easier to implement hydras than transients
+

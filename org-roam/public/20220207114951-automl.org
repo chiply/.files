@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       0021EF8F-6FA1-4C9C-9CFA-F965AC15B9CA
+:mtime:    20220207150739 20220207150625 20220207145642 20220207145543 20220207145131 20220207145052 20220207145020 20220207144736 20220207144626 20220207144534 20220207144317 20220207120120 20220207115353
+:ctime:    20220207114951
+:END:
+#+title: AutoML
+Methods for automating the [[id:0CD798F5-AA9D-465D-81AF-896B935F8A1B][Machine Learning]] process.
+
+From this [[https://www.automl.org/automl/][site]]: Automated Machine Learning provides methods
+and processes to make Machine Learning available for
+non-Machine Learning experts, to improve efficiency of
+Machine Learning and to accelerate research on Machine
+Learning.
+
+

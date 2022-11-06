@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       544B0D0D-C466-4495-99F4-84D1CC59D3B2
+:ROAM_REFS: https://semver.org/
+:mtime:    20221013160136
+:ctime:    20221013160121
+:END:
+#+title: semver
+

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       8B9D13B8-0F4D-465E-8377-D2448936DB95
+:ROAM_ALIASES: "Elastic Map Reduce"
+:mtime:    20220221111648
+:ctime:    20220221111616
+:END:
+#+title: EMR
+[[id:1DBA0383-C60B-4333-8240-BDFB67344CB2][AWS]] service for distributed computation via.

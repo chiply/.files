@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       15B0D3B1-4FB3-4D44-BFE1-7523CC9DC94E
+:ROAM_REFS: https://github.com/alebcay/awesome-shell
+:mtime:    20220823101632
+:ctime:    20220823101621
+:END:
+#+title: Awesome Shell
+

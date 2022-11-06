@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       CB2B58E3-6ED7-486A-B035-D676ACDF81E3
+:ROAM_REFS: cite:buitinck2013api
+:mtime:    20220217050932
+:ctime:    20220217050917
+:END:
+#+title: Api design for machine learning software: experiences from the scikit-learn project
+Details design of the [[id:6D5AA06A-DCA7-4EB3-8DFF-0A39EB3CFD03][sklearn]] API.

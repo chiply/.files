@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       317DB419-B3BE-415D-9B25-E34D0E5017DF
+:mtime:    20221027111057
+:ctime:    20221027111036
+:END:
+#+title: Airflow
+DAG orchestration framework in [[id:1EFE9BCC-FCF0-4A60-8F4E-406C00BCFED7][Python]].

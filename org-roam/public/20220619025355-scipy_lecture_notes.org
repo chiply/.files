@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       5BBEB3ED-4263-4EB4-83F3-31F492B27D21
+:ROAM_REFS: http://scipy-lectures.org/preface.html
+:mtime:    20220619192908 20220619025408
+:ctime:    20220619025355
+:END:
+#+title: scipy lecture notes

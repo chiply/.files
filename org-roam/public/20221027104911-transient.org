@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       0BC0C266-FFE9-4731-908C-B82A49A7AEA4
+:mtime:    20221027105049
+:ctime:    20221027104911
+:END:
+#+title: transient
+An [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] package for modal key user interfaces. Used by [[id:6DDD23D5-C112-4E6F-8E8C-93EAC16CD7FC][magit]]

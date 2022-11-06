@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       0EFB7E2A-74A7-4E57-B2B9-4D463C98AEB5
+:ROAM_ALIASES: VSAC
+:ROAM_REFS: https://vsac.nlm.nih.gov/
+:mtime:    20220217024844 20220217024645
+:ctime:    20220217024554
+:END:
+#+title: Value Set Authority Center
+From site: "The VSAC is a repository and authoring tool for
+public value sets created by external programs. Value sets
+are lists of codes and corresponding terms, from NLM-hosted
+standard clinical vocabularies (such as SNOMED CT, RxNorm,
+LOINC® and others), that define clinical concepts to support
+effective and interoperable health information exchange."
+
+It is used by [[id:2377F919-785D-4CF9-AE73-9432F7C3DB92][Developing a semantic web-based framework for
+executing the clinical quality language using fhir.]] to
+define retrieve information necessary to transform [[id:B58FC48D-2B5D-4EC4-809F-F8121585709C][Clinical
+Quality Language]] into [[id:3161B9A7-8BEB-49E6-B541-1E1D7E2F5B86][SPARQL]].

@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       543E915F-FCBD-4A5B-8680-32DE9FB03424
+:mtime:    20220420083726 20220420083642
+:ctime:    20220420083628
+:END:
+#+title: Bookmarks
+An [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] feature.
+
+https://www.emacswiki.org/emacs/BookmarkPlus
+
+
+

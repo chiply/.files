@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       3161B9A7-8BEB-49E6-B541-1E1D7E2F5B86
+:mtime:    20220217025046 20220217025015 20220217024836
+:ctime:    20220217024816
+:END:
+#+title: SPARQL
+From wikipedia: "SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a
+recursive acronym for SPARQL Protocol and RDF Query
+Language) is an RDF query language—that is, a semantic query
+language for databases—able to retrieve and manipulate data
+stored in Resource Description Framework (RDF) format."
+
+Basically, how to query [[id:9BF2B2A9-1B43-48A5-A4BF-314013F7A07C][Resource Description Framework]].
+
+Example (from wikipedia)
+
+#+BEGIN_SRC sparql
+PREFIX ex: <http://example.com/exampleOntology#>
+SELECT ?capital ?country
+WHERE {
+  ?x ex:cityname ?capital ;
+     ex:isCapitalOf ?y .
+  ?y ex:countryname ?country ;
+     ex:isInContinent ex:Africa .
+}
+#+END_SRC 
+
+

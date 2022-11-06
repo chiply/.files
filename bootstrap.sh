@@ -1,4 +1,5 @@
 cd ~
+touch ~/.localsecrets
 
 # macos thing
 xcode-select --install

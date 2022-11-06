@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       275BAB65-04E2-4A8C-89BE-31DFD236AB89
+:mtime:    20221101153719
+:ctime:    20221101153716
+:END:
+#+title: System Design
+

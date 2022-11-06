@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       DD54C8C1-62C7-4C2D-B26A-D7260FA42159
+:mtime:    20220501201318
+:ctime:    20220501201249
+:END:
+#+title: org
+A markup language ships with [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] .

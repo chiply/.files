@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       395C7E7F-533F-4815-9857-47A7FCA1CB15
+:ROAM_REFS: https://www.hl7.org/fhir/overview.html
+:ROAM_ALIASES: "Fast Healthcare Interoperability Resources"
+:mtime:    20220217024011
+:ctime:    20220217023749
+:END:
+#+title: FHIR
+From site: "Welcome to the FHIR (Fast Healthcare
+Interoperability Resources) Specification, which is a
+standard for exchanging healthcare information
+electronically. This page provides an overview of the
+standard, and serves as a road map for first-time readers of
+the specification to help find your way around FHIR
+quickly."
+
+The site (ref) provides a really nice overview of the
+specification.
