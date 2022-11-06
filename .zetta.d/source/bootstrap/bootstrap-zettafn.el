@@ -178,6 +178,28 @@ Code:
   )
 
 
+(defun z-touch-maybe (path)
+  "touches the file if it doesn't already exist."
+  (if (not (file-exists-p path))
+      (if (string-match-p
+           (regexp-quote ".")
+           (nth 0 (split-string path "/")))
+          ;; it's a file, so touch
+          (progn
+            (message (shell-command-to-string (concat "touch " path)))
+            (message (concat "touch " path))
+            )
+        ;; it's a dir, so mkdir
+        (progn
+          (message (shell-command-to-string (concat "mkdir " path)))
+          (message (concat "mkdir " path))
+          )
+        )
+    (message (concat "{" path "} already exists")))
+  )
+
+
+
 
 
 (provide 'bootstrap-zettafn)

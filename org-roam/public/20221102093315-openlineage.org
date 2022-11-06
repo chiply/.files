@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       78C5FDD4-DBF8-4042-80D2-B843DE7FA32C
+:ROAM_REFS: https://github.com/OpenLineage/OpenLineage
+:mtime:    20221102093326
+:ctime:    20221102093315
+:END:
+#+title: OpenLineage

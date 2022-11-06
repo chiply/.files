@@ -1,0 +1,42 @@
+:PROPERTIES:
+:ID:       FDE05303-4EE3-494E-82C6-8AB06FAFC13E
+:mtime:    20220501191646 20220501185853 20220501185716 20220501094925 20220429124631 20220429012324 20220429003214 20220429002130 20220429000926 20220428230934 20220428215419 20220428182134 20220428181233 20220427165104 20220427165028 20220427164953
+:ctime:    20220427164950
+:END:
+#+title: SQLite3
+
+* Config file
+
+** Some subheading
+
+** Another subheading
+* Useful CLI commands
+
+.mode line
+.mode column
+
+.tables
+.open [filename]
+
+.nilnilheaders on
+
+
+.schema [tablename]
+
+#+BEGIN_SRC sh
+  pwd
+#+END_SRC
+
+#+RESULTS:
+: /Users/charles.baker/org-roam
+
+#+BEGIN_SRC sqlite
+select * from sometable
+#+END_SRC 
+
+
+#+BEGIN_SRC sqlite
+  select *
+  from sometable
+  where somecondition is not null
+#+END_SRC 

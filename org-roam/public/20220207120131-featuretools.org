@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       E53DE237-7E59-427E-901C-268C42EE0A74
+:mtime:    20220207153528 20220207145816 20220207120133
+:ROAM_REFS: https://featuretools.alteryx.com/en/stable/
+:ctime:    20220207120131
+:END:
+#+title: Featuretools
+An [[id:21AAA15B-739C-408D-A0FE-F933217429DD][AutoFE]] solution.

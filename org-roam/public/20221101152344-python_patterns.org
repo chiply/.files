@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       33A4D263-5E25-4F77-90BA-6BC6C84160F1
+:ROAM_REFS: https://github.com/faif/python-patterns
+:mtime:    20221101152348
+:ctime:    20221101152344
+:END:
+#+title: python-patterns
+

@@ -2,6 +2,29 @@
 (add-to-list 'load-path "~/.files/.zetta.d/source/bootstrap")
 (require 'bootstrap)
 
+;; move to zettafn
+
+;; use dash to do the loop
+(setq
+ z-files-that-need-creating
+ '("~/.dir-locals.el"
+   "~/.private.el"
+   "~/.files/org-roam/daily/agenda.org"
+   "~/.files/org-roam/daily/agenda.org_archive"
+   ;; pub doesn't really need to be written as its in vc
+   "~/.files/org-roam/daily/agenda_pub.org"
+   "~/.files/org-roam/daily/agenda_pub.org_archive"
+   "~/.files/org-roam/daily/sprint.org"
+   "~/.files/org-roam/daily/sprint.org_archive"
+   ;; NOTE -- not sprint_pub as print is inherently private to the
+   ;; machine
+   "~/.files/org-roam/private"
+   "~/.files/org-roam/public"
+   ))
+
+(-each z-files-that-need-creating 'z-touch-maybe)
+
+
 (setq
  user-files
  '("display.el" "interface.el" "desktop.el" "csv-mode.el"
@@ -35,7 +58,7 @@
    "helpful.el" "elisp-mode.el" "narrow.el" "ov.el" "vimish-fold.el"
    "editing.el" "smartparens.el" "hungry-delete.el" "prose.el"
    "buffer.el" "ibuffer.el" "bufler.el" "all-the-icons-ibuffer.el"
-    "bookmark.el"  "bookmark+.el" "bookmark-in-project.el" "dogears.el"
+   "bookmark.el"  "bookmark+.el" "bookmark-in-project.el" "dogears.el"
    "theme.el" "detached.el" "yaml-mode.el" "yaml-path.el" "yaml.el"
    "yaml-pro.el" "json-snatcher.el" "jsonian.el" "eww.el" 
    "helm-themes.el" "text-mode.el" "jmespath.el" "highlight-symbol.el"
@@ -43,7 +66,7 @@
    "flycheck-indicator.el" "flycheck-pycheckers.el"
    "magit-diff-flycheck.el" "flycheck-projectile.el" "hercules.el"
    "evil-fringe-mark.el" "modern-fringes.el" "rainbow-mode.el"
-   "cleanup.el" )
+   "cleanup.el")
  )
 
 ;; load user-files and provate lisp code
@@ -71,7 +94,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" "de43637da82e6127fd76472ae58682927f25693fcccb16161be12f2331bcc7cc" default)))
+   '("4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73"
+   "de43637da82e6127fd76472ae58682927f25693fcccb16161be12f2331bcc7cc"
+   default)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

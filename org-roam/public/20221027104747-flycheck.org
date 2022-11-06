@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       E1D00E71-4483-4BD3-A18A-3221A15C4212
+:mtime:    20221027104834
+:ctime:    20221027104747
+:END:
+#+title: flycheck
+An [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] library for 'checkers'.  Could be syntax checkers, style checkers, format checkers, type checkers, etc...

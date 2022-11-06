@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       B83C9CAD-ED25-4D38-84E6-3E1F057F7F8C
+:mtime:    20220608160302 20220608160119 20220608160044 20220209125626
+:ctime:    20220209125625
+:END:
+#+title: Docker
+* Questions
+- Dangling images: Dangling images are layers that have no
+  relationship to any tagged images. They no longer serve a
+  purpose and consume disk space. ([[https://kb.vmware.com/s/article/68151#:~:text=Dangling%20images%20are%20layers%20that,purpose%20and%20consume%20disk%20space.][source]])
+- What are tags and their purpose: Docker tags are mutable
+  named references to Docker images, much like branch refs
+  in Git. They make it easy to pull and run images, and for
+  image authors to roll out updates automatically. ([[https://blog.atomist.com/docker-image-tags/#:~:text=Docker%20tags%20are%20mutable%20named,to%20roll%20out%20updates%20automatically.][source]])
+  
+  
+
+

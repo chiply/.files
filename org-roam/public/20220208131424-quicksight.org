@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       A9D1C405-9676-47B8-9C05-5B333290807D
+:mtime:    20220208131426
+:END:
+#+title: QuickSight
+

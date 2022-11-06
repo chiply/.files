@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       D3418445-E159-44B1-8613-B660CB3BF2B0
+:mtime:    20221103095645
+:ctime:    20221103095400
+:END:
+#+title: Software Testing
+* Articles
+** [[https://www.guru99.com/functional-testing-vs-non-functional-testing.html][functional vs non functional testing]]
+** [[https://www.perfecto.io/blog/what-is-non-functional-testing#:~:text=Functional%20testing%20ensures%20that%20functions,the%20performance%20of%20these%20functions.][what is non functional testing?]]

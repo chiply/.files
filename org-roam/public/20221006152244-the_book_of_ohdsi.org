@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       E9181BE6-1E5A-470A-8D2B-51F0C1178E55
+:ROAM_REFS: https://ohdsi.github.io/TheBookOfOhdsi/
+:mtime:    20221006152254
+:ctime:    20221006152244
+:END:
+#+title: The Book of OHDSI
+

@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       64617B4C-75A3-435A-B007-22FBB142D66F
+:ROAM_REFS: cite:pacaci-2018-seman-trans
+:mtime:    20220217033444 20220217033158 20220217020221
+:ctime:    20220217020158
+:END:
+#+title: A semantic transformation methodology for the secondary use of observational healthcare data in postmarketing safety studies
+A paper demonstrating an alternative approach to
+transforming source EHR data to [[id:4CB47C8D-5895-4C35-9ADC-D3195A015529][OMOP]].
+
+

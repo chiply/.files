@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       CD737C27-1BF0-491E-927C-B2CC9729D992
+:mtime:    20220208090858 20220207140633 20220207140304 20220207122544 20220207121736 20220207121700 20220207121600 20220207121236 20220207120634 20220207120304
+:ctime:    20220207120250
+:END:
+#+title: auto-sklearn
+From website: auto-sklearn is an automated machine learning
+toolkit and a drop-in replacement for a scikit-learn
+estimator.
+
+An [[id:0021EF8F-6FA1-4C9C-9CFA-F965AC15B9CA][AutoML]] solution built on top of [[id:6D5AA06A-DCA7-4EB3-8DFF-0A39EB3CFD03][sklearn]].
+
+Background on the algorithm can be found in [[id:6AD6C7ED-DDC8-45E4-9F24-6DC75074A764][Efficient and
+robust automated machine learning]] and [[id:5F9997CC-F15F-4C4E-8CFC-B95C2B02AA86][Auto-sklearn 2.0:
+hands-free automl via meta-learning]].
+

@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       B0C606E8-9BF9-43F4-BD63-77BE09A392BB
+:mtime:    20220208104634
+:END:
+#+title: Microsoft Teams
+

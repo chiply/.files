@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       658F4BDB-51DE-46C2-9C43-AD32941C7ADF
+:mtime:    20221027105041
+:ctime:    20221027105034
+:END:
+#+title: git
+Version control system

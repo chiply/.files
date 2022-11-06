@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       6F3051E9-1077-4EE7-89CF-3418415548BC
+:ROAM_REFS: https://sachachua.com/blog/category/emacs-news/
+:mtime:    20221017112313
+:ctime:    20221017112304
+:END:
+#+title: Emacs News
+
