@@ -47,7 +47,7 @@ eln-cache/
 # org-roam
 README*
 # roam nodes created and not filed yet
-org-roam/2*
+org-roam/*.org
 org-roam/private/
 org-roam/daily/2*
 org-roam/daily/agenda.org
