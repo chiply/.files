@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       575E4080-C8DD-4F63-BC13-01594D0CDD34
+:ROAM_REFS: https://en.wikipedia.org/wiki/General_Data_Protection_Regulation
+:mtime:    20221107132800
+:ctime:    20221107132750
+:END:
+#+title: GDPR
+

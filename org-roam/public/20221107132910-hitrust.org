@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       EEBBA6A3-76ED-44E4-8918-FF22E9AE619E
+:mtime:    20221107133021 20221107132936
+:ctime:    20221107132910
+:END:
+#+title: HITRUST
+Privately held company that offers frameworks to help companies comply with [[id:BBD5EDAB-30DC-4EDC-82CF-F48CB49423EB][HIPAA]] and other regulations
