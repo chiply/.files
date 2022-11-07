@@ -593,7 +593,7 @@ where is was when z-refresh-agenda was called"
     ;; this restores the point to where it was when the function was called
     )
 
-  (defun z-highlight-agenda-links ()
+  (defun z-highlight-agenda ()
     (interactive)
     ;; web link
     (highlight-regexp "\\[\\[https.*?\\]\\]" 'modus-themes-nuanced-blue)
@@ -601,6 +601,11 @@ where is was when z-refresh-agenda was called"
     (highlight-regexp "\\[\\[id.*?\\]\\]" 'modus-themes-nuanced-green)
     ;; file link
     (highlight-regexp "\\[\\[file.*?\\]\\]" 'modus-themes-nuanced-red)
+
+    ;; headers
+    (highlight-regexp "Block" 'modus-themes-nuanced-red)
+    (highlight-regexp "Sync" 'modus-themes-refine-green)
+    (highlight-regexp "Async" 'modus-themes-nuanced-green)
     )
 
 
@@ -657,7 +662,7 @@ where is was when z-refresh-agenda was called"
 
   :hook ((org-agenda-mode . origami-mode)
          (org-agenda-finalize . z-org-super-agenda-origami-fold-default)
-         (org-agenda-finalize . z-highlight-agenda-links)
+         (org-agenda-finalize . z-highlight-agenda)
          )
   )
 
