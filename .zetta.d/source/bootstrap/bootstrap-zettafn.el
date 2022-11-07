@@ -183,7 +183,7 @@ Code:
   (if (not (file-exists-p path))
       (if (string-match-p
            (regexp-quote ".")
-           (nth 0 (split-string path "/")))
+           (nth 0 (last (split-string path "/"))))
           ;; it's a file, so touch
           (progn
             (message (shell-command-to-string (concat "touch " path)))
