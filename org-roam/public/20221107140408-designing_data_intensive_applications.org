@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       C52638D0-4582-4E96-825C-275056FD2084
+:mtime:    20221107140409
+:ctime:    20221107140408
+:END:
+#+title: Designing Data Intensive Applications
+

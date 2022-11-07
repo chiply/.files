@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       33EAF09A-C4A2-47C1-AF02-E8E8AA22B16A
+:mtime:    20221107140457
+:ctime:    20221107140455
+:END:
+#+title: Fundamentals of Software Architecture
+
