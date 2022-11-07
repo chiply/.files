@@ -1,0 +1,44 @@
+:PROPERTIES:
+:ID:       7CE24369-0A09-41C1-A2FF-13B9D3A8BC35
+:mtime:    20221107171435 20221107171327 20221107170551 20221107170116 20221107165329 20221107165202 20221107155601 20221107155220 20221107142615 20221107142504 20221107142301 20221107142002 20221107141917 20221107141804
+:ctime:    20221107141742
+:END:
+#+title: Curriculum
+
+* Theory
+** Software Skills
+*** [[id:0F268828-C10F-4B9B-951F-03F5B2251228][Design Patterns]]
+**** [[id:33A4D263-5E25-4F77-90BA-6BC6C84160F1][python-patterns]]
+
+*** [[id:59879B34-8D17-4A99-BAFB-B38ED9D47D9B][Algorithms]]
+**** [[id:2FF8627E-392D-4FC8-AED6-079BF880F20C][Grind 75]]
+
+** Higher Level Skills
+- hello wor r
+
+
+*** [[id:275BAB65-04E2-4A8C-89BE-31DFD236AB89][System Design]]
+**** [[id:ADB99701-AA2E-4DD4-B6EF-7DF2E7006958][system-design-primer]]
+*** [[id:C52638D0-4582-4E96-825C-275056FD2084][Designing Data Intensive Applications]]
+*** [[id:33EAF09A-C4A2-47C1-AF02-E8E8AA22B16A][Fundamentals of Software Architecture]]
+*** Other
+- Staff Engineering (Bill Larson)
+
+
+#+BEGIN_SRC python :exports both :results output
+  foobar
+
+
+#+END_SRC
+  
+* Technology
+** AWS (certification cource 72)
+
+* Practicums / Personal Projects
+Design to synthesize the above material into projects that are open ended and do not necessarily have deadlines or acceptance criteria/completion criteria.
+
+
+
+
+
+
