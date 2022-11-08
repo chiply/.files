@@ -1,12 +1,17 @@
 :PROPERTIES:
 :ID:       4C7F52E2-54A7-4E70-833D-C15C8556542F
 :ROAM_REFS: https://chriswarrick.com/blog/2018/09/04/python-virtual-environments/
-:mtime:    20221102185827 20221101122615 20221101115036 20221101112619 20221101111836 20221101111639 20221001104421
+:mtime:    20221107145928 20221107143736 20221107143337 20221102185827 20221101122615 20221101115036 20221101112619 20221101111836 20221101111639 20221001104421
 :ctime:    20221001104410
 :END:
 #+title: Python Virtual Environments in Five Minutes
 
 * A block of python code
+:PROPERTIES:
+:ID:       5024BE9C-CC15-4271-B9ED-C21D7B5BF8BC
+:mtime:    20221107145928
+:ctime:    20221001104410
+:END:
 #+BEGIN_SRC python :exports both :results output
   print('some python code')
 #+END_SRC
@@ -16,8 +21,8 @@
 
 
 #+BEGIN_SRC python :exports both :results output
-print('foobar')
-print('baz')
+  print('foobar')
+  print('baz')
 #+END_SRC
 
 #+RESULTS:
