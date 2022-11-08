@@ -363,14 +363,14 @@ Called with a universal prefix arg, show the priority instead of setting it."
                                       :box nil
                                       :weight 'bold
                                       )
-                  (set-face-attribute 'org-level-1 nil :inherit nil :underline nil)
-                  (set-face-attribute 'org-level-2 nil :inherit nil :underline nil)
-                  (set-face-attribute 'org-level-3 nil :inherit nil :underline nil)
-                  (set-face-attribute 'org-level-4 nil :inherit nil :underline nil)
-                  (set-face-attribute 'org-level-5 nil :inherit nil :underline nil)
-                  (set-face-attribute 'org-level-6 nil :inherit nil :underline nil)
-                  (set-face-attribute 'org-level-7 nil :inherit nil :underline nil)
-                  (set-face-attribute 'org-level-8 nil :inherit nil :underline nil)
+                  ;;(set-face-attribute 'org-level-1 nil :inherit nil :underline nil)
+                  ;;(set-face-attribute 'org-level-2 nil :inherit nil :underline nil)
+                  ;;(set-face-attribute 'org-level-3 nil :inherit nil :underline nil)
+                  ;;(set-face-attribute 'org-level-4 nil :inherit nil :underline nil)
+                  ;;(set-face-attribute 'org-level-5 nil :inherit nil :underline nil)
+                  ;;(set-face-attribute 'org-level-6 nil :inherit nil :underline nil)
+                  ;;(set-face-attribute 'org-level-7 nil :inherit nil :underline nil)
+                  ;;(set-face-attribute 'org-level-8 nil :inherit nil :underline nil)
 
                   )
                )
@@ -1168,14 +1168,28 @@ With a prefix ARG, remove start location."
 
 
 
-
-
-
-
-
-
-
-
-
-
 (setq org-pandoc-options-for-markdown '((wrap . none)))
+
+
+
+
+
+
+(use-package org-modern
+  :hook (org-mode . (lambda ()
+                      (org-indent-mode -1)
+                      (org-modern-mode 1)))
+  )
+
+;; not ready for primetime yet
+;; (use-package org-rainbow-tags
+;;   :straight (:host github :repo "KaratasFurkan/org-rainbow-tags")
+;;   :custom
+;;   (org-rainbow-tags-extra-face-attributes
+;;    ;; Default is '(:weight 'bold)
+;;    '(:inverse-video t :box t :weight 'bold))
+;;   :hook
+;;   (org-mode . org-rainbow-tags-mode))
+
+
+

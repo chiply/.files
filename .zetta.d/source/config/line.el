@@ -34,7 +34,10 @@
          (lsp-headerline--build-string)
          (z-yaml-json-info)
          )
-
+        " "
+        (:eval
+         (when (string= major-mode "org-mode") (concat " > " (org-display-outline-path) "/" (org-get-heading)))
+         )
         " "
         (:eval (cond
                 ((or

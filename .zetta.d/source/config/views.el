@@ -298,14 +298,18 @@
    )
   )
 
+(defun z-org-outline-path ()
+    (when (string= major-mode "org-mode") (concat " > " (org-display-outline-path) "/" (org-get-heading)))
+)
+
 ;;;; For tab bar
 (setq tab-bar-format '(z-tab-bar-string
                        zwhitespace
                        zpath
                        zwhitespace
                        lsp-headerline--build-string
-                       zwhitespace
                        z-yaml-json-info
+                       z-org-outline-path
                        ;; everything here on will be aligned on the right
                        tab-bar-format-align-right
                        recursion-indicator--string
@@ -333,11 +337,6 @@
     )
   )
 
-;; can't change the size too much..
 
 
-(add-to-list 'brushup-styles
-             '(progn
-                (set-face-attribute 'tab-bar nil :background "white" :height 1.0)
-                ))
 

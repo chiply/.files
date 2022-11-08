@@ -141,7 +141,8 @@
 
   ;;:brushup
   (add-to-list 'brushup-styles
-               '(progn
+               '
+               (progn
                   (set-face-attribute 'tab-line-tab-current nil
                                       :overline brushup-fg ;; this isn't working
                                       :foreground brushup-fg
@@ -149,7 +150,7 @@
                                       :box nil
                                       :weight 'normal
                                       :inherit nil
-                                      :height 0.7
+                                      :height 1.0
                                       )
                   (set-face-attribute 'tab-line-tab nil
                                       :overline t
@@ -157,14 +158,14 @@
                                       :background brushup-bg-1
                                       :weight 'normal
                                       :box nil
-                                      :height 0.7
+                                      :height 1.0
                                       :inherit nil
                                       )
                   (set-face-attribute 'tab-line-tab-inactive nil
                                       :background brushup-bg-1_0
                                       :foreground brushup-bg-6
                                       :box nil
-                                      :height 0.7
+                                      :height 1.0
                                       :overline nil
                                       :inherit nil
                                       )
@@ -176,7 +177,8 @@
                                       :overline brushup-bg
                                       :box nil
                                       )
-                  ))
+                  )
+               )
 
   
   :general

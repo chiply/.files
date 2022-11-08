@@ -94,9 +94,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73"
-   "de43637da82e6127fd76472ae58682927f25693fcccb16161be12f2331bcc7cc"
-   default)))
+   '("c505ae23385324c21821b24c9cc1d68d8da6f3cfb117eb18826d146b8ec01b15" "4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" "de43637da82e6127fd76472ae58682927f25693fcccb16161be12f2331bcc7cc" default)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
