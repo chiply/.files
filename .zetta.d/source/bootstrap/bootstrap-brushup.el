@@ -106,7 +106,7 @@ seem to require loading after the client starts up"
                               )
 
           (set-face-attribute 'mode-line nil
-                              :height 0.9
+                              :height 1.6
                               :overline nil
                               :box nil
                               ;;:foreground brushup-bg-6
@@ -118,7 +118,7 @@ seem to require loading after the client starts up"
                               )
 
           (set-face-attribute 'mode-line-inactive nil
-                              :height 0.9
+                              :height 1.6
                               :underline nil
                               :overline nil
                               :box nil
@@ -129,7 +129,7 @@ seem to require loading after the client starts up"
                               )
 
           (set-face-attribute 'header-line nil
-                              :height 1.0
+                              :height 1.6
                               :box nil
                               :background brushup-bg
                               :foreground brushup-fg-1
@@ -139,6 +139,7 @@ seem to require loading after the client starts up"
                               )
 
           (set-face-attribute 'tab-bar nil
+                              :height 1.7
                               :background (modus-themes-color 'green-nuanced-bg)
                               :foreground brushup-fg-1
                               :inherit nil
