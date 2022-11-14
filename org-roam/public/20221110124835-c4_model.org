@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       63803F88-69FE-46B1-850A-B6A6E7DE6BD8
+:ROAM_REFS: https://c4model.com/
+:mtime:    20221110124845
+:ctime:    20221110124835
+:END:
+#+title: C4 Model
+

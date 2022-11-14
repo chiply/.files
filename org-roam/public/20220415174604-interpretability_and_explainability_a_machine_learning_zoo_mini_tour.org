@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       A72E97B6-53B9-4DB4-8257-29D79939A8C6
-:ROAM_REFS: cite:marcinkevivcs2020interpretability
-:mtime:    20220415175325
-:ctime:    20220415174604
-:END:
-#+title: Interpretability and explainability: a machine learning zoo mini-tour
-

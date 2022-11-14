@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       8C576339-F13A-4F86-9201-EE0342DE55A5
+:ROAM_REFS: https://pylint.pycqa.org/en/latest/pyreverse.html
+:mtime:    20221110125338
+:ctime:    20221110125333
+:END:
+#+title: pyreverse
+
