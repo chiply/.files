@@ -76,6 +76,16 @@
           ))
       ))
 
+  (defun z-org-open-at-point ()
+    (interactive)
+    (let ((browse-url-browser-function 'browse-url-default-browser))
+      (call-interactively 'org-open-at-point)
+      )
+    )
+
+
+
+
   ;; display
   (add-to-list 'org-emphasis-alist '("*" (:foreground "black" :background "yellow")))
 
@@ -280,6 +290,13 @@
    "C-d" 'delete-window
    "<S-return>" 'org-edit-special
    )
+  (
+   :states '(normal insert)
+   :keymaps '(org-mode-map org-agenda-mode-map)
+   "C-c C-S-o" 'z-org-open-at-point
+   "C-c C-o" 'org-open-at-point
+   )
+
 
   :hook (
          (org-mode . (lambda () (progn
@@ -298,3 +315,14 @@
   )
 
 (provide 'bootstrap-org)
+
+
+
+
+
+
+
+
+
+
+

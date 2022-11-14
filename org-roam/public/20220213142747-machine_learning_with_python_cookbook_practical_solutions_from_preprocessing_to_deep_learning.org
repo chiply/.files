@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       C26B081F-1EE7-4672-8363-0EB770A30557
-:ROAM_REFS: cite:albon2018machine
-:mtime:    20220213142759
-:ctime:    20220213142747
-:END:
-#+title: Machine learning with python cookbook: practical solutions from preprocessing to deep learning
-

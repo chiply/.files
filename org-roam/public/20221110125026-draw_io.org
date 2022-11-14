@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       EF2F9E98-A93B-4316-8DC2-86972ECD57BD
+:mtime:    20221110125027
+:ctime:    20221110125026
+:END:
+#+title: draw.io
+

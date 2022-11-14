@@ -893,6 +893,9 @@ where is was when z-refresh-agenda was called"
 (use-package org-ref
   :demand t
   :config
+  (setq org-ref-insert-cite-function
+      (lambda ()
+	(org-cite-insert nil)))
   (require 'bibtex)
 
   (setq bibtex-completion-bibliography '("~/.files/.lit/bibliography.bib")
@@ -927,23 +930,23 @@ where is was when z-refresh-agenda was called"
    )
   )
 
-(use-package ivy
-  :config
-  :general
-  (
-   :keymaps 'ivy-minibuffer-map
-   "C-j" 'ivy-next-line
-   "C-k" 'ivy-previous-line
-   "M-S-<" 'ivy-beginning-of-buffer
-   "M-S->" 'ivy-end-of-buffer
-   )
-  )
+;; (use-package ivy
+;;   :config
+;;   :general
+;;   (
+;;    :keymaps 'ivy-minibuffer-map
+;;    "C-j" 'ivy-next-line
+;;    "C-k" 'ivy-previous-line
+;;    "M-S-<" 'ivy-beginning-of-buffer
+;;    "M-S->" 'ivy-end-of-buffer
+;;    )
+;;   )
 
-(use-package ivy-bibtex :demand t)
-(require 'org-ref-ivy)
+;;(use-package ivy-bibtex :demand t)
+;;(require 'org-ref-ivy)
 
 (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
-      org-ref-insert-cite-function 'org-ref-cite-insert-ivy
+      ;;org-ref-insert-cite-function 'org-ref-cite-insert-ivy
       org-ref-insert-label-function 'org-ref-insert-label-link
       org-ref-insert-ref-function 'org-ref-insert-ref-link
       org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
@@ -1039,17 +1042,17 @@ With a prefix ARG, remove start location."
 
 (use-package org-pdfview)
 
-(use-package org-roam-bibtex
-  :config
-  (require 'ivy-bibtex)
-  (setq orb-note-actions-interface 'hydra)
-  (org-roam-bibtex-mode)
-  :custom
-  (orb-insert-interface 'ivy-bibtex)
-  )
+;; (use-package org-roam-bibtex
+;;   :config
+;;   (require 'ivy-bibtex)
+;;   (setq orb-note-actions-interface 'hydra)
+;;   (org-roam-bibtex-mode)
+;;   :custom
+;;   (orb-insert-interface 'ivy-bibtex)
+;;   )
 
-(straight-use-package '(consult-bibtex :host github
-                                       :repo "mohkale/consult-bibtex"))
+;; (straight-use-package '(consult-bibtex :host github
+;;                                        :repo "mohkale/consult-bibtex"))
 
 
 

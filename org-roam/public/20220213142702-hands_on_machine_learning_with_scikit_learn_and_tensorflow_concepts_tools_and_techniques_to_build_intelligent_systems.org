@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       0CB59705-FBFE-4BDF-A015-2F0A159D2459
-:ROAM_REFS: cite:gron2017hands-on
-:mtime:    20220213142721
-:ctime:    20220213142702
-:END:
-#+title: Hands-on machine learning with scikit-learn and tensorflow: concepts, tools, and techniques to build intelligent systems
-

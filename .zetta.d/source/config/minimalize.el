@@ -21,6 +21,7 @@
           'face 'focus-focused
           )
          )
+        ;(:eval (parrot-create))
         ))
 
 (dolist (x '((ns-transparent-titlebar . unbound)

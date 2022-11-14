@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       DA8E7AC6-DDC9-4FEA-851C-C1505F99F902
-:ROAM_REFS: cite:mccabe-1976-compl-measur
-:mtime:    20220606100813 20220606100650
-:ctime:    20220606100613
-:END:
-+title: A Complexity Measure
-

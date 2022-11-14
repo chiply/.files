@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       12C871D9-CF6C-44CC-A575-22A6A8F9AC8C
-:ROAM_REFS: cite:wukich-2016-correl-sf
-:mtime:    20220223182121
-:ctime:    20220223182118
-:END:
-#+title: Correlation of sf-36 and sf-12 component scores in patients with diabetic foot disease
-
