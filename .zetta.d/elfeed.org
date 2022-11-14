@@ -1,23 +1,6 @@
 :PROPERTIES:
 :ID:       8376DF0F-1CAB-4037-8EE5-0A6EE88408BD
 :END:
-step 1 all top level nodes DONE
-step 2 hierarchy and tags DONE
-
-- prot
-- karthink
-- goodies
-
-
-- elfeed tube (for youtube transcriptions)
-
-step4 elfeed dashbaord
-
-step3 scoring rules set in this file and to be be tangled, and set code up for this
-
-step5 bring into org roam as a feeds node?
-
-
 
 * elfeed :elfeed:
 ** tweets                                                              :tweets:
@@ -77,7 +60,8 @@ step5 bring into org roam as a feeds node?
 *** [[https://www.pythonpodcast.com/feed/mp3/][python.__init__]]     :python:
 *** [[https://www.themachinelearningpodcast.com/feed/mp3/][machinelearningpodcast]] :datascience:
 *** [[https://softwareengineeringdaily.com/category/podcast/feed/][software daily]]
-
+*** [[http://podcast.nejm.org/nejm_audio_summaries.xml][nejm audio summaries]]
+*** [[http://podcast.nejm.org/nejm_audio_interview.xml][nejm audo interview]]
 ** aws docs                                                           :doc:aws:
 *** [[https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/amazon-ec2-release-notes.rss][AWSEC2]] 
 *** [[https://docs.aws.amazon.com/AmazonECS/latest/developerguide/amazon-ecs-release-notes.rss][AmazonECS]]
@@ -97,9 +81,40 @@ step5 bring into org roam as a feeds node?
 **** [[https://rss.nytimes.com/services/xml/rss/nyt/Science.xml][science]]
 
 ** reddit                                                              :reddit:
-*** [[https://www.reddit.com/r/emacs.rss][r/emacs]]
+*** [[https://www.reddit.com/r/emacs.rss][r/emacs]] :emacs:
 *** [[https://www.reddit.com/r/dataengineering.rss][r/dataengineering]]
+
 ** science                                                            :science:
+
+*** [[https://www.nature.com/nature.rss][nature]]
+
+*** nejm
+**** https://www.nejm.org/trends/viewed/last1Week?viewType=Rss
+**** https://www.nejm.org/trends/cited/recent?viewType=Rss
+**** https://onesearch-rss.nejm.org/api/specialty/rss?context=nejm&specialty=genetics :genomics:
+**** https://onesearch-rss.nejm.org/api/specialty/rss?context=nejm&specialty=surgery
+
+*** arxiv :arxiv:
+- Leaving the feed names since they capture the query string and makes this more self documenting
+- See this post on recommendations around extracting atuhor lists and using atom https://cundy.me/post/elfeed/
+**** http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending
+**** http://export.arxiv.org/api/query?search_query=cat:q-bio.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending
+**** http://export.arxiv.org/api/query?search_query=cat:stat.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending
+**** medarxiv :medarxiv:
+***** https://connect.medrxiv.org/news/feed.php
+The actual medarxiv blog
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=all :general:
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Genetic_and_Genomic_Medicine :genomics:
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Oncology
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Orthopedics
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Pharmacology_and_Therapeutics
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Public_and_Global_Health
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Sexual_and_Reproductive_Health
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Rehabilitation_Medicine_and_Physical_Therapy
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=infectious_diseases
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Economics :datascience:analytics:
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Informatics :datascience:analytics:
+***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Policy
 *** [[https://ncbiinsights.ncbi.nlm.nih.gov/feed/][ncbi]]
 *** [[https://fivethirtyeight.com/science/feed/][fivethirtyeight: science]]
 
@@ -125,6 +140,7 @@ step5 bring into org roam as a feeds node?
 
 ** misc
 
+*** https://dnascience.plos.org/feed/ :genomics:
 *** [[https://karthinks.com/index.xml][karthinks.com]]
 *** [[https://fivethirtyeight.com/life/feed/][fivethirtyeight: life]]
 *** [[https://fivethirtyeight.com/contributors/nate-silver/feed/][fivethirtyeight: nate silver]]
