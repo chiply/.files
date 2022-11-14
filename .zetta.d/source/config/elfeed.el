@@ -3,6 +3,7 @@
 (use-package elfeed
   :init
 
+
   (defun elfeed-tag-selection-as (mytag)
     "Returns a function that tags an elfeed entry or selection as MYTAG"
     (lambda ()
@@ -62,6 +63,11 @@ minibuffer with something like `exit-minibuffer'."
 
 
   :config
+
+  (defun elfeed-search-format-date (date)
+    (format-time-string "%Y-%m-%d %H:%M" (seconds-to-time date)))
+
+
   (setq browse-url-generic-program nil)
   
   (defun elfeed-show-eww-open (&optional use-generic-p)
