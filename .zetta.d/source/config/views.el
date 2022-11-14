@@ -302,6 +302,7 @@
     (when (string= major-mode "org-mode") (concat " > " (org-display-outline-path) "/" (org-get-heading)))
 )
 
+
 ;;;; For tab bar
 (setq tab-bar-format '(z-tab-bar-string
                        zwhitespace

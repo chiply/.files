@@ -1,0 +1,21 @@
+(("title"
+  (:text "OPEN THREAD" :value -1000 :type S)
+  )
+ ("content"
+  (:text "type erasure" :value 500 :type s)
+  )
+ ("title-or-content"
+  (:text "california" :title-value 150 :content-value 100 :type s)
+  )
+ ("feed"
+  (:text "Essays in Idleness" :value 250 :type S :attr t)
+  (:text "Irreal" :value 250 :type S :attr t)
+  (:text "Julia Evans" :value 100 :type s :attr t)
+  (:text "National Weather Service" :value 400 :type S :attr t)
+  (:text "emacs-news – sacha chua" :value 350 :type S :attr t :comment "Essential!")
+  )
+ ("authors"
+   (:text "Jim Geraghty" :value 500 :type s)
+   )
+ (mark -2500)
+ )

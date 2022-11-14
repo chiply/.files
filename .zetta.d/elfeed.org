@@ -1,0 +1,134 @@
+:PROPERTIES:
+:ID:       8376DF0F-1CAB-4037-8EE5-0A6EE88408BD
+:END:
+step 1 all top level nodes DONE
+step 2 hierarchy and tags DONE
+
+- prot
+- karthink
+- goodies
+
+
+- elfeed tube (for youtube transcriptions)
+
+step4 elfeed dashbaord
+
+step3 scoring rules set in this file and to be be tangled, and set code up for this
+
+step5 bring into org roam as a feeds node?
+
+
+
+* elfeed :elfeed:
+** tweets                                                              :tweets:
+*** [[https://rss.app/feeds/4jZWL4flfzgi1oyX.xml][mickey peterson]]      :rssapp:
+*** [[https://rss.app/feeds/zCyaqj9XE4J27bvN.xml][#dataengineering]]     :rssapp:
+** aws blogs                                                         :aws:blog:
+- https://jiripik.com/2021/09/02/list-of-all-amazon-aws-rss-feeds/
+*** https://aws.amazon.com/blogs/architecture/feed/
+*** https://aws.amazon.com/blogs/aws-cost-management/feed/
+*** https://aws.amazon.com/blogs/apn/feed/
+*** https://aws.amazon.com/podcasts/aws-podcast/
+*** https://aws.amazon.com/blogs/awsmarketplace/feed/
+*** https://aws.amazon.com/blogs/aws/feed/
+*** https://aws.amazon.com/blogs/big-data/feed/
+*** https://aws.amazon.com/blogs/business-productivity/feed/
+*** https://aws.amazon.com/blogs/compute/feed/
+*** https://aws.amazon.com/blogs/contact-center/feed/
+*** https://aws.amazon.com/blogs/containers/feed/
+*** https://aws.amazon.com/blogs/database/feed/
+*** https://aws.amazon.com/blogs/desktop-and-application-streaming/feed/
+*** https://aws.amazon.com/blogs/developer/feed/
+*** https://aws.amazon.com/blogs/devops/feed/
+*** https://aws.amazon.com/blogs/enterprise-strategy/feed/
+*** https://aws.amazon.com/blogs/mobile/feed/
+*** https://aws.amazon.com/blogs/gametech/feed/
+*** https://aws.amazon.com/blogs/hpc/feed/
+*** https://aws.amazon.com/blogs/infrastructure-and-automation/feed/
+*** https://aws.amazon.com/blogs/industries/feed/
+*** https://aws.amazon.com/blogs/iot/feed/
+*** https://aws.amazon.com/blogs/machine-learning/feed/
+*** https://aws.amazon.com/blogs/mt/feed/
+*** https://aws.amazon.com/blogs/media/feed/
+*** https://aws.amazon.com/blogs/messaging-and-targeting/feed/
+*** https://aws.amazon.com/blogs/networking-and-content-delivery/feed/
+*** https://aws.amazon.com/blogs/opensource/feed/
+*** https://aws.amazon.com/blogs/publicsector/feed/
+*** https://aws.amazon.com/blogs/quantum-computing/feed/
+*** https://aws.amazon.com/blogs/robotics/feed/
+*** https://aws.amazon.com/blogs/awsforsap/feed/
+*** https://aws.amazon.com/blogs/security/feed/
+*** https://aws.amazon.com/blogs/startups/feed/
+*** https://aws.amazon.com/blogs/storage/feed/
+*** https://aws.amazon.com/blogs/training-and-certification/feed/
+*** https://aws.amazon.com/blogs/modernizing-with-aws/feed/
+*** https://aws.amazon.com/blogs/big-data/feed/
+** youtube                                                            :youtube:
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXA][system crafters]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ][veritasium]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCVhQ2NnY5Rskt6UjCUkJ_DA][arjan codes]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCraiFqWi0qSIxXxXN4IHFBQ][be a better dev]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCd6MoB9NC6uYN2grvUNT-Zg][aws]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCP4bf6IHJJQehibu6ai__cg][fireship]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug][ted]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQp2VLAOlvq142YN3JO3y8w][john kitchin]]
+** podcasts                                                           :podcast:
+*** [[https://www.dataengineeringpodcast.com/feed/mp3/][dataengineeringpodcast]] :dataengineering:
+*** [[https://www.pythonpodcast.com/feed/mp3/][python.__init__]]     :python:
+*** [[https://www.themachinelearningpodcast.com/feed/mp3/][machinelearningpodcast]] :datascience:
+*** [[https://softwareengineeringdaily.com/category/podcast/feed/][software daily]]
+
+** aws docs                                                           :doc:aws:
+*** [[https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/amazon-ec2-release-notes.rss][AWSEC2]] 
+*** [[https://docs.aws.amazon.com/AmazonECS/latest/developerguide/amazon-ecs-release-notes.rss][AmazonECS]]
+*** [[https://docs.aws.amazon.com/AmazonECR/latest/userguide/amazon-ecr-release-notes.rss][AmazonECR]]
+*** [[https://docs.aws.amazon.com/quicksight/latest/user/amazon-quicksight-doc-release-notes.rss][quicksight]]
+*** [[https://docs.aws.amazon.com/athena/latest/ug/amazon-athena-release-notes.rss][athena]]
+*** [[https://docs.aws.amazon.com/streams/latest/dev/aks-release-notes.rss][streams]]
+*** [[https://docs.aws.amazon.com/firehose/latest/dev/akf-release-notes.rss][firehose]]
+** comic                                                                :comic:
+*** [[https://xkcd.com/rss.xml][xkcd]]
+*** [[https://dilbert.com/feed][dilbert]]
+*** [[https://www.dc.com/feed][dc]]
+** news                                                                  :news:
+*** nytimes                                                         :nytimes:
+**** [[https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml][homepage]]
+**** [[https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml][technology]]
+**** [[https://rss.nytimes.com/services/xml/rss/nyt/Science.xml][science]]
+
+** reddit                                                              :reddit:
+*** [[https://www.reddit.com/r/emacs.rss][r/emacs]]
+*** [[https://www.reddit.com/r/dataengineering.rss][r/dataengineering]]
+** science                                                            :science:
+*** [[https://ncbiinsights.ncbi.nlm.nih.gov/feed/][ncbi]]
+*** [[https://fivethirtyeight.com/science/feed/][fivethirtyeight: science]]
+
+** faang blogs
+*** [[https://engineering.fb.com/feed/][facebook engineering blog]]
+*** [[https://www.precisely.com/feed][precicely blog]]
+*** [[https://engineering.linkedin.com/blog.rss.html/feed][linkedin engineering blog]]
+*** [[https://www.databricks.com/feed][databricks blog]]
+*** [[https://netflixtechblog.com/feed][netflix technical blog]]
+** emacs                                                                :emacs:
+*** [[https://hnrss.org/newest?q=emacs][hn: emacs]]
+*** [[https://kitchingroup.cheme.cmu.edu/blog/feed/index.xml][kitchin group]] :science:
+** [[https://protesilaos.com/codelog.xml][prots blog]]
+** [[https://planet.emacslife.com/atom.xml][nullprogram]]
+** [[https://planet.emacslife.com/atom.xml][planet emacslife]]
+** datascience                                                    :datascience:
+*** [[https://www.kdnuggets.com/feed][kdnuggets]]
+** data engineering                                           :dataengineering:
+*** [[https://towardsdatascience.com/feed/tagged/data-engineering][towards data science: dataengineering]]
+** finance                                                            :finance:
+*** [[https://fortune.com/feed/fortune-feeds/?id=3230629][fortune]]
+*** [[https://fivethirtyeight.com/economics/feed/][fivethirtyeight: economics]]
+
+** misc
+
+*** [[https://karthinks.com/index.xml][karthinks.com]]
+*** [[https://fivethirtyeight.com/life/feed/][fivethirtyeight: life]]
+*** [[https://fivethirtyeight.com/contributors/nate-silver/feed/][fivethirtyeight: nate silver]]
+*** [[https://hnrss.org/frontpage][hn: frontpage]]
+*** [[https://realpython.com/atom.xml][real python]]             :python:edu:
+*** [[https://rss.app/feeds/QzriqACyiEobEdLw.xml][google technology]] :rssapp:
+*** [[https://rss.app/feeds/OYDPQ8NQR3NOVLJ1.xml][gartner]]

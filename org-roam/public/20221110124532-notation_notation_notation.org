@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       172BBAE7-1796-4DEA-B86A-F27F9A7B5EE6
+:ROAM_REFS: https://c4model.com/review/
+:mtime:    20221110124910 20221110124556
+:ctime:    20221110124532
+:END:
+#+title: Notation, Notation, Notation
+A software architecture diagram review checklist
+Checklist for when building any diagram.  From the people behind [[id:63803F88-69FE-46B1-850A-B6A6E7DE6BD8][C4 Model]].
+

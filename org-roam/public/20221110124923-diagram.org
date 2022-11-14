@@ -1,0 +1,52 @@
+:PROPERTIES:
+:ID:       6477CEFF-84FD-48DC-9470-84354CADA38C
+:mtime:    20221110131810 20221110131729 20221110131638 20221110130957 20221110130823 20221110130742 20221110125837 20221110125754 20221110125648 20221110125438 20221110125317 20221110125238 20221110125207 20221110125041
+:ctime:    20221110124923
+:END:
+#+title: diagramming
+This is a node to keep track of general diagramming strategies and methodologies
+
+There are tools like [[id:EF2F9E98-A93B-4316-8DC2-86972ECD57BD][draw.io]] which make by hand drawings easy, but do not take advantage of automation.  This node is mostly concerned with points in the diagramming workflow that can be automated, as well as what shoudl and should not be automated.
+
+* Methodology
+:PROPERTIES:
+:ID:       100C7C9E-1CE9-4512-B5B4-42C183A02D50
+:END:
+- [[id:63803F88-69FE-46B1-850A-B6A6E7DE6BD8][C4 Model]] mainly in the a priori setting
+
+* a priori
+** Freeform
+:PROPERTIES:
+:mtime:    20221110130957
+:ctime:    20221110130957
+:END:
+- [[id:EF2F9E98-A93B-4316-8DC2-86972ECD57BD][draw.io]]
+- lucidchart
+- miro
+
+** Diagrams as code
+:PROPERTIES:
+:ID:       1F6C98B8-D786-4D11-8678-55F4E5901087
+:mtime:    20221110131638 20221110130742 20221110125837 20221110125754
+:ctime:    20221110124923
+:END:
+- [[id:DA683F71-EB91-4748-A13A-6D7ED91DAF58][mermaid]] (markdown)
+- [[id:35CBC978-AF9B-491D-A4D0-FE728BA540A3][diagrams]](python)
+
+* a posteriori
+** Code
+:PROPERTIES:
+:ID:       E7ADA7C4-20DA-4D4D-9C92-FF6E70388FFF
+:mtime:    20221110125317 20221110125238
+:ctime:    20221110124923
+:END:
+- call graph
+  - [[id:01DC6234-3D50-423E-8CAF-78B7BD54C785][code2flow]]
+- class diagram
+  - [[id:8C576339-F13A-4F86-9201-EE0342DE55A5][pyreverse]]
+
+** Infrastructure
+- Terraform
+
+
+
