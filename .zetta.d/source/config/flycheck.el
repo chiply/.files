@@ -7,11 +7,10 @@
   (add-to-list 'flycheck-checkers 'markdown-aspell-dynamic)
 
   (flycheck-aspell-define-checker "org"
-                                  "Org" ("--add-filter" "url")
-                                  (org-mode))
+    "Org" ("--add-filter" "url")
+    (org-mode))
 
   (add-to-list 'flycheck-checkers 'org-aspell-dynamic)
-
   )
 
 
@@ -26,7 +25,8 @@
               (message) line-end))
     :modes (text-mode markdown-mode gfm-mode org-mode))
 
-  ;; NOTE: 10 seems to be the minimum width before the filter symbol causes issues with overlap
+  ;; NOTE: 10 seems to be the minimum width before the filter symbol
+  ;; causes issues with overlap
   (setq flycheck-error-list-format
         [("File" 20)
          ("Line" 10 flycheck-error-list-entry-<)
@@ -42,7 +42,6 @@
   ;; this is necessary!  eg run proselint after org-aspell-dynamic
   ;; from here https://github.com/flycheck/flycheck/issues/186
   (flycheck-add-next-checker 'org-aspell-dynamic 'proselint)
-
   
   :brushup
   (add-to-list 'brushup-styles
