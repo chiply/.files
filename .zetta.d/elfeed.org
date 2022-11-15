@@ -55,6 +55,7 @@
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCP4bf6IHJJQehibu6ai__cg][fireship]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug][ted]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQp2VLAOlvq142YN3JO3y8w][john kitchin]]
+*** [[https://www.youtube.com/channel/UCfLnv9X8jyHTe6gJ4hVBo9Q/videos][dagster]]
 ** podcasts                                                           :podcast:
 *** [[https://www.dataengineeringpodcast.com/feed/mp3/][dataengineeringpodcast]] :dataengineering:
 *** [[https://www.pythonpodcast.com/feed/mp3/][python.__init__]]     :python:
@@ -134,6 +135,7 @@ The actual medarxiv blog
 *** [[https://www.kdnuggets.com/feed][kdnuggets]]
 ** data engineering                                           :dataengineering:
 *** [[https://towardsdatascience.com/feed/tagged/data-engineering][towards data science: dataengineering]]
+*** https://humansofdata.atlan.com/feed/
 ** finance                                                            :finance:
 *** [[https://fortune.com/feed/fortune-feeds/?id=3230629][fortune]]
 *** [[https://fivethirtyeight.com/economics/feed/][fivethirtyeight: economics]]

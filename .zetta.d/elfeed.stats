@@ -1,4 +1,4 @@
 ;;; Elfeed score rule stats file DO NOT EDIT       -*- lisp -*-
 (:version 1 :stats #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data
                                  (#s(elfeed-score-title-or-content-rule "california" 150 100 s nil nil nil)
-                                    #s(elfeed-score-rule-stats 113 1668442152.986617))))
+                                    #s(elfeed-score-rule-stats 120 1668452895.67506))))
