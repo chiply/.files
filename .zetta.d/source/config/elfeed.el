@@ -115,6 +115,8 @@ minibuffer with something like `exit-minibuffer'."
    "l" (elfeed-tag-selection-as 'readlater)
    "d" (elfeed-tag-selection-as 'junk)
    "B" 'elfeed-search-eww-open
+   "r" 'elfeed-search-untag-all-unread
+   "R" 'elfeed-search-tag-all-unread
    )
   )
 
