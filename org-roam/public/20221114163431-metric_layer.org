@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       E375B861-9868-474B-960D-9E23078F2494
+:mtime:    20221114175844 20221114163751 20221114163538 20221114163444
+:ctime:    20221114163431
+:END:
+#+title: Metric Layer
+* https://blog.transform.co/data-talks/the-metric-layer-why-you-need-it-examples-and-how-it-fits-into-your-modern-data-stack/#:~:text=A%20metric%20layer%20is%20a,like%20downstream%20business%20intelligence%20tools.
+:PROPERTIES:
+:ID:       4BCAAD5C-81E3-4DC0-9710-0D0A2E80AD2C
+:mtime:    20221114175844
+:ctime:    20221114163431
+:END:
+
+"A metric layer is a centralized repository for key business metric. This “layer” sits between an organization’s data storage and compute layer and downstream tools where metric logic lives—like downstream business intelligence tools."
+
+[[https://blog.transform.co/content/images/2022/04/gEtGmJO.jpeg][with and without the metric layer]]

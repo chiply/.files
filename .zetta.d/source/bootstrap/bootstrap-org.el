@@ -28,6 +28,7 @@
                              ("emacs-lisp" . emacs-lisp) ("shell" . sh) ("sqlite" . sql)
                              ("html" . web) ("js" . js2) ("jsx" . rjsx)
                              )
+        org-table-shrunk-column-indicator "|"
         )
 
 
@@ -289,6 +290,8 @@
    :keymaps '(org-mode-map)
    "C-d" 'delete-window
    "<S-return>" 'org-edit-special
+   "C-+" 'org-table-expand
+   "C-_" 'org-table-shrink
    )
   (
    :states '(normal insert)
@@ -297,8 +300,11 @@
    "C-c C-o" 'org-open-at-point
    )
 
+  
+
 
   :hook (
+         (org-ctrl-c-ctrl-c-final . org-table-shrink)
          (org-mode . (lambda () (progn
                                   (auto-fill-mode -1)
                                   (visual-line-mode t) 

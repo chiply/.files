@@ -131,11 +131,12 @@ The actual medarxiv blog
 ** [[https://protesilaos.com/codelog.xml][prots blog]]
 ** [[https://planet.emacslife.com/atom.xml][nullprogram]]
 ** [[https://planet.emacslife.com/atom.xml][planet emacslife]]
-** datascience                                                    :datascience:
+** data science                                                  :datascience:
 *** [[https://www.kdnuggets.com/feed][kdnuggets]]
 ** data engineering                                           :dataengineering:
 *** [[https://towardsdatascience.com/feed/tagged/data-engineering][towards data science: dataengineering]]
 *** https://humansofdata.atlan.com/feed/
+*** [[https://blog.transform.co/data-talks/rss/][Transform Metrics Blog]]
 ** finance                                                            :finance:
 *** [[https://fortune.com/feed/fortune-feeds/?id=3230629][fortune]]
 *** [[https://fivethirtyeight.com/economics/feed/][fivethirtyeight: economics]]

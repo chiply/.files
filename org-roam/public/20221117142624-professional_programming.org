@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       C4061609-1EA1-4CCE-A0C5-17C7BB164B51
+:mtime:    20221117142630
+:ctime:    20221117142624
+:END:
+#+title: professional-programming
+https://github.com/charlax/professional-programming
