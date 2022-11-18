@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       B93DEE6C-AC97-48FE-8C65-09A4CDBDA6CE
+:mtime:    20221115110038
+:ctime:    20221115110036
+:END:
+#+title: spike
+

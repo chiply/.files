@@ -1,8 +1,16 @@
 :PROPERTIES:
 :ID:       63803F88-69FE-46B1-850A-B6A6E7DE6BD8
 :ROAM_REFS: https://c4model.com/
-:mtime:    20221110124845
+:mtime:    20221116081403 20221116081327 20221116081255 20221116081221 20221110124845
 :ctime:    20221110124835
 :END:
 #+title: C4 Model
+
+It is important to not conflate the idea of the C4 model which is a standard model for diagramming software systems with the notion of a script-based diagramming such as using [[id:35CBC978-AF9B-491D-A4D0-FE728BA540A3][diagrams]] or graphviz or some other language that compiles to graph visualizations.
+
+Two ideas are independent but can coexist. In fact the author of the C4 model recommends that users do not use freeform illustration tools like lucid, draw.io: Vizio, Miro, PowerPoint, google drawings, etc.…
+
+Tools like diagrams support C4 natively. At least starting out this is my personal choice for implementing for illustrations.
+
+
 

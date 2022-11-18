@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       11F546DC-3A8E-4A76-8129-8F9574A5D201
+:mtime:    20221111161242
+:ctime:    20221111161242
+:ROAM_REFS: @Pan2022Chondroitinpolymerizingfactor
+:END:
+#+title: Pan, Ouyang, Zhang, He, Yang, Zhang :: Chondroitin polymerizing factor predicts a poor prognosis and promotes breast cancer progression via the upstream TGF-β1/SMAD3 and JNK axis activation.
+
