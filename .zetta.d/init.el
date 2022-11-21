@@ -76,7 +76,7 @@
 ;; loading some packages here until I figure out the issues
 (defun z-tmp-load-org-and-snip ()
   (interactive)
-  (let ((user-files '("snippets.el" "org.el" "citar-org-roam.el" "elfeed-org.el")))
+  (let ((user-files '("snippets.el" "org.el" "citar-org-roam.el" "elfeed-org.el" "ob-mermaid.el")))
     (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
     )
   )
