@@ -58,15 +58,15 @@
    "helpful.el" "elisp-mode.el" "narrow.el" "ov.el" "vimish-fold.el"
    "editing.el" "smartparens.el" "hungry-delete.el" "prose.el"
    "buffer.el" "ibuffer.el" "bufler.el" "all-the-icons-ibuffer.el"
-   "bookmark.el"  "bookmark+.el" "bookmark-in-project.el" "dogears.el"
+   "bookmark.el" "bookmark+.el" "bookmark-in-project.el" "dogears.el"
    "theme.el" "detached.el" "yaml-mode.el" "yaml-path.el" "yaml.el"
-   "yaml-pro.el" "json-snatcher.el" "jsonian.el" "eww.el" 
+   "yaml-pro.el" "json-snatcher.el" "jsonian.el" "eww.el"
    "helm-themes.el" "text-mode.el" "jmespath.el" "highlight-symbol.el"
    "terraform.el" "ein.el" "adaptive-wrap.el" "flycheck.el"
    "flycheck-indicator.el" "flycheck-pycheckers.el"
    "magit-diff-flycheck.el" "flycheck-projectile.el" "hercules.el"
    "evil-fringe-mark.el" "modern-fringes.el" "rainbow-mode.el"
-   "cleanup.el")
+   "eaf.el" "browse-url.el" "cleanup.el")
  )
 
 ;; load user-files and provate lisp code

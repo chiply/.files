@@ -1,10 +1,12 @@
 :PROPERTIES:
 :ID:       EC35C8AC-972E-4CE1-BF67-5E23ECA24EC3
-:mtime:    20220618113228
+:mtime:    20221122085226 20220618113228
 :ctime:    20220618113216
 :END:
 #+title: eww
 [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] web wowser.
+
+[[https://www.reddit.com/r/emacs/comments/ywexhw/eww_is_awesome_what_do_you_use_it_for/][A really fantastic post explaing eww's benefits]]
 * Websites that don't work
 * Reasons why certain websites won't work
 

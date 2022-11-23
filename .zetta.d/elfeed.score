@@ -1,18 +1,23 @@
 (("title"
-  (:text "OPEN THREAD" :value -1000 :type S)
+  (:text "emacs news" :value 10 :type s :comment "FOOBARR")
+  (:text "world cup" :value 100 :type s :comment "BOOT IT")
   )
  ("content"
-  (:text "type erasure" :value 500 :type s)
+  (:text "emacs" :value 5 :type s)
+  (:text "python" :value 5 :type s)
+  (:text "data engineer" :value 5 :type s)
+  (:text "data science" :value 5 :type s)
   )
  ("title-or-content"
-  (:text "california" :title-value 150 :content-value 100 :type s)
+  (:text "boston" :title-value 150 :content-value 100 :type s)
+  (:text "massachusetts" :title-value 150 :content-value 100 :type s)
   )
  ("feed"
-  (:text "Essays in Idleness" :value 250 :type S :attr t)
-  (:text "Irreal" :value 250 :type S :attr t)
-  (:text "Julia Evans" :value 100 :type s :attr t)
-  (:text "National Weather Service" :value 400 :type S :attr t)
-  (:text "emacs-news – sacha chua" :value 350 :type S :attr t :comment "Essential!")
+  (:text "Amazon QuickSight Documentation Release Notes" :value 15 :type S :attr t)
+  (:text "AmazonECR" :value 250 :type S :attr t)
+  )
+ ("tag"
+  (:tags (t . release_notes) :value 15)
   )
  ("authors"
    (:text "Jim Geraghty" :value 500 :type s)
