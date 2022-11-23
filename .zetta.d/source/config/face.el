@@ -1,15 +1,17 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized)) 
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
 
+
 (defun my/set-transparency (frame)
   (set-frame-parameter frame 'alpha 100))
 
+;; so new frames will not be transparent -- helps distinguish
 (add-hook 'after-make-frame-functions 'my/set-transparency)
-(set-frame-parameter (selected-frame) 'alpha 100)
 
 (defun transparency (value)
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
+(transparency 93)
 
 (defhydra+ hydra-window ()
   ("T" transparency :exit t)
