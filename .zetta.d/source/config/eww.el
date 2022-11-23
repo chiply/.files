@@ -4,6 +4,6 @@
   :config
   (setq eww-auto-rename-buffer 'title)
   (setq eww-bookmarks-directory (expand-file-name "data/eww" user-emacs-directory))
-  (setq browse-url-browser-function 'eww-browse-url)
   )
+
 

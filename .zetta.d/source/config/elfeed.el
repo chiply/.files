@@ -83,8 +83,6 @@ minibuffer with something like `exit-minibuffer'."
       (elfeed-search-browse-url use-generic-p)))
 
   ;; doesn't really work
-  (setq browse-url-handlers
-        '(("https:\\/\\/www\\.youtu\\.*be." . browse-url-mpv)))
 
   (defun browse-url-mpv (url &optional single)
     ;; LEFT OFF - replace this function? use vterm, async has problems running mpv
