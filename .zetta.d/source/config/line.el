@@ -1,25 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
 
-;;; LEFT OFF can't get alignement to work, needs more testing (this
-;;; would be for functions in line-utils)... Can still proceed with
-;;; everything else.  Ultimately, alignment may be a nice-to-have, I
-;;; can't identify any immediate need for it outside of aesthetics
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; default
-;; here we set the 'default' line-format.  And apply it as either a
-;; mode-line or header-line
-
-
-
-;; 
 (setq default-line-align-left-devel
       '(
-        ;;(:eval (projectile-project-name))
-        ;;(:eval vc-mode)
-        ;; if in tabulated list mode, which obfuscates header -- a
-        ;; better implementtation would be able to simple place the
-        ;; headerline contents here instead.... wont weat this for now
         (:eval (when (or
                       (eq major-mode 'docker-image-mode)
                       (eq major-mode 'docker-container-mode)
@@ -55,7 +38,6 @@
 (setq default-line-align-left
       '(
         " "
-        ;;(:eval (yaml-path/path))
         (:eval (propertize
                 (window-parameter (selected-window) 'ace-window-path)
                 'face 'focus-focused))
@@ -111,7 +93,6 @@
 (setq-default mode-line-format (z-get-line-format default-line-align-left "" ""))
 (setq anzu-cons-mode-line-p nil)
 (setq-default header-line-format (z-get-line-format default-line-align-left-devel "" ""))
-;; (setq-default mode-line-format nil)
 
 
 
@@ -138,7 +119,7 @@
     )
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; treemacs
+;; for apps that strangely don't take the defaults
 (add-hook 'treemacs-mode-hook
           '(lambda ()
              (setq mode-line-format
@@ -160,4 +141,13 @@
              )
           )
 
+
+
+(add-hook 'eaf-mode-hook
+          '(lambda ()
+             (setq mode-line-format
+                   (z-get-line-format default-line-align-left "" "")
+                   )
+             )
+          )
 
