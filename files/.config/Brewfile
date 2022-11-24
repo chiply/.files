@@ -76,7 +76,7 @@ brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-imagemagick", "with-nat
 brew "isacikgoz/taps/tldr"
 brew "sebglazebrook/aliases/aliases"
 brew "xo/xo/usql"
-brew "mmdc"
+brew "mermaid-cli"
 cask "mactex"
 cask "rectangle"
 cask "visual-studio-code"
