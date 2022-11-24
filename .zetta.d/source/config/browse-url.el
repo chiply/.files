@@ -6,6 +6,10 @@
    browse-url-handlers
    '(
      ("https:\\/\\/www\\.youtu\\.*be." . browse-url-mpv)
-     ("." . eaf-open-browser)
+     ("github.com" . eaf-open-browser)
+     ("." . eww-browse-url)
      ))
   )
+
+
+(string-match "https://github.com" "https://github.com/skeeto/elfeed")

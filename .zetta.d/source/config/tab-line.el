@@ -26,6 +26,7 @@
          "magit-status-mode"
          "helpful-mode"
          "vterm-mode"
+         "eaf-mode"
          ))
       (seq-sort-by
        #'buffer-name #'string<
@@ -138,11 +139,11 @@
 
 
 
+  (global-tab-line-mode)
 
   ;;:brushup
   (add-to-list 'brushup-styles
-               '
-               (progn
+               '(progn
                   (set-face-attribute 'tab-line-tab-current nil
                                       :overline brushup-fg ;; this isn't working
                                       :foreground brushup-fg
@@ -183,17 +184,17 @@
   
   :general
   (
-   :states '(normal insert visual)
-   :keymaps '(
-              vterm-mode-map shell-mode-map sh-mode-map help-mode-map
-              helpful-mode-map dired-mode-map python-mode-map
-              emacs-lisp-mode-map sql-mode-map yaml-mode-map
-              org-mode-map csv-mode-map pubmed-mode-map
-              lisp-interaction-mode-map text-mode-map grep-mode-map
-              occur-mode-map json-mode-map jsonian-mode-map eww-mode-map
-              embark-collect-mode-map dockerfile-mode-map docker-compose-mode-map
-              docker-image-mode-map docker-container-mode-map
-              )
+   :keymaps 'override
+   ;;:keymaps '(
+              ;;vterm-mode-map shell-mode-map sh-mode-map help-mode-map
+              ;;helpful-mode-map dired-mode-map python-mode-map
+              ;;emacs-lisp-mode-map sql-mode-map yaml-mode-map
+              ;;org-mode-map csv-mode-map pubmed-mode-map
+              ;;lisp-interaction-mode-map text-mode-map grep-mode-map
+              ;;occur-mode-map json-mode-map jsonian-mode-map eww-mode-map
+              ;;embark-collect-mode-map dockerfile-mode-map docker-compose-mode-map
+              ;;docker-image-mode-map docker-container-mode-map eaf-mode-map
+              ;;)
    "C-<tab>" 'tab-line-switch-to-next-tab
    "C-S-<tab>" 'tab-line-switch-to-prev-tab
    ;; works in modeline version
@@ -206,7 +207,6 @@
    "s-7" '(lambda () (interactive) (switch-to-buffer (nth 6 (z-project-mode-buffers))))
    "s-8" '(lambda () (interactive) (switch-to-buffer (nth 7 (z-project-mode-buffers))))
    "s-9" '(lambda () (interactive) (switch-to-buffer (nth 8 (z-project-mode-buffers))))
-
    )
   (
    :keymaps 'override
@@ -214,15 +214,17 @@
    "s-w" 'z-tab-line-close-tab
    )
 
-  :hook (((
-           helpful-mode vterm-mode shell-mode help-mode dired-mode
-           python-mode emacs-lisp-mode sql-mode magit-status-mode
-           org-mode detached-log-mode detached-compilation-mode detached-tail-mode special-mode text-mode
-           fundamental-mode messages-buffer-mode grep-mode
-           messages-buffer-mode info-mode occur-mode prog-mode diff-mode
-           bookmark-bmenu-mode flycheck-error-list-mode
-           )
-          . tab-line-mode)
+  :hook (
+         ;;((
+           ;;prog-mode
+           ;;;;helpful-mode vterm-mode shell-mode help-mode dired-mode
+           ;;;;python-mode emacs-lisp-mode sql-mode magit-status-mode
+           ;;;;org-mode detached-log-mode detached-compilation-mode detached-tail-mode special-mode text-mode
+           ;;;;fundamental-mode messages-buffer-mode grep-mode
+           ;;;;messages-buffer-mode info-mode occur-mode prog-mode diff-mode
+           ;;;;bookmark-bmenu-mode flycheck-error-list-mode eaf-mode
+           ;;)
+          ;;. tab-line-mode)
          (use-package--hydra--post-config . z-brushup)
          )
   )
