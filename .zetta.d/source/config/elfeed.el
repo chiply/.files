@@ -125,6 +125,16 @@ minibuffer with something like `exit-minibuffer'."
     (elfeed-score-enable)
     (define-key elfeed-search-mode-map "=" elfeed-score-map))
   (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
+
+  :display
+  (z-side "^\\*elfeed-score-explanations*" 'bottom)
+
+  :general
+  (
+   :states '(normal)
+   :keymaps '(elfeed-search-mode-map)
+   "x" 'elfeed-score-explain
+   )
   )
 
 
@@ -142,3 +152,184 @@ minibuffer with something like `exit-minibuffer'."
   )
 
 
+
+(use-package elfeed-summary
+  :config
+  (setq
+   elfeed-summary-settings
+   '(
+     (group
+      (:title . "All")
+      (:elements
+       (search (:filter . "@12-months-ago") (:title . "All"))
+       )
+      (:hide nil))
+
+     (group
+      (:title . "Reading List")
+      (:elements
+       (search (:filter . "@12-months-ago +readlater") (:title . "All"))
+       (query . (and readlater))
+       )
+      (:hide nil))
+
+     ;; News
+     (group
+      (:title . "News")
+      (:elements
+       (search (:filter . "@12-months-ago +news") (:title . "All"))
+       (query . (and news))
+       )
+      (:hide nil))
+
+     ;; Tweets
+     (group
+      (:title . "Tweets")
+      (:elements
+       (search (:filter . "@12-months-ago +tweets") (:title . "All"))
+       (query . (and tweets))
+       )
+      (:hide nil))
+
+     ;; Reddit
+     (group
+      (:title . "Reddit")
+      (:elements
+       (search (:filter . "@12-months-ago +reddit") (:title . "All"))
+       (query . (and reddit))
+       )
+      (:hide nil))
+     
+
+
+     ;; Podcasts
+     (group
+      (:title . "podcasts")
+      (:elements
+       (search (:filter . "@12-months-ago +podcast") (:title . "All"))
+       (query . (and podcast))
+       )
+      (:hide nil))
+
+
+     ;; Youtube
+     (group
+      (:title . "Youtube")
+      (:elements
+       (search (:filter . "@12-months-ago +youtube") (:title . "All"))
+       (group (:title . "Industry") (:elements (query . (and youtube industry))) (:hide nil))
+       (group (:title . "Tech") (:elements (query . (and youtube technology))) (:hide nil))
+       (group (:title . "Math") (:elements (query . (and youtube math))) (:hide nil))
+       (group (:title . "Science") (:elements (query . (and youtube science))) (:hide nil))
+       )
+      (:hide nil))
+
+     ;; release notes
+     (group
+      (:title . "AWS Docs")
+      (:elements
+       (search (:filter . "@12-months-ago +release_notes") (:title . "All"))
+       (query . (and release_notes))
+       )
+      (:hide nil))
+
+     ;; AWS Blogs
+     (group
+      (:title . "AWS Blogs")
+      (:elements
+       (search (:filter . "@12-months-ago +aws +blog") (:title . "All"))
+       (query . (and aws blog))
+       )
+      (:hide nil))
+
+     ;; Dataengineering
+     (group
+      (:title . "dataengineering")
+      (:elements
+       (search (:filter . "@12-months-ago +dataengineering") (:title . "All"))
+       (query . (and dataengineering))
+       )
+      (:hide nil))
+
+     ;; Dagster
+     (group
+      (:title . "dagster")
+      (:elements
+       (search (:filter . "@12-months-ago +dagster") (:title . "All"))
+       (query . (and dagster))
+       )
+      (:hide nil))
+
+     ;; python
+     (group
+      (:title . "python")
+      (:elements
+       (search (:filter . "@12-months-ago +python") (:title . "All"))
+       (query . (and python))
+       )
+      (:hide nil))
+
+     ;; faang_blog
+     (group
+      (:title . "faang_blog")
+      (:elements
+       (search (:filter . "@12-months-ago +faang_blog") (:title . "All"))
+       (query . (and faang_blog))
+       )
+      (:hide nil))
+
+     ;; Emacs
+     (group
+      (:title . "Emacs")
+      (:elements
+       (search (:filter . "@12-months-ago +emacs") (:title . "All tagged"))
+       (search (:filter . "@12-months-ago emacs") (:title . "All mentions"))
+       (query . (and emacs))
+       )
+      (:hide nil))
+     
+     ;; Medrxiv
+     (group
+      (:title . "medrxiv")
+      (:elements
+       (search (:filter . "@12-months-ago +medrxiv") (:title . "All"))
+       (query . (and medrxiv))
+       )
+      (:hide nil))
+
+     ;; arxiv
+     (group
+      (:title . "arxiv")
+      (:elements
+       (search (:filter . "@12-months-ago +arxiv") (:title . "All"))
+       (query . (and arxiv))
+       )
+      (:hide nil))
+
+     ;; Datascience
+     (group
+      (:title . "datascience")
+      (:elements
+       (search (:filter . "@12-months-ago +datascience") (:title . "All"))
+       (query . (and datascience))
+       )
+      (:hide nil))
+
+
+     ;; Comics
+     (group
+      (:title . "Funnies")
+      (:elements
+       (search (:filter . "@12-months-ago +comic") (:title . "All"))
+       (search (:filter . "@12-months-ago +comic +dilbert") (:title . "Dilbert"))
+       (search (:filter . "@12-months-ago +comic +xkcd") (:title . "xkcd"))
+       )
+      (:hide nil))
+
+     ;; Ungrouped
+     (group
+      (:title . "Ungrouped")
+      (:elements :misc)
+      (:hide t))
+
+     )))
