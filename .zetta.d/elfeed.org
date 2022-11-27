@@ -47,22 +47,29 @@
 *** https://aws.amazon.com/blogs/modernizing-with-aws/feed/
 *** https://aws.amazon.com/blogs/big-data/feed/
 ** youtube                                                            :youtube:
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A][Numberphile]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww][Lex Clips]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCtESv1e7ntJaLJYKIO1FoYw][Periodic Videos]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA][Computerphile]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw][3Blue1Brown]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfzlCWGWYyIQ0aLC5w48gBQ][sentdex]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQp2VLAOlvq142YN3JO3y8w][John Kitchin Youtube]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQB][system crafters]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXAQ][veritasium]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCVhQ2NnY5Rskt6UjCUkJ_DA][arjan codes]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCraiFqWi0qSIxXxXN4IHFBQ][be a better dev]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCd6MoB9NC6uYN2grvUNT-Zg][aws]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCP4bf6IHJJQehibu6ai__cg][fireship]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug][ted]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQp2VLAOlvq142YN3JO3y8w][john kitchin]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfLnv9X8jyHTe6gJ4hVBo9Q][dagster]]
+
+*** tech :technology:
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww][Lex Clips]]
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA][Computerphile]]
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJetJ7nDNLlEzDLXv7KIo0w][Gavin Freeborn]]
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCP4bf6IHJJQehibu6ai__cg][fireship]]
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCraiFqWi0qSIxXxXN4IHFBQ][be a better dev]]
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCVhQ2NnY5Rskt6UjCUkJ_DA][arjan codes]]
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQB][system crafters]]
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQp2VLAOlvq142YN3JO3y8w][John Kitchin Youtube]]
+*** science                                                             :science:
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCtESv1e7ntJaLJYKIO1FoYw][Periodic Videos]]
+*** industry :industry:
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfLnv9X8jyHTe6gJ4hVBo9Q][dagster]] :dagster:
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCd6MoB9NC6uYN2grvUNT-Zg][aws]]
+
+*** math and datascience                                                 :math:
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A][Numberphile]] 
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw][3Blue1Brown]]
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfzlCWGWYyIQ0aLC5w48gBQ][sentdex]]
+*** misc
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug][ted]]
+
 ** podcasts                                                           :podcast:
 *** [[https://www.dataengineeringpodcast.com/feed/mp3/][dataengineeringpodcast]] :dataengineering:
 *** [[https://www.pythonpodcast.com/feed/mp3/][python.__init__]]     :python:
@@ -79,8 +86,8 @@
 *** [[https://docs.aws.amazon.com/streams/latest/dev/aks-release-notes.rss][streams]]
 *** [[https://docs.aws.amazon.com/firehose/latest/dev/akf-release-notes.rss][firehose]]
 ** comic                                                                :comic:
-*** [[https://xkcd.com/rss.xml][xkcd]]
-*** [[https://dilbert.com/feed][dilbert]]
+*** [[https://xkcd.com/rss.xml][xkcd]] :xkcd:
+*** [[https://dilbert.com/feed][dilbert]] :dilbert:
 *** [[https://www.dc.com/feed][dc]]
 ** news                                                                  :news:
 *** nytimes                                                         :nytimes:
@@ -108,25 +115,25 @@
 **** http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending
 **** http://export.arxiv.org/api/query?search_query=cat:q-bio.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending
 **** http://export.arxiv.org/api/query?search_query=cat:stat.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending
-**** medarxiv :medarxiv:
-***** https://connect.medrxiv.org/news/feed.php
-The actual medarxiv blog
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=all :general:
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Genetic_and_Genomic_Medicine :genomics:
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Oncology
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Orthopedics
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Pharmacology_and_Therapeutics
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Public_and_Global_Health
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Sexual_and_Reproductive_Health
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Rehabilitation_Medicine_and_Physical_Therapy
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=infectious_diseases
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Economics :datascience:analytics:
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Informatics :datascience:analytics:
-***** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Policy
+*** medrxiv                                                             :medrxiv:
+**** https://connect.medrxiv.org/news/feed.php
+The actual medrxiv blog
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=all              :general:
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Genetic_and_Genomic_Medicine :genomics:
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Oncology
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Orthopedics
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Pharmacology_and_Therapeutics
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Public_and_Global_Health
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Sexual_and_Reproductive_Health
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Rehabilitation_Medicine_and_Physical_Therapy
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=infectious_diseases
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Economics :datascience:analytics:
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Informatics :datascience:analytics:
+**** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Policy
 *** [[https://ncbiinsights.ncbi.nlm.nih.gov/feed/][ncbi]]
-*** [[https://fivethirtyeight.com/science/feed/][fivethirtyeight: science]]
+*** [[https://fivethirtyeight.com/science/feed/][fivethirtyeight: science]] :fivethirtyeight:
 
-** faang blogs
+** faang blogs :faang_blog:
 *** [[https://engineering.fb.com/feed/][facebook engineering blog]]
 *** [[https://www.precisely.com/feed][precicely blog]]
 *** [[https://engineering.linkedin.com/blog.rss.html/feed][linkedin engineering blog]]
@@ -135,11 +142,11 @@ The actual medarxiv blog
 ** emacs                                                                :emacs:
 *** [[https://hnrss.org/newest?q=emacs][hn: emacs]]
 *** [[https://kitchingroup.cheme.cmu.edu/blog/feed/index.xml][kitchin group]] :science:
-** [[https://protesilaos.com/codelog.xml][prots blog]]
-** [[https://planet.emacslife.com/atom.xml][nullprogram]]
-** [[https://planet.emacslife.com/atom.xml][planet emacslife]]
+*** [[https://planet.emacslife.com/atom.xml][planet emacslife]]
+*** [[https://sachachua.com/blog/category/emacs-news/feed/atom/][emacs-news]]
+*** [[https://protesilaos.com/codelog.xml][prots blog]]
+*** [[https://planet.emacslife.com/atom.xml][nullprogram]]
 ** data science                                                  :datascience:
-** [[https://sachachua.com/blog/category/emacs-news/feed/atom/][emacs-news]]
 *** [[https://www.kdnuggets.com/feed][kdnuggets]]
 ** data engineering                                           :dataengineering:
 *** [[https://towardsdatascience.com/feed/tagged/data-engineering][towards data science: dataengineering]]
@@ -147,14 +154,14 @@ The actual medarxiv blog
 *** [[https://blog.transform.co/data-talks/rss/][Transform Metrics Blog]]
 ** finance                                                            :finance:
 *** [[https://fortune.com/feed/fortune-feeds/?id=3230629][fortune]]
-*** [[https://fivethirtyeight.com/economics/feed/][fivethirtyeight: economics]]
+*** [[https://fivethirtyeight.com/economics/feed/][fivethirtyeight: economics]] :fivethirtyeight:
 
 ** misc
 
 *** https://dnascience.plos.org/feed/ :genomics:
 *** [[https://karthinks.com/index.xml][karthinks.com]]
-*** [[https://fivethirtyeight.com/life/feed/][fivethirtyeight: life]]
-*** [[https://fivethirtyeight.com/contributors/nate-silver/feed/][fivethirtyeight: nate silver]]
+*** [[https://fivethirtyeight.com/life/feed/][fivethirtyeight: life]] :fivethirtyeight:
+*** [[https://fivethirtyeight.com/contributors/nate-silver/feed/][fivethirtyeight: nate silver]] :fivethirtyeight:
 *** [[https://hnrss.org/frontpage][hn: frontpage]]
 *** [[https://realpython.com/atom.xml][real python]]             :python:edu:
 *** [[https://rss.app/feeds/QzriqACyiEobEdLw.xml][google technology]] :rssapp:
