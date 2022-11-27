@@ -1,4 +1,4 @@
-;; may need to eaf-install-and-update
+;; this is incidentally a great example of using a striaght recipe
 (use-package eaf
   :straight (eaf
              :type git
@@ -23,21 +23,17 @@
                          "terminal"
                          "org-previewer"
                          "markdown-previewer"
-
                          "--ignore-sys-deps")
              )
+
   ;; Evil mode doesn't work well with eaf keybindings.
   :init (evil-set-initial-state 'eaf-mode 'emacs)
 
   :config
-
   (defun z-eaf-switch-to-eww ()
     (interactive)
     (eww-browse-url (eaf-get-path-or-url))
     )
-
-
-
   ) 
 
 
@@ -48,20 +44,38 @@
   (eaf-browser-enable-adblocker t)
   :config
   (eaf-bind-key z-eaf-switch-to-eww "C-&" eaf-browser-keybinding)
+  (eaf-bind-key nil "," eaf-browser-keybinding)
 
-
-
+  (eaf-bind-key consult-buffer ",b" eaf-browser-keybinding)
+  (eaf-bind-key consult-buffer ",B" eaf-browser-keybinding)
+  (eaf-bind-key execute-extended-command ",x" eaf-browser-keybinding)
+  (eaf-bind-key z-projectile-find-file ",p" eaf-browser-keybinding)
+  (eaf-bind-key find-file ",p" eaf-browser-keybinding)
+  (eaf-bind-key kill-this-buffer ",p" eaf-browser-keybinding)
+  (eaf-bind-key (lambda () (interactive)
+                  (z-org-agenda "1" org-super-agenda-groups-main)
+                  (org-agenda-redo) 
+                  )
+                ",p" eaf-browser-keybinding)
   )
 
 ;; note pymupdf is a dependency!!!
-;; don't get a nice occur buffer
-;; still need to figure out annotations
-;; what happens when visiting pdf in the browser
-(use-package eaf-pdf-viewer)
+(use-package eaf-pdf-viewer
+  :config
+  (eaf-bind-key nil "," eaf-pdf-viewer-keybinding)
+  )
 
-;;
-(use-package eaf-image-viewer)
-(use-package eaf-terminal)
+(use-package eaf-image-viewer
+  :config
+  (eaf-bind-key nil "," eaf-image-viewer-keybinding)
+  )
 
-(use-package eaf-markdown-previewer)
-(use-package eaf-org-previewer)
+(use-package eaf-markdown-previewer
+  :config
+  (eaf-bind-key nil "," eaf-markdown-previewer-keybinding)
+  )
+
+(use-package eaf-org-previewer
+  :config
+  (eaf-bind-key nil "," eaf-org-previewer-keybinding)
+  )
