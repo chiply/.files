@@ -9,6 +9,7 @@
   (:text "data science" :value 5 :type s)
   )
  ("title-or-content"
+  (:text "dagster" :title-value 150 :content-value 100 :type s)
   (:text "boston" :title-value 150 :content-value 100 :type s)
   (:text "massachusetts" :title-value 150 :content-value 100 :type s)
   )
