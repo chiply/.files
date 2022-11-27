@@ -66,7 +66,7 @@
    "flycheck-indicator.el" "flycheck-pycheckers.el"
    "magit-diff-flycheck.el" "flycheck-projectile.el" "hercules.el"
    "evil-fringe-mark.el" "modern-fringes.el" "rainbow-mode.el"
-   "image-mode.el" "eaf.el" "browse-url.el" "cleanup.el")
+   "image-mode.el"  "browse-url.el" "cleanup.el")
  )
 
 ;; load user-files and provate lisp code
@@ -76,7 +76,7 @@
 ;; loading some packages here until I figure out the issues
 (defun z-tmp-load-org-and-snip ()
   (interactive)
-  (let ((user-files '("snippets.el" "org.el" "citar-org-roam.el" "elfeed-org.el" "ob-mermaid.el")))
+  (let ((user-files '("snippets.el" "org.el" "citar-org-roam.el" "elfeed-org.el" "ob-mermaid.el" "eaf.el")))
     (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
     )
   )
