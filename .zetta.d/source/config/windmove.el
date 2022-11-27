@@ -12,7 +12,6 @@
 
   :general
   (
-   :states '(normal insert visual)
    :keymaps '(override treemacs-mode-map)
    "C-S-a" 'windmove-left
    "C-S-d" 'windmove-right

@@ -47,15 +47,22 @@
 *** https://aws.amazon.com/blogs/modernizing-with-aws/feed/
 *** https://aws.amazon.com/blogs/big-data/feed/
 ** youtube                                                            :youtube:
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXA][system crafters]]
-*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ][veritasium]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A][Numberphile]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww][Lex Clips]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCtESv1e7ntJaLJYKIO1FoYw][Periodic Videos]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA][Computerphile]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw][3Blue1Brown]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfzlCWGWYyIQ0aLC5w48gBQ][sentdex]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQp2VLAOlvq142YN3JO3y8w][John Kitchin Youtube]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQB][system crafters]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXAQ][veritasium]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCVhQ2NnY5Rskt6UjCUkJ_DA][arjan codes]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCraiFqWi0qSIxXxXN4IHFBQ][be a better dev]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCd6MoB9NC6uYN2grvUNT-Zg][aws]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCP4bf6IHJJQehibu6ai__cg][fireship]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug][ted]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCQp2VLAOlvq142YN3JO3y8w][john kitchin]]
-*** [[https://www.youtube.com/channel/UCfLnv9X8jyHTe6gJ4hVBo9Q/videos][dagster]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfLnv9X8jyHTe6gJ4hVBo9Q][dagster]]
 ** podcasts                                                           :podcast:
 *** [[https://www.dataengineeringpodcast.com/feed/mp3/][dataengineeringpodcast]] :dataengineering:
 *** [[https://www.pythonpodcast.com/feed/mp3/][python.__init__]]     :python:
