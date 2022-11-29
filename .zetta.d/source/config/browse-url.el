@@ -5,11 +5,11 @@
   (setq
    browse-url-handlers
    '(
-     ("https:\\/\\/www\\.youtu\\.*be." . browse-url-mpv)
+     ("youtube.com" . eaf-open-browser)
      ("github.com" . eaf-open-browser)
+     ("melpa.org" . eaf-open-browser)
      ("." . eww-browse-url)
      ))
   )
 
 
-(string-match "https://github.com" "https://github.com/skeeto/elfeed")

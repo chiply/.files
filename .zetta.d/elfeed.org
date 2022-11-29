@@ -13,7 +13,7 @@
 *** https://aws.amazon.com/blogs/apn/feed/
 *** https://aws.amazon.com/podcasts/aws-podcast/
 *** https://aws.amazon.com/blogs/awsmarketplace/feed/
-*** https://aws.amazon.com/blogs/aws/feed/
+*** https://aws.amazon.com/blogs/aws/feed/ :industry_update:
 *** https://aws.amazon.com/blogs/big-data/feed/
 *** https://aws.amazon.com/blogs/business-productivity/feed/
 *** https://aws.amazon.com/blogs/compute/feed/
@@ -60,8 +60,8 @@
 *** science                                                             :science:
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCtESv1e7ntJaLJYKIO1FoYw][Periodic Videos]]
 *** industry :industry:
-**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfLnv9X8jyHTe6gJ4hVBo9Q][dagster]] :dagster:
-**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCd6MoB9NC6uYN2grvUNT-Zg][aws]]
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfLnv9X8jyHTe6gJ4hVBo9Q][dagster]] :dagster:industry_update:
+**** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCd6MoB9NC6uYN2grvUNT-Zg][aws]] :industry_update:
 
 *** math and datascience                                                 :math:
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A][Numberphile]] 
@@ -88,7 +88,6 @@
 ** comic                                                                :comic:
 *** [[https://xkcd.com/rss.xml][xkcd]] :xkcd:
 *** [[https://dilbert.com/feed][dilbert]] :dilbert:
-*** [[https://www.dc.com/feed][dc]]
 ** news                                                                  :news:
 *** nytimes                                                         :nytimes:
 **** [[https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml][homepage]]
