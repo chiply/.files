@@ -34,6 +34,12 @@
     (interactive)
     (eww-browse-url (eaf-get-path-or-url))
     )
+
+  (defun z-eaf-org-agenda ()
+    (interactive)
+    (z-org-agenda "1" org-super-agenda-groups-main)
+    (org-agenda-redo) 
+    )
   ) 
 
 
@@ -50,13 +56,9 @@
   (eaf-bind-key consult-buffer ",B" eaf-browser-keybinding)
   (eaf-bind-key execute-extended-command ",x" eaf-browser-keybinding)
   (eaf-bind-key z-projectile-find-file ",p" eaf-browser-keybinding)
-  (eaf-bind-key find-file ",p" eaf-browser-keybinding)
-  (eaf-bind-key kill-this-buffer ",p" eaf-browser-keybinding)
-  (eaf-bind-key (lambda () (interactive)
-                  (z-org-agenda "1" org-super-agenda-groups-main)
-                  (org-agenda-redo) 
-                  )
-                ",p" eaf-browser-keybinding)
+  (eaf-bind-key find-file ",f" eaf-browser-keybinding)
+  (eaf-bind-key kill-this-buffer ",b" eaf-browser-keybinding)
+  (eaf-bind-key z-eaf-org-agenda ",a" eaf-browser-keybinding)
   )
 
 ;; note pymupdf is a dependency!!!

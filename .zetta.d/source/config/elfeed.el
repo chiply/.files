@@ -182,6 +182,15 @@ minibuffer with something like `exit-minibuffer'."
        )
       (:hide nil))
 
+     ;; Industry Updates
+     (group
+      (:title . "Industry updates")
+      (:elements
+       (search (:filter . "@12-months-ago +industry_update") (:title . "All"))
+       (query . (and industry_update))
+       )
+      (:hide nil))
+
      ;; Tweets
      (group
       (:title . "Tweets")
@@ -217,10 +226,19 @@ minibuffer with something like `exit-minibuffer'."
       (:title . "Youtube")
       (:elements
        (search (:filter . "@12-months-ago +youtube") (:title . "All"))
-       (group (:title . "Industry") (:elements (query . (and youtube industry))) (:hide nil))
-       (group (:title . "Tech") (:elements (query . (and youtube technology))) (:hide nil))
-       (group (:title . "Math") (:elements (query . (and youtube math))) (:hide nil))
-       (group (:title . "Science") (:elements (query . (and youtube science))) (:hide nil))
+       (group (:title . "Industry") (:elements
+                                     (search (:filter . "@12-months-ago +youtube +industry") (:title . "All"))
+                                     (query . (and youtube industry))) (:hide nil)
+                                     )
+       (group (:title . "Tech") (:elements
+                                 (search (:filter . "@12-months-ago +youtube +technology") (:title . "All"))
+                                 (query . (and youtube technology))) (:hide nil))
+       (group (:title . "Math") (:elements
+                                 (search (:filter . "@12-months-ago +youtube +math") (:title . "All"))
+                                 (query . (and youtube math))) (:hide nil))
+       (group (:title . "Science") (:elements
+                                    (search (:filter . "@12-months-ago +youtube +science") (:title . "All"))
+                                    (query . (and youtube science))) (:hide nil))
        )
       (:hide nil))
 
