@@ -5,9 +5,11 @@
   (setq
    browse-url-handlers
    '(
+     ;; urls that cannot render fully in eww
      ("youtube.com" . eaf-open-browser)
      ("github.com" . eaf-open-browser)
      ("melpa.org" . eaf-open-browser)
+     ;; everything else, use eww-browse-url
      ("." . eww-browse-url)
      ))
   )

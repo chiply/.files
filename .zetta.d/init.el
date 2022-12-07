@@ -66,7 +66,8 @@
    "flycheck-indicator.el" "flycheck-pycheckers.el"
    "magit-diff-flycheck.el" "flycheck-projectile.el" "hercules.el"
    "evil-fringe-mark.el" "modern-fringes.el" "rainbow-mode.el"
-   "image-mode.el"  "browse-url.el" "minibar.el" "cleanup.el")
+   "image-mode.el" "browse-url.el" "minibar.el" "spray.el"
+   "cleanup.el")
  )
 
 ;; load user-files and provate lisp code
