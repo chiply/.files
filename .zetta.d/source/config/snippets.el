@@ -153,6 +153,28 @@
 (use-package yasnippet-snippets
   )
 
+(use-package py-snippets
+  :after yasnippet
+  :config
+  (py-snippets-initialize))
+
+;; (use-package sphinx-doc
+;;   :config
+;;   (setq sphinx-doc-include-types nil)
+;;   (add-hook 'python-mode-hook (lambda ()
+;;                                 (require 'sphinx-doc)
+;;                                 (sphinx-doc-mode t)))
+;;   )
+
+;; not the greatest, but it's one of the better solutions that
+;; actually supports type hinting
+(use-package numpydoc
+  :config
+  (setq numpydoc-insertion-style nil)
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate)))
+
+
 ;; excellent for discoverability.  like autocompletion, but at the top
 ;; level for all snippets
 ;; a really great demo workflow is to open up a buffer in an

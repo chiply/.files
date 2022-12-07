@@ -3,6 +3,53 @@
 :END:
 
 * elfeed :elfeed:
+
+
+** https://www.trackawesomelist.com/rss.xml :awesome:
+
+** google alerts :google_alerts:
+
+*** [[https://www.google.com/alerts/feeds/13130175312220372401/1041989850633493049][Google Alerts: docker]]
+
+*** [[https://www.google.com/alerts/feeds/13130175312220372401/1041989850633493049][Google Alerts: dagster]]
+
+*** [[https://www.google.com/alerts/feeds/13130175312220372401/2682747375583402332][Google Alerts: sema4]]
+
+*** [[https://www.google.com/alerts/feeds/13130175312220372401/9762467059344056332][Google Alerts: genedx]]
+
+** ghub :ghub:
+*** org-roam :org_roam:
+**** https://github.com/org-roam/org-roam/commits.atom
+**** https://github.com/org-roam/org-roam/releases.atom
+**** https://github.com/org-roam/org-roam/tags.atom
+*** dagster :dagster:
+**** https://github.com/dagster-io/dagster/commits.atom
+**** https://github.com/dagster-io/dagster/releases.atom
+**** https://github.com/dagster-io/dagster/tags.atom
+*** great-expectations :great_expectations:
+**** https://github.com/great-expectations/great_expectations/commits.atom
+**** https://github.com/great-expectations/great_expectations/releases.atom
+**** https://github.com/great-expectations/great_expectations/tags.atom
+
+** github :github:
+
+*** python
+**** https://mshibanami.github.io/GitHubTrendingRSS/daily/python.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/weekly/python.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/monthly/python.xml
+*** R
+**** https://mshibanami.github.io/GitHubTrendingRSS/daily/r.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/weekly/r.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/monthly/r.xml
+*** emacs-lisp
+**** https://mshibanami.github.io/GitHubTrendingRSS/daily/emacs-lisp.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/weekly/emacs-lisp.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/monthly/emacs-lisp.xml
+*** jupyter notebook
+**** https://mshibanami.github.io/GitHubTrendingRSS/daily/jupyter-notebook.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/weekly/jupyter-notebook.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/monthly/jupyter-notebook.xml
+
 ** tweets                                                              :tweets:
 *** [[https://rss.app/feeds/4jZWL4flfzgi1oyX.xml][mickey peterson]]      :rssapp:
 *** [[https://rss.app/feeds/zCyaqj9XE4J27bvN.xml][#dataengineering]]     :rssapp:
@@ -154,9 +201,27 @@ The actual medrxiv blog
 ** finance                                                            :finance:
 *** [[https://fortune.com/feed/fortune-feeds/?id=3230629][fortune]]
 *** [[https://fivethirtyeight.com/economics/feed/][fivethirtyeight: economics]] :fivethirtyeight:
+*** seeking alpha :seeking_alpha:
+**** [[https://seekingalpha.com/sector/healthcare.xml][seeking alpha: healthcare]]
+**** [[https://seekingalpha.com/tag/etf-portfolio-strategy.xml][seeking alpha: etf portfolio strategy]]
+**** [[https://seekingalpha.com/listing/most-popular-articles.xml][seeking alpha: popular articles]]
+**** [[https://seekingalpha.com/market_currents.xml][seeking alpha: market currents]]
+**** [[https://seekingalpha.com/tag/wall-st-breakfast.xml][seeking alpha: wall st breakfast]]
+**** [[https://seekingalpha.com/feed.xml][seeking alpha: all]]
+**** [[https://seekingalpha.com/tag/long-ideas.xml][seeking alpha: long ideas]]
+**** [[https://seekingalpha.com/sector/transcripts.xml][seeking alpha: transcripts]]
+*** Market Watch :market_watch:
+**** [[http://feeds.marketwatch.com/marketwatch/topstories/][market watch: top stories]]
+**** [[http://feeds.marketwatch.com/marketwatch/realtimeheadlines/][market watch: real time headlines]]
+**** [[http://feeds.marketwatch.com/marketwatch/marketpulse/][market watch: market pulse]]
+**** [[http://feeds.marketwatch.com/marketwatch/bulletins][market watch: bulletins]]
+**** [[http://feeds.marketwatch.com/marketwatch/StockstoWatch/][market watch: stocks to watch]]
+**** [[http://feeds.marketwatch.com/marketwatch/newslettersandresearch/][market watch: newsletters and research]]
+
 
 ** misc
 
+*** [[http://pitchfork.com/rss/news/][pitchfork]]
 *** https://dnascience.plos.org/feed/ :genomics:
 *** [[https://karthinks.com/index.xml][karthinks.com]]
 *** [[https://fivethirtyeight.com/life/feed/][fivethirtyeight: life]] :fivethirtyeight:

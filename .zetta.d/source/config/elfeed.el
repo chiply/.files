@@ -173,6 +173,27 @@ minibuffer with something like `exit-minibuffer'."
        )
       (:hide nil))
 
+     (group
+      (:title . "Today")
+      (:elements
+       (search (:filter . "@1-day-ago") (:title . "All"))
+       )
+      (:hide nil))
+
+     (group
+      (:title . "This Week")
+      (:elements
+       (search (:filter . "@7-days-ago") (:title . "All"))
+       )
+      (:hide nil))
+
+     (group
+      (:title . "This Month")
+      (:elements
+       (search (:filter . "@31-days-ago") (:title . "All"))
+       )
+      (:hide nil))
+
      ;; News
      (group
       (:title . "News")
@@ -188,8 +209,40 @@ minibuffer with something like `exit-minibuffer'."
       (:elements
        (search (:filter . "@12-months-ago +industry_update") (:title . "All"))
        (query . (and industry_update))
+       (search (:filter . "@12-months-ago +awesome") (:title . "All"))
+       (query . (and awesome))
+       (search (:filter . "@12-months-ago +github") (:title . "All"))
+       (query . (and github))
+       (group
+        (:title . "Github Activity Feeds")
+        (:elements
+         (search (:filter . "@12-months-ago +ghub") (:title . "All"))
+         (query . (and ghub))
+         )
+        )
        )
       (:hide nil))
+
+     (group
+      (:title . "Google Alerts")
+      (:elements
+       (search (:filter . "@12-months-ago +google_alerts") (:title . "All"))
+       (query . (and google_alerts))
+       ))
+
+     (group
+      (:title . "Seeking alpha")
+      (:elements
+       (search (:filter . "@12-months-ago +seeking_alpha") (:title . "All"))
+       (query . (and seeking_alpha))
+       ))
+
+     (group
+      (:title . "Market Watch")
+      (:elements
+       (search (:filter . "@12-months-ago +market_watch") (:title . "All"))
+       (query . (and market_watch))
+       ))
 
      ;; Tweets
      (group

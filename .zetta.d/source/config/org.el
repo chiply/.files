@@ -691,13 +691,22 @@ where is was when z-refresh-agenda was called"
            :prepend t
            )
           (
-           "H" "Unlinked header"
+           "H" "public"
            entry
            (file "~/.files/org-roam/daily/agenda_pub.org")
            ;; note using custom function from above
            "* INBOX %?"
            :prepend t
            )
+          (
+           "f" "provate linked"
+           entry
+           (file "~/.files/org-roam/daily/agenda.org")
+           ;; note using custom function from above
+           "* INBOX %? \n%a\n%F "
+           :prepend t
+           )
+          
           )
         )
 
@@ -766,6 +775,17 @@ where is was when z-refresh-agenda was called"
     (interactive)
     (setq z-captured-from-win (selected-window))
     (org-roam-node-find))
+
+  (setq org-roam-capture-templates
+        '(
+          ("d" "default" plain "%?" :target
+           (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t)
+          ("D" "default" plain "%?\n%a\n%F" :target
+           (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t)
+          )
+        )
 
   (defun z-org-roam-capture () (interactive)
          (setq z-captured-from-win (selected-window))
@@ -892,8 +912,8 @@ where is was when z-refresh-agenda was called"
   :demand t
   :config
   (setq org-ref-insert-cite-function
-      (lambda ()
-	(org-cite-insert nil)))
+        (lambda ()
+          (org-cite-insert nil)))
   (require 'bibtex)
 
   (setq bibtex-completion-bibliography '("~/.files/.lit/bibliography.bib")
