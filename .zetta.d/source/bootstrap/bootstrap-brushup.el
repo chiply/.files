@@ -100,85 +100,95 @@ seem to require loading after the client starts up"
                                              term-color-blue term-color-magenta
                                              term-color-cyan term-color-white])
 
-          (set-face-attribute 'vertical-border nil
-                              :background brushup-bg
-                              :foreground brushup-bg
-                              )
+          (set-face-attribute
+           'vertical-border nil
+           :background brushup-bg
+           :foreground brushup-bg
+           )
 
-          (set-face-attribute 'mode-line nil
-                              :height 1.6
-                              :overline nil
-                              :box nil
-                              ;;:foreground brushup-bg-6
-                              ;;:background brushup-bg-1_0
-                              :background brushup-bg
-                              :foreground brushup-fg-3
-                              ;;:underline `(:color ,brushup-bg-3)
-                              :underline nil
-                              )
+          (set-face-attribute
+           'mode-line nil
+           :height 1.2
+           :overline nil
+           :box nil
+           ;;:foreground brushup-bg-6
+           ;;:background brushup-bg-1_0
+           :background brushup-bg
+           :foreground brushup-fg-3
+           ;;:underline `(:color ,brushup-bg-3)
+           :underline nil
+           )
 
-          (set-face-attribute 'mode-line-inactive nil
-                              :height 1.6
-                              :underline nil
-                              :overline nil
-                              :box nil
-                              :background brushup-bg
-                              :foreground brushup-bg-4
-                              ;;:underline `(:color ,brushup-bg-3)
-                              :underline nil
-                              )
+          (set-face-attribute
+           'mode-line-inactive nil
+           :height 1.2
+           :underline nil
+           :overline nil
+           :box nil
+           :background brushup-bg
+           :foreground brushup-bg-4
+           ;;:underline `(:color ,brushup-bg-3)
+           :underline nil
+           )
 
-          (set-face-attribute 'header-line nil
-                              :height 1.6
-                              :box nil
-                              :background brushup-bg
-                              :foreground brushup-fg-1
-                              :underline nil
-                              :overline nil
-                              :inherit nil
-                              )
+          (set-face-attribute
+           'header-line nil
+           :height 1.2
+           :box nil
+           :background brushup-bg
+           :foreground brushup-fg-1
+           :underline nil
+           :overline nil
+           :inherit nil
+           )
 
-          (set-face-attribute 'tab-bar nil
-                              :height 1.7
-                              :background (modus-themes-color 'green-nuanced-bg)
-                              :foreground brushup-fg-1
-                              :inherit nil
-                              )
+          (set-face-attribute
+           'tab-bar nil
+           :height 1.3
+           :background (modus-themes-color 'green-nuanced-bg)
+           :foreground brushup-fg-1
+           :inherit nil
+           :underline nil
+           :overline nil
+           )
 
-          (set-face-attribute 'sh-heredoc nil
-                              :foreground brushup-fg
-                              :weight 'normal)
-
-
-
-          (set-face-attribute 'button nil
-                              :foreground brushup-fg
-                              :background brushup-bg
-                              :box nil
-                              :underline t)
+          (set-face-attribute
+           'sh-heredoc nil
+           :foreground brushup-fg
+           :weight 'normal)
 
 
-          (set-face-attribute 'font-lock-comment-face nil
-                              :foreground (if brushup-dark-p
-                                              (color-lighten-name brushup-bg 25)
-                                            (color-lighten-name brushup-bg -25))
-                              :slant 'normal)
 
-          (set-face-attribute 'font-lock-string-face nil
-                              :slant 'normal)
+          (set-face-attribute
+           'button nil
+           :foreground brushup-fg
+           :background brushup-bg
+           :box nil
+           :underline t)
 
-          (set-face-attribute 'font-lock-doc-face nil
-                              :foreground (if brushup-dark-p
-                                              (color-lighten-name brushup-bg 30)
-                                            (color-lighten-name brushup-bg -30)
-                                            ))
+
+          (set-face-attribute
+           'font-lock-comment-face nil
+           :foreground (if brushup-dark-p
+                           (color-lighten-name brushup-bg 25)
+                         (color-lighten-name brushup-bg -25))
+           :slant 'normal)
+
+          (set-face-attribute
+           'font-lock-string-face nil
+           :slant 'normal)
+
+          (set-face-attribute
+           'font-lock-doc-face nil
+           :foreground (if brushup-dark-p
+                           (color-lighten-name brushup-bg 30)
+                         (color-lighten-name brushup-bg -30)
+                         ))
 
           ;;(set-face-attribute 'minibuffer-prompt nil
-          ;;:foreground brushup-fg
-          ;;:weight 'bold
-          ;;:font "Courier 12"
-          ;;:box nil
-          ;;:background brushup-bg)
+                              ;;:foreground brushup-fg
+                              ;;:background brushup-bg-1)
+
           )
       (error (message "error in z-brushup"))
       )
