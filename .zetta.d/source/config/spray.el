@@ -1,5 +1,5 @@
 (use-package spray
-  :straight (:host gitlab :repo "iankelling/spray")
+  :straight (:host sourcehut :repo "iank/spray")
   )
 
 

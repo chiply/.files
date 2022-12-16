@@ -20,6 +20,7 @@
    :keymaps '(eww-mode-map)
    "C-&" 'z-eww-switch-to-eaf
    "<return>" 'z-eww-follow-link
+   "x" '(lambda () (interactive) (kill-buffer (current-buffer)))
    )
 
   )

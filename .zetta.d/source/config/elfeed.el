@@ -386,6 +386,16 @@ minibuffer with something like `exit-minibuffer'."
        )
       (:hide nil))
 
+     ;; Medium
+     (group
+      (:title . "medium")
+      (:elements
+       (search (:filter . "@12-months-ago +medium") (:title . "All"))
+       (query . (and medium))
+       )
+      (:hide nil))
+
+
 
      ;; Comics
      (group

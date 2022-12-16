@@ -5,6 +5,8 @@
   )
 
 
+
+
 (use-package detached
   :init
   (setq detached-notification-function #'detached-extra-alert-notification)
