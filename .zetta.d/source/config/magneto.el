@@ -1,3 +1,9 @@
+;; LEFT OFF -- testing embark integration, adding actions / trying other actions
+;; FIRST: make 1) embark-action and 2) magneto-action sequential, with embark action being optional
+;; adding other window manipulation stuff to compose a higher level interface
+;; faces
+
+
                                         ;TODO: framework-ify -- document exactly how to add new actions and embark-actions
 
 ;;TODO: ace selection anywhere in key sequence DONE,

@@ -2,9 +2,12 @@
 :ID:       8376DF0F-1CAB-4037-8EE5-0A6EE88408BD
 :END:
 
+
+
 * elfeed :elfeed:
 
 
+** https://rss.art19.com/techmeme-ridehome :podcast:technology:
 ** https://www.trackawesomelist.com/rss.xml :awesome:
 
 ** google alerts :google_alerts:
@@ -33,6 +36,16 @@
 
 ** github :github:
 
+*** javascript
+
+**** https://mshibanami.github.io/GitHubTrendingRSS/daily/javascript.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/weekly/javascript.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/monthly/javascript.xml
+
+*** rust
+**** https://mshibanami.github.io/GitHubTrendingRSS/daily/rust.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/weekly/rust.xml
+**** https://mshibanami.github.io/GitHubTrendingRSS/monthly/rust.xml
 *** python
 **** https://mshibanami.github.io/GitHubTrendingRSS/daily/python.xml
 **** https://mshibanami.github.io/GitHubTrendingRSS/weekly/python.xml
@@ -118,7 +131,13 @@
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug][ted]]
 
 ** podcasts                                                           :podcast:
+
+*** [[https://dataskeptic.libsyn.com/rss][data skeptic]] :datascience:
+*** [[https://changelog.com/practicalai/feed][practical ai]] :dataengineering:
+*** [[https://feeds.transistor.fm/aws-morning-brief][morning brief]] :industry:
 *** [[https://www.dataengineeringpodcast.com/feed/mp3/][dataengineeringpodcast]] :dataengineering:
+*** [[https://feed.syntax.fm/rss][syntax]]
+*** [[https://allinchamathjason.libsyn.com/rss][all-in]]
 *** [[https://www.pythonpodcast.com/feed/mp3/][python.__init__]]     :python:
 *** [[https://www.themachinelearningpodcast.com/feed/mp3/][machinelearningpodcast]] :datascience:
 *** [[https://softwareengineeringdaily.com/category/podcast/feed/][software daily]]
@@ -221,6 +240,7 @@ The actual medrxiv blog
 
 ** misc
 
+*** [[https://snyk.io/blog/feed/][snyk blog]]
 *** [[http://pitchfork.com/rss/news/][pitchfork]]
 *** https://dnascience.plos.org/feed/ :genomics:
 *** [[https://karthinks.com/index.xml][karthinks.com]]
@@ -230,3 +250,9 @@ The actual medrxiv blog
 *** [[https://realpython.com/atom.xml][real python]]             :python:edu:
 *** [[https://rss.app/feeds/QzriqACyiEobEdLw.xml][google technology]] :rssapp:
 *** [[https://rss.app/feeds/OYDPQ8NQR3NOVLJ1.xml][gartner]]
+** Medium :medium:
+*** [[https://medium.com/feed/tag/data-science][medium tagged data-science]]
+*** [[https://medium.com/feed/tag/datascience][medium tagged datascience]]
+*** [[https://medium.com/feed/tag/machine-learning][medium tagged machine-learning]]
+*** [[https://pub.towardsai.net/feed][medium publication towards ai]]
+*** [[https://towardsdatascience.com/feed][towards data science]]
