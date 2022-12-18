@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       ADB99701-AA2E-4DD4-B6EF-7DF2E7006958
 :ROAM_REFS: https://github.com/donnemartin/system-design-primer
-:mtime:    20221101152649
+:mtime:    20221218100722 20221101152649
 :ctime:    20221101152628
 :END:
 #+title: system-design-primer

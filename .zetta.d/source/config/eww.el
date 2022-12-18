@@ -17,6 +17,7 @@
 
   :general
   (
+   :states '(normal visual insert)
    :keymaps '(eww-mode-map)
    "C-&" 'z-eww-switch-to-eaf
    "<return>" 'z-eww-follow-link
