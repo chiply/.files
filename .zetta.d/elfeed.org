@@ -256,3 +256,7 @@ The actual medrxiv blog
 *** [[https://medium.com/feed/tag/machine-learning][medium tagged machine-learning]]
 *** [[https://pub.towardsai.net/feed][medium publication towards ai]]
 *** [[https://towardsdatascience.com/feed][towards data science]]
+*** [[https://flowingdata.com/feed][FlowingData]] :datascience:
+:PROPERTIES:
+:ID:       A324C13C-3AED-4769-AFB1-7544A73C251F
+:END:
