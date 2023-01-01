@@ -267,14 +267,3 @@ Version 2019-11-04"
                             (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
 
-
-
-
-
-
-(z-docs-from-extension "dired")
-
-
-;; LEFT OFF vars aren't getting in here
-
-

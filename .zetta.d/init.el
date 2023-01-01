@@ -39,24 +39,25 @@
    "tokei.el" "security.el" "grep.el" "replace.el" "ag.el" "wgrep.el"
    "iedit.el" "lsp.el" "dap-mode.el" "python.el" "web-mode.el"
    "js2-mode.el" "rjsx-mode.el" "emmet-mode.el" "shell.el"
-   "foreman_conf.el" "citar.el" "vc.el" "transient.el" "magit.el"
-   "forge.el" "git-gutter.el" "docker.el" "dockerfile-mode.el"
-   "docker-compose-mode.el" "utility.el" "pocket-reader.el"
-   "convention.el" "tree-mode.el" "unidecode.el" "define-word.el"
-   "mw-thesaurus.el" "sx.el" "pubmed.el" "helm-wikipedia.el"
-   "elfeed.el" "window.el" "ace-window.el" "windmove.el" "avy.el"
-   "olivetti.el" "winds.el" "evil.el" "evil-anzu.el" "evil-matchit.el"
-   "evil-surround.el" "evil-collection.el" "evil-exchange.el"
-   "evil-indent-plus.el" "evil-search-highlight-persist.el" "keys.el"
-   "consult-lsp.el" "dumb-jump.el" "bookmark-view.el" "views.el"
-   "line-utils.el" "tab-line.el" "line.el" "sql.el" "sqlite.el"
-   "dired.el" "all-the-icons-dired.el" "dired-subtree.el"
-   "dired-ranger.el" "completion.el" "cape.el" "dabbrev.el"
-   "recursion-indicator.el" "helm.el" "marginalia.el" "orderless.el"
-   "vertico.el" "embark.el" "embark-consult.el" "magneto.el"
-   "consult.el" "tap.el" "tap-block.el" "helpful.el" "elisp-mode.el"
-   "narrow.el" "ov.el" "vimish-fold.el" "editing.el" "smartparens.el"
-   "hungry-delete.el" "prose.el" "buffer.el" "ibuffer.el" "bufler.el"
+   "sh-script.el" "vterm.el" "foreman.el" "foreman_conf.el" "citar.el"
+   "vc.el" "transient.el" "magit.el" "forge.el" "git-gutter.el"
+   "docker.el" "dockerfile-mode.el" "docker-compose-mode.el"
+   "utility.el" "pocket-reader.el" "convention.el" "tree-mode.el"
+   "unidecode.el" "define-word.el" "mw-thesaurus.el" "sx.el"
+   "pubmed.el" "helm-wikipedia.el" "elfeed.el" "window.el"
+   "ace-window.el" "windmove.el" "avy.el" "olivetti.el" "winds.el"
+   "evil.el" "evil-anzu.el" "evil-matchit.el" "evil-surround.el"
+   "evil-collection.el" "evil-exchange.el" "evil-indent-plus.el"
+   "evil-search-highlight-persist.el" "keys.el" "consult-lsp.el"
+   "dumb-jump.el" "bookmark-view.el" "views.el" "line-utils.el"
+   "tab-line.el" "line.el" "sql.el" "sqlite.el" "dired.el"
+   "all-the-icons-dired.el" "dired-subtree.el" "dired-ranger.el"
+   "completion.el" "cape.el" "dabbrev.el" "recursion-indicator.el"
+   "helm.el" "marginalia.el" "orderless.el" "vertico.el" "embark.el"
+   "embark-consult.el" "magneto.el" "consult.el" "tap.el"
+   "tap-block.el" "helpful.el" "elisp-mode.el" "narrow.el" "ov.el"
+   "vimish-fold.el" "editing.el" "smartparens.el" "hungry-delete.el"
+   "prose.el" "buffer.el" "ibuffer.el" "bufler.el"
    "all-the-icons-ibuffer.el" "bookmark.el" "bookmark+.el"
    "bookmark-in-project.el" "dogears.el" "theme.el" "detached.el"
    "yaml-mode.el" "yaml-path.el" "yaml.el" "yaml-pro.el"
@@ -67,8 +68,7 @@
    "flycheck-projectile.el" "hercules.el" "evil-fringe-mark.el"
    "modern-fringes.el" "rainbow-mode.el" "image-mode.el"
    "browse-url.el" "minibar.el" "spray.el" "mermaid-mode.el"
-   "cleanup.el")
- )
+   "hyperbole.el" "cleanup.el" ))
 
 ;; load user-files and provate lisp code
 (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
@@ -77,7 +77,16 @@
 ;; loading some packages here until I figure out the issues
 (defun z-tmp-load-org-and-snip ()
   (interactive)
-  (let ((user-files '("snippets.el" "org.el" "citar-org-roam.el" "elfeed-org.el" "ob-mermaid.el" "eaf.el")))
+  (let ((user-files
+         '("snippets.el" "org-ql.el" "org-agenda.el"
+           "org-super-agenda.el" "org-capture.el"
+           "org-roam.el" "org-roam-ui.el"
+           "org-roam-timestamps.el" "org-ref.el"
+           "biblio.el" "org-noter.el" "pdf-tools.el"
+           "org-pdftools.el" "org-noter-pdftools.el"
+           "org.el" "citar-org-roam.el" "elfeed-org.el"
+           "ob-mermaid.el" "eaf.el"
+           )))
     (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
     )
   )
