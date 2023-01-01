@@ -312,7 +312,12 @@ point."
  )
 
 
-(use-package lsp-ui)
+(use-package lsp-ui
+  :config
+  (setq
+   lsp-ui-sideline-enable nil
+   )
+  )
 
 (use-package lsp-treemacs
   :config

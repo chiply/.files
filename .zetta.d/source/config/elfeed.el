@@ -163,7 +163,7 @@ minibuffer with something like `exit-minibuffer'."
       (:elements
        (search (:filter . "@12-months-ago") (:title . "All"))
        )
-      (:hide nil))
+      (:hide t))
 
      (group
       (:title . "Reading List")
@@ -171,28 +171,28 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +readlater") (:title . "All"))
        (query . (and readlater))
        )
-      (:hide nil))
+      )
 
      (group
       (:title . "Today")
       (:elements
        (search (:filter . "@1-day-ago") (:title . "All"))
        )
-      (:hide nil))
+      )
 
      (group
       (:title . "This Week")
       (:elements
        (search (:filter . "@7-days-ago") (:title . "All"))
        )
-      (:hide nil))
+      (:hide t))
 
      (group
       (:title . "This Month")
       (:elements
        (search (:filter . "@31-days-ago") (:title . "All"))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; News
      (group
@@ -201,7 +201,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +news") (:title . "All"))
        (query . (and news))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; Industry Updates
      (group
@@ -221,28 +221,31 @@ minibuffer with something like `exit-minibuffer'."
          )
         )
        )
-      (:hide nil))
+      (:hide t))
 
      (group
       (:title . "Google Alerts")
       (:elements
        (search (:filter . "@12-months-ago +google_alerts") (:title . "All"))
        (query . (and google_alerts))
-       ))
+       )
+      (:hide t))
 
      (group
       (:title . "Seeking alpha")
       (:elements
        (search (:filter . "@12-months-ago +seeking_alpha") (:title . "All"))
        (query . (and seeking_alpha))
-       ))
+       )
+      (:hide t))
 
      (group
       (:title . "Market Watch")
       (:elements
        (search (:filter . "@12-months-ago +market_watch") (:title . "All"))
        (query . (and market_watch))
-       ))
+       )
+      (:hide t))
 
      ;; Tweets
      (group
@@ -251,7 +254,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +tweets") (:title . "All"))
        (query . (and tweets))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; Reddit
      (group
@@ -260,7 +263,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +reddit") (:title . "All"))
        (query . (and reddit))
        )
-      (:hide nil))
+      (:hide t))
      
 
 
@@ -271,7 +274,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +podcast") (:title . "All"))
        (query . (and podcast))
        )
-      (:hide nil))
+      )
 
 
      ;; Youtube
@@ -281,19 +284,19 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +youtube") (:title . "All"))
        (group (:title . "Industry") (:elements
                                      (search (:filter . "@12-months-ago +youtube +industry") (:title . "All"))
-                                     (query . (and youtube industry))) (:hide nil)
+                                     (query . (and youtube industry))) (:hide t)
                                      )
        (group (:title . "Tech") (:elements
                                  (search (:filter . "@12-months-ago +youtube +technology") (:title . "All"))
-                                 (query . (and youtube technology))) (:hide nil))
+                                 (query . (and youtube technology))) (:hide t))
        (group (:title . "Math") (:elements
                                  (search (:filter . "@12-months-ago +youtube +math") (:title . "All"))
-                                 (query . (and youtube math))) (:hide nil))
+                                 (query . (and youtube math))) (:hide t))
        (group (:title . "Science") (:elements
                                     (search (:filter . "@12-months-ago +youtube +science") (:title . "All"))
-                                    (query . (and youtube science))) (:hide nil))
+                                    (query . (and youtube science))) (:hide t))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; release notes
      (group
@@ -302,7 +305,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +release_notes") (:title . "All"))
        (query . (and release_notes))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; AWS Blogs
      (group
@@ -311,7 +314,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +aws +blog") (:title . "All"))
        (query . (and aws blog))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; Dataengineering
      (group
@@ -320,7 +323,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +dataengineering") (:title . "All"))
        (query . (and dataengineering))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; Dagster
      (group
@@ -329,7 +332,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +dagster") (:title . "All"))
        (query . (and dagster))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; python
      (group
@@ -338,7 +341,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +python") (:title . "All"))
        (query . (and python))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; faang_blog
      (group
@@ -347,7 +350,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +faang_blog") (:title . "All"))
        (query . (and faang_blog))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; Emacs
      (group
@@ -357,7 +360,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago emacs") (:title . "All mentions"))
        (query . (and emacs))
        )
-      (:hide nil))
+      (:hide t))
      
      ;; Medrxiv
      (group
@@ -366,7 +369,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +medrxiv") (:title . "All"))
        (query . (and medrxiv))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; arxiv
      (group
@@ -375,7 +378,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +arxiv") (:title . "All"))
        (query . (and arxiv))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; Datascience
      (group
@@ -384,7 +387,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +datascience") (:title . "All"))
        (query . (and datascience))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; Medium
      (group
@@ -393,7 +396,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +medium") (:title . "All"))
        (query . (and medium))
        )
-      (:hide nil))
+      (:hide t))
 
 
 
@@ -405,7 +408,7 @@ minibuffer with something like `exit-minibuffer'."
        (search (:filter . "@12-months-ago +comic +dilbert") (:title . "Dilbert"))
        (search (:filter . "@12-months-ago +comic +xkcd") (:title . "xkcd"))
        )
-      (:hide nil))
+      (:hide t))
 
      ;; Ungrouped
      (group

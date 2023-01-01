@@ -250,6 +250,7 @@ The actual medrxiv blog
 *** [[https://realpython.com/atom.xml][real python]]             :python:edu:
 *** [[https://rss.app/feeds/QzriqACyiEobEdLw.xml][google technology]] :rssapp:
 *** [[https://rss.app/feeds/OYDPQ8NQR3NOVLJ1.xml][gartner]]
+*** [[https://css-tricks.com/feed/][css-tricks]] :technology:
 ** Medium :medium:
 *** [[https://medium.com/feed/tag/data-science][medium tagged data-science]]
 *** [[https://medium.com/feed/tag/datascience][medium tagged datascience]]
@@ -260,3 +261,4 @@ The actual medrxiv blog
 :PROPERTIES:
 :ID:       A324C13C-3AED-4769-AFB1-7544A73C251F
 :END:
+*** https://embeddedartistry.com/feed/ :technology:

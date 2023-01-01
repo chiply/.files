@@ -10,6 +10,11 @@
         ;; IMPORTANT!  otherwise completion-at-point doesn't use vertico!
         completion-in-region-function 'consult-completion-in-region)
 
+  (setq
+   consult-ripgrep-args
+   "rg --hidden --glob \"!.git\" --null --line-buffered --color=never --max-columns=1000 --path-separator /   --smart-case --no-heading --line-number ."
+   )
+
   (defun z-consult-ripgrep (&optional arg)
     (interactive "P")
     (let ((consult-preview-key "M-."))

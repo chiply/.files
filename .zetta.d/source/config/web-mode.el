@@ -25,10 +25,9 @@
 
   :general
   (
-   :states '(normal visual insert)
    :keymaps '(web-mode-map)
-   "M-e" 'er/expand-region
-   "C-e" 'web-mode-mark-and-expand
+   "M-e" 'web-mode-mark-and-expand
+   "C-e" 'er/expand-region
    "s-j" 'web-mode-element-next
    "s-k" 'web-mode-element-previous
    "s-C-j" 'web-mode-element-sibling-next
@@ -53,5 +52,6 @@
 
   :hook ((web-mode . (lambda () (smartparens-mode +1)))
          (use-package--web-mode--post-config . z-brushup)
+         (mhtml-mode . web-mode)
          )
   )
