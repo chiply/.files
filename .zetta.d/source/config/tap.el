@@ -136,8 +136,8 @@ used to override thing at point for whatever reason"
                snippet-mode-map shell-mode-map vterm-mode-map
                embark-collect-mode-map wgrep-mode-map csv-mode-map
                help-mode-map helpful-mode-map text-mode-map
-               pubmed-show-mode-map json-mode-map eww-mode-map jmespath-mode-map
-               jsonian-mode-map)
+               pubmed-show-mode-map json-mode-map eww-mode-map
+               jmespath-mode-map jsonian-mode-map js2-mode-map)
    "C-e" 'er/expand-region
    ))
 
