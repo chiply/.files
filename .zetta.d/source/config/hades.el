@@ -3,81 +3,59 @@
 
 ;; pre build hydras?... also would we want these to be verbose?
 
-;; config.. will push maps to a list, for each element in the list, we
-;; will run this eval to create the hydra. DONE
+;; more features:
+;;;; fine grain control for hydra: color, exit for certain functions, messages, etc...
+
+;;;; define higher level keybindings! what would a consistent way to do this be?  basically, invoke a 
+;;;; ohhhh, could we define the hydra on the fly?  or would this interfere withe potential customizeability... I guess we can do both, fall back to defining it on the fly.
+;; basically though, there would be a key like s-. would allow the end user to pass a prefix
 
 ;; nesting? DONE
-
-;; how to include docuemntation
+;; finer nesting: actualy traversal through the tpl of hydras
 
 ;; calculate columns DONE
 ;;; TODO column overflow, what to do...
 
 ;; prefix key to show docs instead?
 
-;; which-key like behavor
-
-;;(require 'evil)
-;;(require 'which-key)
-;;;; evil-window
-
-;; does which key undo still work?
-
-;; example for how this could replace declaring a hydra
-;; two usecases -- turning an existing keymap into a hydra
-;; declaring an entirely new keymap, binding keys, and then making
-;; iinto a hades
-
-
-;; easy way to get exiting hydras?  would emulate which keys behavior... but would probably lose which key features
-
-
-
 (setq hades-registry '())
-(setq hades-max-height 10)
+(setq hades-max-height 20)
 
 
 
-(defun hades (map)
+(defun hades (tpl)
   (eval
    `(defhydra
       ;; name
-      ,(intern (concat "hades-" map))
+      ,(intern (concat "hades-" (car tpl)))
       ;; columns
-      (:columns ,(+ 1 (/ (length
-                          (which-key--get-keymap-bindings
-                           (intern map)
-                           nil nil nil
-                           t ; prefix
-                           t ; evil
-                           ))
+      (:columns ,(+ 1 (/ (length (which-key--get-keymap-bindings (cadr tpl) nil nil nil t t))
                          hades-max-height)))
       ;; heads
-      ,@(mapcar (lambda (x)
-                  (list (car x) (intern (cdr x)) (cdr x)))
-                (which-key--get-keymap-bindings
-                 (intern map)
-                 nil nil nil
-                 t ; prefix
-                 t ; evil
-                 ))
+      ,@(mapcar
+         (lambda (x) (list (car x) (intern (cdr x)) (cdr x)))
+         (which-key--get-keymap-bindings (cadr tpl) nil nil nil t t) 
+         )
       ;; other useful keys (see defhydra+)
       ("q" nil "quit"))))
 
 
-;; evil-window
-
-
-
-
-(add-to-list 'hades-registry "evil-window-map")
-(add-to-list 'hades-registry "hlt-map")
+;; each config can use one of these lines to create a convenient hydra
+(add-to-list 'hades-registry `("evil-window-map" ,evil-window-map))
+(add-to-list 'hades-registry `("hlt-map" ,hlt-map))
+(add-to-list 'hades-registry `("lsp-mode-map" ,lsp-mode-map))
 
 
 ;; create all the hades
-(-map
- (lambda (mapnm) (when (keymapp (intern mapnm)) (hades mapnm)))
- hades-registry)
+(defun hades-create-hydras ()
+  (-map
+   (lambda (tpl) (hades tpl))
+   hades-registry)
+  )
+
+
+;; create the hydras
+(hades-create-hydras)
 
 
 

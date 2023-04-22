@@ -14,7 +14,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="refined"
+#ZSH_THEME="refined"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
@@ -27,13 +27,15 @@ zstyle ':omz:update' frequency 1
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(
-    codeclimate common-aliases copybuffer copyfile copypath dash
+    codeclimate common-aliases aliases alias-finder copybuffer copyfile copypath
     dirhistory docker docker-compose extract fd frontend-search gh
-    brew git-extras gitfast git-lfs history httpie jsontools pip
+    brew git-extras gitfast git-lfs git-prompt history httpie jsontools pip
     ripgrep safe-paste screen terraform tmux themes tmuxinator
-    zsh-autosuggestions
+    zsh-autosuggestions kube-ps1 aws virtualenv npm dirpersist kubectl
 )
 source $ZSH/oh-my-zsh.sh
+export KUBE_PS1_BINARY=kubectl
+export KUBE_PS1_NS_ENABLE=true
 
 
 
@@ -54,6 +56,9 @@ export GEM_HOME="$HOME/.gem"
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+
 
 # mcfly
 #export MCFLY_RESULTS_SORT=LAST_RUN
@@ -81,7 +86,10 @@ complete -C '/usr/local/bin/aws_completer' awslocal
 
 # autosuggestion
 znap source marlonrichert/zsh-autocomplete
-bindkey autosuggest-fetch '^ '
+bindkey "^ " autosuggest-fetch
+bindkey "^f" forward-char
+bindkey "^w" forward-word
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # autocompletion
 zstyle ':autocomplete:*' min-input 2
@@ -93,7 +101,7 @@ zstyle ':autocomplete:*' insert-unambiguous yes
 
 
 # syntax highlighting
-source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 
@@ -117,5 +125,32 @@ vterm_printf(){
 }
 
 
-# from https://github.com/doomemacs/doomemacs/issues/3546
+function virtualenv_info { 
+    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+}
+
+# kubernetes autocompletion
+source <(kubectl completion zsh)
+
+alias cat="bat --theme=GitHub --style=\"numbers,changes,header\""
+alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
+
+
+export VIRTUAL_ENV_DISABLE_PROMPT=0
+export SHOW_AWS_PROMPT=false
+
+
+# lots of prompt features add to RPROMPT, but I dislike this as it
+# breaks up the information and can also cause issues with display
+RPROMPT=''
+
+
+
+
+
+export PROMPT=$'\n''%n@%m $(git_super_status) $(git rev-parse --show-prefix 2> /dev/null || pwd )'$'\n''$(aws_prompt_info)*$(kube_ps1)*$(virtualenv_info)'$'\n''x---}-> '
+
+
+
+
 

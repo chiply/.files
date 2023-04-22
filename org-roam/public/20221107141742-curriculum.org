@@ -1,6 +1,6 @@
 :PROPERTIES:
 :ID:       7CE24369-0A09-41C1-A2FF-13B9D3A8BC35
-:mtime:    20221217093639 20221217091020 20221217090221 20221217090046 20221217085826 20221217085746 20221217085604 20221217085416 20221109094940 20221109094828 20221109094545 20221109094044 20221107181421 20221107181223 20221107180821 20221107180321 20221107175932 20221107175621 20221107175147 20221107171657 20221107171435 20221107171327 20221107170551 20221107170116 20221107165329 20221107165202 20221107155601 20221107155220 20221107142615 20221107142504 20221107142301 20221107142002 20221107141917 20221107141804
+:mtime:    20230206081152 20230111101407 20230111101311 20230111101104 20230111083021 20230111082841 20230111082804 20230110163131 20230110153816 20221217093639 20221217091020 20221217090221 20221217090046 20221217085826 20221217085746 20221217085604 20221217085416 20221109094940 20221109094828 20221109094545 20221109094044 20221107181421 20221107181223 20221107180821 20221107180321 20221107175932 20221107175621 20221107175147 20221107171657 20221107171435 20221107171327 20221107170551 20221107170116 20221107165329 20221107165202 20221107155601 20221107155220 20221107142615 20221107142504 20221107142301 20221107142002 20221107141917 20221107141804
 :ctime:    20221107141742
 :END:
 #+title: Curriculum
@@ -12,6 +12,8 @@
 **** [[id:33A4D263-5E25-4F77-90BA-6BC6C84160F1][python-patterns]]
 *** [[id:59879B34-8D17-4A99-BAFB-B38ED9D47D9B][Algorithms]]
 **** [[id:2FF8627E-392D-4FC8-AED6-079BF880F20C][Grind 75]]
+**** (some algorithms textbook eg from MIT) for canonical algorithms
+**** (some video course for canonical algorithms explanation)
 ** System
 *** [[id:275BAB65-04E2-4A8C-89BE-31DFD236AB89][System Design]]
 **** [[id:ADB99701-AA2E-4DD4-B6EF-7DF2E7006958][system-design-primer]]
@@ -22,24 +24,26 @@
 * Technology
 ** AWS (certification cource 72)
 ** Genomics and Genetics data processing
+** Front end app development (React)
 * Practicums / Personal Projects / work projects
 Design to synthesize the above material into projects that are open ended and do not necessarily have deadlines or acceptance criteria/completion criteria.
 ** Source code reviews
 Skills: algorithms, design patterns, python package architecture
-*** diagrams
+*** diagrams application
 *** dagster
 *** great_expectations
 ** Manual time
 Time spent with manuals (docs) for critical technology and services.  Goal is to read the whole manual. 
 *** dagster
 *** Redshift
-*** lambda
+*** AWS Lambda
 *** docs.python.org
 * Other resources:
 - Real Python
 
 * Timeline
 - Need to determine volume of each element above and place on a schedule
+- Assume we have a little less than 80% of the year to make this happen - roughly 40 weeks.  This will nicely chunk out quarters that are 10 weeks in size.  For each of these chunks, we could assume 8 weeks planned and 2 weeks overflow (another 80-20 rule).
 
 * Tracking / notes
 Monorepo design should help to stay organized easily. 

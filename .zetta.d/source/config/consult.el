@@ -28,7 +28,7 @@
    ;;z-consult-ripgrep
    consult-bookmark
    consult-project-buffer
-   ;;org-roam-node-insert
+   org-roam-node-insert
    ;;z-org-roam-node-find
    ;;z-org-roam-capture
    :preview-key (kbd "M-.")
