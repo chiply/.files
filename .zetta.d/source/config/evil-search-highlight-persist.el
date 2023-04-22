@@ -5,8 +5,8 @@
   :brushup
   (add-to-list 'brushup-styles
                '(set-face-attribute 'evil-search-highlight-persist-highlight-face nil
-                                    :foreground nil
-                                    :background nil
+                                    :foreground 'unspecified
+                                    :background 'unspecified
                                     :underline t))
 
   :general

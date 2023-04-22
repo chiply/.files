@@ -9,6 +9,11 @@
 (setenv "BROWSER" "chrome")
 
 
+;; by default, make inline images look like thumbnails.  If using
+;; actual width of the image, then it takes up too much space in the
+;; buffer
+(setq org-image-actual-width 200)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Flow / tasks
@@ -32,6 +37,16 @@
 (use-package htmlize )
 (use-package ox-jekyll-md)
 
+;; from the docs
+;; "To stop Org from evaluating code blocks to speed exports, use the
+;; header argument ‘:eval never-export’ (see Evaluating Code
+;; Blocks). To stop Org from evaluating code blocks for greater
+;; security, set the org-export-use-babel variable to nil, but
+;; understand that header arguments will have no effect."
+;; NOTE setting this to nil causes issues.  when dealing with an org
+;; document and hot exporting, you can increase efficiency by
+;; narrowing the buffer
+(setq org-export-use-babel t)
 
 ;; convenient super bindinigs for organization
 (setq z-captured-from-win "")

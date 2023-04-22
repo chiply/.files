@@ -1,4 +1,5 @@
 ;; https://github.com/minad/vertico
+
 (use-package vertico
   :straight (:files (:defaults "extensions/*"))
 
@@ -30,8 +31,9 @@
    vertico-multiform-commands
    `(
      ;; builtins
-     (find-file flat)
+     ;;(find-file flat)
      ;;(execute-extended-command buffer (:not reverse)
+     (execute-extended-command indexed)
      ;;,(lambda (_) (unless (equal text-scale-mode-amount 0)
      ;;(text-scale-set -2)))
      ;;(vertico-buffer-display-action
@@ -47,7 +49,7 @@
      (helpful-function grid)
      (helpful-command grid)
 
-     (consult-buffer flat)
+     ;;(consult-buffer flat)
      (consult-dir reverse)
      (consult-line
       buffer (:not reverse)
@@ -57,7 +59,8 @@
        .
        (display-buffer-in-side-window
         (side . right) (slot . -1) (window-width . 0.25))))
-     (projectile-switch-project flat)
+
+     ;;(projectile-switch-project flat)
 
      ;; z-*
      (z-consult-ripgrep
@@ -69,9 +72,9 @@
        (display-buffer-in-side-window
         (side . right) (slot . -1) (window-width . 0.25))))
 
-     (z-projectile-find-file flat)
+     ;;(z-projectile-find-file flat)
 
-     (z-completion-at-point flat)
+     ;;(z-completion-at-point flat)
      )
    )
 
@@ -159,6 +162,7 @@
     (when (vertico-quick-jump)
       (embark-act arg)))
 
+
   :brushup
   (add-to-list 'brushup-styles
                '(progn
@@ -240,7 +244,9 @@
               rjsx-mode-map
               text-mode-map
               org-mode-map
-              bibtex-mode-map)
+              bibtex-mode-map
+              json-mode-map
+              )
    "<C-SPC>" 'z-vertico-IS
    )
   
@@ -248,3 +254,4 @@
          ;; needed for vertico repeatt (and therefore the intellisense)
          (minibuffer-setup . vertico-repeat-save)
          ))
+

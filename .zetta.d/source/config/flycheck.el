@@ -48,10 +48,10 @@
                '(progn
                   (set-face-attribute 'flycheck-fringe-error nil
                                       :foreground brushup-fg
-                                      :background (modus-themes-color 'red-nuanced-bg))
+                                      :background (modus-themes-get-color-value 'bg-red-nuanced))
                   (set-face-attribute 'flycheck-fringe-warning nil
                                       :foreground brushup-fg
-                                      :background (modus-themes-color 'blue-nuanced-bg))
+                                      :background (modus-themes-get-color-value 'bg-blue-nuanced))
                   (set-face-attribute 'flycheck-fringe-info nil
                                       :foreground brushup-fg
                                       :background brushup-bg-1_0)

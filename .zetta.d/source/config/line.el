@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+;; REFACTOR!
+
 
 (setq default-line-align-left-devel
       '(
@@ -12,6 +14,8 @@
                  (propertize
                   (window-parameter (selected-window) 'ace-window-path)
                   'face 'focus-focused)))
+        " "
+        (:eval (spinner-print spinner-current))
         " "
         (:eval 
          (lsp-headerline--build-string)

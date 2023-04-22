@@ -28,6 +28,8 @@
   (evil-set-initial-state 'Info-mode 'normal)
   (evil-set-initial-state 'with-editor-mode 'emacs)
   (evil-set-initial-state 'eww-mode 'emacs)
+  (evil-set-initial-state 'minimap-sb-mode 'emacs)
+  (evil-set-initial-state 'minimap-mode 'emacs)
 
   (evil-mode 1)
   
