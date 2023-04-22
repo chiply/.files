@@ -171,7 +171,7 @@
                                       :inherit nil
                                       )
                   (set-face-attribute 'tab-line nil
-                                      :background (modus-themes-color 'blue-nuanced-bg)
+                                      :background (modus-themes-get-color-value 'bg-blue-nuanced)
                                       :height 1.2
                                       :underline "gray"
                                       ;; basically nil

@@ -24,7 +24,6 @@
 
 (-each z-files-that-need-creating 'z-touch-maybe)
 
-
 (setq
  user-files
  '("display.el" "interface.el" "desktop.el" "csv-mode.el"
@@ -37,24 +36,22 @@
    "all-the-icons.el" "remote.el" "minimalize.el" "projectile.el"
    "treemacs.el" "treemacs-projectile.el" "treemacs-all-the-icons.el"
    "tokei.el" "security.el" "grep.el" "replace.el" "ag.el" "wgrep.el"
-   "iedit.el" "lsp.el" "dap-mode.el" "python.el" "web-mode.el"
-   "js2-mode.el" "rjsx-mode.el" "emmet-mode.el" "shell.el"
-   "sh-script.el" "vterm.el" "foreman.el" "foreman_conf.el" "citar.el"
-   "vc.el" "transient.el" "magit.el" "forge.el" "git-gutter.el"
-   "docker.el" "dockerfile-mode.el" "docker-compose-mode.el"
-   "utility.el" "pocket-reader.el" "convention.el" "tree-mode.el"
-   "unidecode.el" "define-word.el" "mw-thesaurus.el" "sx.el"
-   "pubmed.el" "helm-wikipedia.el" "elfeed.el" "window.el"
-   "ace-window.el" "windmove.el" "avy.el" "olivetti.el" "winds.el"
-   "evil.el" "evil-anzu.el" "evil-matchit.el" "evil-surround.el"
-   "evil-collection.el" "evil-exchange.el" "evil-indent-plus.el"
-   "evil-search-highlight-persist.el" "keys.el" "consult-lsp.el"
+   "iedit.el" "dap-mode.el" "python.el" "web-mode.el" "js2-mode.el"
+   "rjsx-mode.el" "emmet-mode.el" "shell.el" "sh-script.el"
+   "foreman.el" "foreman_conf.el" "citar.el" "vc.el" "transient.el"
+   "magit.el" "forge.el" "git-gutter.el" "docker.el"
+   "dockerfile-mode.el" "docker-compose-mode.el" "utility.el"
+   "pocket-reader.el" "convention.el" "tree-mode.el" "unidecode.el"
+   "define-word.el" "mw-thesaurus.el" "sx.el" "pubmed.el"
+   "helm-wikipedia.el" "ace-window.el" "windmove.el" "avy.el"
+   "olivetti.el" "winds.el" "evil.el" "evil-anzu.el" "evil-matchit.el"
+   "evil-surround.el" "evil-collection.el" "evil-exchange.el"
+   "evil-indent-plus.el" "evil-search-highlight-persist.el" "keys.el"
    "dumb-jump.el" "bookmark-view.el" "views.el" "line-utils.el"
-   "tab-line.el" "line.el" "sql.el" "sqlite.el" "dired.el"
-   "all-the-icons-dired.el" "dired-subtree.el" "dired-ranger.el"
-   "completion.el" "cape.el" "dabbrev.el" "recursion-indicator.el"
-   "helm.el" "marginalia.el" "orderless.el" "vertico.el" "embark.el"
-   "embark-consult.el" "magneto.el" "consult.el" "tap.el"
+   "sql.el" "sqlite.el" "all-the-icons-dired.el" "dired-subtree.el"
+   "dired-ranger.el" "completion.el" "cape.el" "dabbrev.el"
+   "recursion-indicator.el" "helm.el" "marginalia.el" "orderless.el"
+   "embark.el" "embark-consult.el" "magneto.el" "consult.el" "tap.el"
    "tap-block.el" "helpful.el" "elisp-mode.el" "narrow.el" "ov.el"
    "vimish-fold.el" "editing.el" "smartparens.el" "hungry-delete.el"
    "prose.el" "buffer.el" "ibuffer.el" "bufler.el"
@@ -68,20 +65,52 @@
    "flycheck-projectile.el" "hercules.el" "evil-fringe-mark.el"
    "modern-fringes.el" "rainbow-mode.el" "image-mode.el"
    "browse-url.el" "minibar.el" "spray.el" "mermaid-mode.el"
-   "hyperbole.el" "cleanup.el" ))
+   "minimap.el" "hyperbole.el" "kubernetes-el.el" "kubel.el"
+   "git-link.el" "python-pytest.el" "multi-compile.el" "spinner.el"
+   "compile.el" "fancy-compilation.el" "cleanup.el"))
 
 ;; load user-files and provate lisp code
 (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
 (load-file "~/.private.el")
+;; LEFT OFF did elfeed, test this and then move onto the other more
+;; complex configurations
+
+
+
+;; trying out z-lisp methofology
+;; todo -- NEED TO ACTUALLY CONFIRM THIS IS AUTOLOADING STUFF
+;; should really automate pullling the files and then make the user
+;; use a separatesandbox directory for code they don't actually want
+;; to load during initialization
+
+;; can do this with site-lisp
+
+
+(load-file "~/.files/.zetta.d/source/config/use-package-file.el")
+(add-to-list 'load-path (expand-file-name (concat user-emacs-directory "source/z-lisp")))
+(setq
+ user-files-ext-features
+ '(
+   "z-tree-sitter" "z-elfeed" "z-org-agenda" "z-dired" "z-lsp"
+   "z-vertico" "z-vterm" "z-tab-line" "z-window" "z-org-super-agenda"
+   "z-snippets" "z-line"
+   ))
+;; require all the features
+(-map (lambda (feature) (require (intern feature))) user-files-ext-features)
+
+
+
+
+
 
 ;; loading some packages here until I figure out the issues
 (defun z-tmp-load-org-and-snip ()
   (interactive)
   (let ((user-files
-         '("snippets.el" "org-ql.el" "org-agenda.el"
-           "org-super-agenda.el" "org-capture.el"
+         '( "org-ql.el" 
+            "org-capture.el"
            "org-roam.el" "org-roam-ui.el"
-           "org-roam-timestamps.el" "org-ref.el"
+           "org-roam-timestamps.el" "org-ref.el" "org-modern.el"
            "biblio.el" "org-noter.el" "pdf-tools.el"
            "org-pdftools.el" "org-noter-pdftools.el"
            "org.el" "citar-org-roam.el" "elfeed-org.el"
@@ -98,13 +127,15 @@
   ;;(z-ws-cfg-bv-new-bv "default")
   )
 
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("c505ae23385324c21821b24c9cc1d68d8da6f3cfb117eb18826d146b8ec01b15" "4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" "de43637da82e6127fd76472ae58682927f25693fcccb16161be12f2331bcc7cc" default)))
+   '("bfc0b9c3de0382e452a878a1fb4726e1302bf9da20e69d6ec1cd1d5d82f61e3d" "9724b3abaf500b227faa036dcf817abed9764802835ba6e8d1e475c877205157" "c505ae23385324c21821b24c9cc1d68d8da6f3cfb117eb18826d146b8ec01b15" "4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" "de43637da82e6127fd76472ae58682927f25693fcccb16161be12f2331bcc7cc" default))
+ '(helm-minibuffer-history-key "M-p"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -113,4 +144,5 @@
  '(fill-column-indicator ((t (:foreground "gray80" :weight normal))))
  '(multi-magit-repo-heading ((t (:inherit magit-section-heading :box nil))))
  '(speedbar-selected-face ((t (:foreground "#008B45" :underline t)))))
+
 

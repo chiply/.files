@@ -91,7 +91,7 @@ seem to require loading after the client starts up"
                                               (color-lighten-name brushup-fg (- 60))
                                             brushup-bg-2
                                             )
-                              :foreground nil)
+                              :foreground 'unspecified)
 
           ;;(set-frame-font "Courier 12" nil t)
 
@@ -145,7 +145,7 @@ seem to require loading after the client starts up"
           (set-face-attribute
            'tab-bar nil
            :height 1.3
-           :background (modus-themes-color 'green-nuanced-bg)
+           :background (modus-themes-get-color-value 'bg-green-nuanced)
            :foreground brushup-fg-1
            :inherit nil
            :underline nil

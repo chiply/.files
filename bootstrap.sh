@@ -87,3 +87,16 @@ cd chemacs
     # ~/.doom.d/bin/doom install
 
 
+
+## language servers
+npm install -g vscode-json-languageserver
+
+
+
+# ##
+# mkdir -p ~/tmp/hishtory
+# cd ~/tmp/hishtory
+# git clone https://github.com/ddworken/hishtory.git
+# ./hishtory/hishtory-binary install --offline
+# cd
+

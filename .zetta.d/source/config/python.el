@@ -39,3 +39,11 @@
 ;; autoformatting
 (use-package blacken)
 
+
+;; not the greatest, but it's one of the better solutions that
+;; actually supports type hinting
+(use-package numpydoc
+  :config
+  (setq numpydoc-insertion-style nil)
+  :bind (:map python-mode-map
+              ("C-c C-n" . numpydoc-generate)))

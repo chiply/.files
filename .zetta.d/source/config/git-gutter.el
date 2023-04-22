@@ -13,13 +13,13 @@
                         brushup-git-gutter-background brushup-bg)
                   (set-face-attribute 'git-gutter:added nil
                                       :foreground brushup-git-gutter-foreground
-                                      :background (modus-themes-color 'green-nuanced-bg))
+                                      :background (modus-themes-get-color-value 'bg-green-nuanced))
                   (set-face-attribute 'git-gutter:deleted nil
                                       :foreground brushup-git-gutter-foreground
-                                      :background (modus-themes-color 'red-nuanced-bg))
+                                      :background (modus-themes-get-color-value 'bg-red-nuanced))
                   (set-face-attribute 'git-gutter:modified nil
                                       :foreground brushup-git-gutter-foreground
-                                      :background (modus-themes-color 'yellow-nuanced-bg))
+                                      :background (modus-themes-get-color-value 'bg-yellow-nuanced))
                   (set-face-attribute 'git-gutter:separator nil
                                       :foreground brushup-git-gutter-foreground
                                       :background brushup-git-gutter-background)))

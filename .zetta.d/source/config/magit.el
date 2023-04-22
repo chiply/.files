@@ -1,3 +1,6 @@
+(use-package compat
+  :demand t)
+
 (use-package magit
   :init
   (setq magit-branch-read-upstream-first 'fallback)

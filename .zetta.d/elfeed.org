@@ -251,6 +251,8 @@ The actual medrxiv blog
 *** [[https://rss.app/feeds/QzriqACyiEobEdLw.xml][google technology]] :rssapp:
 *** [[https://rss.app/feeds/OYDPQ8NQR3NOVLJ1.xml][gartner]]
 *** [[https://css-tricks.com/feed/][css-tricks]] :technology:
+*** [[https://lakefs.io/blog/feed/][lakefs blog]] :dataengineering:
+*** [[https://martinfowler.com/feed.atom][Martin Fowler Blog]] :dataengineering:
 ** Medium :medium:
 *** [[https://medium.com/feed/tag/data-science][medium tagged data-science]]
 *** [[https://medium.com/feed/tag/datascience][medium tagged datascience]]
@@ -262,3 +264,6 @@ The actual medrxiv blog
 :ID:       A324C13C-3AED-4769-AFB1-7544A73C251F
 :END:
 *** https://embeddedartistry.com/feed/ :technology:
+*** https://feeds.buzzsprout.com/186154.rss :streaming_audio:
+*** [[https://duckdb.org/feed][duckdb blog]] :dataengineering:
+*** [[https://feeds.libsyn.com/419861/rss][kubernetes podcast from google]] :dataengineering:
