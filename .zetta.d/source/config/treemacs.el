@@ -3,7 +3,7 @@
   :demand t 
 
   :init
-    (setq treemacs-persist-file (expand-file-name ".data/treemacs/.cache/treemacs-persist" user-emacs-directory))
+  (setq treemacs-persist-file (expand-file-name ".data/treemacs/.cache/treemacs-persist" user-emacs-directory))
 
   
   :config

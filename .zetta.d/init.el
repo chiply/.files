@@ -1,3 +1,4 @@
+
 ;; bootstrap
 (add-to-list 'load-path "~/.files/.zetta.d/source/bootstrap")
 (require 'bootstrap)
@@ -34,7 +35,7 @@
    "tree-sitter-langs.el" "dimmer.el" "focus.el" "face-remap.el"
    "default-text-scale.el" "hl-line.el" "lin.el" "hide-mode-line.el"
    "all-the-icons.el" "remote.el" "minimalize.el" "projectile.el"
-   "treemacs.el" "treemacs-projectile.el" "treemacs-all-the-icons.el"
+   "treemacs-all-the-icons.el" "treemacs.el" "treemacs-projectile.el"
    "tokei.el" "security.el" "grep.el" "replace.el" "ag.el" "wgrep.el"
    "iedit.el" "dap-mode.el" "python.el" "web-mode.el" "js2-mode.el"
    "rjsx-mode.el" "emmet-mode.el" "shell.el" "sh-script.el"
@@ -67,82 +68,35 @@
    "browse-url.el" "minibar.el" "spray.el" "mermaid-mode.el"
    "minimap.el" "hyperbole.el" "kubernetes-el.el" "kubel.el"
    "git-link.el" "python-pytest.el" "multi-compile.el" "spinner.el"
-   "compile.el" "fancy-compilation.el" "cleanup.el"))
+   "compile.el" "fancy-compilation.el" "copilot.el" "org-ql.el"
+   "org-capture.el" "org-roam.el" "org-roam-ui.el"
+   "org-roam-timestamps.el" "org-ref.el" "org-modern.el" "biblio.el"
+   "org.el" "citar-org-roam.el" "elfeed-org.el" "ob-mermaid.el"
+   "eaf.el" "cleanup.el"))
+
+
+;;"org-noter.el" "pdf-tools.el" "org-pdftools.el" "org-noter-pdftools.el"
+
 
 ;; load user-files and provate lisp code
 (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
 (load-file "~/.private.el")
-;; LEFT OFF did elfeed, test this and then move onto the other more
-;; complex configurations
 
-
-
-;; trying out z-lisp methofology
-;; todo -- NEED TO ACTUALLY CONFIRM THIS IS AUTOLOADING STUFF
-;; should really automate pullling the files and then make the user
-;; use a separatesandbox directory for code they don't actually want
-;; to load during initialization
-
-;; can do this with site-lisp
-
-
+;; z-lisp. slowly migrating from above files into z-lisp
 (load-file "~/.files/.zetta.d/source/config/use-package-file.el")
-(add-to-list 'load-path (expand-file-name (concat user-emacs-directory "source/z-lisp")))
+
+(add-to-list
+ 'load-path
+ (expand-file-name
+  (concat user-emacs-directory "source/z-lisp")))
 (setq
  user-files-ext-features
  '(
    "z-tree-sitter" "z-elfeed" "z-org-agenda" "z-dired" "z-lsp"
-   "z-vertico" "z-vterm" "z-tab-line" "z-window" "z-org-super-agenda"
-   "z-snippets" "z-line"
+   "z-vertico" "z-vterm" "z-tab-line" "z-window"
+   "z-org-super-agenda" "z-snippets" "z-line"
    ))
 ;; require all the features
 (-map (lambda (feature) (require (intern feature))) user-files-ext-features)
-
-
-
-
-
-
-;; loading some packages here until I figure out the issues
-(defun z-tmp-load-org-and-snip ()
-  (interactive)
-  (let ((user-files
-         '( "org-ql.el" 
-            "org-capture.el"
-           "org-roam.el" "org-roam-ui.el"
-           "org-roam-timestamps.el" "org-ref.el" "org-modern.el"
-           "biblio.el" "org-noter.el" "pdf-tools.el"
-           "org-pdftools.el" "org-noter-pdftools.el"
-           "org.el" "citar-org-roam.el" "elfeed-org.el"
-           "ob-mermaid.el" "eaf.el"
-           )))
-    (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
-    )
-  )
-
-(defun z-tmp-load-whole-init ()
-  (interactive)
-  (z-load-config-file (concat user-emacs-directory "init.el"))
-  (z-tmp-load-org-and-snip)
-  ;;(z-ws-cfg-bv-new-bv "default")
-  )
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("bfc0b9c3de0382e452a878a1fb4726e1302bf9da20e69d6ec1cd1d5d82f61e3d" "9724b3abaf500b227faa036dcf817abed9764802835ba6e8d1e475c877205157" "c505ae23385324c21821b24c9cc1d68d8da6f3cfb117eb18826d146b8ec01b15" "4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" "de43637da82e6127fd76472ae58682927f25693fcccb16161be12f2331bcc7cc" default))
- '(helm-minibuffer-history-key "M-p"))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(fill-column-indicator ((t (:foreground "gray80" :weight normal))))
- '(multi-magit-repo-heading ((t (:inherit magit-section-heading :box nil))))
- '(speedbar-selected-face ((t (:foreground "#008B45" :underline t)))))
 
 

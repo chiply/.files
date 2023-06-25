@@ -2,24 +2,14 @@
 :ID:       8376DF0F-1CAB-4037-8EE5-0A6EE88408BD
 :END:
 
-
-
 * elfeed :elfeed:
-
-
 ** https://rss.art19.com/techmeme-ridehome :podcast:technology:
 ** https://www.trackawesomelist.com/rss.xml :awesome:
-
 ** google alerts :google_alerts:
-
 *** [[https://www.google.com/alerts/feeds/13130175312220372401/1041989850633493049][Google Alerts: docker]]
-
 *** [[https://www.google.com/alerts/feeds/13130175312220372401/1041989850633493049][Google Alerts: dagster]]
-
 *** [[https://www.google.com/alerts/feeds/13130175312220372401/2682747375583402332][Google Alerts: sema4]]
-
 *** [[https://www.google.com/alerts/feeds/13130175312220372401/9762467059344056332][Google Alerts: genedx]]
-
 ** ghub :ghub:
 *** org-roam :org_roam:
 **** https://github.com/org-roam/org-roam/commits.atom
@@ -33,15 +23,11 @@
 **** https://github.com/great-expectations/great_expectations/commits.atom
 **** https://github.com/great-expectations/great_expectations/releases.atom
 **** https://github.com/great-expectations/great_expectations/tags.atom
-
 ** github :github:
-
 *** javascript
-
 **** https://mshibanami.github.io/GitHubTrendingRSS/daily/javascript.xml
 **** https://mshibanami.github.io/GitHubTrendingRSS/weekly/javascript.xml
 **** https://mshibanami.github.io/GitHubTrendingRSS/monthly/javascript.xml
-
 *** rust
 **** https://mshibanami.github.io/GitHubTrendingRSS/daily/rust.xml
 **** https://mshibanami.github.io/GitHubTrendingRSS/weekly/rust.xml
@@ -62,7 +48,6 @@
 **** https://mshibanami.github.io/GitHubTrendingRSS/daily/jupyter-notebook.xml
 **** https://mshibanami.github.io/GitHubTrendingRSS/weekly/jupyter-notebook.xml
 **** https://mshibanami.github.io/GitHubTrendingRSS/monthly/jupyter-notebook.xml
-
 ** tweets                                                              :tweets:
 *** [[https://rss.app/feeds/4jZWL4flfzgi1oyX.xml][mickey peterson]]      :rssapp:
 *** [[https://rss.app/feeds/zCyaqj9XE4J27bvN.xml][#dataengineering]]     :rssapp:
@@ -107,7 +92,6 @@
 *** https://aws.amazon.com/blogs/modernizing-with-aws/feed/
 *** https://aws.amazon.com/blogs/big-data/feed/
 ** youtube                                                            :youtube:
-
 *** tech :technology:
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJIfeSCssxSC_Dhc5s7woww][Lex Clips]]
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA][Computerphile]]
@@ -122,16 +106,13 @@
 *** industry :industry:
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfLnv9X8jyHTe6gJ4hVBo9Q][dagster]] :dagster:industry_update:
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCd6MoB9NC6uYN2grvUNT-Zg][aws]] :industry_update:
-
 *** math and datascience                                                 :math:
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A][Numberphile]] 
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw][3Blue1Brown]]
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCfzlCWGWYyIQ0aLC5w48gBQ][sentdex]]
 *** misc
 **** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAuUUnT6oDeKwE6v1NGQxug][ted]]
-
 ** podcasts                                                           :podcast:
-
 *** [[https://dataskeptic.libsyn.com/rss][data skeptic]] :datascience:
 *** [[https://changelog.com/practicalai/feed][practical ai]] :dataengineering:
 *** [[https://feeds.transistor.fm/aws-morning-brief][morning brief]] :industry:
@@ -159,21 +140,16 @@
 **** [[https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml][homepage]]
 **** [[https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml][technology]]
 **** [[https://rss.nytimes.com/services/xml/rss/nyt/Science.xml][science]]
-
 ** reddit                                                              :reddit:
 *** [[https://www.reddit.com/r/emacs.rss][r/emacs]] :emacs:
 *** [[https://www.reddit.com/r/dataengineering.rss][r/dataengineering]]
-
 ** science                                                            :science:
-
 *** [[https://www.nature.com/nature.rss][nature]]
-
 *** nejm
 **** https://www.nejm.org/trends/viewed/last1Week?viewType=Rss
 **** https://www.nejm.org/trends/cited/recent?viewType=Rss
 **** https://onesearch-rss.nejm.org/api/specialty/rss?context=nejm&specialty=genetics :genomics:
 **** https://onesearch-rss.nejm.org/api/specialty/rss?context=nejm&specialty=surgery
-
 *** arxiv :arxiv:
 - Leaving the feed names since they capture the query string and makes this more self documenting
 - See this post on recommendations around extracting atuhor lists and using atom https://cundy.me/post/elfeed/
@@ -197,7 +173,6 @@ The actual medrxiv blog
 **** http://connect.medrxiv.org/medrxiv_xml.php?subject=Health_Policy
 *** [[https://ncbiinsights.ncbi.nlm.nih.gov/feed/][ncbi]]
 *** [[https://fivethirtyeight.com/science/feed/][fivethirtyeight: science]] :fivethirtyeight:
-
 ** faang blogs :faang_blog:
 *** [[https://engineering.fb.com/feed/][facebook engineering blog]]
 *** [[https://www.precisely.com/feed][precicely blog]]
@@ -236,10 +211,7 @@ The actual medrxiv blog
 **** [[http://feeds.marketwatch.com/marketwatch/bulletins][market watch: bulletins]]
 **** [[http://feeds.marketwatch.com/marketwatch/StockstoWatch/][market watch: stocks to watch]]
 **** [[http://feeds.marketwatch.com/marketwatch/newslettersandresearch/][market watch: newsletters and research]]
-
-
 ** misc
-
 *** [[https://snyk.io/blog/feed/][snyk blog]]
 *** [[http://pitchfork.com/rss/news/][pitchfork]]
 *** https://dnascience.plos.org/feed/ :genomics:
