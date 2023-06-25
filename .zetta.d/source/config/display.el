@@ -1,8 +1,11 @@
 (z-side "^\\*Async*" 'top 1)
+(z-side "^\\*compilation*" 'top 1)
 (z-side "^\\*Shell*" 'top 3)
 (z-side "\\calendar-mode" 'top 1)
 (z-side "\\occur-mode" 'right -1 0.2)
 (z-side "\\grep-mode" 'right -1 0.25)
+(z-side "\\xref--xref-buffer-mode" 'right -1 0.25)
+
 (add-hook 'grep-mode-hook '(lambda () (toggle-truncate-lines 1)))
 (add-hook 'occur-mode-hook '(lambda () (text-scale-set -2)))
 (add-hook 'grep-mode-hook '(lambda () (text-scale-set -2)))

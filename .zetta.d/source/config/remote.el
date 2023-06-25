@@ -1,7 +1,6 @@
 (setq tramp-default-method "ssh")
 (setq tramp-shell-prompt-pattern "\\(?:^\\|\r\\)[^]#$%>\n]*#?[]#$%>].* *\\(^[\\[[0-9;]*[a-zA-Z] *\\)*")
 
-(use-package docker-tramp)
 
 ;; stuff to speed up tramp
 ;; probably doesn't have a significant affect

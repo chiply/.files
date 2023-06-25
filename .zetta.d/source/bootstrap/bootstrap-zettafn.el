@@ -219,9 +219,18 @@ Code:
     (message (concat "{" path "} already exists")))
   )
 
-
-
-
+;; leaves all but last dir
+(defun z-minify-path (path)
+  (let* ((path (abbreviate-file-name path))
+         (path-split (split-string path "/"))
+         (leaf-dir-name (car (last path-split 2)))
+         (path-split (butlast path-split 2))
+         )
+    (concat
+     (mapconcat
+      (lambda (s) (if (> (length s) 1) (substring s 0 2) (substring s 0 1)))
+      path-split "/")
+     "/" leaf-dir-name)))
 
 (provide 'bootstrap-zettafn)
 
