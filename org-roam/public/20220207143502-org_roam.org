@@ -1,6 +1,0 @@
-:PROPERTIES:
-:ID:       D975F550-E5CC-4074-9D60-9D38C62BBB66
-:mtime:    20220207143512
-:END:
-#+title: org-roam
-A knowledge management framework for [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]].

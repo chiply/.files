@@ -196,6 +196,16 @@ Code:
   (highlight-phrase "ERROR" 'error)
   (highlight-phrase "HOOK_ERRORED" 'modus-themes-subtle-red)
   (highlight-phrase "New Records" 'modus-themes-subtle-blue)
+
+  (highlight-phrase "COMMIT" 'modus-themes-subtle-red)
+  (highlight-phrase "ROLLBACK" 'modus-themes-red-nuanced)
+  (highlight-phrase "SELECT" 'modus-themes-subtle-blue)
+
+  (highlight-phrase "INSERT" 'modus-themes-subtle-green)
+  (highlight-phrase "UPDATE" 'modus-themes-subtle-green)
+  (highlight-phrase "DELETE" 'modus-themes-subtle-green)
+
+
   )
 
 

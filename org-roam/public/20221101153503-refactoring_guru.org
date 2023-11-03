@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       85236D63-282D-40AC-8F77-EC23C28BCFE9
-:ROAM_REFS: https://refactoring.guru/
-:mtime:    20221101153514
-:ctime:    20221101153503
-:END:
-#+title: Refactoring.Guru
-

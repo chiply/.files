@@ -2,17 +2,7 @@
 ;; FIRST: make 1) embark-action and 2) magneto-action sequential, with embark action being optional
 ;; adding other window manipulation stuff to compose a higher level interface
 ;; faces
-
-
-                                        ;TODO: framework-ify -- document exactly how to add new actions and embark-actions
-
-;;TODO: ace selection anywhere in key sequence DONE,
-;;TODO:  can improve by incorporating the initial key stroke (a,s,f) as initial inpit to avy-read DONE
-;;TODO: reset to default settings each time, maybe have an option for 'repeat last command' DONE
-
-
-                                        ;TODO: how to make this play nicely with embark? look at karthik implementation https://karthinks.com/software/fifteen-ways-to-use-embark/.  Leave this for way later as it will depend on the magneto function in the same way it depends on the ace function as in my/embark-magneto-action
-
+;;TODO: framework-ify -- document exactly how to add new actions and embark-actions
 
 ;; redifining avy-read to allow initial input
 (defun magneto-avy-read (initial-input tree display-fn cleanup-fn)
@@ -123,27 +113,22 @@
    ((string= magneto-destination-action "v") (split-window) (windmove-down))
    ((string= magneto-destination-action "H") (split-window-horizontally))
    ((string= magneto-destination-action "h") (split-window-horizontally) (windmove-right)))
-
   (cond
    ;; switch-buffer is candidateless, this would never be supplied by
    ;; embark
-   (magneto-embark-action (progn (message "HEYOOO") (funcall magneto-embark-action magneto-embark-candidate))) ; note the lack of '
+   (magneto-embark-action
+    (progn (message "HEYOOO")
+                                        ; note the lack of '
+           (funcall magneto-embark-action magneto-embark-candidate))) 
    ((string= magneto-action-action "switch-buffer")
     (switch-to-buffer buf-orig))
    ;; candidates possibly coming from embark
    ((string= magneto-action-action "execute-command")
-    (call-interactively (execute-extended-command nil))
-    
-    )
+    (call-interactively (execute-extended-command nil)))
    ((string= magneto-action-action "find-file")
-    (call-interactively 'find-file)
-    )
+    (call-interactively 'find-file))
    ((string= magneto-action-action "consult-buffer")
-    (consult-buffer)
-    )
-   )
-  
-
+    (consult-buffer)))
   (selected-window)
   )
 
@@ -231,32 +216,30 @@
 ;; was selcted via the command ''.  move is still legal"
 (defun magneto-set-magneto-source-action (setting)
   (interactive)
-  (setq magneto-source-action setting)
-  )
+  (setq magneto-source-action setting))
 
 (defun magneto-set-magneto-destination-action (setting)
   (interactive)
-  (setq magneto-destination-action setting)
-  )
+  (setq magneto-destination-action setting))
 
 (defun magneto-set-magneto-selection-action (setting)
   (interactive)
-  (setq magneto-selection-action setting)
-  )
+  (setq magneto-selection-action setting))
 
 (defun magneto-set-magneto-action-action (setting)
   (interactive)
-  (setq magneto-action-action setting)
-  )
+  (setq magneto-action-action setting))
 
 (defun magneto-set-magneto-destination-window (setting)
   (interactive)
   (setq magneto-destination-window (magneto-ace-get-window setting)))
 
-
 (defhydra+ hydra-magneto ()
   "
-%s(concat magneto-source-action \"-\" magneto-destination-action \"-\" magneto-select-action \"-\" magneto-action-action)
+%s(concat magneto-source-action \"-\"
+ magneto-destination-action \"-\"
+ magneto-select-action \"-\"
+ magneto-action-action)
 "
   ;; run the exit function, eg execute the move specifed by 
   ("s-m" magneto-move)
@@ -305,38 +288,24 @@
   (magneto-restore-defaults)
   (hydra-magneto/body))
 
-
-
-
 ;; embark integration
-(eval-when-compile
-  (defmacro my/embark-magneto-action (fn)
-    `(defun ,(intern (concat "my/embark-magneto-" (symbol-name fn))) ()
-       (interactive)
-       (with-demoted-errors "%s"
-         (magneto-restore-defaults)
-         ;; set the action and candidate
-         (setq
-          ;; the action should be an interactive command
-          magneto-embark-candidate (read-from-minibuffer "foobar prompt: ")
-          magneto-embark-action ',fn)
-          ;;(message magneto-embark-action)
-          ;;(error "foo")
-          (hydra-magneto/body)
-          ))))
+(defmacro my/embark-magneto-action (fn)
+  `(defun ,(intern (concat "my/embark-magneto-" (symbol-name fn))) ()
+     (interactive)
+     (with-demoted-errors "%s"
+       (magneto-restore-defaults)
+       (magneto-set-magneto-source-action "copy")
+       ;; set the action and candidate
+       (setq
+        ;; the action should be an interactive command
+        magneto-embark-candidate (read-from-minibuffer "foobar prompt: ")
+        magneto-embark-action ',fn)
+       ;; call the hydra
+       (hydra-magneto/body))))
 
-
-;; the action should be an interactive command
+;; the action should be an interactive command, i don't think they have to be though
 (define-key embark-file-map     (kbd "o") (my/embark-magneto-action find-file))
 (define-key embark-buffer-map   (kbd "o") (my/embark-magneto-action switch-to-buffer))
 (define-key embark-bookmark-map (kbd "o") (my/embark-magneto-action bookmark-jump))
 
-
-(general-define-key
- :keymaps 'override
- "s-m" 'magneto)
-
-
-
-;; also see if we really can make a unifieed interactive function that can be used for both -- this would come after implementing the above, not alternative to
-
+(general-define-key :keymaps 'override "s-m" 'magneto)

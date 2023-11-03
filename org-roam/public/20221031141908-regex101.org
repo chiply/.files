@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       BBE31256-C144-4859-A9DA-5CCDDE163EDA
-:ROAM_REFS: https://regex101.com/
-:mtime:    20221031141913
-:ctime:    20221031141908
-:END:
-#+title: regex101
-

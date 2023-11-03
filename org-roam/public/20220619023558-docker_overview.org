@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       0EB6CB6F-479F-438B-95BA-5454F9089E6F
-:mtime:    20220621070924
-:ctime:    20220619023558
-:END:
-#+title: Docker Overview
-

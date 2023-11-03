@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       4B65FD7A-63F8-4653-8971-252820BE874E
-:mtime:    20221109140528
-:ctime:    20221109140524
-:END:
-#+title: Change Data Capture
-

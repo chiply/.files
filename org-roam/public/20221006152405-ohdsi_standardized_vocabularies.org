@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       9E229861-47A7-4060-8425-4EA765B81CF3
-:ROAM_REFS: https://www.ohdsi.org/web/wiki/doku.php?id=documentation:vocabulary:sidebar
-:mtime:    20221006152409
-:ctime:    20221006152405
-:END:
-#+title: OHDSI Standardized Vocabularies
-

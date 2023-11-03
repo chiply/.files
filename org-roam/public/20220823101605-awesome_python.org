@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       31F1580B-F329-4882-A295-52EBF9DE929C
-:ROAM_REFS: https://github.com/vinta/awesome-python
-:mtime:    20221001101037 20221001100908 20220823101616
-:ctime:    20220823101605
-:END:
-#+title: Awesome Python
-

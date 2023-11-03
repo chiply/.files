@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       F25CD7AA-8D9F-43A2-B841-9C9C0CCCABA4
-:ROAM_REFS: https://riskstorming.com/
-:mtime:    20221110180829
-:ctime:    20221110180821
-:END:
-#+title: Risk-storming
-

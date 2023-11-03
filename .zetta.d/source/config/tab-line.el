@@ -26,6 +26,7 @@
          "magit-status-mode"
          "helpful-mode"
          "vterm-mode"
+         "shell-mode"
          "eaf-mode"
          ))
       (seq-sort-by
@@ -228,3 +229,6 @@
          (use-package--hydra--post-config . z-brushup)
          )
   )
+
+
+

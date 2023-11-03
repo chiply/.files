@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       E3DA0A47-63B6-40F4-8112-60DEA185E011
-:ROAM_REFS: https://aws.amazon.com/blogs/machine-learning/part-1-create-and-manage-amazon-emr-clusters-from-sagemaker-studio-to-run-interactive-spark-and-ml-workloads/
-:mtime:    20220221111717
-:ctime:    20220221111657
-:END:
-#+title: Create and manage Amazon EMR Clusters from SageMaker Studio to run interactive Spark and ML workloads – Part 1
-Orchestrating [[id:8B9D13B8-0F4D-465E-8377-D2448936DB95][EMR]] clusters from [[id:572D33C0-346E-42A1-BE64-5DCD91A8B7AF][SageMaker]]

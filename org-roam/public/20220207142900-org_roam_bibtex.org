@@ -1,9 +1,0 @@
-:PROPERTIES:
-:ID:       46C0ABDC-3DBC-46D6-80F2-9E1FCBDFD5F4
-:ROAM_REFS: https://github.com/org-roam/org-roam-bibtex
-:mtime:    20220207143542 20220207143435 20220207143236 20220207142921
-:ctime:    20220207142900
-:END:
-#+title: org-roam-bibtex
-Provides integration between [[id:D975F550-E5CC-4074-9D60-9D38C62BBB66][org-roam]] and [[id:288895DE-319D-4ADE-BC73-F4384F258FF0][BibTeX]] /
-citation management software.

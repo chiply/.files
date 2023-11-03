@@ -1,9 +1,0 @@
-:PROPERTIES:
-:ID:       8B433483-0EFC-43A3-BAB2-CF427E878C83
-:mtime:    20220207150522
-:ctime:    20220207150437
-:END:
-#+title: Deep Feature Synthesis
-Method of automated feature generation in [[id:0CD798F5-AA9D-465D-81AF-896B935F8A1B][Machine Learning]].
-
-See paper describing the methodology here [[id:050539CA-00AD-4402-BF51-4DC7BBCB7F36][Deep feature synthesis: towards automating data science endeavors]].

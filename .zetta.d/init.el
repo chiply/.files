@@ -3,24 +3,22 @@
 (add-to-list 'load-path "~/.files/.zetta.d/source/bootstrap")
 (require 'bootstrap)
 
-;; move to zettafn
-
 ;; use dash to do the loop
 (setq
  z-files-that-need-creating
  '("~/.dir-locals.el"
    "~/.private.el"
-   "~/.files/org-roam/daily/agenda.org"
-   "~/.files/org-roam/daily/agenda.org_archive"
-   ;; pub doesn't really need to be written as its in vc
-   "~/.files/org-roam/daily/agenda_pub.org"
-   "~/.files/org-roam/daily/agenda_pub.org_archive"
-   "~/.files/org-roam/daily/sprint.org"
-   "~/.files/org-roam/daily/sprint.org_archive"
-   ;; NOTE -- not sprint_pub as print is inherently private to the
-   ;; machine
-   "~/.files/org-roam/private"
-   "~/.files/org-roam/public"
+   ;;"~/.files/org-roam/daily/agenda.org"
+   ;;"~/.files/org-roam/daily/agenda.org_archive"
+   ;;;; pub doesn't really need to be written as its in vc
+   ;;"~/.files/org-roam/daily/agenda_pub.org"
+   ;;"~/.files/org-roam/daily/agenda_pub.org_archive"
+   ;;"~/.files/org-roam/daily/sprint.org"
+   ;;"~/.files/org-roam/daily/sprint.org_archive"
+   ;;;; NOTE -- not sprint_pub as print is inherently private to the
+   ;;;; machine
+   ;;"~/.files/org-roam/private"
+   ;;"~/.files/org-roam/public"
    ))
 
 (-each z-files-that-need-creating 'z-touch-maybe)
@@ -57,22 +55,34 @@
    "vimish-fold.el" "editing.el" "smartparens.el" "hungry-delete.el"
    "prose.el" "buffer.el" "ibuffer.el" "bufler.el"
    "all-the-icons-ibuffer.el" "bookmark.el" "bookmark+.el"
-   "bookmark-in-project.el" "dogears.el" "theme.el" "detached.el"
+   "bookmark-in-project.el" "dogears.el" "theme.el" ;;"detached.el"
    "yaml-mode.el" "yaml-path.el" "yaml.el" "yaml-pro.el"
-   "json-snatcher.el" "jsonian.el" "eww.el" "helm-themes.el"
-   "text-mode.el" "jmespath.el" "highlight-symbol.el" "terraform.el"
-   "ein.el" "adaptive-wrap.el" "flycheck.el" "flycheck-indicator.el"
-   "flycheck-pycheckers.el" "magit-diff-flycheck.el"
-   "flycheck-projectile.el" "hercules.el" "evil-fringe-mark.el"
-   "modern-fringes.el" "rainbow-mode.el" "image-mode.el"
-   "browse-url.el" "minibar.el" "spray.el" "mermaid-mode.el"
-   "minimap.el" "hyperbole.el" "kubernetes-el.el" "kubel.el"
-   "git-link.el" "python-pytest.el" "multi-compile.el" "spinner.el"
-   "compile.el" "fancy-compilation.el" "copilot.el" "org-ql.el"
-   "org-capture.el" "org-roam.el" "org-roam-ui.el"
-   "org-roam-timestamps.el" "org-ref.el" "org-modern.el" "biblio.el"
-   "org.el" "citar-org-roam.el" "elfeed-org.el" "ob-mermaid.el"
-   "eaf.el" "cleanup.el"))
+   "helm-themes.el" "text-mode.el" "jmespath.el" "highlight-symbol.el"
+   "terraform.el" "ein.el" "adaptive-wrap.el"
+   "xref.el"
+
+   "flycheck.el"
+   "flycheck-indicator.el"
+   ;;"flycheck-pycheckers.el"
+   "magit-diff-flycheck.el" "flycheck-projectile.el"
+   "flycheck-ruff.el"
+
+   "hercules.el"
+   "evil-fringe-mark.el" "modern-fringes.el" "rainbow-mode.el"
+   "image-mode.el" "browse-url.el" "minibar.el" "spray.el"
+   "mermaid-mode.el" "minimap.el" "hyperbole.el" "kubernetes-el.el"
+   "kubel.el" "git-link.el" "python-pytest.el" "multi-compile.el"
+   "spinner.el" "compile.el" "fancy-compilation.el" "copilot.el"
+   "org-ql.el" "org-capture.el"
+   ;;"org-roam.el" "org-roam-ui.el" "org-roam-timestamps.el" "citar-org-roam.el"
+   "org-ref.el" "org-modern.el" "biblio.el"
+   "org.el"
+   ;;"elfeed-org.el"
+   "ob-mermaid.el"
+   ;;"hi-lock"
+   "lsp.el"
+   ;;"eaf.el"
+   "obsidian.el" "cleanup.el"))
 
 
 ;;"org-noter.el" "pdf-tools.el" "org-pdftools.el" "org-noter-pdftools.el"
@@ -92,7 +102,10 @@
 (setq
  user-files-ext-features
  '(
-   "z-tree-sitter" "z-elfeed" "z-org-agenda" "z-dired" "z-lsp"
+   "z-tree-sitter"
+   ;;"z-elfeed"
+   "z-org-agenda" "z-dired"
+   ;;"z-lsp"
    "z-vertico" "z-vterm" "z-tab-line" "z-window"
    "z-org-super-agenda" "z-snippets" "z-line"
    ))

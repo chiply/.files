@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       616E85A6-80B8-4B59-940E-A5EF7AA7001A
-:mtime:    20220606100713
-:ctime:    20220606100709
-:END:
-#+title: Code Climate
-

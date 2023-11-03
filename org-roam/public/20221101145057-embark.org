@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       2136FB75-A934-46D7-A806-71D22A7B0C29
-:mtime:    20221101145109
-:ctime:    20221101145057
-:END:
-#+title: embark
-[[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] package allowing actions on things

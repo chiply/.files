@@ -1,9 +1,0 @@
-:PROPERTIES:
-:ID:       EC0EE444-5EEA-4450-978C-7830B6F76A41
-:mtime:    20221112001854
-:ctime:    20221112001849
-:END:
-#+title: Prot's dotemacs
-Prot's [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] configuration.
-
-https://protesilaos.com/emacs/dotemacs#h:0cd8ddab-55d1-40df-b3db-1234850792ba

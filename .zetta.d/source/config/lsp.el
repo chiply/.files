@@ -1,28 +1,25 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LSP MODE
 ;; for performance
 (setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 1024 1024))
+(setq lsp-use-plists t)
+(setq read-process-output-max (* 1024 1024)) 
 
-
-;; LEFT OFF TODO implement my own find definitioin function!!! should also pop up in side windows, but ensure in a different slot!!!!
-;; this gives best of both worlds :)  Although technicallyy, the code buffer would also contain the docs...  CAn tie in the same way as intellisense... just instead of help, we implement goto (maybe a different flag?)
-;; RReplace display functions with my special function
-;; nows probably a good time for magneto 
 
 (use-package lsp-mode
   :init
+  ;;(setq flycheck-checkers '())
   (setq
    lsp-enable-completion-at-point t
    lsp-completion-provider :none
-   lsp-idle-delay nil
-   lsp-tooltip-idle-delay nil
-   lsp-headerline-breadcrumb-enable nil
+   lsp-idle-delay 0.500
+   lsp-tooltip-idle-delay 0.500
+   lsp-headerline-breadcrumb-enable t
    lsp-enable-snippet nil
    lsp-enable-indentation nil
-   lsp-enable-xref nil
+   lsp-enable-xref t
    lsp-eldoc-render-all nil
    lsp-eldoc-enable-hover nil
-   lsp-diagnostics-provider 'flycheck
+   lsp-diagnostics-provider :none ;; needs to be set.  we are activating flycheck separately
    lsp-semantic-highlighting nil
    lsp-signature-render-documentation nil
    lsp-signature-auto-activate nil
@@ -30,11 +27,8 @@
    lsp-modeline-code-actions-enable nil
 
    lsp-session-file (expand-file-name ".data/lsp/.lsp-session-v1" user-emacs-directory)
-
+   lsp-log-io nil
    )
-
-
-
 
   ;; see issue: https://github.com/tigersoldier/company-lsp/issues/145
   (defun lsp--sort-completions (completions)
@@ -105,16 +99,14 @@ point."
   ;; python
   (setq lsp-language-id-configuration '())
   (add-to-list 'lsp-language-id-configuration '(python-mode . "python"))
+
   ;; yaml
   (add-to-list 'lsp-language-id-configuration '(yaml-mode . "yaml"))
   ;; bash
   (add-to-list 'lsp-language-id-configuration '(sh-mode . "bash"))
 
+
   :config
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection "pylsp")
-                    :activation-fn (lsp-activate-on "python")
-                    :server-id 'pylsp))
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection "yaml-language-server")
                     :activation-fn (lsp-activate-on "yaml")
@@ -149,12 +141,19 @@ point."
 
 
 
+
+
   :commands lsp
 
   :display
   ;; for the lsp help buffers
   (z-side "^\\*L: *" 'right)
 
+
+
+  :hook (
+         (python-mode . lsp-deferred)
+         )
   )
 
 
@@ -327,7 +326,11 @@ point."
 
 
 
-
+(use-package lsp-pylsp
+  :straight nil
+  :custom
+  (lsp-pylsp-plugins-flake8-enabled nil)
+  )
 
 
 

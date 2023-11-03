@@ -1,6 +1,0 @@
-:PROPERTIES:
-:ID:       A4B736DD-D191-417C-9FEA-AC6C16045F2A
-:mtime:    20220207140545
-:END:
-#+title: precision
-

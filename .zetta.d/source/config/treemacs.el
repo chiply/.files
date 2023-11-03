@@ -8,7 +8,8 @@
   
   :config
   (setq aw-ignored-buffers '("*Calc Trail*" " *LV*"))
-  
+
+
   (setq-default
    ;;treemacs--project-follow-delay 0.25
    treemacs-file-follow-delay 0.25
@@ -19,12 +20,16 @@
    ;; this bahaves a lot like frame-level contruct
    treemacs-display-in-side-window t
    treemacs-width 35
+   treemacs-width-is-initially-locked nil
    )
   ;; very odd.. order matters here..., esp when it comes to files that lack tags
   ;; in the other order, there is an issue with the followign of files without tags
-  (treemacs-tag-follow-mode nil)
   (treemacs-follow-mode nil)
   (treemacs-project-follow-mode nil)
+  (treemacs-tag-follow-mode nil)
+
+  (treemacs-filewatch-mode t)
+
 
 
   (defun z-refresh-treemacs ()

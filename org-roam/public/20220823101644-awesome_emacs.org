@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       4C9400DE-6E59-4D47-AB5B-AE4D41F464F2
-:ROAM_REFS: https://github.com/emacs-tw/awesome-emacs
-:mtime:    20220823101649
-:ctime:    20220823101644
-:END:
-#+title: Awesome Emacs
-

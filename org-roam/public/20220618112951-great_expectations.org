@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       3EE94B5B-74C0-4C34-B0C1-B8D66B81FC69
-:mtime:    20220618112952
-:ctime:    20220618112951
-:END:
-#+title: Great Expectations
-

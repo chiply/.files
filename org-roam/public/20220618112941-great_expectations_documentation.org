@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       83541639-3EC8-48EA-B71A-21C936A33707
-:ROAM_REFS: https://docs.greatexpectations.io/docs/#
-:mtime:    20220619113510 20220618114643
-:ctime:    20220618112941
-:END:
-#+title: Great Expectations Documentation
-

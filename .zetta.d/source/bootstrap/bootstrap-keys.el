@@ -5,10 +5,9 @@
 ;; they involve sequential presses of keys
 (use-package key-chord
   :config
-  (setq key-chord-two-keys-delay .1 key-chord-one-keys-delay .1)
+  (setq key-chord-two-keys-delay .05 key-chord-one-key-delay .05)
   (key-chord-mode 1)
   )
-
 
 ;; provides hints
 (use-package which-key

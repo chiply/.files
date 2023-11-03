@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       9BFAE5EE-F0B5-4AD2-9897-EE8B6C809769
-:ROAM_ALIASES: OHDSI
-:mtime:    20220503093625 20220217030257
-:ctime:    20220217030241
-:END:
-#+title: Observational Health Data Sciences and Informatics
-

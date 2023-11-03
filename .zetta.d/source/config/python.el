@@ -2,6 +2,8 @@
   :init
   (pyvenv-mode))
 
+(use-package poetry)
+
 (use-package python
   :straight nil
 
@@ -47,3 +49,4 @@
   (setq numpydoc-insertion-style nil)
   :bind (:map python-mode-map
               ("C-c C-n" . numpydoc-generate)))
+

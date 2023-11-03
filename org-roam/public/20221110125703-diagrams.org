@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       35CBC978-AF9B-491D-A4D0-FE728BA540A3
-:ROAM_REFS: https://diagrams.mingrammer.com/
-:mtime:    20221110125730
-:ctime:    20221110125703
-:END:
-#+title: diagrams
-[[id:1EFE9BCC-FCF0-4A60-8F4E-406C00BCFED7][Python]] library for diagrams.  Supports a wide variety of providers, as well as [[id:63803F88-69FE-46B1-850A-B6A6E7DE6BD8][C4 Model]]

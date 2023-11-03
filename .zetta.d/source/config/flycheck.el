@@ -16,6 +16,7 @@
 
 (use-package flycheck
   :config
+  (setq flycheck-checker-error-threshold 5000)
   (flycheck-define-checker proselint
     "A linter for prose."
     :command ("proselint" source-inplace)

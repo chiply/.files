@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       001C56E0-E2AB-43B5-A633-5001CCFFF56C
-:ROAM_REFS: https://github.com/donnemartin/awesome-aws#command-line-tools
-:mtime:    20220823111652
-:ctime:    20220823101659
-:END:
-#+title: Awesome AWS
-

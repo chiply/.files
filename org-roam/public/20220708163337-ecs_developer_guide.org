@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       56CBD37B-4F9B-4837-B732-60496B605518
-:ROAM_REFS: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-dg.pdf
-:mtime:    20220708163352
-:ctime:    20220708163337
-:END:
-#+title: ECS Developer Guide
-

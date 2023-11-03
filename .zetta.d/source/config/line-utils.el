@@ -16,12 +16,6 @@
 
 
 
-
-
-
-
-
-
 ;;;; functions for generating icons
 (defun z-line-iedit-icon ()
   (when (and (boundp 'iedit-mode) iedit-mode)
@@ -114,14 +108,6 @@
 
 
 
-
-
-
-
-
-
-
-
 ;; This buffer is for text that is not saved, and for Lisp evaluation.
 ;; To create a file, visit it with C-x C-f and enter text in its buffer.
 (defun mode-line-fill-right (face reserve)
@@ -147,7 +133,7 @@
 
 
 ;; NOTE use this to allow  more space ont eh right, otherwise you will get cutoff
-(defconst RIGHT_PADDING 10)
+(defconst RIGHT_PADDING 20)
 
 (defun reserve-left/middle (line-align-middle)
   (/ (length (format-mode-line line-align-middle)) 2))
@@ -170,33 +156,6 @@
     (mode-line-fill-right 'mode-line-inactive
                           (reserve-middle/right line-align-right))
     ))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ;; extremely conduing, but vars need to be passed to eval as strings

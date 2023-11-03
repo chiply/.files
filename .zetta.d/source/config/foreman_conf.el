@@ -373,7 +373,7 @@ Position: %s(g 'pos)
   ("i" 4mn-set-image-name)
   ("R" 4mn-init-conf)
   ("j" 4mn-set-json-file)
-  ("<return>" detached-consult-session :exit t)
+  ("<return>" detached-list-sessions :exit t)
   )
 
 

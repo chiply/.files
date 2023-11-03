@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       8E3A1AF7-3438-44B1-A0EE-5EC6DB8041D5
-:ROAM_REFS: https://github.com/yangshun/tech-interview-handbook
-:mtime:    20221005145018
-:ctime:    20221005145008
-:END:
-#+title: tech-interview-handbook 
-

@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       CF46084C-363B-434B-B5DF-B1E0E1EBBED2
-:ROAM_REFS: https://wiki.python.org/moin/PythonDecoratorLibrary
-:mtime:    20221019141648
-:ctime:    20221019141640
-:END:
-#+title: PythonDecoratorLibrary
-

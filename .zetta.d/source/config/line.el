@@ -18,7 +18,7 @@
         (:eval (spinner-print spinner-current))
         " "
         (:eval 
-         (lsp-headerline--build-string)
+         ;;(lsp-headerline--build-string)
          (z-yaml-json-info)
          )
         " "
@@ -88,13 +88,25 @@
         ;;" "
         " "
         (:eval (propertize "%c(%p)" 'face 'focus-unfocused))
+        ;; zmc
+        " "
+        ;; not showing up?
+        (:eval (propertize
+                (concat "<"
+                        (or
+                         (if (boundp 'local-transient) local-transient)
+                         (if (boundp 'latest-transient) latest-transient))
+                        ">")
+                'face 'focus-unfocused
+                )
+               )
         )
       )
 
 
 (setq default-line-align-middle '(""))
 (setq default-line-align-right '(""))
-(setq-default mode-line-format (z-get-line-format default-line-align-left "" ""))
+(setq-default mode-line-format (z-get-line-format default-line-align-left "" default-line-align-right))
 (setq anzu-cons-mode-line-p nil)
 (setq-default header-line-format (z-get-line-format default-line-align-left-devel "" ""))
 
@@ -125,7 +137,7 @@
 
 ;; for apps that strangely don't take the defaults
 (add-hook 'treemacs-mode-hook
-          '(lambda ()
+          #'(lambda ()
              (setq mode-line-format
                    (list
                     '(:eval
@@ -148,7 +160,7 @@
 
 
 (add-hook 'eaf-mode-hook
-          '(lambda ()
+          #'(lambda ()
              (setq mode-line-format
                    (z-get-line-format default-line-align-left "" "")
                    )

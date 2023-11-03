@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       59879B34-8D17-4A99-BAFB-B38ED9D47D9B
-:mtime:    20221101153705
-:ctime:    20221101153702
-:END:
-#+title: Algorithms
-

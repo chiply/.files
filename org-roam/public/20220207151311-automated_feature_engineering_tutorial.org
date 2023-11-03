@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       9902FD26-9348-4444-9AD0-54AAC3C67242
-:ROAM_REFS: https://www.kaggle.com/willkoehrsen/automated-feature-engineering-tutorial
-:mtime:    20220207151404
-:END:
-#+title: Automated Feature Engineering Tutorial
-A [[id:D3F6867D-E7F2-4CFA-8A39-F35ECA9AF502][Kaggle]] notebook providing an explanation and demonstration of [[id:8B433483-0EFC-43A3-BAB2-CF427E878C83][Deep Feature Synthesis]] using [[id:E53DE237-7E59-427E-901C-268C42EE0A74][Featuretools]]
