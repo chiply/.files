@@ -31,7 +31,7 @@ plugins=(
     dirhistory docker docker-compose extract fd frontend-search gh
     brew git-extras gitfast git-lfs git-prompt history httpie jsontools pip
     ripgrep safe-paste screen terraform tmux themes tmuxinator
-    zsh-autosuggestions kube-ps1 aws virtualenv npm dirpersist kubectl
+    zsh-autosuggestions kube-ps1 aws npm dirpersist kubectl poetry
 )
 source $ZSH/oh-my-zsh.sh
 export KUBE_PS1_BINARY=kubectl
@@ -125,10 +125,6 @@ vterm_printf(){
 }
 
 
-function virtualenv_info { 
-    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
-}
-
 # kubernetes autocompletion
 source <(kubectl completion zsh)
 
@@ -136,7 +132,6 @@ alias cat="bat --theme=GitHub --style=\"numbers,changes,header\""
 alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
 
 
-export VIRTUAL_ENV_DISABLE_PROMPT=0
 export SHOW_AWS_PROMPT=false
 
 
@@ -145,12 +140,16 @@ export SHOW_AWS_PROMPT=false
 RPROMPT=''
 
 
+export PROMPT=$'\n''%n@%m $(git_super_status) $(git rev-parse --show-prefix 2> /dev/null || pwd )'$'\n''$(aws_prompt_info)*$(kube_ps1)'$'\n''x---}-> '
+
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 
 
-export PROMPT=$'\n''%n@%m $(git_super_status) $(git rev-parse --show-prefix 2> /dev/null || pwd )'$'\n''$(aws_prompt_info)*$(kube_ps1)*$(virtualenv_info)'$'\n''x---}-> '
 
+export LSP_USE_PLISTS=true
 
-
-
-
+unexport VIRTUAL_ENV

@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       EA26E0A2-AA64-446C-8727-4DC331301040
-:ROAM_REFS: https://sourabhbajaj.com/mac-setup/
-:mtime:    20220820160150
-:ctime:    20220820160101
-:END:
-#+title: Macos Setup
-

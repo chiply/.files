@@ -19,3 +19,11 @@ PS1=$PS1'\[$(vterm_prompt_end)\]'
 
 
 
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+
+unexport VIRTUAL_ENV
+
+export LSP_USE_PLISTS=true

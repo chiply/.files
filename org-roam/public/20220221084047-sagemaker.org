@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       572D33C0-346E-42A1-BE64-5DCD91A8B7AF
-:mtime:    20220221084112
-:ctime:    20220221084047
-:END:
-#+title: SageMaker
-[[id:1DBA0383-C60B-4333-8240-BDFB67344CB2][AWS]] service, basically [[id:A7BB21E1-67A6-40CC-85CA-A674FDB334EC][Jupyter Notebooks]] in the cloud

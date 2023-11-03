@@ -308,14 +308,14 @@
                        zwhitespace
                        zpath
                        zwhitespace
-                       lsp-headerline--build-string
+                       ;;lsp-headerline--build-string
                        z-yaml-json-info
                        z-org-outline-path
                        ;; everything here on will be aligned on the right
                        tab-bar-format-align-right
                        recursion-indicator--string
                        "  "
-                       tab-bar-format-global
+                       ;;tab-bar-format-global
                        ))
 
 

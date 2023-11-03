@@ -78,7 +78,8 @@ used to override thing at point for whatever reason"
   :states '(normal visual insert)
   :keymaps '(sql-mode-map lisp-mode-map lisp-interaction-mode-map
                           emacs-lisp-mode-map elisp python-mode-map
-                          yaml-mode-map sh-mode-map shell-mode-map)
+                          yaml-mode-map sh-mode-map shell-mode-map
+                          )
   "s-j" '(lambda () (interactive)
            (if (buffer-narrowed-p)
                (progn (call-interactively 'z-narrow-or-widen)
@@ -137,7 +138,8 @@ used to override thing at point for whatever reason"
                embark-collect-mode-map wgrep-mode-map csv-mode-map
                help-mode-map helpful-mode-map text-mode-map
                pubmed-show-mode-map json-mode-map eww-mode-map
-               jmespath-mode-map jsonian-mode-map js2-mode-map)
+               jmespath-mode-map jsonian-mode-map js2-mode-map
+               compilation-mode-map)
    "C-e" 'er/expand-region
    ))
 
