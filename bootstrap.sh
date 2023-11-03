@@ -9,6 +9,7 @@ xcode-select --install
 # housekeeping
 brew update
 brew upgrade
+export GRAPHVIZ_DIR="$(brew --prefix graphviz)"
 
 
 # sync dot files
@@ -90,13 +91,3 @@ cd chemacs
 
 ## language servers
 npm install -g vscode-json-languageserver
-
-
-
-# ##
-# mkdir -p ~/tmp/hishtory
-# cd ~/tmp/hishtory
-# git clone https://github.com/ddworken/hishtory.git
-# ./hishtory/hishtory-binary install --offline
-# cd
-

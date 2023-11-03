@@ -7,22 +7,21 @@
 - invoke magneto (use s-m)
 - apply 0-n settings
 - invoke magneto (use s-m)
-- select a window for the action
-- TODO: allow specifying the window anywhere in the flow, not sure how to accomplish this
+- select a window for the action (if not already selected)
 
 * Options
 ** source
 Description: controls what happens to the window from which
 magneto was invoked
 
-| value     | description                                                                                                | key |
-|-----------+------------------------------------------------------------------------------------------------------------+-----|
-|           | <11>                                                                                                       |     |
-|-----------+------------------------------------------------------------------------------------------------------------+-----|
-| duplicate | places a copy of the view into the location specified                                                      | c   |
-| move      | places a copy of the view into the location specified and deletes original window (DEFAULT)                | m   |
-| pull      | places a copy of the view into the location specified and switches previous window to it's previous buffer | p   |
-| swap      | self explanatory                                                                                           | s   |
+| value               | description                                                                                                | key |
+|---------------------+------------------------------------------------------------------------------------------------------------+-----|
+|                     | <11>                                                                                                       |     |
+|---------------------+------------------------------------------------------------------------------------------------------------+-----|
+| duplicate           | places a copy of the view into the location specified                                                      | c   |
+| move                | places a copy of the view into the location specified and deletes original window (DEFAULT)                | m   |
+| pull                | places a copy of the view into the location specified and switches previous window to it's previous buffer | p   |
+| swap (implemented?) | self explanatory                                                                                           | s   |
 
 
 ** destination

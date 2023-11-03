@@ -1,9 +1,16 @@
-(z-side "^\\*Async*" 'top 1)
-(z-side "^\\*compilation*" 'top 1)
-(z-side "^\\*Shell*" 'top 3)
+;;(z-side "^\\*Async*" 'top 1)
+;;(z-side "^\\*compilation*" 'top 1)
+
+;; consider having no defaults for these and simply letting other
+;; tooling place the windows
+;;(z-side "compilation-mode" 'top 1) ;; note this can't have the backslashes...
+;;(z-side "shell-mode" 'top 1)
+;;(z-side "^\\*Shell*" 'top 3)
+
 (z-side "\\calendar-mode" 'top 1)
 (z-side "\\occur-mode" 'right -1 0.2)
 (z-side "\\grep-mode" 'right -1 0.25)
+(z-side "\\magit-process-mode" 'top 1 )
 (z-side "\\xref--xref-buffer-mode" 'right -1 0.25)
 
 (add-hook 'grep-mode-hook '(lambda () (toggle-truncate-lines 1)))

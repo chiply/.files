@@ -1,9 +1,0 @@
-:PROPERTIES:
-:ID:       5F9997CC-F15F-4C4E-8CFC-B95C2B02AA86
-:ROAM_REFS: cite:feurer-2020-auto-sklear
-:mtime:    20220207135637 20220207121757
-:ctime:    20220207121745
-:END:
-#+title: Auto-sklearn 2.0: hands-free automl via meta-learning
-Test note.
-

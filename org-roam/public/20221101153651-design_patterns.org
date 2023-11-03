@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       0F268828-C10F-4B9B-951F-03F5B2251228
-:mtime:    20221101153654
-:ctime:    20221101153651
-:END:
-#+title: Design Patterns
-

@@ -1,6 +1,0 @@
-:PROPERTIES:
-:ID:       1EFE9BCC-FCF0-4A60-8F4E-406C00BCFED7
-:mtime:    20220207151443
-:END:
-#+title: Python
-

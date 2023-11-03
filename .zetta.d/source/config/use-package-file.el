@@ -38,7 +38,7 @@
 (use-package default-text-scale)
 (use-package define-word)
 (use-package desktop)
-(use-package detached)
+;;(use-package detached)
 (use-package dimmer)
 (use-package dired :straight (:type built-in))
 (use-package dired-ranger)
@@ -51,6 +51,7 @@
 (use-package dockerfile-mode)
 (use-package dogears)
 (use-package dumb-jump)
+
 ;; todo factor this into a separate file, especially since it's more
 ;; of a QT sidecar to emacs as opposed to emacs / elisp itself.  This
 ;; also makes the use package declaration huge!
@@ -63,6 +64,7 @@
        :pre-build ("python3" "install-eaf.py" "--install" "pdf-viewer"
                    "browser" "image-viewer" "terminal" "org-previewer"
                    "markdown-previewer" "--ignore-sys-deps")))
+
 (use-package eaf-browser)
 (use-package eaf-image-viewer)
 (use-package eaf-markdown-previewer)
@@ -97,7 +99,7 @@
 (use-package flycheck-aspell)
 (use-package flycheck-indicator)
 (use-package flycheck-projectile)
-(use-package flycheck-pycheckers)
+;;(use-package flycheck-pycheckers)
 (use-package focus)
 (use-package foreman :straight nil :load-path "~/.files/.zetta.d/source/zettapkg/foreman" :demand t)
 (use-package forge)

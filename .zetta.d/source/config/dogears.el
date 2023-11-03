@@ -13,6 +13,7 @@
           ;;tab-line-switch-to-next-tab
           ;;tab-line-switch-to-prev-tab
           evil-search-forward
+          evil-goto-definition
           ;;windmove-up
           ;;windmove-down
           ;;windmove-left
@@ -32,8 +33,9 @@
   (
    :keymaps 'override
    "s-!" 'dogears-remember
+   "C-s-h" 'pop-global-mark
    )
 
-  :hook (dogears-list-mode . (lambda () (text-scale-set -2)))
+  :hook (dogears-list-mode . (lambda () (text-scale-set 0))) ;; to appease tablist mode
   )
 

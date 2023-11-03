@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       FC3C8E2A-0DFF-4C55-8E34-7DADA2C9C539
-:ROAM_REFS: https://medium.com/whispering-data/the-state-of-data-engineering-2022-d6ef0f7cf607
-:mtime:    20221011170915
-:ctime:    20221011161713
-:END:
-#+title: The State of Data Engineering 2022
-

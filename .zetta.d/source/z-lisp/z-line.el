@@ -21,7 +21,7 @@
         (:eval (spinner-print spinner-current))
         " "
         (:eval 
-         (lsp-headerline--build-string)
+         ;;(lsp-headerline--build-string)
          (z-yaml-json-info)
          )
         " "

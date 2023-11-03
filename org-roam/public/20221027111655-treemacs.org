@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       9CE94A63-9ACE-4B04-9CC4-FEC753F84893
-:mtime:    20221027111856
-:ctime:    20221027111655
-:END:
-#+title: treemacs
-An [[id:8423A445-3117-4147-BDA0-197E6F134505][Emacs]] framework for working with tree data.  Most common implementation is as a file browser.  But can be used for things like error lists, dependency graphs, call graphs, etc...

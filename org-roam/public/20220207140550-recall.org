@@ -1,6 +1,0 @@
-:PROPERTIES:
-:ID:       49C87255-4CCA-499E-B67A-222730893157
-:mtime:    20220207140551
-:END:
-#+title: recall
-

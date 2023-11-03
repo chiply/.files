@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       985E59FE-9700-42D0-972E-8E7391326F93
-:mtime:    20221116082258
-:ctime:    20221116082257
-:END:
-#+title: Open Source
-

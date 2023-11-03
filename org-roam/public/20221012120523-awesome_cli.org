@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       08E3107A-A6F6-4B81-9880-D7D536B81193
-:ROAM_REFS: https://github.com/Kikobeats/awesome-cli
-:mtime:    20221012120531
-:ctime:    20221012120523
-:END:
-#+title: Awesome CLI
-

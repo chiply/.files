@@ -1,5 +1,0 @@
-:PROPERTIES:
-:ID:       F7FCDA6B-A7DB-4C92-A806-75A91DF1B49B
-:END:
-#+title: TheAlgorithms Python
-[[roam:TheAlgorithms]] for [[roam:Python]]

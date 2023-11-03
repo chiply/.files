@@ -9,11 +9,7 @@
                '(progn
                 (set-face-attribute 'treemacs-all-the-icons-root-face nil
                                     :height 1.2
-                                    :foreground brushup-fg-2
-                                    )
-                )
-               )
-  
+                                    :foreground brushup-fg-2)))
   
   :hook (treemacs-mode . treemacs-toggle-fixed-width)
   )

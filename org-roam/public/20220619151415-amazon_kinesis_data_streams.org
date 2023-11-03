@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       2CBEDD2B-7376-4728-A10F-0CDA300C047F
-:mtime:    20220621070925
-:ctime:    20220619151415
-:END:
-#+title: Amazon Kinesis Data Streams
-

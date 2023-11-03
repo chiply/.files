@@ -14,14 +14,11 @@
       scroll-conservatively 9999
       scroll-step 1)
 
-
-
 (defun server-shutdown ()
   "Save buffers, Quit, and Shutdown (kill) server"
   (interactive)
   (save-some-buffers)
-  (kill-emacs)
-  )
+  (kill-emacs))
 
 (defun z-scratch ()
   (interactive)
@@ -30,21 +27,18 @@
     (switch-to-buffer (concat "*" major-mode-input "-scratch" "*"))
     (when (string= major-mode-input "python") (python-mode))
     (when (string= major-mode-input "sql") (sql-mode))
-    (when (string= major-mode-input "elisp") (emacs-lisp-mode))
-    ))
-
-
+    (when (string= major-mode-input "elisp") (emacs-lisp-mode))))
 
 (setq enable-local-variables :all)
 
-
-
-
 (defhydra+ hydra-window ()
   ("C-S" z-scratch :exit t)
-  ("C-S-<backspace>" z-server-shutdown-save-desktop)
-  )
+  ("C-S-<backspace>" z-server-shutdown-save-desktop))
 
 
 
-
+;; (use-package exec-path-from-shell
+;;   :config
+;;   (when (memq window-system '(mac ns x))
+;;   (exec-path-from-shell-initialize))
+;;   )

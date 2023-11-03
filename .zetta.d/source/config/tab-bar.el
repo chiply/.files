@@ -1,5 +1,3 @@
-
-
 ;;(setq z-ws-cfg-tabbar-list '(
                              ;;;; car is ws cfg and cdr is list of tabs
                              ;;((main 1) . ("default"))

@@ -1,9 +1,0 @@
-:PROPERTIES:
-:ID:       6E83EFB4-23DB-484F-85EE-48CDF4459898
-:mtime:    20220503121634
-:ctime:    20220503121536
-:END:
-#+title: AWS Free Tier
-Special pricing (mostly free / free trial) for [[id:1DBA0383-C60B-4333-8240-BDFB67344CB2][AWS]] for 1st 12mo.
-
-- [[https://aws.amazon.com/free/?trk=78b916d7-7c94-4cab-98d9-0ce5e648dd5f&sc_channel=ps&sc_campaign=acquisition&sc_medium=ACQ-P|PS-GO|Brand|Desktop|SU|AWS|Core|US|EN|Text&s_kwcid=AL!4422!3!423676352544!e!!g!!aws%20free%20tier&ef_id=EAIaIQobChMIlvrRh93D9wIVxsiUCR3QDwjYEAAYASAAEgJGj_D_BwE:G:s&s_kwcid=AL!4422!3!423676352544!e!!g!!aws%20free%20tier&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all][AWS Free Tier]]: shows the pricing / capacity limits under free tier

@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       DA683F71-EB91-4748-A13A-6D7ED91DAF58
-:mtime:    20221110125844
-:ctime:    20221110125842
-:END:
-#+title: mermaid
-
