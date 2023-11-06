@@ -29,7 +29,10 @@
       ;; name
       ,(intern (concat "hades-" (car tpl)))
       ;; columns
-      (:columns ,(+ 1 (/ (length (which-key--get-keymap-bindings (cadr tpl) nil nil nil t t))
+      (:columns ,(+ 1 (/ (length
+                          (which-key--get-keymap-bindings
+                           (cadr tpl)
+                           nil nil nil t t))
                          hades-max-height)))
       ;; heads
       ,@(mapcar
@@ -48,10 +51,7 @@
 
 ;; create all the hades
 (defun hades-create-hydras ()
-  (-map
-   (lambda (tpl) (hades tpl))
-   hades-registry)
-  )
+  (-map (lambda (tpl) (hades tpl)) hades-registry))
 
 
 ;; create the hydras

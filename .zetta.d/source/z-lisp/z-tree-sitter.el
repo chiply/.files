@@ -2,10 +2,13 @@
 
 
 ;;; Code:
+(setq tree-sitter-debug-highlight-jump-region t)
+(setq tree-sitter-debug-jump-buttons t)
 
 (add-hook
  'python-mode-hook
  (lambda () (progn (tree-sitter-mode) (tree-sitter-hl-mode))))
+
 
 ;;;###autoload
 (defun z-tree-sitter-test ()
