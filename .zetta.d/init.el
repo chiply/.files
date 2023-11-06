@@ -4,22 +4,7 @@
 (require 'bootstrap)
 
 ;; use dash to do the loop
-(setq
- z-files-that-need-creating
- '("~/.dir-locals.el"
-   "~/.private.el"
-   ;;"~/.files/org-roam/daily/agenda.org"
-   ;;"~/.files/org-roam/daily/agenda.org_archive"
-   ;;;; pub doesn't really need to be written as its in vc
-   ;;"~/.files/org-roam/daily/agenda_pub.org"
-   ;;"~/.files/org-roam/daily/agenda_pub.org_archive"
-   ;;"~/.files/org-roam/daily/sprint.org"
-   ;;"~/.files/org-roam/daily/sprint.org_archive"
-   ;;;; NOTE -- not sprint_pub as print is inherently private to the
-   ;;;; machine
-   ;;"~/.files/org-roam/private"
-   ;;"~/.files/org-roam/public"
-   ))
+(setq z-files-that-need-creating '("~/.dir-locals.el" "~/.private.el"))
 
 (-each z-files-that-need-creating 'z-touch-maybe)
 
@@ -29,8 +14,10 @@
    "super-save.el" "hud.el" "highlight-indent-guides.el"
    "scroll-bar.el" "display-fill-column-indicator.el"
    "display-line-numbers.el" "linum-relative.el" "undo-tree.el"
-   "visual-fill-column.el" "face.el" "tree-sitter.el"
-   "tree-sitter-langs.el" "dimmer.el" "focus.el" "face-remap.el"
+   "visual-fill-column.el" "face.el"
+   ;;"tree-sitter.el" "tree-sitter-langs.el"
+   "treesit.el"
+   "dimmer.el" "focus.el" "face-remap.el"
    "default-text-scale.el" "hl-line.el" "lin.el" "hide-mode-line.el"
    "all-the-icons.el" "remote.el" "minimalize.el" "projectile.el"
    "treemacs-all-the-icons.el" "treemacs.el" "treemacs-projectile.el"
@@ -102,10 +89,8 @@
 (setq
  user-files-ext-features
  '(
-   "z-tree-sitter"
-   ;;"z-elfeed"
+   ;;"z-tree-sitter"
    "z-org-agenda" "z-dired"
-   ;;"z-lsp"
    "z-vertico" "z-vterm" "z-tab-line" "z-window"
    "z-org-super-agenda" "z-snippets" "z-line"
    ))

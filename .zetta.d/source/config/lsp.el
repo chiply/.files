@@ -98,7 +98,7 @@ point."
 
   ;; python
   (setq lsp-language-id-configuration '())
-  (add-to-list 'lsp-language-id-configuration '(python-mode . "python"))
+  (add-to-list 'lsp-language-id-configuration '(python-ts-mode . "python"))
 
   ;; yaml
   (add-to-list 'lsp-language-id-configuration '(yaml-mode . "yaml"))
@@ -152,7 +152,7 @@ point."
 
 
   :hook (
-         (python-mode . lsp-deferred)
+         (python-ts-mode . lsp-deferred)
          )
   )
 
@@ -297,7 +297,7 @@ point."
 
 
 (general-define-key
- :keymaps '(lisp-mode-map lisp-interaction-mode-map emacs-lisp-mode-map lisp-data-mode-map python-mode-map)
+ :keymaps '(lisp-mode-map lisp-interaction-mode-map emacs-lisp-mode-map lisp-data-mode-map python-ts-mode-map)
  :states '(normal) 
  "gdd" 'evil-goto-definition
  "gdo" 'z-jump-to-def
