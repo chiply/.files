@@ -25,7 +25,7 @@
   (let* ((major-mode-input (completing-read "Enter a major mode: "
                                             '("python" "sql" "elisp"))))
     (switch-to-buffer (concat "*" major-mode-input "-scratch" "*"))
-    (when (string= major-mode-input "python") (python-mode))
+    (when (string= major-mode-input "python") (python-ts-mode))
     (when (string= major-mode-input "sql") (sql-mode))
     (when (string= major-mode-input "elisp") (emacs-lisp-mode))))
 
@@ -35,10 +35,13 @@
   ("C-S" z-scratch :exit t)
   ("C-S-<backspace>" z-server-shutdown-save-desktop))
 
+(setq-default left-margin-width 2)
+(setq-default right-margin-width 1)
 
 
-;; (use-package exec-path-from-shell
-;;   :config
-;;   (when (memq window-system '(mac ns x))
-;;   (exec-path-from-shell-initialize))
-;;   )
+(setq tab-bar-format '(;; everything here on will be aligned on the right
+                       tab-bar-format-align-right
+                       recursion-indicator--string
+                       "  "
+                       tab-bar-format-global
+                       ))

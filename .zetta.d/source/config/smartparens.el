@@ -4,7 +4,7 @@
   (smartparens-global-mode t)
   (show-smartparens-global-mode t)
 
-  (setq smartparen-modes '(python-mode rjsx-mode js2-mode web-mode css-mode sql-mode))
+  (setq smartparen-modes '(python-ts-mode rjsx-mode js2-mode web-mode css-mode sql-mode))
 
   (sp-local-pair smartparen-modes "{" nil :post-handlers '(:add ("||\n[i]" "RET")))
   (sp-local-pair smartparen-modes "(" nil :post-handlers '(:add ("||\n[i]" "RET")))

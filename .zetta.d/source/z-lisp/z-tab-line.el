@@ -129,52 +129,83 @@
 
 (global-tab-line-mode)
 
+;;;;:brushup
+;;(add-to-list 'brushup-styles
+;;'(progn
+;;(set-face-attribute 'tab-line-tab-current nil
+;;:overline brushup-fg ;; this isn't working
+;;:foreground brushup-fg
+;;:background brushup-bg-1
+;;:box nil
+;;:weight 'normal
+;;:inherit nil
+;;:height 1.0
+;;)
+;;(set-face-attribute 'tab-line-tab nil
+;;:overline t
+;;:foreground brushup-fg-3
+;;:background brushup-bg-1
+;;:weight 'normal
+;;:box nil
+;;:height 1.0
+;;:inherit nil
+;;)
+;;(set-face-attribute 'tab-line-tab-inactive nil
+;;:background brushup-bg-1_0
+;;:foreground brushup-bg-6
+;;:box nil
+;;:height 1.0
+;;:overline nil
+;;:inherit nil
+;;)
+;;(set-face-attribute 'tab-line nil
+;;:background (modus-themes-get-color-value 'bg-blue-nuanced)
+;;:height 1.2
+;;:underline "gray"
+                                    ;;;; basically nil
+;;:overline brushup-bg
+;;:box nil
+;;)
+;;)
+;;)
+
 ;;:brushup
-(add-to-list 'brushup-styles
-             '(progn
-                (set-face-attribute 'tab-line-tab-current nil
-                                    :overline brushup-fg ;; this isn't working
-                                    :foreground brushup-fg
-                                    :background brushup-bg-1
-                                    :box nil
-                                    :weight 'normal
-                                    :inherit nil
-                                    :height 1.0
-                                    )
-                (set-face-attribute 'tab-line-tab nil
-                                    :overline t
-                                    :foreground brushup-fg-3
-                                    :background brushup-bg-1
-                                    :weight 'normal
-                                    :box nil
-                                    :height 1.0
-                                    :inherit nil
-                                    )
-                (set-face-attribute 'tab-line-tab-inactive nil
-                                    :background brushup-bg-1_0
-                                    :foreground brushup-bg-6
-                                    :box nil
-                                    :height 1.0
-                                    :overline nil
-                                    :inherit nil
-                                    )
-                (set-face-attribute 'tab-line nil
-                                    :background (modus-themes-get-color-value 'bg-blue-nuanced)
-                                    :height 1.2
-                                    :underline "gray"
-                                    ;; basically nil
-                                    :overline brushup-bg
-                                    :box nil
-                                    )
-                )
-             )
+(add-to-list
+ 'brushup-styles
+ '(progn
+    (set-face-attribute 'tab-line-tab-current nil
+                        :box nil
+                        :weight 'normal
+                        :inherit nil
+                        :height 1.0
+                        )
+    (set-face-attribute 'tab-line-tab nil
+                        ;;:overline t
+                        :weight 'normal
+                        :box nil
+                        :height 1.0
+                        :inherit nil
+                        )
+    (set-face-attribute 'tab-line-tab-inactive nil
+                        :box nil
+                        :height 1.0
+                        :inherit nil
+                        )
+    (set-face-attribute 'tab-line nil
+                        :height 1.0
+                        :underline nil
+                        :box nil
+                        )
+    )
+ )
+
 
 
 (general-define-key
  :keymaps 'override
  ;;:keymaps '(
  ;;vterm-mode-map shell-mode-map sh-mode-map help-mode-map
- ;;helpful-mode-map dired-mode-map python-mode-map
+ ;;helpful-mode-map dired-mode-map python-ts-mode-map
  ;;emacs-lisp-mode-map sql-mode-map yaml-mode-map
  ;;org-mode-map csv-mode-map pubmed-mode-map
  ;;lisp-interaction-mode-map text-mode-map grep-mode-map

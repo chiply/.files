@@ -104,6 +104,30 @@ point."
   (add-to-list 'lsp-language-id-configuration '(yaml-mode . "yaml"))
   ;; bash
   (add-to-list 'lsp-language-id-configuration '(sh-mode . "bash"))
+  ;; sql
+  (add-to-list 'lsp-language-id-configuration '(sql-mode . "sql"))
+  ;; tf
+  (add-to-list 'lsp-language-id-configuration '(terraform-mode . "terraform")) ;; just to avoid an error
+
+
+
+  (setq lsp-terraform-server "terraform-ls")
+  (setq lsp-terraform-ls-enable-show-reference t)
+  (setq lsp-disabled-clients '(tfls))
+  (setq lsp-terraform-ls-enable-show-reference t)
+  (setq lsp-semantic-tokens-enable nil)
+  (setq lsp-semantic-tokens-honor-refresh-requests nil)
+  (setq lsp-enable-links t)
+
+  (setq lsp-terraform-ls-prefill-required-fields t)
+
+
+  (setq lsp-sqls-server (expand-file-name "~/go/bin/sqls"))
+  (setq lsp-sqls-connections
+        '(
+          ((driver . "sqlite3") (dataSourceName . "test.db"))
+          ((driver . "postgresql") (dataSourceName . "host=127.0.0.1 port=5433 user=master password=mypassword dbname=master_data_store sslmode=disable"))
+          ))
 
 
   :config
@@ -125,6 +149,13 @@ point."
       )
      ;; other
      ;; ...
+     ;; K8s - Note the LSP hours are a limited utility here because
+     ;; this doesn't work well with the template syntax that thinks
+     ;; like home uses
+     (https://kubernetesjsonschema.dev/v1.14.0/deployment-apps-v1.json . ["deployment.yaml"])
+     (https://kubernetesjsonschema.dev/v1.10.3-standalone/service-v1.json . ["service.yaml"])
+
+
      )
    )
 
@@ -291,21 +322,19 @@ point."
                                           (window-width . 0.30)
                                           (window-parameters . ((no-delete-other-windows . 1)))
                                           )))
-    (evil-goto-definition)
-    ))
-
-
+    (evil-goto-definition)))
 
 (general-define-key
- :keymaps '(lisp-mode-map lisp-interaction-mode-map emacs-lisp-mode-map lisp-data-mode-map python-ts-mode-map)
+ :keymaps '(lisp-mode-map lisp-interaction-mode-map emacs-lisp-mode-map lisp-data-mode-map python-ts-mode-map sql-mode-map sh-mode-map dockerfile-mode-map terraform-mode-map css-mode-map)
  :states '(normal) 
+
  "gdd" 'evil-goto-definition
  "gdo" 'z-jump-to-def
  "gdh" 'z-jump-to-def-hor
  "gdH" 'z-jump-to-def-hor-1
  "gdv" 'z-jump-to-def-vert
  "gdV" 'z-jump-to-def-vert-1
- ;; 
+
  "gds" 'z-jump-to-def-side
  "gh" 'z-jump-to-doc
  )
@@ -313,17 +342,13 @@ point."
 
 (use-package lsp-ui
   :config
-  (setq
-   lsp-ui-sideline-enable nil
-   )
-  )
+  (setq lsp-ui-sideline-enable nil))
+
 
 (use-package lsp-treemacs
   :config
   (lsp-treemacs-sync-mode 1)
-  (setq lsp-treemacs-theme "all-the-icons")
-  )
-
+  (setq lsp-treemacs-theme "all-the-icons"))
 
 
 (use-package lsp-pylsp

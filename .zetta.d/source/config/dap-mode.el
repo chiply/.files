@@ -1,6 +1,8 @@
 (use-package dap-mode
   :config
 
+  (setq dap-ui-variable-length 1000)
+
   ;; lang specific
   (require 'dap-python)
 
@@ -55,8 +57,8 @@
              :env env-vars
              ))))
 
-  :hook ((python-mode . dap-ui-mode)
-         (python-mode . dap-mode))
+  :hook ((python-ts-mode . dap-ui-mode)
+         (python-ts-mode . dap-mode))
 
   :general
   (
@@ -65,6 +67,8 @@
    "C-S-s-d" 'dap-debug
    )
   )
+
+
 
 
 
