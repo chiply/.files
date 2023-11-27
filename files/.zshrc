@@ -153,3 +153,9 @@ eval "$(pyenv init -)"
 export LSP_USE_PLISTS=true
 
 unexport VIRTUAL_ENV
+
+
+
+
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin

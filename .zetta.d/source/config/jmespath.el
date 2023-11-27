@@ -1,5 +1,5 @@
 (define-derived-mode jmespath-mode
-  python-mode "JMESPath"
+  python-ts-mode "JMESPath"
   "Major mode for hypertext.")
 
 

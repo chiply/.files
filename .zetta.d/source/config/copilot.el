@@ -1,7 +1,19 @@
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
 
+  :brushup
+  (add-to-list 'brushup-styles
+               '(progn
+                  (set-face-attribute 'copilot-overlay-face nil
+                                      :foreground (modus-themes-get-color-value 'green-intense)
+                                      :background brushup-bg
+                                      )
+                  )
+               ) 
+
   )
+
+
 
 
 (general-define-key

@@ -19,7 +19,6 @@ brew install git
 brew intall python
 python3 ~/.files/main.py
 
-
 # install bundle
 brew tap Homebrew/bundle
 

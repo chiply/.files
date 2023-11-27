@@ -35,9 +35,10 @@
 
   :hook (
          (
-          json-mode yaml-mode
+          json-mode
+          ;;yaml-mode
           org-mode
-          ;; python-mode
+          ;; python-ts-mode
           emacs-lisp-mode
           ) .
          highlight-indent-guides-mode

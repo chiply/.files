@@ -23,7 +23,7 @@
 (setq
  multi-compile-alist
  '(
-   (python-mode . (
+   (python-ts-mode . (
                    ("goodbye" "echo bye" default-directory)
                    ))
    ))

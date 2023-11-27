@@ -20,13 +20,9 @@
         " "
         (:eval (spinner-print spinner-current))
         " "
-        (:eval 
-         ;;(lsp-headerline--build-string)
-         (z-yaml-json-info)
-         )
-        " "
         (:eval
-         (when (string= major-mode "org-mode") (concat " > " (org-display-outline-path) "/" (org-get-heading)))
+         (when (string= major-mode "org-mode")
+           (concat " > " (org-display-outline-path) "/" (org-get-heading)))
          )
         " "
         (:eval (cond
@@ -58,7 +54,7 @@
              path
              )
            ))
-        (:eval (when (string= major-mode "python-mode")
+        (:eval (when (string= major-mode "python-ts-mode")
                  (propertize
                   (concat " [" pyvenv-virtual-env-name "]")
                   'face 'focus-unfocused
@@ -128,13 +124,13 @@
 
 
 
-(add-hook 'eaf-mode-hook
-          '(lambda ()
-             (setq mode-line-format
-                   (z-get-line-format default-line-align-left "" "")
-                   )
-             )
-          )
+;; (add-hook 'eaf-mode-hook
+;;           '(lambda ()
+;;              (setq mode-line-format
+;;                    (z-get-line-format default-line-align-left "" "")
+;;                    )
+;;              )
+;;           )
 
 
 (provide 'z-line)

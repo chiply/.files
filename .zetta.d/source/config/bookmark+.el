@@ -17,6 +17,6 @@
                                       )
                   ))
 
-  :hook ((org-mode python-mode emacs-lisp-mode) . (lambda ()
+  :hook ((org-mode python-ts-mode emacs-lisp-mode) . (lambda ()
                                                     (call-interactively 'bmkp-light-bookmarks)))
   )

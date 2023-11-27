@@ -24,16 +24,16 @@
   :general
   (
    :states '(normal visual)
-   :keymaps 'python-mode-map
+   :keymaps 'python-ts-mode-map
    "==" '(lambda () (interactive)
            (save-excursion
              (evil-indent (point-min) (point-max))))
    )
 
   :hook (
-         (python-mode . flycheck-mode)
-         (python-mode . dap-ui-mode)
-         (python-mode . dap-mode)
+         (python-ts-mode . flycheck-mode)
+         (python-ts-mode . dap-ui-mode)
+         (python-ts-mode . dap-mode)
          (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
          )
   )
@@ -47,6 +47,6 @@
 (use-package numpydoc
   :config
   (setq numpydoc-insertion-style nil)
-  :bind (:map python-mode-map
+  :bind (:map python-ts-mode-map
               ("C-c C-n" . numpydoc-generate)))
 

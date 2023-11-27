@@ -59,7 +59,7 @@
                   ("pos" "t0")
                           ("suppress-output" "yes")
                   ))
-      ("python-mode" (ht
+      ("python-ts-mode" (ht
                       ("exec" "python")
                       ("venv" "~/envs/main")
                       ("suff" "py")
@@ -160,7 +160,7 @@
 
 
 ;; Modes with 4mn controls
-(add-hook 'python-mode-hook '4mn-init-conf)
+(add-hook 'python-ts-mode-hook '4mn-init-conf)
 (add-hook 'sql-mode-hook '4mn-init-conf)
 (add-hook 'emacs-lisp-mode-hook '4mn-init-conf)
 (add-hook 'sh-mode-hook '4mn-init-conf)
@@ -378,7 +378,7 @@ Position: %s(g 'pos)
 
 
 (let ((modes '(
-               python-mode-map sh-mode-map js2-mode-map ruby-mode-map
+               python-ts-mode-map sh-mode-map js2-mode-map ruby-mode-map
                go-mode-map scala-mode-map ess-r-mode-map ess-r-help-mode-map
                julia-mode-map sql-mode-map yaml-mode-map dockerfile-mode-map
                jmespath-mode-map

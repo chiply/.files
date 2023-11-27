@@ -19,8 +19,8 @@
    (-map
     (lambda (e)
       (let* ((kv (split-string e "="))
-             (k (string-replace "--" "" (nth 0 kv)))
-             (v (nth 1 kv)))
+             (k (string-replace "--" "" (car kv)))
+             (v (string-join (cdr kv) "=")))
         `(,k . ,v)))
     args)))
 
@@ -135,6 +135,9 @@
          )
     (setq latest-cmd cmd)
     (set (make-local-variable 'local-cmd) cmd)
+    (message "foobar")
+    (message cmd)
+
     (apply 'zmc-run `(,program ,cmd ,bufnm ,side ,slot ,select))
     )
   )

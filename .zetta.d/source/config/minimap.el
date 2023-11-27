@@ -107,7 +107,7 @@ When FORCE, enforce update of the active region."
 
   (setq minimap-major-modes
         '(
-          emacs-lisp-mode python-mode sql-mode vterm-mode help-mode
+          emacs-lisp-mode python-ts-mode sql-mode vterm-mode help-mode
           helpful-mode Info-mode messages-buffer-mode org-mode sh-mode yaml-mode json-mode terraform-mode
           )
         )
@@ -171,6 +171,15 @@ When FORCE, enforce update of the active region."
    "s-}" 'z-toggle-minimap-follow
    )
   )
+
+
+
+
+
+
+
+
+
 
 
 

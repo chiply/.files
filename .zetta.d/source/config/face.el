@@ -41,7 +41,7 @@
 ;;(setq-local olivetti-recall-visual-line-mode-entry-state t)
 ;;)
 ;;(add-hook 'org-mode-hook (lambda () (z-generic-olivetti-mode)))
-;;(add-hook 'python-mode-hook (lambda () (z-generic-olivetti-mode)))
+;;(add-hook 'python-ts-mode-hook (lambda () (z-generic-olivetti-mode)))
 ;;(add-hook 'sql-mode-hook (lambda () (z-generic-olivetti-mode)))
   ;;;;(add-hook 'emacs-lisp-mode-hook (lambda () (z-generic-olivetti-mode)))
 ;;(add-hook 'web-mode-hook (lambda () (z-generic-olivetti-mode)))

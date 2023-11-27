@@ -74,7 +74,7 @@
       "title": "SupportedEmacsMajorModes",
       "description": "Emacs major-modes supported by this program",
       "enum": [
-        "python-mode",
+        "python-ts-mode",
         "sql-mode",
         "sh-mode",
         "yaml-mode"

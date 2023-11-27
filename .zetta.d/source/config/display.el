@@ -20,6 +20,7 @@
 (z-side "^\\*Messages*" 'bottom 3)
 (z-side "^\\*Warnings*" 'top)
 (z-side "^\\*Backtrace*" 'top)
+(z-side "^\\*sqls results*" 'top)
 (z-side "^\\*info*" 'bottom)
 (z-side "^\\*Help*" 'right)
 (z-side "^\\*helpful*" 'right)

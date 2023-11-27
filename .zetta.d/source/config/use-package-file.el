@@ -55,21 +55,21 @@
 ;; todo factor this into a separate file, especially since it's more
 ;; of a QT sidecar to emacs as opposed to emacs / elisp itself.  This
 ;; also makes the use package declaration huge!
-(use-package eaf
-  :straight
-  (eaf :type git :host github :repo "emacs-eaf/emacs-application-framework"           
-       :files ("*.el" "*.py" "core" "app" "*.json")
-       :includes (eaf-pdf-viewer eaf-browser eaf-image-viewer eaf-terminal
-                                 eaf-org-previewer eaf-markdown-previewer)
-       :pre-build ("python3" "install-eaf.py" "--install" "pdf-viewer"
-                   "browser" "image-viewer" "terminal" "org-previewer"
-                   "markdown-previewer" "--ignore-sys-deps")))
+;;(use-package eaf
+  ;;:straight
+  ;;(eaf :type git :host github :repo "emacs-eaf/emacs-application-framework"           
+       ;;:files ("*.el" "*.py" "core" "app" "*.json")
+       ;;:includes (eaf-pdf-viewer eaf-browser eaf-image-viewer eaf-terminal
+                                 ;;eaf-org-previewer eaf-markdown-previewer)
+       ;;:pre-build ("python3" "install-eaf.py" "--install" "pdf-viewer"
+                   ;;"browser" "image-viewer" "terminal" "org-previewer"
+                   ;;"markdown-previewer" "--ignore-sys-deps")))
 
-(use-package eaf-browser)
-(use-package eaf-image-viewer)
-(use-package eaf-markdown-previewer)
-(use-package eaf-org-previewer)
-(use-package eaf-pdf-viewer)
+;;(use-package eaf-browser)
+;;(use-package eaf-image-viewer)
+;;(use-package eaf-markdown-previewer)
+;;(use-package eaf-org-previewer)
+;;(use-package eaf-pdf-viewer)
 (use-package ein)
 (use-package elfeed)
 (use-package elfeed-org :after (elfeed))
@@ -134,7 +134,7 @@
 (use-package lavender-theme)
 (use-package leuven-theme)
 (use-package lin)
-(use-package linum-relative)
+;;(use-package linum-relative)
 (use-package lsp-mode)
 (use-package lsp-treemacs)
 (use-package lsp-ui)

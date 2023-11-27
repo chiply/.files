@@ -2,7 +2,7 @@
 ;;   :straight nil
 
 ;;   :hook
-;;   ((python-mode) . eglot-ensure)
+;;   ((python-ts-mode) . eglot-ensure)
 
 ;;   :config
 ;;   (setq-default eglot-workspace-configuration

@@ -213,7 +213,7 @@
 ;; vertico-IS
 (general-define-key
  :states '(insert)
- :keymaps '(python-mode-map
+ :keymaps '(python-ts-mode-map
             lisp-interaction-mode-map
             emacs-lisp-mode-map
             lisp-mode-map
@@ -225,7 +225,12 @@
             jsonian-mode-map
             text-mode-map
             org-mode-map
-            bibtex-mode-map)
+            bibtex-mode-map
+            dockerfile-mode-map
+            css-mode-map
+            sh-mode-map
+            terraform-mode-map
+            )
  "<C-SPC>" 'z-vertico-IS
  )
 

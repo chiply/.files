@@ -6,7 +6,8 @@
 
   :general
   (
-   :keymaps '(python-mode-map)
+   :keymaps '(python-ts-mode-map sql-mode-map css-mode-map
+                                 sh-mode-map terraform-mode-map dockerfile-mode-map)
    :states '(normal insert visual)
    "M-." 'xref-find-definitions
    "M-," 'xref-go-back

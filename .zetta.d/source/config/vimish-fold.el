@@ -66,11 +66,15 @@ of tap), then toggle the closest fold"
   :general
   (
    :states '(normal visual)
-   :keymaps '(python-mode-map
+   :keymaps '(python-ts-mode-map
               emacs-lisp-mode-map
               lisp-interaction-mode-map
               sql-mode-map
-              yaml-mode-map)
+              yaml-mode-map
+              css-mode-map
+              dockerfile-mode-map
+              terraform-mode-map
+              )
    :prefix "z"
    "z" 'vimish-fold-avy
    "t" 'vimish-fold-toggle
@@ -85,11 +89,15 @@ of tap), then toggle the closest fold"
    )
   (
    :states '(normal)
-   :keymaps '(python-mode-map
+   :keymaps '(python-ts-mode-map
               emacs-lisp-mode-map
               lisp-interaction-mode-map
               sql-mode-map
-              yaml-mode-map)
+              yaml-mode-map
+              css-mode-map
+              dockerfile-mode-map
+              terraform-mode-map
+              )
    "<tab>" 'z-vimish-fold-tap
    "<S-tab>" 'vimish-fold-toggle-all
    )

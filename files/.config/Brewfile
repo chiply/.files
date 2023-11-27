@@ -80,6 +80,8 @@ brew "isacikgoz/taps/tldr"
 brew "sebglazebrook/aliases/aliases"
 brew "xo/xo/usql"
 brew "mermaid-cli"
+brew "hashicorp/tap/terraform-ls"
 cask "mactex"
 cask "rectangle"
 cask "visual-studio-code"
+

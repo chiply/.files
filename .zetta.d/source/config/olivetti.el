@@ -8,7 +8,4 @@
   :hydra
   (defhydra+ hydra-window ()
     ("C-o" (lambda () (interactive) (call-interactively 'olivetti-mode)))
-    )
-
-
-  )
+    ))

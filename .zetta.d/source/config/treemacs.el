@@ -122,7 +122,7 @@
                             (toggle-truncate-lines -1)
                             ))
          ;; note is somewhat close to the behavior of having frame specific treemacs buffers, or at least satisfies the same usecase
-         ;;((python-mode emacs-lisp-mode sql-mode) . z-setup-treemacs-for-buffer)
+         ;;((python-ts-mode emacs-lisp-mode sql-mode) . z-setup-treemacs-for-buffer)
          )
   )
 

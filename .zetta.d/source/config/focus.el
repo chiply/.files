@@ -54,6 +54,6 @@
    )
 
   :hook ((emacs-lisp-mode . (lambda () (z-focus-mode 'defun)))
-         ((python-mode sql-mode yaml-mode sh-mode) . (lambda () (z-focus-mode 'brick)))
+         ((python-ts-mode sql-mode yaml-mode sh-mode) . (lambda () (z-focus-mode 'brick)))
          (use-package--focus--post-config . (lambda () (z-brushup))))
   )

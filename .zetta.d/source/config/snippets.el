@@ -161,7 +161,7 @@
 ;; (use-package sphinx-doc
 ;;   :config
 ;;   (setq sphinx-doc-include-types nil)
-;;   (add-hook 'python-mode-hook (lambda ()
+;;   (add-hook 'python-ts-mode-hook (lambda ()
 ;;                                 (require 'sphinx-doc)
 ;;                                 (sphinx-doc-mode t)))
 ;;   )
@@ -171,7 +171,7 @@
 (use-package numpydoc
   :config
   (setq numpydoc-insertion-style nil)
-  :bind (:map python-mode-map
+  :bind (:map python-ts-mode-map
               ("C-c C-n" . numpydoc-generate)))
 
 

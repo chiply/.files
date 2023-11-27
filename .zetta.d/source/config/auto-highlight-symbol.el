@@ -2,6 +2,6 @@
   :config
   (setq highlight-symbol-idle-delay 0.05)
 
-  :hook ((python-mode emacs-lisp-mode yaml-mode jsonian-mode json-mode web-mode shell-mode) . highlight-symbol-mode)
+  :hook ((python-ts-mode emacs-lisp-mode yaml-mode jsonian-mode json-mode web-mode shell-mode) . highlight-symbol-mode)
 
   )

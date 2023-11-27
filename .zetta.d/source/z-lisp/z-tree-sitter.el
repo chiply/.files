@@ -6,7 +6,7 @@
 (setq tree-sitter-debug-jump-buttons t)
 
 (add-hook
- 'python-mode-hook
+ 'python-ts-mode-hook
  (lambda () (progn (tree-sitter-mode) (tree-sitter-hl-mode))))
 
 
