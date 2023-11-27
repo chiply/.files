@@ -285,18 +285,18 @@
 
 (defun zwhitespace () (let ((x " ")) x))
 
-(defun z-yaml-json-info ()
-  (cond
-   ((or
-     ;; anything using yaml
-     (equal major-mode 'docker-compose-mode)
-     (equal major-mode 'yaml-mode))
-    (concat "{" (jpt-yaml-path-to-point) "}"))
-   ((or
-     (equal major-mode 'jsonian-mode))
-    (concat "{" (jsons-get-path-python) "}"))
-   )
-  )
+;; (defun z-yaml-json-info ()
+;;   (cond
+;;    ((or
+;;      ;; anything using yaml
+;;      (equal major-mode 'docker-compose-mode)
+;;      (equal major-mode 'yaml-mode))
+;;     (concat "{" (jpt-yaml-path-to-point) "}"))
+;;    ((or
+;;      (equal major-mode 'jsonian-mode))
+;;     (concat "{" (jsons-get-path-python) "}"))
+;;    )
+;;   )
 
 (defun z-org-outline-path ()
     (when (string= major-mode "org-mode") (concat " > " (org-display-outline-path) "/" (org-get-heading)))
@@ -309,7 +309,7 @@
                        zpath
                        zwhitespace
                        ;;lsp-headerline--build-string
-                       z-yaml-json-info
+                       ;;z-yaml-json-info
                        z-org-outline-path
                        ;; everything here on will be aligned on the right
                        tab-bar-format-align-right

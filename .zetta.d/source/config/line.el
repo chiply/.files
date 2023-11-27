@@ -19,23 +19,24 @@
         " "
         (:eval 
          ;;(lsp-headerline--build-string)
-         (z-yaml-json-info)
+         ;;(z-yaml-json-info)
          )
         " "
         (:eval
          (when (string= major-mode "org-mode") (concat " > " (org-display-outline-path) "/" (org-get-heading)))
          )
         " "
-        (:eval (cond
-                ((or
-                  ;; anything using yaml
-                  (equal major-mode 'docker-compose-mode)
-                  (equal major-mode 'yaml-mode))
-                 (concat "{" (jpt-yaml-path-to-point) "}"))
-                ((or
-                  (equal major-mode 'jsonian-mode))
-                 (concat "{" (jsons-get-path-python) "}"))
-                ))
+        (:eval (when (not (and (boundp 'lsp-mode) lsp-mode))
+                 (cond
+                  ((or
+                    ;; anything using yaml
+                    (equal major-mode 'docker-compose-mode)
+                    (equal major-mode 'yaml-mode))
+                   (concat "{" (jpt-yaml-path-to-point) "}"))
+                  ((or
+                    (equal major-mode 'jsonian-mode))
+                   (concat "{" (jsons-get-path-python) "}"))
+                  )))
         )
       )
 
@@ -55,7 +56,7 @@
              path
              )
            ))
-        (:eval (when (string= major-mode "python-mode")
+        (:eval (when (string= major-mode "python-ts-mode")
                  (propertize
                   (concat " [" pyvenv-virtual-env-name "]")
                   'face 'focus-unfocused
@@ -138,32 +139,32 @@
 ;; for apps that strangely don't take the defaults
 (add-hook 'treemacs-mode-hook
           #'(lambda ()
-             (setq mode-line-format
-                   (list
-                    '(:eval
-                      (let ((path (abbreviate-file-name default-directory)))
-                        (if (> (length path) 30)
-                            (z-minify-path default-directory)
-                          path
-                          )
-                        ))
-                    ))
-             (setq header-line-format (list
-                                       '(:eval (z-get-repo-name))
-                                       ":"
-                                       '(:eval (z-get-branch-name))
-                                       )
-                   )
-             )
+              (setq mode-line-format
+                    (list
+                     '(:eval
+                       (let ((path (abbreviate-file-name default-directory)))
+                         (if (> (length path) 30)
+                             (z-minify-path default-directory)
+                           path
+                           )
+                         ))
+                     ))
+              (setq header-line-format (list
+                                        '(:eval (z-get-repo-name))
+                                        ":"
+                                        '(:eval (z-get-branch-name))
+                                        )
+                    )
+              )
           )
 
 
 
 (add-hook 'eaf-mode-hook
           #'(lambda ()
-             (setq mode-line-format
-                   (z-get-line-format default-line-align-left "" "")
-                   )
-             )
+              (setq mode-line-format
+                    (z-get-line-format default-line-align-left "" "")
+                    )
+              )
           )
 

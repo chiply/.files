@@ -234,7 +234,7 @@
   ;; vertico-IS
   (
    :states '(insert)
-   :keymaps '(python-mode-map
+   :keymaps '(python-ts-mode-map
               lisp-interaction-mode-map
               emacs-lisp-mode-map
               lisp-mode-map

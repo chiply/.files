@@ -4,7 +4,7 @@
 
   :config
   (setq bookmark-fringe-mark 'bookmark-mark)
-  (setq bookmark-save-flag nil)
+  (setq bookmark-save-flag t)
 
   (add-to-list 'desktop-globals-to-save 'bookmark-alist)
 

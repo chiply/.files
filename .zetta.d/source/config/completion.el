@@ -112,7 +112,7 @@ tempel expand?)
                                (string= major-mode "lisp-interaction-mode"))
                            ;; todo -- not making it through to ispell... why?
                            '(elisp-completion-at-point cape-file))
-                          ((string= major-mode "python-mode")
+                          ((string= major-mode "python-ts-mode")
                            '(python-completion-at-point cape-file))
                           ((string= major-mode "org-mode")
                            '(cape-file
@@ -142,7 +142,7 @@ tempel expand?)
                                (string= major-mode "lisp-interaction-mode"))
                            ;; todo -- not making it through to ispell... why?
                            '(cape-ispell))
-                          ((string= major-mode "python-mode")
+                          ((string= major-mode "python-ts-mode")
                            '(cape-ispell))
                           ((string= major-mode "org-mode")
                            '(cape-ispell))))
@@ -158,7 +158,7 @@ tempel expand?)
 
 (general-define-key
  :states '(insert)
- :keymaps '(python-mode-map
+ :keymaps '(python-ts-mode-map
             lisp-interaction-mode-map
             emacs-lisp-mode-map
             lisp-mode-map
@@ -169,7 +169,11 @@ tempel expand?)
             text-mode-map
             org-mode-map
             bibtex-mode-map
-            sh-mode-map)
+            sh-mode-map
+            lark-mode-map
+            dockerfile-mode-map
+            terraform-mode-map
+            )
  "C-;" 'indent-for-tab-command
  "<tab>" 'z-completion-at-point
  )

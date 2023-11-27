@@ -133,10 +133,10 @@ seem to require loading after the client starts up"
 
           (set-face-attribute
            'header-line nil
-           :height 1.2
+           :height 1.0
            :box nil
-           :background brushup-bg
-           :foreground brushup-fg-1
+           ;;:background brushup-bg
+           ;;:foreground brushup-fg-1
            :underline nil
            :overline nil
            :inherit nil
@@ -144,9 +144,9 @@ seem to require loading after the client starts up"
 
           (set-face-attribute
            'tab-bar nil
-           :height 1.3
-           :background (modus-themes-get-color-value 'bg-green-nuanced)
-           :foreground brushup-fg-1
+           :height 1.0
+           ;;:background (modus-themes-get-color-value 'bg-green-nuanced)
+           ;;:foreground brushup-fg-1
            :inherit nil
            :underline nil
            :overline nil

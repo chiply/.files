@@ -26,7 +26,7 @@ See URL `https://beta.ruff.rs/docs/'."
             (id (one-or-more (any alpha)) (one-or-more digit)) " "
             (message (one-or-more not-newline))
             line-end))
-  :modes (python-mode python-ts-mode)
+  :modes (python-ts-mode python-ts-mode)
   ;;:next-checkers ((warning . python-pycheckers))
   )
 
@@ -38,7 +38,7 @@ See URL `https://beta.ruff.rs/docs/'."
     ))
 
 (add-to-list 'flycheck-checkers 'python-ruff)
-(add-hook 'python-mode-local-vars-hook #'python-flycheck-setup 'append)
+(add-hook 'python-ts-mode-local-vars-hook #'python-flycheck-setup 'append)
 
 
 
