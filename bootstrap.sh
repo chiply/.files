@@ -21,13 +21,14 @@ python3 ~/.files/main.py
 brew tap Homebrew/bundle
 
 # installs everything ~/Brewfile
-brew bundle
+brew bundle --file ~/.config/Brewfile
+yes | /usr/local/opt/fzf/install
 # to update the brewfile and the system
 # uninstalls anything not included in the brew bundle file:
-# brew bundle --force cleanup
+# brew bundle --file ~/.config/Brewfile --force cleanup
 # .. manual edits
 # rewrites the Brewfile:
-# brew bundle dump
+# brew bundle --file ~/.config/Brewfile dump
 
 # znap: znap is a plugin manager for zsh that's simple, fast, and easy
 # to use.
