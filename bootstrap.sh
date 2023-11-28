@@ -82,6 +82,5 @@ cd chemacs
     # ~/.doom.d/bin/doom install
 
 
-
-## language servers
+## language servers (not all should be installed into global scope, eg python)
 npm install -g vscode-json-languageserver

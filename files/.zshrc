@@ -143,19 +143,16 @@ RPROMPT=''
 export PROMPT=$'\n''%n@%m $(git_super_status) $(git rev-parse --show-prefix 2> /dev/null || pwd )'$'\n''$(aws_prompt_info)*$(kube_ps1)'$'\n''x---}-> '
 
 
+# pyvenv
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 
 
-
+# language server specific settings
 export LSP_USE_PLISTS=true
-
 unexport VIRTUAL_ENV
-
-
-
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
