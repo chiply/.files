@@ -72,8 +72,14 @@ export GEM_HOME="$HOME/.gem"
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 
-# be able to tab expand aliases
+# expand alias this is such a critical binding as it allows you to
+# acheive the convenience of aliases.  When the completion is
+# unambiguous, this behaves like yasnippet, otherwise it completes for
+# aliases and then expands.  Expansion can be triggered manually with
+# the keybinding
 zstyle ':completion:*' completer _expand_alias _complete _ignored
+zle -N _expand_alias # to avoid error
+bindkey "^Xe" _expand_alias
 zstyle ':completion:*' regular true
 
 # aws completion
@@ -156,3 +162,10 @@ unexport VIRTUAL_ENV
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+# todo not specific
+
+
+export BROOT_CONFIG_DIR=~/.config/broot
+
+source /Users/redacted/.config/broot/launcher/bash/br

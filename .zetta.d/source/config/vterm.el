@@ -114,38 +114,38 @@
                              vterm-color-underline
                              ])
 
-  (add-to-list 'brushup-styles
-               '(progn
-                  (set-face-attribute 'vterm-color-magenta nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                  (set-face-attribute 'vterm-color-black nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                  (set-face-attribute 'vterm-color-yellow nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                  (set-face-attribute 'vterm-color-yellow nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                  (set-face-attribute 'term-color-yellow nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                  (set-face-attribute 'term-color-magenta nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                  (set-face-attribute 'term-color-bright-yellow nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                  )
-               )
+  ;;(add-to-list 'brushup-styles
+               ;;'(progn
+                  ;;(set-face-attribute 'vterm-color-magenta nil
+                                    ;;:foreground brushup-fg
+                                    ;;:background brushup-bg-3
+                                    ;;)
+                  ;;(set-face-attribute 'vterm-color-black nil
+                                    ;;:foreground brushup-fg
+                                    ;;:background brushup-bg-3
+                                    ;;)
+                  ;;(set-face-attribute 'vterm-color-yellow nil
+                                    ;;:foreground brushup-fg
+                                    ;;:background brushup-bg-3
+                                    ;;)
+                  ;;(set-face-attribute 'vterm-color-yellow nil
+                                    ;;:foreground brushup-fg
+                                    ;;:background brushup-bg-3
+                                    ;;)
+                  ;;(set-face-attribute 'term-color-yellow nil
+                                    ;;:foreground brushup-fg
+                                    ;;:background brushup-bg-3
+                                    ;;)
+                  ;;(set-face-attribute 'term-color-magenta nil
+                                    ;;:foreground brushup-fg
+                                    ;;:background brushup-bg-3
+                                    ;;)
+                  ;;(set-face-attribute 'term-color-bright-yellow nil
+                                    ;;:foreground brushup-fg
+                                    ;;:background brushup-bg-3
+                                    ;;)
+                  ;;)
+               ;;)
 
   :display
   (z-side "^\\*zsh*" 'bottom)
