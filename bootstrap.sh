@@ -21,13 +21,21 @@ python3 ~/.files/main.py
 brew tap Homebrew/bundle
 
 # installs everything ~/Brewfile
-brew bundle
+# if the fzf install script is at /usr/local/opt/fzf/install then ins
+if [ -f /usr/local/opt/fzf/install ]; then
+    yes | /usr/local/opt/fzf/install
+fi
+
+if [ -f /opt/homebrew/opt/fzf/install ]; then
+    yes | /opt/homebrew/opt/fzf/install
+fi
+
 # to update the brewfile and the system
 # uninstalls anything not included in the brew bundle file:
-# brew bundle --force cleanup
+# brew bundle --file ~/.config/Brewfile --force cleanup
 # .. manual edits
 # rewrites the Brewfile:
-# brew bundle dump
+# brew bundle --file ~/.config/Brewfile dump
 
 # znap: znap is a plugin manager for zsh that's simple, fast, and easy
 # to use.
@@ -84,3 +92,12 @@ cd chemacs
 
 ## language servers (not all should be installed into global scope, eg python)
 npm install -g vscode-json-languageserver
+
+# nvm ode
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# download and sets current version of node
+nvm install node
