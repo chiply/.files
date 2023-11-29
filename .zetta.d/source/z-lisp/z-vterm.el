@@ -105,49 +105,53 @@
 
 (setq vterm-shell "zsh")
 
-(setq vterm-color-palette [vterm-color-black
-                           font-lock-comment-face
-                           vterm-color-white
-                           vterm-color-underline
-                           vterm-color-underline
-                           vterm-color-underline
-                           vterm-color-underline
-                           vterm-color-underline
-                           ])
+;;(setq vterm-color-palette [vterm-color-black
+                           ;;font-lock-comment-face
+                           ;;vterm-color-black
+                           ;;vterm-color-underline
+                           ;;vterm-color-underline
+                           ;;vterm-color-underline
+                           ;;vterm-color-underline
+                           ;;vterm-color-underline
+                           ;;])
 
-(add-to-list 'brushup-styles
-             '(progn
-                (set-face-attribute 'vterm-color-magenta nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                (set-face-attribute 'vterm-color-black nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                (set-face-attribute 'vterm-color-yellow nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                (set-face-attribute 'vterm-color-yellow nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                (set-face-attribute 'term-color-yellow nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                (set-face-attribute 'term-color-magenta nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                (set-face-attribute 'term-color-bright-yellow nil
-                                    :foreground brushup-fg
-                                    :background brushup-bg-3
-                                    )
-                )
-             )
+;; [vterm-color-black vterm-color-red vterm-color-green
+;; vterm-color-yellow vterm-color-blue vterm-color-magenta
+;; vterm-color-cyan vterm-color-white]
 
+ ;;(add-to-list 'brushup-styles
+              ;;'(progn
+                 ;;(set-face-attribute 'vterm-color-magenta nil
+                                     ;;:foreground brushup-fg
+                                     ;;:background brushup-bg-3
+                                     ;;)
+                 ;;(set-face-attribute 'vterm-color-black nil
+                                     ;;:foreground brushup-fg
+                                     ;;:background brushup-bg-3
+                                     ;;)
+                 ;;(set-face-attribute 'vterm-color-yellow nil
+                                     ;;:foreground brushup-fg
+                                     ;;:background brushup-bg-3
+                                     ;;)
+                 ;;(set-face-attribute 'vterm-color-yellow nil
+                                     ;;:foreground brushup-fg
+                                     ;;:background brushup-bg-3
+                                     ;;)
+                 ;;(set-face-attribute 'term-color-yellow nil
+                                     ;;:foreground brushup-fg
+                                     ;;:background brushup-bg-3
+                                     ;;)
+                 ;;(set-face-attribute 'term-color-magenta nil
+                                     ;;:foreground brushup-fg
+                                     ;;:background brushup-bg-3
+                                     ;;)
+                 ;;(set-face-attribute 'term-color-bright-yellow nil
+                                     ;;:foreground brushup-fg
+                                     ;;:background brushup-bg-3
+                                     ;;)
+                 ;;)
+              ;;)
+;;
 (z-side "^\\*zsh*" 'bottom)
 (z-side "^\\*bash*" 'bottom)
 (z-side "^\\*python3*" 'bottom 1)
@@ -159,6 +163,8 @@
  :states '(insert)
  :keymaps '(vterm-mode-map)
  "C-s" 'vterm-send-C-s
+ "C-x" 'vterm-send-C-x
+
  "<escape>" 'vterm-send-escape
  )
 

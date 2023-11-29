@@ -8,3 +8,7 @@ eval "$(pyenv init -)"
 
 unexport VIRTUAL_ENV
 
+
+source /Users/charles.baker/Library/Application\ Support/org.dystroy.broot/launcher/bash/br
+
+source /Users/charles.baker/.config/broot/launcher/bash/br
