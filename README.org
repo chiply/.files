@@ -1,0 +1,31 @@
+
+* .files
+This repo houses my 'dotfiles' and implements lightweight mechanisms to 'install' these dotfiles to new machines. 
+
+* Setup
+- run bootstrap.sh
+- zsh is the main shell, so bashrc and profile will be sparse while zsh will contain most configurations
+
+
+* Todo
+- file for emacs distro installations
+- file for language server installations
+- Examples readme showing examples of how to use the toolset as a whole (eg how to use tmuxinator with a makefile, also levarging python fire (of course utilizing pyvenv, poetry, and lsp in the process) for example)
+
+
+* Size
+- Track total size of codebase
+
+* Bootstrap.sh side effects
+- touches files, has the effect of creating the file if it doesn't exist.  This step helps to prevent 'file doesn't exist' errors.
+  - ~/private.el
+  - ~/.localsecrets
+- Symlinks everything in files to an equivalent path reletive to the home directory.  For example .files/files/.zsh would be symlinked to ~/.zsh. .files/files/foobar/subfile.sh would be linked to ~/foobar/subfile/sh.
+
+* Privacy
+:PROPERTIES:
+:ID:       674822DC-A547-4B03-B3FA-B835EAF12396
+:END:
+Implemented with gitignore.
+
+

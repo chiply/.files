@@ -46,7 +46,6 @@ eln-cache/
 
 
 # org-roam
-README*
 # roam nodes created and not filed yet
 org-roam/*.org
 org-roam/image/

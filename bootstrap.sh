@@ -1,4 +1,7 @@
+
 cd ~
+mkdir -p .tmux/themes
+
 touch ~/.localsecrets
 
 # macos thing
