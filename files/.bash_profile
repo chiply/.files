@@ -27,3 +27,7 @@ eval "$(pyenv init -)"
 unexport VIRTUAL_ENV
 
 export LSP_USE_PLISTS=true
+
+source /Users/redacted/Library/Application\ Support/org.dystroy.broot/launcher/bash/br
+
+source /Users/redacted/.config/broot/launcher/bash/br
