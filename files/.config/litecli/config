@@ -42,7 +42,7 @@ table_format = ascii
 # friendly, monokai, paraiso, colorful, murphy, bw, pastie, paraiso, trac, default,
 # fruity.
 # Screenshots at http://mycli.net/syntax
-syntax_style = default
+syntax_style = emacs
 
 # Keybindings: Possible values: emacs, vi.
 # Emacs mode: Ctrl-A is home, Ctrl-E is end. All emacs keybindings are available in the REPL.
@@ -96,9 +96,9 @@ scrollbar = 'bg:#00aaaa'
 selected = '#ffffff bg:#6666aa'
 search = '#ffffff bg:#4444aa'
 search.current = '#ffffff bg:#44aa44'
-bottom-toolbar = 'bg:#222222 #aaaaaa'
-bottom-toolbar.off = 'bg:#222222 #888888'
-bottom-toolbar.on = 'bg:#222222 #ffffff'
+bottom-toolbar = 'bg:#ffffff #888888'
+bottom-toolbar.off = 'bg:#ffffff #aaaaaa'
+bottom-toolbar.on = 'bg:#ffffff #000000'
 search-toolbar = 'noinherit bold'
 search-toolbar.text = 'nobold'
 system-toolbar = 'noinherit bold'

@@ -102,7 +102,7 @@ table_format = psql
 # Syntax Style. Possible values: manni, igor, xcode, vim, autumn, vs, rrt,
 # native, perldoc, borland, tango, emacs, friendly, monokai, paraiso-dark,
 # colorful, murphy, bw, pastie, paraiso-light, trac, default, fruity
-syntax_style = bw
+syntax_style = emacs
 
 # Keybindings:
 # When Vi mode is enabled you can use modal editing features offered by Vi in the REPL.
@@ -170,9 +170,9 @@ scrollbar = 'bg:#00aaaa'
 selected = '#ffffff bg:#6666aa'
 search = '#ffffff bg:#4444aa'
 search.current = '#ffffff bg:#44aa44'
-bottom-toolbar = 'bg:#222222 #aaaaaa'
-bottom-toolbar.off = 'bg:#222222 #888888'
-bottom-toolbar.on = 'bg:#222222 #ffffff'
+bottom-toolbar = 'bg:#ffffff #888888'
+bottom-toolbar.off = 'bg:#ffffff #aaaaaa'
+bottom-toolbar.on = 'bg:#ffffff #000000'
 search-toolbar = 'noinherit bold'
 search-toolbar.text = 'nobold'
 system-toolbar = 'noinherit bold'
