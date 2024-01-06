@@ -164,3 +164,40 @@
 
 (setq org-pandoc-options-for-markdown '((wrap . none)))
 
+
+
+
+
+
+
+
+
+
+
+(defun org-babel-tangle--unbracketed-link (params)
+  "Get a raw link to the src block at point, without brackets.
+
+The PARAMS are the 3rd element of the info for the same src block."
+  (unless (string= "no" (cdr (assq :comments params)))
+    (save-match-data
+      (let* (;; The created link is transient.  Using ID is not necessary,
+             ;; but could have side-effects if used.  An ID property may
+             ;; be added to existing entries thus creating unexpected file
+             ;; modifications.
+             ;; CHANGED
+             ;;(org-id-link-to-org-use-id nil)
+             (l (org-no-properties
+                 (cl-letf (((symbol-function 'org-store-link-functions)
+                            (lambda () nil)))
+                   (org-store-link nil))))
+             (bare (and (string-match org-link-bracket-re l)
+                        (match-string 1 l))))
+        (when bare
+          (if (and org-babel-tangle-use-relative-file-links
+                   (string-match org-link-types-re bare)
+                   (string= (match-string 1 bare) "file"))
+              (concat "file:"
+                      (file-relative-name (substring bare (match-end 0))
+                                          (file-name-directory
+                                           (cdr (assq :tangle params)))))
+            bare))))))

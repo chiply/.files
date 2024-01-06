@@ -27,11 +27,14 @@ zstyle ':omz:update' frequency 1
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(
-    codeclimate common-aliases aliases alias-finder copybuffer copyfile copypath
+    codeclimate
+    common-aliases aliases alias-finder
+    copybuffer copyfile copypath
     dirhistory docker docker-compose extract fd frontend-search gh
     brew git-extras gitfast git-lfs git-prompt history httpie jsontools pip
     ripgrep safe-paste screen terraform tmux themes tmuxinator
-    zsh-autosuggestions kube-ps1 aws npm dirpersist kubectl poetry
+    zsh-autosuggestions
+    kube-ps1 aws npm dirpersist kubectl poetry
 )
 source $ZSH/oh-my-zsh.sh
 export KUBE_PS1_BINARY=kubectl
@@ -59,14 +62,6 @@ export GEM_HOME="$HOME/.gem"
 
 
 
-
-# mcfly
-#export MCFLY_RESULTS_SORT=LAST_RUN
-#export MCFLY_RESULTS=50
-#export MCFLY_FUZZY=5
-#export MCFLY_LIGHT=TRUE
-#export MCFLY_DISABLE_MENU=TRUE
-#eval "$(mcfly init zsh)"
 
 # completion
 autoload bashcompinit && bashcompinit
@@ -138,15 +133,7 @@ alias cat="bat --theme=GitHub --style=\"numbers,changes,header\""
 alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
 
 
-export SHOW_AWS_PROMPT=false
 
-
-# lots of prompt features add to RPROMPT, but I dislike this as it
-# breaks up the information and can also cause issues with display
-RPROMPT=''
-
-
-export PROMPT=$'\n''%n@%m $(git_super_status) $(git rev-parse --show-prefix 2> /dev/null || pwd )'$'\n''$(aws_prompt_info)*$(kube_ps1)'$'\n''x---}-> '
 
 
 # pyvenv
@@ -170,4 +157,44 @@ source ~/.config/broot/launcher/bash/br
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+
+
+
+
+# PROMPT
+RPROMPT=''
+export SHOW_AWS_PROMPT=false
+
+function preexec() {
+  timer=$(print -P %D{%s%3.})
+}
+
+function precmd() {
+  timeprompt=""	
+  if [ $timer ]; then
+    now=$(print -P %D{%s%3.})
+    local d_ms=$(($now - $timer))
+    local d_s=$((d_ms / 1000))
+    local ms=$((d_ms % 1000))
+    local s=$((d_s % 60))
+    local m=$(((d_s / 60) % 60))
+    local h=$((d_s / 3600))
+
+    if   ((h > 0)); then timeprompt=${h}h${m}m${s}s
+    elif ((m > 0)); then timeprompt=${m}m${s}.$(printf $(($ms / 100)))s # 1m12.3s
+    elif ((s > 9)); then timeprompt=${s}.$(printf %02d $(($ms / 10)))s # 12.34s
+    elif ((s > 0)); then timeprompt=${s}.$(printf %03d $ms)s # 1.234s
+    else timeprompt=${ms}ms
+    fi
+    timeprompt="%B%F{yellow}${timeprompt} %f%b"
+    unset timer
+  fi
+}
+
+export PROMPT=$'\n''%n@%m $(git_super_status) $(git rev-parse --show-prefix 2> /dev/null || pwd ) $timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\nx---}-> '
+
+
+
 
