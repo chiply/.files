@@ -5,7 +5,9 @@
   ;; Prevent undo tree files from polluting your git repo.
   ;; This also ensures that undo data, whch could potentially contain
   ;; sensitive information, is not stored in the emacs directory
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs-undo/undo")))
+
+  (setq undo-tree-auto-save-history nil)
+  ;;(setq undo-tree-history-directory-alist '(("." . "~/.emacs-undo/undo")))
 
   ;; https://stackoverflow.com/questions/8370778/remove-glyph-at-end-of-truncated-lines
   (set-display-table-slot standard-display-table 0 ?\ )

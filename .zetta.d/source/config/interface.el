@@ -14,6 +14,12 @@
       scroll-conservatively 9999
       scroll-step 1)
 
+(setq scroll-bar-width nil)
+(setq scroll-bar-height nil)
+
+;; make the background of scroll-bar more colorful
+
+
 (defun server-shutdown ()
   "Save buffers, Quit, and Shutdown (kill) server"
   (interactive)
@@ -45,3 +51,5 @@
                        "  "
                        tab-bar-format-global
                        ))
+
+

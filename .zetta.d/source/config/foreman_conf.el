@@ -160,12 +160,12 @@
 
 
 ;; Modes with 4mn controls
-(add-hook 'python-ts-mode-hook '4mn-init-conf)
-(add-hook 'sql-mode-hook '4mn-init-conf)
-(add-hook 'emacs-lisp-mode-hook '4mn-init-conf)
-(add-hook 'sh-mode-hook '4mn-init-conf)
-(add-hook 'yaml-mode-hook '4mn-init-conf)
-(add-hook 'dockerfile-mode-hook '4mn-init-conf)
+;; (add-hook 'python-ts-mode-hook '4mn-init-conf)
+;; (add-hook 'sql-mode-hook '4mn-init-conf)
+;; (add-hook 'emacs-lisp-mode-hook '4mn-init-conf)
+;; (add-hook 'sh-mode-hook '4mn-init-conf)
+;; (add-hook 'yaml-mode-hook '4mn-init-conf)
+;; (add-hook 'dockerfile-mode-hook '4mn-init-conf)
 
 
 
