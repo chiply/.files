@@ -17,43 +17,56 @@
         brushup-gradient-step 7
         )
 
-  (setq brushup-fg-1 (if brushup-dark-p
-                         (color-lighten-name brushup-fg (- brushup-gradient-step))
-                       (color-lighten-name brushup-fg brushup-gradient-step))
-        brushup-fg-2 (if brushup-dark-p
-                         (color-lighten-name brushup-fg (* 2 (- brushup-gradient-step)))
-                       (color-lighten-name brushup-fg (* 2 brushup-gradient-step )))
-        brushup-fg-3 (if brushup-dark-p
-                         (color-lighten-name brushup-fg (* 3 (- brushup-gradient-step)))
-                       (color-lighten-name brushup-fg (* 3 brushup-gradient-step )))
-        brushup-fg-4 (if brushup-dark-p
-                         (color-lighten-name brushup-fg (* 4 (- brushup-gradient-step)))
-                       (color-lighten-name brushup-fg (* 4 brushup-gradient-step )))
-        brushup-fg-5 (if brushup-dark-p
-                         (color-lighten-name brushup-fg (* 5 (- brushup-gradient-step)))
-                       (color-lighten-name brushup-fg (* 5 brushup-gradient-step )))
-        brushup-fg-6 (if brushup-dark-p
-                         (color-lighten-name brushup-fg (* 6 (- brushup-gradient-step)))
-                       (color-lighten-name brushup-fg (* 6 brushup-gradient-step )))
-        brushup-bg-1 (if brushup-dark-p
-                         (color-lighten-name brushup-bg brushup-gradient-step)
-                       (color-lighten-name brushup-bg (- brushup-gradient-step)))
-        brushup-bg-1_0 (color-lighten-name brushup-bg (- 3)) ;; for solair
-        brushup-bg-2 (if brushup-dark-p
-                         (color-lighten-name brushup-bg (* 2 brushup-gradient-step))
-                       (color-lighten-name brushup-bg (* 2 (- brushup-gradient-step))))
-        brushup-bg-3 (if brushup-dark-p
-                         (color-lighten-name brushup-bg (* 3 brushup-gradient-step ))
-                       (color-lighten-name brushup-bg (* 3 (- brushup-gradient-step))))
-        brushup-bg-4 (if brushup-dark-p
-                         (color-lighten-name brushup-bg (* 4 brushup-gradient-step))
-                       (color-lighten-name brushup-bg (* 4 (- brushup-gradient-step))))
-        brushup-bg-5 (if brushup-dark-p
-                         (color-lighten-name brushup-bg (* 5 brushup-gradient-step))
-                       (color-lighten-name brushup-bg (* 5 (- brushup-gradient-step))))
-        brushup-bg-6 (if brushup-dark-p
-                         (color-lighten-name brushup-bg (* 6 brushup-gradient-step ))
-                       (color-lighten-name brushup-bg (* 6 (- brushup-gradient-step)))))
+  (setq
+   brushup-fg-1
+   (if brushup-dark-p
+       (color-lighten-name brushup-fg (- brushup-gradient-step))
+     (color-lighten-name brushup-fg brushup-gradient-step))
+   brushup-fg-2
+   (if brushup-dark-p
+       (color-lighten-name brushup-fg (* 2 (- brushup-gradient-step)))
+     (color-lighten-name brushup-fg (* 2 brushup-gradient-step )))
+   brushup-fg-3
+   (if brushup-dark-p
+       (color-lighten-name brushup-fg (* 3 (- brushup-gradient-step)))
+     (color-lighten-name brushup-fg (* 3 brushup-gradient-step )))
+   brushup-fg-4
+   (if brushup-dark-p
+       (color-lighten-name brushup-fg (* 4 (- brushup-gradient-step)))
+     (color-lighten-name brushup-fg (* 4 brushup-gradient-step )))
+   brushup-fg-5
+   (if brushup-dark-p
+       (color-lighten-name brushup-fg (* 5 (- brushup-gradient-step)))
+     (color-lighten-name brushup-fg (* 5 brushup-gradient-step )))
+   brushup-fg-6
+   (if brushup-dark-p
+       (color-lighten-name brushup-fg (* 6 (- brushup-gradient-step)))
+     (color-lighten-name brushup-fg (* 6 brushup-gradient-step )))
+   brushup-bg-1
+   (if brushup-dark-p
+       (color-lighten-name brushup-bg brushup-gradient-step)
+     (color-lighten-name brushup-bg (- brushup-gradient-step)))
+   brushup-bg-1_0 (color-lighten-name brushup-bg (- 3)) ;; for solair
+   brushup-bg-2
+   (if brushup-dark-p
+       (color-lighten-name brushup-bg (* 2 brushup-gradient-step))
+     (color-lighten-name brushup-bg (* 2 (- brushup-gradient-step))))
+   brushup-bg-3
+   (if brushup-dark-p
+       (color-lighten-name brushup-bg (* 3 brushup-gradient-step ))
+     (color-lighten-name brushup-bg (* 3 (- brushup-gradient-step))))
+   brushup-bg-4
+   (if brushup-dark-p
+       (color-lighten-name brushup-bg (* 4 brushup-gradient-step))
+     (color-lighten-name brushup-bg (* 4 (- brushup-gradient-step))))
+   brushup-bg-5
+   (if brushup-dark-p
+       (color-lighten-name brushup-bg (* 5 brushup-gradient-step))
+     (color-lighten-name brushup-bg (* 5 (- brushup-gradient-step))))
+   brushup-bg-6
+   (if brushup-dark-p
+       (color-lighten-name brushup-bg (* 6 brushup-gradient-step ))
+     (color-lighten-name brushup-bg (* 6 (- brushup-gradient-step)))))
   )
 
 
@@ -86,12 +99,11 @@ seem to require loading after the client starts up"
     ;; default
     (condition-case nil
         (progn
-          (set-face-attribute 'region nil
-                              :background (if brushup-dark-p
-                                              (color-lighten-name brushup-fg (- 60))
-                                            brushup-bg-2
-                                            )
-                              :foreground 'unspecified)
+          (set-face-attribute
+           'region nil
+           :background
+           (if brushup-dark-p (color-lighten-name brushup-fg (- 60)) brushup-bg-2)
+           :foreground 'unspecified)
 
           ;;(set-frame-font "Courier 12" nil t)
 
@@ -100,57 +112,42 @@ seem to require loading after the client starts up"
                                              term-color-blue term-color-magenta
                                              term-color-cyan term-color-white])
 
-          (set-face-attribute
-           'vertical-border nil
-           :background brushup-bg
-           :foreground brushup-bg
-           )
-
+          ;;(set-face-attribute
+          ;;'vertical-border nil
+          ;;:background brushup-bg
+          ;;:foreground brushup-bg
+          ;;)
           (set-face-attribute
            'mode-line nil
-           :height 1.2
-           :overline nil
-           :box nil
-           ;;:foreground brushup-bg-6
-           ;;:background brushup-bg-1_0
-           :background brushup-bg
-           :foreground brushup-fg-3
-           ;;:underline `(:color ,brushup-bg-3)
-           :underline nil
+           :underline `(:color ,brushup-bg-2)
+           :overline t
            )
-
           (set-face-attribute
            'mode-line-inactive nil
-           :height 1.2
-           :underline nil
-           :overline nil
-           :box nil
-           :background brushup-bg
-           :foreground brushup-bg-4
-           ;;:underline `(:color ,brushup-bg-3)
-           :underline nil
+           :underline `(:color ,brushup-bg-2)
+           :overline t
            )
-
-          (set-face-attribute
-           'header-line nil
-           :height 1.0
-           :box nil
-           ;;:background brushup-bg
-           ;;:foreground brushup-fg-1
-           :underline nil
-           :overline nil
-           :inherit nil
-           )
-
-          (set-face-attribute
-           'tab-bar nil
-           :height 1.0
-           ;;:background (modus-themes-get-color-value 'bg-green-nuanced)
-           ;;:foreground brushup-fg-1
-           :inherit nil
-           :underline nil
-           :overline nil
-           )
+          ;;
+          ;;(set-face-attribute
+          ;;'header-line nil
+          ;;:height 1.0
+          ;;:box nil
+           ;;;;:background brushup-bg
+           ;;;;:foreground brushup-fg-1
+          ;;:underline nil
+          ;;:overline nil
+          ;;:inherit nil
+          ;;)
+          ;;
+          ;;(set-face-attribute
+          ;;'tab-bar nil
+          ;;:height 1.0
+           ;;;;:background (modus-themes-get-color-value 'bg-green-nuanced)
+           ;;;;:foreground brushup-fg-1
+          ;;:inherit nil
+          ;;:underline nil
+          ;;:overline nil
+          ;;)
 
           (set-face-attribute
            'sh-heredoc nil
@@ -169,9 +166,10 @@ seem to require loading after the client starts up"
 
           (set-face-attribute
            'font-lock-comment-face nil
-           :foreground (if brushup-dark-p
-                           (color-lighten-name brushup-bg 25)
-                         (color-lighten-name brushup-bg -25))
+           :foreground
+           (if brushup-dark-p
+               (color-lighten-name brushup-bg 25)
+             (color-lighten-name brushup-bg -25))
            :slant 'normal)
 
           (set-face-attribute
@@ -180,14 +178,19 @@ seem to require loading after the client starts up"
 
           (set-face-attribute
            'font-lock-doc-face nil
-           :foreground (if brushup-dark-p
-                           (color-lighten-name brushup-bg 30)
-                         (color-lighten-name brushup-bg -30)
-                         ))
+           :foreground
+           (if brushup-dark-p
+               (color-lighten-name brushup-bg 30)
+             (color-lighten-name brushup-bg -30)
+             ))
 
           ;;(set-face-attribute 'minibuffer-prompt nil
-                              ;;:foreground brushup-fg
-                              ;;:background brushup-bg-1)
+          ;;:foreground brushup-fg
+          ;;:background brushup-bg-1)
+
+          ;; set the background of the fringe to black
+          (set-face-background 'fringe brushup-bg-1_0)
+
 
           )
       (error (message "error in z-brushup"))

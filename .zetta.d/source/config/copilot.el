@@ -6,15 +6,7 @@
                '(progn
                   (set-face-attribute 'copilot-overlay-face nil
                                       :foreground (modus-themes-get-color-value 'green-intense)
-                                      :background brushup-bg
-                                      )
-                  )
-               ) 
-
-  )
-
-
-
+                                      :background brushup-bg))))
 
 (general-define-key
  :keymaps '(copilot-completion-map)
@@ -25,3 +17,4 @@
  "C-n" 'copilot-next-completion
  "C-p" 'copilot-previous-completion
  )
+

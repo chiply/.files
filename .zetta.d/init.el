@@ -18,6 +18,7 @@
    "undo-tree.el"
    ;;"visual-fill-column.el"
    "face.el"
+
    "vi-tilde-fringe.el"
    ;;"tree-sitter.el" "tree-sitter-langs.el"
    "treesit.el"
@@ -41,6 +42,7 @@
    "evil-indent-plus.el" "evil-search-highlight-persist.el" "keys.el"
    "dumb-jump.el"
    ;;"bookmark-view.el"
+   "ef-themes.el"
    ;;"views.el"
    "line-utils.el"
    "sql.el" "sqlite.el" "all-the-icons-dired.el" "dired-subtree.el"
@@ -80,6 +82,8 @@
    ;;"hi-lock"
    "lsp.el"
    "lark.el"
+   "yascroll.el"
+   "nyan-mode.el"
    ;;"eaf.el"
    "obsidian.el" "cleanup.el"))
 
@@ -101,7 +105,9 @@
 (setq
  user-files-ext-features
  '(;;"z-tree-sitter" "z-org-agenda" "z-org-super-agenda"
-   "z-dired" "z-vertico" "z-vterm" "z-tab-line" "z-window" "z-snippets" "z-line"))
+   "z-dired" "z-vertico" "z-vterm"
+   "z-tab-line"
+   "z-window" "z-snippets" "z-line"))
 ;; require all the features
 (-map (lambda (feature) (require (intern feature))) user-files-ext-features)
 
@@ -196,6 +202,8 @@
       (null-device . "/dev/null"))
      (eshell-connection-default-profile
       (eshell-path-env-list))))
+ '(custom-safe-themes
+   '("4c7228157ba3a48c288ad8ef83c490b94cb29ef01236205e360c2c4db200bb18" default))
  '(helm-minibuffer-history-key "M-p"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
