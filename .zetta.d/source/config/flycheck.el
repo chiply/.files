@@ -44,20 +44,20 @@
   ;; from here https://github.com/flycheck/flycheck/issues/186
   (flycheck-add-next-checker 'org-aspell-dynamic 'proselint)
   
-  :brushup
-  (add-to-list 'brushup-styles
-               '(progn
-                  (set-face-attribute 'flycheck-fringe-error nil
-                                      :foreground brushup-fg
-                                      :background (modus-themes-get-color-value 'bg-red-nuanced))
-                  (set-face-attribute 'flycheck-fringe-warning nil
-                                      :foreground brushup-fg
-                                      :background (modus-themes-get-color-value 'bg-blue-nuanced))
-                  (set-face-attribute 'flycheck-fringe-info nil
-                                      :foreground brushup-fg
-                                      :background brushup-bg-1_0)
-                  )
-               )
+  ;;:brushup
+  ;;(add-to-list 'brushup-styles
+               ;;'(progn
+                  ;;(set-face-attribute 'flycheck-fringe-error nil
+                                      ;;:foreground brushup-fg
+                                      ;;:background (modus-themes-get-color-value 'bg-red-nuanced))
+                  ;;(set-face-attribute 'flycheck-fringe-warning nil
+                                      ;;:foreground brushup-fg
+                                      ;;:background (modus-themes-get-color-value 'bg-blue-nuanced))
+                  ;;(set-face-attribute 'flycheck-fringe-info nil
+                                      ;;:foreground brushup-fg
+                                      ;;:background brushup-bg-1_0)
+                  ;;)
+               ;;)
 
   :display
   (z-side "^\\*Flycheck*" 'top)
