@@ -13,37 +13,33 @@ for quitting, and s-x for hide-showing the hint."
         (format "%s: " name) ;; docstring
         ("C-g" (hydra-set-property (intern ,name) :verbosity 0)
          "exit" :exit t)
-        ("j" (setq foobar "barbaz"))
         ("s-x"
          (cond
           ((eq 0 (hydra-get-property (intern ,name) :verbosity))
            (hydra-set-property (intern ,name) :verbosity 1))
           ((eq 1 (hydra-get-property (intern ,name) :verbosity))
-           (hydra-set-property (intern ,name) :verbosity 0))))
-        ))
+           (hydra-set-property (intern ,name) :verbosity 0))))))
     ;; set the verbosity to 0 (eg don't show the docstrinig)
     (eval `(hydra-set-property (intern ,name) :verbosity 0))
     ;; add the name to the hydra registry (useful for introspection)
-    (push name hydra-registry)
-    )
+    (push name hydra-registry))
 
   ;; redefining macro from hydra.el
   (defmacro defhydra+ (name body &optional docstring &rest heads)
-  "Redefine an existing hydra by adding new heads.
+    "Redefine an existing hydra by adding new heads.
 Arguments are same as of `defhydra'."
-  (unless (fboundp (intern (concat (symbol-name name) "/body")))
-    (z-hydra-init (symbol-name name)))
-  (declare (indent defun) (doc-string 3))
-  (unless (stringp docstring)
-    (setq heads
-          (cons docstring heads))
-    (setq docstring nil))
-  `(defhydra ,name ,(or body (hydra--prop name "/params"))
-     ,(or docstring (hydra--prop name "/docstring"))
-     ,@(cl-delete-duplicates
-        (append (hydra--prop name "/heads") heads)
-        :key #'car
-        :test #'equal)))
+    (unless (fboundp (intern (concat (symbol-name name) "/body")))
+      (z-hydra-init (symbol-name name)))
+    (declare (indent defun) (doc-string 3))
+    (unless (stringp docstring)
+      (setq heads (cons docstring heads))
+      (setq docstring nil))
+    `(defhydra ,name ,(or body (hydra--prop name "/params"))
+       ,(or docstring (hydra--prop name "/docstring"))
+       ,@(cl-delete-duplicates
+          (append (hydra--prop name "/heads") heads)
+          :key #'car
+          :test #'equal)))
 
   :brushup
   (add-to-list 'brushup-styles

@@ -10,10 +10,7 @@
   (force-mode-line-update t))
 
 (add-hook 'post-command-hook 'ml-record-selected-window)
-(add-hook 'buffer-list-udpate-hook 'ml-update-all)
-
-
-
+(add-hook 'buffer-list-update-hook 'ml-update-all)
 
 
 ;;;; functions for generating icons
@@ -118,7 +115,8 @@
     (setq reserve (+ reserve 3)))
   (propertize " "
               'display `((space :align-to (- (+ right right-fringe right-margin) ,reserve)))
-              'face face))
+              ;;'face face
+              ))
 
 (defun mode-line-fill-center (face reserve)
   "Return empty space using FACE to the center of remaining space leaving RESERVE space on the right."
@@ -129,7 +127,8 @@
   (propertize " "
               'display `((space :align-to (- (+ center (.5 . right-margin)) ,reserve
                                              (.5 . left-margin))))
-              'face face))
+              ;;'face face
+              ))
 
 
 ;; NOTE use this to allow  more space ont eh right, otherwise you will get cutoff
@@ -140,8 +139,7 @@
 
 (defun z-do-reserve-left/middle (line-align-middle)
   (if (eq ml-selected-window (selected-window))
-      (mode-line-fill-center 'mode-line
-                             (reserve-left/middle line-align-middle))
+      (mode-line-fill-center 'mode-line (reserve-left/middle line-align-middle))
     (mode-line-fill-center 'mode-line-inactive
                            (reserve-left/middle line-align-middle))
     ))

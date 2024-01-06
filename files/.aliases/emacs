@@ -3,20 +3,17 @@
 alias emacs="/opt/homebrew/opt/emacs-plus@29/bin/emacs"
 alias emacsclient="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient"
 
-# default profile 
-alias cmacs="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=default --with-profile default"
-alias ec="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s default"
-
-# default profile 
-alias zetta="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=zetta --with-profile zetta"
-alias zc="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s zetta"
-
-alias zistro="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=zistro --with-profile zistro"
-alias zic="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s zistro"
-
 # emacs -Q
 alias qmacs="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=qmacs --with-profile qmacs"
 alias qc="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s qmacs"
+
+# zetta
+alias zetta="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=zetta --with-profile zetta"
+alias zc="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s zetta"
+
+# tera
+alias tera="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=tera --with-profile tera"
+alias terac="/opt/homebrew/opt/emacs-plus@29/bin/emacsclient -c -s tera"
 
 # spacemacs
 alias spacemacs="/opt/homebrew/opt/emacs-plus@29/bin/emacs --daemon=spacemacs --with-profile spacemacs"

@@ -105,52 +105,14 @@
 
 (setq vterm-shell "zsh")
 
-;;(setq vterm-color-palette [vterm-color-black
-                           ;;font-lock-comment-face
-                           ;;vterm-color-black
-                           ;;vterm-color-underline
-                           ;;vterm-color-underline
-                           ;;vterm-color-underline
-                           ;;vterm-color-underline
-                           ;;vterm-color-underline
-                           ;;])
-
-;; [vterm-color-black vterm-color-red vterm-color-green
-;; vterm-color-yellow vterm-color-blue vterm-color-magenta
-;; vterm-color-cyan vterm-color-white]
-
- ;;(add-to-list 'brushup-styles
-              ;;'(progn
-                 ;;(set-face-attribute 'vterm-color-magenta nil
-                                     ;;:foreground brushup-fg
-                                     ;;:background brushup-bg-3
-                                     ;;)
-                 ;;(set-face-attribute 'vterm-color-black nil
-                                     ;;:foreground brushup-fg
-                                     ;;:background brushup-bg-3
-                                     ;;)
-                 ;;(set-face-attribute 'vterm-color-yellow nil
-                                     ;;:foreground brushup-fg
-                                     ;;:background brushup-bg-3
-                                     ;;)
-                 ;;(set-face-attribute 'vterm-color-yellow nil
-                                     ;;:foreground brushup-fg
-                                     ;;:background brushup-bg-3
-                                     ;;)
-                 ;;(set-face-attribute 'term-color-yellow nil
-                                     ;;:foreground brushup-fg
-                                     ;;:background brushup-bg-3
-                                     ;;)
-                 ;;(set-face-attribute 'term-color-magenta nil
-                                     ;;:foreground brushup-fg
-                                     ;;:background brushup-bg-3
-                                     ;;)
-                 ;;(set-face-attribute 'term-color-bright-yellow nil
-                                     ;;:foreground brushup-fg
-                                     ;;:background brushup-bg-3
-                                     ;;)
-                 ;;)
-              ;;)
+;; fixes unreadable situation -- comes out brown by default
+;; note this is dependent on the terminal that launches emacs, I'm
+;; using iterm2
+(add-to-list 'brushup-styles
+             '(progn
+                (set-face-attribute 'vterm-color-yellow nil
+                                    :foreground brushup-fg
+                                    :background brushup-bg-3)))
 ;;
 (z-side "^\\*zsh*" 'bottom)
 (z-side "^\\*bash*" 'bottom)
@@ -164,17 +126,14 @@
  :keymaps '(vterm-mode-map)
  "C-s" 'vterm-send-C-s
  "C-x" 'vterm-send-C-x
-
- "<escape>" 'vterm-send-escape
- )
+ "<escape>" 'vterm-send-escape)
 
 (general-define-key
  :states '(normal)
  :keymaps '(vterm-mode-map)
  "C-b" 'vterm-send-C-b
  "C-k" 'vterm-send-up
- "C-j" 'vterm-send-down
- )
+ "C-j" 'vterm-send-down)
 
 (defhydra+ hydra-run ()
   ("s" (lambda ()
@@ -187,10 +146,9 @@
 
 (add-hook 'vterm-mode-hook (lambda ()
                              (setq global-hl-line-mode nil)
-                             (text-scale-set -1)
-                             (toggle-truncate-lines 1)
-                             (display-line-numbers-mode 1)
-                             ))
+                             ;;(text-scale-set -1)
+                             (toggle-truncate-lines 1) (display-line-numbers-mode 1)))
+
 (add-hook 'shell-mode-hook 'tab-line-mode)
 (add-hook 'vterm-mode-hook 'tab-line-mode)
 

@@ -72,26 +72,8 @@ npm install -g how-2
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
 source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# user friendly emacs distros
-git clone https://github.com/plexus/chemacs.git
-cd chemacs
-./install.sh
-# note the ~/.emacs-profiles.el file which refers to these directories
-
-## spacemacs
-# clone or update spacemacs
-#if [ -d "~/.spacemacs.d" ]; then
-    #cd ~/.spacemacs.d
-    #git pull
-#else
-    #git clone https://github.com/syl20bnr/spacemacs ~/.spacemacs.d
-#fi
-    
-
-## doom
-# git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.doom.d && \
-    # ~/.doom.d/bin/doom install
-
+# emacs
+chmod +x ./install_emacs_distros.sh && ./install_emacs_distros.sh
 
 ## language servers (not all should be installed into global scope, eg python)
 npm install -g vscode-json-languageserver
@@ -104,3 +86,12 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 # download and sets current version of node
 nvm install node
+
+
+# completions
+just --completions zsh > just.zsh
+
+
+
+
+git clone https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k

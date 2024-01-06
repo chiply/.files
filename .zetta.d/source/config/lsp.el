@@ -7,7 +7,6 @@
 
 (use-package lsp-mode
   :init
-  ;;(setq flycheck-checkers '())
   (setq
    lsp-enable-completion-at-point t
    lsp-completion-provider :none
@@ -19,14 +18,15 @@
    lsp-enable-xref t
    lsp-eldoc-render-all nil
    lsp-eldoc-enable-hover nil
-   lsp-diagnostics-provider :none ;; needs to be set.  we are activating flycheck separately
+   ;; needs to be set.  we are activating flycheck separately
+   lsp-diagnostics-provider :none
    lsp-semantic-highlighting nil
    lsp-signature-render-documentation nil
    lsp-signature-auto-activate nil
    lsp-enable-symbol-highlighting nil
    lsp-modeline-code-actions-enable nil
-
-   lsp-session-file (expand-file-name ".data/lsp/.lsp-session-v1" user-emacs-directory)
+   lsp-session-file (expand-file-name ".data/lsp/.lsp-session-v1"
+                                      user-emacs-directory)
    lsp-log-io nil
    )
 
@@ -55,7 +55,8 @@ point."
             (with-current-buffer buf
               (text-mode)
               (erase-buffer)
-              (insert (string-trim-right (lsp--render-on-hover-content contents t)))
+              (insert (string-trim-right
+                       (lsp--render-on-hover-content contents t)))
               (beginning-of-buffer))
             (display-buffer buf)
             )
@@ -77,7 +78,6 @@ point."
          ))
       )
     )
-
   (defun evil-goto-definition-1 ()
     "Display the type signature and documentation of the thing at
 point."
@@ -107,7 +107,8 @@ point."
   ;; sql
   (add-to-list 'lsp-language-id-configuration '(sql-mode . "sql"))
   ;; tf
-  (add-to-list 'lsp-language-id-configuration '(terraform-mode . "terraform")) ;; just to avoid an error
+  ;; just to avoid an error
+  (add-to-list 'lsp-language-id-configuration '(terraform-mode . "terraform"))
 
 
 
@@ -153,11 +154,7 @@ point."
      ;; this doesn't work well with the template syntax that thinks
      ;; like home uses
      (https://kubernetesjsonschema.dev/v1.14.0/deployment-apps-v1.json . ["deployment.yaml"])
-     (https://kubernetesjsonschema.dev/v1.10.3-standalone/service-v1.json . ["service.yaml"])
-
-
-     )
-   )
+     (https://kubernetesjsonschema.dev/v1.10.3-standalone/service-v1.json . ["service.yaml"])))
 
   (setq lsp-headerline-breadcrumb-icons-enable nil)
   (setq lsp-headerline-breadcrumb-enable-diagnostics t)
@@ -169,10 +166,6 @@ point."
 
   ;;(set-face-attribute 'lsp-headerline-breadcrumb-path-face nil :height 1.0)
   ;;(set-face-attribute 'lsp-headerline-breadcrumb-separator-face nil :height 0.8)
-
-
-
-
 
   :commands lsp
 

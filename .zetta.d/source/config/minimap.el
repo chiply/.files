@@ -117,7 +117,7 @@ When FORCE, enforce update of the active region."
   (setq minimap-hide-fringes nil)
   (setq minimap-minimum-width 25)
   (setq minimap-width-fraction 0.10)
-  (setq minimap-update-delay nil)
+  (setq minimap-update-delay 0.1)
   (setq minimap-hide-scroll-bar nil)
   ;; causes issues with window size when on left... 
   (setq minimap-window-location 'right)
@@ -150,17 +150,17 @@ When FORCE, enforce update of the active region."
     (minimap-mode 'toggle)
     )
 
-  :brushup
-  (add-to-list 'brushup-styles
-               '(progn
-                  (set-face-attribute 'minimap-current-line-face nil
-                                      :background brushup-bg-2
-                                      )
-                  (set-face-attribute 'minimap-active-region-background nil
-                                      :background brushup-bg-1_0
-                                      )
-                  
-                  ))
+  ;;:brushup
+  ;;(add-to-list 'brushup-styles
+               ;;'(progn
+                  ;;(set-face-attribute 'minimap-current-line-face nil
+                                      ;;:background brushup-bg-2
+                                      ;;)
+                  ;;(set-face-attribute 'minimap-active-region-background nil
+                                      ;;:background brushup-bg-1_0
+                                      ;;)
+                 ;; 
+                  ;;))
 
   :general
   (
