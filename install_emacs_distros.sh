@@ -1,6 +1,7 @@
 ######################################################################
 # chemacs
 ######################################################################
+[ ! -e ~/chemacs ] || rm -rf ~/chemacs
 git clone https://github.com/plexus/chemacs.git && \
     cd chemacs && \
     ./install.sh

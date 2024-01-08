@@ -34,7 +34,7 @@ plugins=(
     brew git-extras gitfast git-lfs git-prompt history httpie jsontools pip
     ripgrep safe-paste screen terraform tmux themes tmuxinator
     zsh-autosuggestions
-    kube-ps1 aws npm dirpersist kubectl poetry
+    kube-ps1 aws npm dirpersist kubectl poetry zsh-syntax-highlighting
 )
 source $ZSH/oh-my-zsh.sh
 export KUBE_PS1_BINARY=kubectl
@@ -102,7 +102,7 @@ zstyle ':autocomplete:*' insert-unambiguous yes
 
 
 # syntax highlighting
-source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 
@@ -136,9 +136,12 @@ alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
 
 
 
-# pyvenv
+# pyenv
+echo doing pyenv stuff
 export PYENV_ROOT="$HOME/.pyenv"
+echo doing pyenv command
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+echo doing pyenv init
 eval "$(pyenv init -)"
 
 
@@ -151,19 +154,23 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 
-export BROOT_CONFIG_DIR=~/.config/broot
-source ~/.config/broot/launcher/bash/br
+#export BROOT_CONFIG_DIR=~/.config/broot
+#source ~/.config/broot/launcher/bash/br
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
 
+export PATH="$HOME/.local/bin:$PATH"
 
+
+# move this to bootstrap -- need to load before
 
 
 # PROMPT
+echo doing prompt stuff
 RPROMPT=''
 export SHOW_AWS_PROMPT=false
 
@@ -193,6 +200,7 @@ function precmd() {
   fi
 }
 
+echo doing prompt setteing
 export PROMPT=$'\n''%n@%m $(git_super_status) $(git rev-parse --show-prefix 2> /dev/null || pwd ) $timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\nx---}-> '
 
 
