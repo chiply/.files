@@ -45,6 +45,7 @@
    "ef-themes.el"
    ;;"views.el"
    "line-utils.el"
+   "dired.el"
    "sql.el" "sqlite.el" "all-the-icons-dired.el" "dired-subtree.el"
    "dired-ranger.el" "completion.el" "cape.el" "dabbrev.el"
    "recursion-indicator.el" "helm.el" "marginalia.el" "orderless.el"
@@ -105,7 +106,8 @@
 (setq
  user-files-ext-features
  '(;;"z-tree-sitter" "z-org-agenda" "z-org-super-agenda"
-   "z-dired" "z-vertico" "z-vterm"
+   ;;"z-dired"
+   "z-vertico" "z-vterm"
    "z-tab-line"
    "z-window" "z-snippets" "z-line"))
 ;; require all the features
