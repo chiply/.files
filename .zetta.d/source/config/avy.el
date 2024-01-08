@@ -6,23 +6,6 @@
                             shell-mode
                             vterm-mode))
 
-  ;;:brushup
-  ;;(add-to-list 'brushup-styles
-               ;;'(progn
-                  ;;(set-face-attribute 'avy-lead-face nil
-                                      ;;:foreground brushup-fg
-                                      ;;:background brushup-bg-1
-                                      ;;:underline t)
-                  ;;(set-face-attribute 'avy-lead-face-0 nil
-                                      ;;:foreground brushup-fg
-                                      ;;:background brushup-bg-2)
-                  ;;(set-face-attribute 'avy-lead-face-1 nil
-                                      ;;:foreground brushup-fg
-                                      ;;:background brushup-bg-3)
-                  ;;(set-face-attribute 'avy-lead-face-2 nil
-                                      ;;:foreground brushup-fg
-                                      ;;:background brushup-bg-4)))
-
   :general
   (
    :keymaps 'evil-insert-state-map
