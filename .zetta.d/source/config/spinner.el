@@ -20,9 +20,7 @@
   ;; 
   ;; copied from https://github.com/FGRibreau/spinners/blob/master/src/utils/spinners_data.rs
   (setq spinner-types
-        '(
-          ;;(Dots8 . ("⠁" "⠁" "⠉" "⠙" "⠚" "⠒" "⠂" "⠂" "⠒" "⠲" "⠴" "⠤" "⠄" "⠄" "⠤" "⠠" "⠠" "⠤" "⠦" "⠖" "⠒" "⠐" "⠐" "⠒" "⠓" "⠋" "⠉" "⠈" "⠈"))
-          (Line . ("-" "\\" "|" "/"))
+        '((Line . ("-" "\\" "|" "/"))
           (Pipe . ("┤" "┘" "┴" "└" "├" "┌" "┬" "┐"))
           (SimpleDots . (".  " ".. " "..." "   "))
           (SimpleDotsScrolling . (".  " ".. " "..." " .." "  ." "   "))
