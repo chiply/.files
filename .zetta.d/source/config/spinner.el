@@ -2,7 +2,11 @@
   :after (compile)
   :config
   ;; Starting
-  (add-hook 'compilation-start-hook (lambda (_) (spinner-start)))
+  (add-hook
+   'compilation-start-hook
+   (lambda (_)
+     (spinner-start
+      (car (nth (random (length spinner-types)) spinner-types)))))
 
   ;; Stop
   (defun z-compile-spin-stop (buffer result)
@@ -11,3 +15,10 @@
           ((string-match "^exited abnormally" result) (spinner-stop))))
 
   (add-to-list 'compilation-finish-functions 'z-compile-spin-stop))
+
+
+(type-of spinner-types)
+
+;; pick a random member of spinner-types
+
+

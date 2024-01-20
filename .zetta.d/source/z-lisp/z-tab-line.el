@@ -52,7 +52,8 @@
        (or ;; need both conditions as they don't all add to projectile-project-buffers
         (member buffer (projectile-project-buffers))
         (string-match
-         (projectile-project-root)
+         ;; remove trailing / from projectile-project-root
+            (substring (projectile-project-root) 0 -1)
          (with-current-buffer buffer default-directory)))))
 
 
@@ -89,7 +90,7 @@
 ;; create a buffer local variable
 
 ;; Create a hook to set a window parameter anytime a window is created
-(set-window-parameter (selected-window) 'z-tab-line-scope 'z-tab-line-scope-project-buffers)
+;; (set-window-parameter (selected-window) 'z-tab-line-scope 'z-tab-line-scope-project-buffers)
 
 ;; scopes == each scope is a function that returns a list of buffers
 (defun z-tab-line-scope-all-buffers ()
