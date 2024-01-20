@@ -23,7 +23,8 @@
          )
         " "
         (:eval
-         (when (string= major-mode "org-mode") (concat " > " (org-display-outline-path) "/" (org-get-heading)))
+         (when (string= major-mode "org-mode")
+           (concat " > " (org-display-outline-path) "/" (org-get-heading)))
          )
         " "
         (:eval (when (not (and (boundp 'lsp-mode) lsp-mode))
@@ -84,7 +85,6 @@
         (:eval (anzu--update-mode-line))
         (vc-mode vc-mode)
         flycheck-mode-line
-        ;;(:eval (parrot-create))
         ;;(:eval (z-get-tab-line-string))
         ;;" "
         " "
