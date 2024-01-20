@@ -128,16 +128,6 @@ seem to require loading after the client starts up"
            :overline t
            )
           ;;
-          ;;(set-face-attribute
-          ;;'header-line nil
-          ;;:height 1.0
-          ;;:box nil
-           ;;;;:background brushup-bg
-           ;;;;:foreground brushup-fg-1
-          ;;:underline nil
-          ;;:overline nil
-          ;;:inherit nil
-          ;;)
           ;;
           ;;(set-face-attribute
           ;;'tab-bar nil
@@ -162,6 +152,13 @@ seem to require loading after the client starts up"
            :background brushup-bg
            :box nil
            :underline t)
+
+          (set-face-attribute
+           'emoji nil
+           :font "Apple Color Emoji 11"
+           :height 0.1
+           :inherit nil
+           )
 
 
           (set-face-attribute
