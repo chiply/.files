@@ -33,14 +33,14 @@
 
   (highlight-indent-guides-auto-set-faces)
 
-  :hook (
-         (
-          json-mode
-          ;;yaml-mode
-          org-mode
-          ;; python-ts-mode
-          emacs-lisp-mode
-          ) .
-         highlight-indent-guides-mode
-         )
+  ;;:hook (
+         ;;(
+          ;;json-mode
+          ;;;;yaml-mode
+          ;;org-mode
+          ;;;; python-ts-mode
+          ;;emacs-lisp-mode
+          ;;) .
+         ;;highlight-indent-guides-mode
+         ;;)
   )
