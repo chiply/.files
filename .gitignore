@@ -1,5 +1,6 @@
 # zetta
 .zetta.d/eaf
+.zetta.d/tree-sitter
 #for now
 elfeed.stats
 logview-cache.extmap
@@ -63,3 +64,4 @@ org-roam/daily/sprint.org_archive
 # files
 
 .hypothesis/
+
