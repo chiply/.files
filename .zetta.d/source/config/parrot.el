@@ -4,7 +4,7 @@
   :custom
   (parrot-animate 'hide-static)
   (parrot-rotate-animate-after-rotation nil)
-  (parrot-num-rotations 10)
+  (parrot-num-rotations 4)
   (parrot-type 'emacs)
   (parrot-animate-on-load t)
   (parrot-mode t))
