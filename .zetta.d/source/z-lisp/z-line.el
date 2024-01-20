@@ -19,7 +19,6 @@
         " "
         (:eval (spinner-print spinner-current))
         ;; silly animations for magit, can replace this with something more interesting
-        (:eval (when (eq major-mode 'magit-status-mode) (parrot--create)))
         (:eval (when (eq major-mode 'magit-status-mode) (nyan-create)))
         (:eval
          (when (string= major-mode "org-mode")

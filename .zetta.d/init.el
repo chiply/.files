@@ -73,7 +73,7 @@
    "image-mode.el" "browse-url.el" "minibar.el" "spray.el"
    "mermaid-mode.el" "minimap.el" "hyperbole.el" "kubernetes-el.el"
    "kubel.el" "git-link.el" "python-pytest.el" "multi-compile.el"
-   "unicode-fonts.el" "spinner.el" "compile.el" "fancy-compilation.el" "copilot.el"
+    "compile.el" "unicode-fonts.el" "spinner.el" "fancy-compilation.el" "copilot.el"
    "org-ql.el" "org-capture.el"
    ;;"org-roam.el" "org-roam-ui.el" "org-roam-timestamps.el" "citar-org-roam.el"
    "org-ref.el" "org-modern.el" "biblio.el"
@@ -84,7 +84,7 @@
    "lsp.el"
    "lark.el"
    "yascroll.el"
-   "nyan-mode.el" "parrot.el"
+   "nyan-mode.el"
    "gptel.el"
    ;;"eaf.el"
    "obsidian.el" "cleanup.el"))
