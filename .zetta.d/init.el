@@ -87,6 +87,7 @@
    "nyan-mode.el"
    "gptel.el"
    ;;"eaf.el"
+   "popper.el"
    "obsidian.el" "cleanup.el"))
 
 
