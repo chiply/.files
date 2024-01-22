@@ -111,54 +111,54 @@ being displayed, otherwise returns nil"
 ;; there, and if so, read int he height width order.
 (defun z-side (regex &optional side slot size size2)
   ;; delete old config 
-  (setq display-buffer-alist
-        (-remove
-         (lambda (elt) (cond ((stringp (nth 0 elt)) (string= (nth 0 elt) regex)) ;; remove this entry
-                             ((equal (nth 0 elt) 'popper-display-control-p) nil) ;; keep this entry
-                             ((equal (nth 0 elt) 'closure)
-                               ;; parses out mode name used to create closure :-)
-                              (equal (cdr (nth 0 (nth 1 (nth 0 elt)))) regex)) ;; remove this entry
-                             (t nil)
-                             ))
-         display-buffer-alist)
-        )
-
-  ;; if side is top, set height to size
-  (let (
-        (height (cond
-                 ((and size size2) size)
-                 ((equal side 'top) (or size z-side-display-default-height-top))
-                 ((equal side 'bottom) (or size z-side-display-default-height-bottom))
-                 ((or (equal side 'left)
-                      (equal side 'right))
-                  nil)))
-        (width (cond
-                ((and size size2) size2)
-                ((equal side 'left) (or size z-side-display-default-width-left))
-                ((equal side 'right) (or size z-side-display-default-width-right))
-                ((or (equal side 'top)
-                     (equal side 'bottom))
-                 nil)))
-        (slot (or slot 0))
-        )
-    ;; update
-    (add-to-list
-     'display-buffer-alist
-     (if (string-match "-mode$" regex)
-         `(,(z-soda-mode-name regex)
-           (display-buffer-in-side-window)
-           (side . ,side) (slot . ,slot)
-           (window-height . ,height) (window-width . ,width)
-           (window-parameters . ((no-delete-other-windows . 1))))
-       `(,regex
-         (display-buffer-in-side-window)
-         (side . ,side) (slot . ,slot)
-         (window-height . ,height) (window-width . ,width)
-         (window-parameters . ((no-delete-other-windows . 1))))
-       )
-     nil
-     )
-    )
+  ;; exit the defun without doing anything
+  (setq foob 'bar)
+  ;;(setq display-buffer-alist
+        ;;(-remove
+         ;;(lambda (elt) (cond ((stringp (nth 0 elt)) (string= (nth 0 elt) regex)) ;; remove this entry
+                             ;;((equal (nth 0 elt) 'popper-display-control-p) nil) ;; keep this entry
+                             ;;((equal (nth 0 elt) 'closure)
+                               ;;;; parses out mode name used to create closure :-)
+                              ;;(equal (cdr (nth 0 (nth 1 (nth 0 elt)))) regex)) ;; remove this entry
+                             ;;(t nil)))
+         ;;display-buffer-alist))
+;;
+  ;;;; if side is top, set height to size
+  ;;(let (
+        ;;(height (cond
+                 ;;((and size size2) size)
+                 ;;((equal side 'top) (or size z-side-display-default-height-top))
+                 ;;((equal side 'bottom) (or size z-side-display-default-height-bottom))
+                 ;;((or (equal side 'left)
+                      ;;(equal side 'right))
+                  ;;nil)))
+        ;;(width (cond
+                ;;((and size size2) size2)
+                ;;((equal side 'left) (or size z-side-display-default-width-left))
+                ;;((equal side 'right) (or size z-side-display-default-width-right))
+                ;;((or (equal side 'top)
+                     ;;(equal side 'bottom))
+                 ;;nil)))
+        ;;(slot (or slot 0))
+        ;;)
+    ;;;; update
+    ;;(add-to-list
+     ;;'display-buffer-alist
+     ;;(if (string-match "-mode$" regex)
+         ;;`(,(z-soda-mode-name regex)
+           ;;(display-buffer-in-side-window)
+           ;;(side . ,side) (slot . ,slot)
+           ;;(window-height . ,height) (window-width . ,width)
+           ;;(window-parameters . ((no-delete-other-windows . 1))))
+       ;;`(,regex
+         ;;(display-buffer-in-side-window)
+         ;;(side . ,side) (slot . ,slot)
+         ;;(window-height . ,height) (window-width . ,width)
+         ;;(window-parameters . ((no-delete-other-windows . 1))))
+       ;;)
+     ;;nil
+     ;;)
+    ;;)
   )
 
 
