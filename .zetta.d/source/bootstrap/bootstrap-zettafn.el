@@ -205,7 +205,18 @@ Code:
   (highlight-phrase "UPDATE" 'modus-themes-subtle-green)
   (highlight-phrase "DELETE" 'modus-themes-subtle-green)
 
+  (highlight-phrase "400" 'modus-themes-subtle-red)
+  (highlight-phrase "401" 'modus-themes-subtle-red)
+  (highlight-phrase "402" 'modus-themes-subtle-red)
 
+  (highlight-phrase "404" 'modus-themes-subtle-red)
+
+  (highlight-phrase "422" 'modus-themes-subtle-magenta)
+
+  (highlight-phrase "500" 'modus-themes-intense-red)
+
+  (highlight-phrase "200" 'modus-themes-subtle-green)
+  (highlight-phrase "201" 'modus-themes-subtle-green)
   )
 
 

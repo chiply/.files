@@ -3,6 +3,9 @@
   :init
   (global-hl-line-mode 1)
   (make-variable-buffer-local 'global-hl-line-mode)
+  (setq hl-line-overlay-priority -5000)
+
+
 
   :brushup
   (add-to-list 'brushup-styles
