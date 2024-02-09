@@ -12,8 +12,8 @@
   ;; set emoji font size to 11 -- I have found this is necessary to
   ;; prevent the spinner characters from being to big and causing the
   ;; height of the *-line to change.  this may not abstract when text size increases or decreases...
-  (set-fontset-font t 'unicode "Apple Color Emoji 9" nil 'prepend)
-  (set-fontset-font t 'unicode "Arial Unicode MS 11" nil 'prepend)
+  (set-fontset-font t 'unicode "Apple Color Emoji 13" nil 'prepend)
+  (set-fontset-font t 'unicode "Arial Unicode MS 13" nil 'prepend)
 
   ;; Starting
   ;; commenting out soinners that cause issues with the mode or headerline
@@ -28,8 +28,6 @@
           (Star2 . ("+" "x" "*"))
           (Flip . ("_" "_" "_" "-" "`" "`" "'" "´" "-" "_" "_" "_"))
           (Hamburger . ("☱" "☲" "☴"))
-          (GrowVertical . ("▁" "▃" "▄" "▅" "▆" "▇" "▆" "▅" "▄" "▃"))
-          (GrowHorizontal . ("▏" "▎" "▍" "▌" "▋" "▊" "▉" "▊" "▋" "▌" "▍" "▎"))
           (Balloon . (" " "." "o" "O" "@" "*" " "))
           (Balloon2 . ("." "o" "O" "°" "O" "o" "."))
           (Noise . ("▓" "▒" "░"))
@@ -57,11 +55,6 @@
           (Toggle13 . ("=" "*" "-"))
           ;;(Arrow . ("←" "↖" "↑" "↗" "→" "↘" "↓" "↙"))
           (Arrow3 . ("▹▹▹▹▹" "▸▹▹▹▹" "▹▸▹▹▹" "▹▹▸▹▹" "▹▹▹▸▹" "▹▹▹▹▸"))
-          (BouncingBar . ("[ ]" "[= ]" "[== ]" "[=== ]" "[ ===]" "[
-          ==]" "[ =]" "[ ]" "[ =]" "[ ==]" "[ ===]" "[====]" "[=== ]"
-          "[== ]" "[= ]"))
-          (BouncingBall . ("( ● )" "( ● )" "( ● )" "( ● )" "( ●)" "( ●
-          )" "( ● )" "( ● )" "( ● )" "(● )"))
           (Smiley . ("😄 " "😝 "))
           (Monkey . ("🙈 " "🙈 " "🙉 " "🙊 "))
           (Hearts . ("💛 " "💙 " "💜 " "💚 " "❤️ "))
@@ -181,7 +174,8 @@
        (* 1.25 spinner-number-of-frames)
        ;; having a delay prevents wasting compute on display for quick
        ;; commands
-       1)))
+       ;;1
+       )))
 
 
   (add-hook 'compilation-start-hook 'z-spinner-compile-spin)

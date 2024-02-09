@@ -1,10 +1,10 @@
+;; -*- lexical-binding: t; -*-
+
 ;; LEFT OFF -- testing embark integration, adding actions / trying other actions
 ;; FIRST: make 1) embark-action and 2) magneto-action sequential, with embark action being optional
-;; adding other window manipulation stuff to compose a higher level interface
-;; faces
-;;TODO: framework-ify -- document exactly how to add new actions and embark-actions
 
-;; redifining avy-read to allow initial input
+;; move general to the config layer
+
 (defun magneto-avy-read (initial-input tree display-fn cleanup-fn)
   (catch 'done
     (setq avy-current-path initial-input)
@@ -60,12 +60,8 @@
                                               (null aw-display-mode-overlay))
                                          (lambda (_path _leaf))
                                        aw--lead-overlay-fn)
-                                     aw--remove-leading-chars-fn
-                                     )))
-         )
-    (message "window selected with magneto-ace-get-window")
-    win
-    ))
+                                     aw--remove-leading-chars-fn))))
+    win))
 
 
 
@@ -76,8 +72,7 @@
       magneto-default-action-action "switch-buffer"
       magneto-default-destination-window nil
       magneto-default-embark-candidate nil
-      magneto-default-embark-action nil
-      )
+      magneto-default-embark-action nil)
 
 
 (defun magneto-make-indirect ()
@@ -96,15 +91,10 @@
         magneto-action-action magneto-default-action-action
         magneto-destination-window magneto-default-destination-window
         magneto-embark-candidate magneto-default-embark-candidate
-        magneto-embark-action magneto-default-embark-action
-        ))
+        magneto-embark-action magneto-default-embark-action))
 
 ;; Instantiates the variables from Defaults
 (magneto-restore-defaults)
-
-
-
-
 
 (defun magneto-move-after-select (buf-orig)
   (cond
@@ -116,10 +106,7 @@
   (cond
    ;; switch-buffer is candidateless, this would never be supplied by
    ;; embark
-   (magneto-embark-action
-    (progn (message "HEYOOO")
-                                        ; note the lack of '
-           (funcall magneto-embark-action magneto-embark-candidate))) 
+   (magneto-embark-action (funcall magneto-embark-action magneto-embark-candidate))
    ((string= magneto-action-action "switch-buffer")
     (switch-to-buffer buf-orig))
    ;; candidates possibly coming from embark
@@ -129,30 +116,20 @@
     (call-interactively 'find-file))
    ((string= magneto-action-action "consult-buffer")
     (consult-buffer)))
-  (selected-window)
-  )
-
+  (selected-window))
 
 
 (defun magneto-select-win-dest-ace (buf-orig)
   (if magneto-destination-window
       ;; if a window was specified already...
       (progn
-        ;;(message (concat "foo-bar" magneto-destination-window))
         (select-window magneto-destination-window)
         (magneto-move-after-select buf-orig))
     ;; otherwise, invoke ace-window now
-    (progn
-      ;;(message "hello")
-      (aw-select
-       "Select a window!: "
-       (lambda (window)
-         (aw-switch-to-window window)
-         (magneto-move-after-select buf-orig)
-         )))
-    )
-
-  )
+    (aw-select "Select a window!: "
+               (lambda (window)
+                 (aw-switch-to-window window)
+                 (magneto-move-after-select buf-orig)))))
 
 (defun magneto-select-win-dest-side (buf-orig)
   (let ((side (cond
@@ -201,19 +178,12 @@
          ;; CREATE-MAYBE
          (win-dest (magneto-select-win-dest buf-orig)))
     ;;;; CLEAN-MAYBE
-    (message "processing source")
     (magneto-process-source win-orig)
     ;;;; PLACE-CURSOR
-    (message "processing select")
-    (magneto-process-select win-orig win-dest)
-    )
-  )
+    (magneto-process-select win-orig win-dest)))
 
 
 
-;; Factoring the setter functions is useful because we can enrich to
-;; include small reports or indications of what happened -- eg "window
-;; was selcted via the command ''.  move is still legal"
 (defun magneto-set-magneto-source-action (setting)
   (interactive)
   (setq magneto-source-action setting))
@@ -244,8 +214,6 @@
   ;; run the exit function, eg execute the move specifed by 
   ("s-m" magneto-move)
   ("<return>" magneto-move)
-
-  ;; run previous (tbd how we will cache the previous move's settings)
 
   ;; source actions
   ("m" (magneto-set-magneto-source-action "move") "move" :column "source actions")
@@ -288,24 +256,67 @@
   (magneto-restore-defaults)
   (hydra-magneto/body))
 
+
+
 ;; embark integration
-(defmacro my/embark-magneto-action (fn)
-  `(defun ,(intern (concat "my/embark-magneto-" (symbol-name fn))) ()
-     (interactive)
-     (with-demoted-errors "%s"
-       (magneto-restore-defaults)
-       (magneto-set-magneto-source-action "copy")
-       ;; set the action and candidate
-       (setq
-        ;; the action should be an interactive command
-        magneto-embark-candidate (read-from-minibuffer "foobar prompt: ")
-        magneto-embark-action ',fn)
-       ;; call the hydra
-       (hydra-magneto/body))))
+(defun my/embark-magneto-action (keymap action key-sequence)
+  ;; define a functions and bind it to a key
+  (let ((function-name (intern (concat "my/embark-magneto-" (symbol-name action)))))
+    `(progn
+       (defun ,function-name ()
+         (interactive)
+         (with-demoted-errors "%s"
+           (magneto-restore-defaults)
+           (magneto-set-magneto-source-action "copy")
+           (setq magneto-embark-candidate (read-from-minibuffer "")
+                 magneto-embark-action ',action)
+           (hydra-magneto/body)))
+       (condition-case nil
+           (define-key ,keymap ,(kbd (concat "s-o " key-sequence)) ',function-name)
+         (error (message ,(concat (symbol-name keymap) " " (symbol-name function-name) " didn't work")))
+         )
+       )))
 
-;; the action should be an interactive command, i don't think they have to be though
-(define-key embark-file-map     (kbd "o") (my/embark-magneto-action find-file))
-(define-key embark-buffer-map   (kbd "o") (my/embark-magneto-action switch-to-buffer))
-(define-key embark-bookmark-map (kbd "o") (my/embark-magneto-action bookmark-jump))
-
+;; embark general map
 (general-define-key :keymaps 'override "s-m" 'magneto)
+
+
+;;;;;; experimenting with getting keymap data:
+(defun parse-keymap (keymap &optional prefix)
+  (let (result)
+    (map-keymap
+     (lambda (key command)
+       (let* ((key-str (single-key-description key))
+              (new-prefix (if prefix (concat prefix " " key-str) key-str)))
+         (if (keymapp command)
+             (setq result (append result (parse-keymap command (replace-regexp-in-string " " "-" new-prefix))))
+           (push (list command new-prefix) result))))
+     keymap)
+    (nreverse result)))
+
+;;;; filter out digit arguments
+;;;; filter out magneto actoins
+(defun my/embark-bind-keys (keymap)
+  (-map
+   (lambda (x)
+     (eval (my/embark-magneto-action keymap (car x) (cadr x))))
+   (-filter (lambda (x)
+              (not (or
+                    (s-contains? "digit-arg" (symbol-name (car x)))
+                    (s-contains? "collect" (symbol-name (car x)))
+                    (s-contains? "export" (symbol-name (car x)))
+                    (s-contains? "become" (symbol-name (car x)))
+                    (s-contains? "my/embark" (symbol-name (car x)))
+                    (s-contains? "embark-org-link-map" (symbol-name (car x))))))
+            (parse-keymap (eval keymap)))))
+
+(setq embark-maps-list (-map (lambda (x) (if (listp (cdr x)) (car (cdr x)) (cdr x))) embark-keymap-alist))
+
+;; (-map (lambda (x)
+;;         (condition-case nil
+;;             (progn (my/embark-bind-keys x))
+;;           (error (message (concat (symbol-name x) " didn't work")))))
+;;       embark-maps-list)
+
+
+

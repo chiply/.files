@@ -2,6 +2,16 @@
 
 (setq auto-window-vscroll nil)
 
+(winner-mode)
+
+;; convenient way to save and restore window configurations
+;; this could help with my own implemntations of multi-d workspaces
+;; maybe this would persist across sessions
+;;(setq my-window-conf (winner-conf))
+;;(winner-set my-window-conf)
+
+
+
 (global-auto-revert-mode 1) ;; you might not want this
 (setq auto-revert-verbose nil) ;; or this
 
@@ -16,8 +26,6 @@
 
 (setq scroll-bar-width nil)
 (setq scroll-bar-height nil)
-
-;; make the background of scroll-bar more colorful
 
 
 (defun server-shutdown ()
