@@ -1,22 +1,16 @@
 ;; LEFT OFF
-;; test persisting (start inicludng wiinds again)
-;; actually hold off on persisting... creates otherr complicatoins.... keep the 3-d structure transient forr now, eg don't save across sessionis
-;; -- works, refactor winds out of window and invorporate views (not snapshots, that is something separate)... these should be under winds-extras-views-
 
+;; this is really adding a 3rd dimension, and the xtra feature for the
+;; use case of 'rewinding' to a 'snapshot' that can be created on the
+;; fly.
+
+;; todo - my own implementation using winner and ht, based on
+;; progressive subdivision of workspaces
+
+;; todo: test persisting (start inicludng wiinds again)
+;; similar semantics for the winds spaces tabs, previous, swtich etc...
 ;; order of the views... should be reversed
 ;; how to handle renaming, deleting, etc...
-
-;; somewhat accidental, but falls back elegantly for gt at end of tab list, prmopts for swiitch, creates if doesn't exist
-;; actually doesn't fallback well!!! fals to restablish current buffer
-
-
-;; need a wrapper for ad hoc bookmark functioin which selects the bookmark that gets saved.
-
-
-
-
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;; Snapshots
 (defun z-strip-text-properties (str)
@@ -29,7 +23,8 @@
 
 (defun z-get-snapshots ()
   (let ((snapshots (-filter
-                    (lambda (bm-view-name) (string-match "snapshot-*" bm-view-name ))
+                    (lambda (bm-view-name)
+                      (string-match "snapshot-*" bm-view-name ))
                     (bookmark-view-names)
                     )))
     (when snapshots (-map
@@ -61,8 +56,6 @@
 (defun z-bookmark-view-generate-snapshot-name ()
   ;; get names
   (let* ((snapshots (z-get-snapshots)))
-    ;;(setq snapshots '("snapshot-1" "snapshot-2" "snapshot-11"))
-    ;; get the latest name
     (if snapshots
         (progn 
           (setq snapshots-sorted (cl-sort snapshots 'snapshot-lessp))
@@ -70,20 +63,8 @@
            "snapshot-"
            (number-to-string (+ 1 (string-to-number
                                    (car (last (split-string
-                                               (car (last (cl-sort snapshots-sorted 'snapshot-lessp))) "-")))))))
-          )
-      "snapshot-1"
-      )
-    )
-  )
-
-
-
-
-
-
-
-
+                                               (car (last (cl-sort snapshots-sorted 'snapshot-lessp))) "-"))))))))
+      "snapshot-1")))
 
 
 (tab-bar-mode)
@@ -98,13 +79,9 @@
 
 (setq z-ws-cfg-bv-leftoff '())
 
-(add-to-list 'desktop-globals-to-save 'z-ws-cfg-bv-list)
-(add-to-list 'desktop-globals-to-save 'z-ws-cfg-bv-leftoff)
-(add-to-list 'desktop-globals-to-save 'z-ws-cfg-bv-current-bv)
-
-
-;; create the initional bookmark
-;;(z-ws-cfg-bv-new-bv "default")
+;;(add-to-list 'desktop-globals-to-save 'z-ws-cfg-bv-list)
+;;(add-to-list 'desktop-globals-to-save 'z-ws-cfg-bv-leftoff)
+;;(add-to-list 'desktop-globals-to-save 'z-ws-cfg-bv-current-bv)
 
 
 (defun z-ws-cfg-bvs ()
@@ -136,11 +113,13 @@
        `(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
        z-ws-cfg-bv-list
        nil nil 'equal)
-      `(,(concat bvprefix (car (car z-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) ": " name)))
-     )
-    (setq z-ws-cfg-b-current-bv bm-full-name)
-    )
-  )
+      `(,(concat bvprefix (car (car z-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) ": " name))))
+    ;;(bookmark-view-open bm-full-name)
+    (setq z-ws-cfg-bv-current-bv bm-full-name)))
+
+
+;; create the initional bookmark
+(z-ws-cfg-bv-new-bv "default")
 
 
 (defun z-ws-cfg-bv-switch (&optional name)
@@ -148,60 +127,42 @@
   ;; save current buffer state
   (bookmark-view-save z-ws-cfg-bv-current-bv)
   ;; should be switch or create
-  (let* ((name (or
-                name
-                ;; TODO -- should only prompt for ws cfg local 
-                (completing-read
-                 "select a tab: "
-                 (z-ws-cfg-bvs)
-                 ;;(-filter
-                 ;;(lambda (name) (string-match "^bv--*" name))
-                 ;;(bookmark-view-names))
-                 )))
-         (bvprefix "bv--")
-         )
-    (if (member name (alist-get
-                      `(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
-                      z-ws-cfg-bv-list
-                      nil nil 'equal))
+  (let* ((name (or name (completing-read "select a tab: " (z-ws-cfg-bvs))))
+         (bvprefix "bv--"))
+    (if (member name
+                (alist-get
+                 `(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
+                 z-ws-cfg-bv-list nil nil 'equal))
         (progn
           ;; switch to the bookmark
           (bookmark-view name)
           (setq z-ws-cfg-bv-current-bv name))
       (progn
         (z-ws-cfg-bv-new-bv name)
-        (setq z-ws-cfg-bv-current-bv (concat bvprefix (car (car z-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) (format ": %s" name)))
-        )
-      )
-    ;;(message "UPDATED")
-    ;; force refresh the tab bar
-    )
-  )
+        (setq z-ws-cfg-bv-current-bv
+              (concat
+               bvprefix
+               (car (car z-ws-alist))
+               "-"
+               (number-to-string (winds-get-cur-cfg))
+               (format ": %s" name)))))))
+
 
 ;; need to introduce the notion of a current bookmark... note the leftoff functionality here
 ;; define update current bookmark
-
 (defun z-propertize-tab-bar-string-tab (str)
   (if (string= str z-ws-cfg-bv-current-bv)
       ;;; ughh... need to modify the text to make the tab bar update
       ;;; immediately... this is an annoyance!  all caps is a good
       ;;; workaround
       (concat (propertize (upcase (nth 1 (split-string str ": "))) 'face 'focus-focused))
-    (propertize (nth 1 (split-string str ": ")) 'face 'focus-unfocused)
-    )
-  )
+    (propertize (nth 1 (split-string str ": ")) 'face 'focus-unfocused)))
 
 (defun z-tab-bar-bvs ()
   (let ((ws-cfg-bvs (z-ws-cfg-bvs))) 
-    (-filter
-     (lambda (x) (member x ws-cfg-bvs))
-     (bookmark-view-names)
-     )
-    ))
+    (-filter (lambda (x) (member x ws-cfg-bvs)) (bookmark-view-names))))
 
-
-
-;; taken from winds
+;; redefined from winds.el
 (defun winds-get-status-msg ()
   "Display a status message in the echo area with the current ws id and cfg id."
   (interactive)
@@ -232,47 +193,36 @@
 
 
 
-;; LEFT OFF - this is why tab bar isn't working
 (defun z-tab-bar-string ()
   (concat
-   " "
-   "{ "
+   " { "
    (winds-get-status-msg)
-   ;;(winds-display-status-msg)
-   "  "
-   "["
-   (mapconcat 'z-propertize-tab-bar-string-tab (z-tab-bar-bvs) " | ")
-   "]"
-   " }"
-
-   ))
+   "  [" (mapconcat 'z-propertize-tab-bar-string-tab (z-tab-bar-bvs) " | ") "]"
+   " }"))
 
 (defun z-ws-cfg-bv-switcher (dir)
-  (let* (
-         (current-index (cl-position z-ws-cfg-bv-current-bv (z-tab-bar-bvs) :test 'equal))
+  (let* ((current-index (cl-position z-ws-cfg-bv-current-bv (z-tab-bar-bvs) :test 'equal))
          (previous-index (- current-index 1))
          (next-index (+ current-index 1))
-         (previous-tab (nth previous-index (z-tab-bar-bvs)))
-         (next-tab (nth next-index (z-tab-bar-bvs)))
-         )
+         (previous-tab (if (>= previous-index 0)
+                           (nth previous-index (z-tab-bar-bvs))
+                         (or (car (last (z-tab-bar-bvs) 1))
+                             ;; handles case when len = 1
+                             (car (z-tab-bar-bvs))
+                             )))
+         (next-tab (or (nth next-index (z-tab-bar-bvs)) (car (z-tab-bar-bvs)))))
     (cond
      ((string= dir "prev") (z-ws-cfg-bv-switch previous-tab))
-     ((string= dir "next") (z-ws-cfg-bv-switch next-tab))
-     ) 
-    ))     
+     ((string= dir "next") (z-ws-cfg-bv-switch next-tab)))))     
 
 ;; works nicely!
 (general-define-key
  :keymaps 'override
  :states '(normal visual)
- "gT" (lambda () (interactive) (z-ws-cfg-bv-switcher "prev"))
- "gt" (lambda () (interactive) (z-ws-cfg-bv-switcher "next"))
- "g C-t" (lambda () (interactive) (z-ws-cfg-bv-switch))
+ "C-M-S-<tab>" (lambda () (interactive) (z-ws-cfg-bv-switcher "prev"))
+ "C-M-<tab>" (lambda () (interactive) (z-ws-cfg-bv-switcher "next"))
+ "g t" (lambda () (interactive) (z-ws-cfg-bv-switch))
  )
-
-
-
-
 
 
 (defun zpath ()
@@ -285,49 +235,23 @@
 
 (defun zwhitespace () (let ((x " ")) x))
 
-;; (defun z-yaml-json-info ()
-;;   (cond
-;;    ((or
-;;      ;; anything using yaml
-;;      (equal major-mode 'docker-compose-mode)
-;;      (equal major-mode 'yaml-mode))
-;;     (concat "{" (jpt-yaml-path-to-point) "}"))
-;;    ((or
-;;      (equal major-mode 'jsonian-mode))
-;;     (concat "{" (jsons-get-path-python) "}"))
-;;    )
-;;   )
-
 (defun z-org-outline-path ()
-    (when (string= major-mode "org-mode") (concat " > " (org-display-outline-path) "/" (org-get-heading)))
-)
-
+  (when
+      (string= major-mode "org-mode")
+    (concat " > " (org-display-outline-path) "/" (org-get-heading))))
 
 ;;;; For tab bar
-(setq tab-bar-format '(z-tab-bar-string
-                       zwhitespace
-                       zpath
-                       zwhitespace
-                       ;;lsp-headerline--build-string
-                       ;;z-yaml-json-info
-                       z-org-outline-path
-                       ;; everything here on will be aligned on the right
-                       tab-bar-format-align-right
-                       recursion-indicator--string
-                       "  "
-                       ;;tab-bar-format-global
-                       ))
+(setq tab-bar-format
+      '(z-tab-bar-string zwhitespace zpath zwhitespace
+                         z-org-outline-path
+                         ;; everything here on will be aligned on the right
+                         tab-bar-format-align-right
+                         ;;recursion-indicator--string ;; changes height of the tab bar
+                         " "
+                         tab-bar-format-global))
 
-
-
-
-
-
-
-
-
-
-;; the interface to making snapshoots -- using consuot bookmark to access them
+;; the interface to making snapshoots -- using consuot bookmark to
+;; access them
 (defun z-bookmark-view-snapshot ()
   (interactive)
   (let* ((name (z-bookmark-view-generate-snapshot-name))
