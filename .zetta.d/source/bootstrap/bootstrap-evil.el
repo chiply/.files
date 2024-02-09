@@ -17,11 +17,11 @@
   ;; get emacs kbds in insert-mode
   (setcdr evil-insert-state-map nil)
   (define-key evil-insert-state-map
-    (read-kbd-macro evil-toggle-key)
-    'evil-emacs-state)
+              (read-kbd-macro evil-toggle-key)
+              'evil-emacs-state)
   (define-key evil-insert-state-map
-    (kbd "<escape>")
-    'evil-force-normal-state)  
+              (kbd "<escape>")
+              'evil-force-normal-state)  
 
   ;; this stuff is destined for the respective
   ;; use-package calls
@@ -32,14 +32,26 @@
   (evil-set-initial-state 'minimap-mode 'emacs)
 
   (evil-mode 1)
-  
+
+
   :general
+  (
+   :keymaps 'evil-insert-state-map
+   (general-chord ",/") 'evil-ex-nohighlight
+   )
+  (
+   :states '(normal visual)
+   :keymaps 'override
+   :prefix ","
+   "/" 'evil-ex-nohighlight
+   )
   (
    :states '(normal visual)
    "C-S-j" (lambda () (interactive) (evil-scroll-down nil))
    "C-S-k" (lambda () (interactive) (evil-scroll-up nil))
    "C-j" (lambda () (interactive) (evil-scroll-line-down 1))
    "C-k" (lambda () (interactive) (evil-scroll-line-up 1))
+
    )
   (
    :keymaps '(evil-insert-state-map evil-visual-state-map)

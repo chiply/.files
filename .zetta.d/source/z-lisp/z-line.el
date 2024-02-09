@@ -33,22 +33,19 @@
 
 (setq default-line-align-left
       '(
-        " "
+        ;;(:eval (nerd-icons-icon-for-file (buffer-file-name)))
+        ;;" "
         (:eval (propertize
                 (window-parameter (selected-window) 'ace-window-path)
                 'face 'focus-focused))
-        (:eval (when (z-side-window-p (selected-window))
-                 (propertize " {S} " 'face 'focus-unfocused)))
+        (:eval (when (z-side-window-p (selected-window)) " {S} "))
         " "
         (:eval
          (let ((path (abbreviate-file-name default-directory)))
            (if (> (length path) 30) (z-minify-path default-directory) path)))
 
         (:eval (when (string= major-mode "python-ts-mode")
-                 (propertize
-                  (concat " [" pyvenv-virtual-env-name "]")
-                  'face 'focus-unfocused
-                  )))
+                 (concat " [" pyvenv-virtual-env-name "]")))
         (:eval (when (or
                       (z-line-tramp-icon)
                       (z-line-docker-icon)
@@ -57,21 +54,16 @@
                       (z-line-hydra-indicator-icon)
                       )
                  " "))
-        (:eval (let ((icon (z-line-tramp-icon)))
-                 (when icon (propertize "T" 'face 'focus-unfocused))))
-        (:eval (let ((icon (z-line-docker-icon)))
-                 (when icon (propertize "D" 'face 'focus-unfocused))))
-        (:eval (let ((icon (z-line-narrowed-icon)))
-                 (when icon (propertize "N" 'face 'focus-unfocused))))
-        (:eval (let ((icon (z-line-iedit-icon)))
-                 (when icon (propertize "E" 'face 'focus-unfocused))))
-        (:eval (let ((icon (z-line-hydra-indicator-icon)))
-                 (when icon (propertize "H" 'face 'focus-unfocused))))
+        (:eval (let ((icon (z-line-tramp-icon))) (when icon "T")))
+        (:eval (let ((icon (z-line-docker-icon))) (when icon "D")))
+        (:eval (let ((icon (z-line-narrowed-icon))) (when icon "N")))
+        (:eval (let ((icon (z-line-iedit-icon))) (when icon "E")))
+        (:eval (let ((icon (z-line-hydra-indicator-icon))) (when icon "H")))
         (:eval (anzu--update-mode-line))
         (vc-mode vc-mode)
         flycheck-mode-line
         " "
-        (:eval (propertize "%c(%p)" 'face 'focus-unfocused))
+        (:eval  "%c(%p)")
         )
       )
 

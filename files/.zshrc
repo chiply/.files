@@ -137,11 +137,8 @@ alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
 
 
 # pyenv
-echo doing pyenv stuff
 export PYENV_ROOT="$HOME/.pyenv"
-echo doing pyenv command
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-echo doing pyenv init
 eval "$(pyenv init -)"
 
 
@@ -170,7 +167,6 @@ export PATH="$HOME/.local/bin:$PATH"
 
 
 # PROMPT
-echo doing prompt stuff
 RPROMPT=''
 export SHOW_AWS_PROMPT=false
 
@@ -200,7 +196,6 @@ function precmd() {
   fi
 }
 
-echo doing prompt setteing
 export PROMPT=$'\n''%n@%m $(git_super_status) $(git rev-parse --show-prefix 2> /dev/null || pwd ) $timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\nx---}-> '
 
 

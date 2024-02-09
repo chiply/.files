@@ -8,9 +8,7 @@
   (defun z-magit-project ()
     (interactive)
     (let ((dir (completing-read "Project: " (projectile-relevant-known-projects))))
-      (magit-status dir)
-      )
-    )
+      (magit-status dir)))
 
   (defhydra+ hydra-magit ()
     ("g" magit-status :exit t)
@@ -25,8 +23,7 @@
     ("r" magit-show-refs :exit t)
     ("d" vc-diff :exit t)
     ("f" magit-fetch :exit t)
-    ("p" magit-pull :exit t)
-    )
+    ("p" magit-pull :exit t))
 
 
   :display

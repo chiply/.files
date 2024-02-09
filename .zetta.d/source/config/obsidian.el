@@ -2,7 +2,7 @@
   :ensure t
   :demand t
   :config
-  (obsidian-specify-path "~/obsidian/default")
+  (obsidian-specify-path "~/obsidian/vaults/main")
   (global-obsidian-mode t)
   :custom
   ;; This directory will be used for `obsidian-capture' if set.

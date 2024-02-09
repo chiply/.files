@@ -37,7 +37,7 @@
   (defun winds-extra-goto-ws (&optional name)
     (interactive)
     "A wrapper for winds-goto, specifically for ws, that updates z-ws-alist"
-    ;;(winds-extra-record-ws-cfg-bv-leftoff)
+    (winds-extra-record-ws-cfg-bv-leftoff)
     (let* ((name (or name (completing-read "Select a ws: " z-ws-alist)))
            (id (if (member name (-map (lambda (x) (car x)) z-ws-alist))
                    (cdr (assoc name z-ws-alist))
@@ -66,7 +66,7 @@
     (interactive)
     "A wrapper for winds-goto, specifically for ws, that switches
 to the previously select ws and updates z-ws-alist"
-    ;;(winds-extra-record-ws-cfg-bv-leftoff)
+    (winds-extra-record-ws-cfg-bv-leftoff)
     (let ((name (car (nth 1 z-ws-alist)))
           (id (cdr (nth 1 z-ws-alist))))
       (if (member name (-map (lambda (x) (car x)) z-ws-alist))
@@ -77,17 +77,16 @@ to the previously select ws and updates z-ws-alist"
         (message "ws doesn't exist")))
     )
 
-
-  ;;(defun winds-extra-record-ws-cfg-bv-leftoff ()
-    ;;;; record the last bv for tthe ws-cfg
-    ;;(setf
-     ;;(alist-get
-      ;;`(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
-      ;;z-ws-cfg-bv-leftoff
-      ;;nil nil 'equal)
-     ;;z-ws-cfg-bv-current-bv
-     ;;)
-    ;;)
+  (defun winds-extra-record-ws-cfg-bv-leftoff ()
+    ;; record the last bv for tthe ws-cfg
+    (setf
+     (alist-get
+      `(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
+      z-ws-cfg-bv-leftoff
+      nil nil 'equal)
+     z-ws-cfg-bv-current-bv
+     )
+    )
 
   (defun winds-extra-set-ws-cfg-bv ()
     (setq z-ws-cfg-bv-current-bv
@@ -98,16 +97,17 @@ to the previously select ws and updates z-ws-alist"
             z-ws-cfg-bv-leftoff
             nil nil 'equal)
            ;; when it's just been created (eg it has never been left off)
-           (concat "bv--" (car (car z-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) (format ": %s" "default"))
-           )
-          )
-    )
+           (concat
+            "bv--"
+            (car (car z-ws-alist))
+            "-"
+            (number-to-string (winds-get-cur-cfg))
+            (format ": %s" "default")))))
 
   (defun winds-extra-goto (&keys cfg)
-    ;;(winds-extra-record-ws-cfg-bv-leftoff)
+    (winds-extra-record-ws-cfg-bv-leftoff)
     (winds-goto :cfg cfg)
-    (winds-extra-set-ws-cfg-bv)
-    )
+    (winds-extra-set-ws-cfg-bv))
 
   :general
   (
