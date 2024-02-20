@@ -11,6 +11,40 @@
 (defvar st-named-workspaces (ht-create))
 
 
+;; Basically the option is to use either the built-in window
+;; configuration switching functions, or to use bookmark for
+;; you. Bookmark view allows for the same buffer to be displayed in
+;; multiple spaces but with cursor different positions. The built-ins
+;; however do not support this, if you move cursor in a buffer in one
+;; workspace it will actually move the cursor to the same position in
+;; a different workspace. The trade on for this is that workspace
+;; switching significantly faster, and Emacs seems to hang a little
+;; bit less one restoring window configurations complicated. For me
+;; using the built-in is a fair trade off because it's pretty rare
+;; that I'm gonna be displaying the same buffer in multiple work
+;; spaces, even when I do I'm typically not trying to preserve the
+;; Kirshner location in both, although that probably would be my ideal
+;; default setting.  Another words and very very minor and rarely used
+;; feature for having multiple cursor positions for a given buffer
+;; across workspaces is absolutely not worth the trade-off in snappy
+;; Ness of workspace switching.  Interestingly I have no idea why
+;; bookmark he was in much more slow operation than the built-in but
+;; that's probably worth investingating.
+;; The difference in performance is actually kind of drastic using the
+;; built-in you get basically instantaneous switching for even
+;; complicated window layouts that are probably more cramped and I
+;; would practically use. However at the same and even lower levels of
+;; complexity using bookmark view it can take one and a half to two
+;; seconds to switch fully I am not a fan of that to me that's way way
+;; way too much of a slow down to enable a pretty esoteric behavior
+;; that I'm probably never going to leverage
+
+
+;; generate a uuid
+(defun uuidgen ()
+  (interactive)
+  (string-trim (shell-command-to-string "uuidgen")))
+
 
 (defun st-history-match (history sublist)
   (let ((n (length sublist)))
@@ -18,16 +52,12 @@
           (lambda (x) (equal (butlast x (- (length x) n)) sublist))
           history))))
 
-
-(defun st-init ()
-  (interactive)
-  (setq st (ht-create))
-  (setq st-spaces (ht-create))
-  (setq st-named-workspaces (ht-create))
-  (setq st-history '())
-  (ht-set st "spacetree" (ht-create))
-  (st-add-workspace '(1))
-  (force-mode-line-update))
+(defun st-number-of-spaces-current-level ()
+  (length
+   (ht-keys
+    (eval (append
+           '(ht-get* st "spacetree")
+           (butlast st-current-space-address))))))
 
 
 (defun st-add-workspace (address)
@@ -41,30 +71,43 @@
                '((ht-create)))))
     (eval code)
     (setq st-current-space-address address)
-    (ht-set st-spaces address (winner-conf))
+    (ht-set st-spaces address (current-window-configuration))
     (setq st-history (cons st-current-space-address st-history))
-    (st-delete-other-windows-and-switch-to-scratch)
+    ;; only if this isn't the first space, empty it out (this prevents
+    ;; workspaces from being lost during subdivision, basically forces
+    ;; the higher level workspace prior to subdivision to be saved)
+    (when (> (st-number-of-spaces-current-level) 1)
+      (st-delete-other-windows-and-switch-to-scratch))
     code))
+
+
+(defun st-init ()
+  (interactive)
+  (setq st (ht-create))
+  (setq st-spaces (ht-create))
+  (setq st-named-workspaces (ht-create))
+  (setq st-history '())
+  (ht-set st "spacetree" (ht-create))
+  (st-add-workspace '(1))
+  (force-mode-line-update))
 
 
 (defun st-switch (new-address)
   (interactive)
   (let* ((old-address st-current-space-address)
          (workspace (ht-get st-spaces new-address)))
-    (ht-set st-spaces old-address (winner-conf))
+    (ht-set st-spaces old-address (current-window-configuration))
     (cond ((not workspace)
            (st-add-workspace new-address))
           ((st-history-match st-history new-address)
-           (winner-set (ht-get st-spaces (st-history-match st-history new-address)))
-           (setq st-current-space-address (st-history-match st-history new-address))
-           (setq st-history (cons st-current-space-address st-history))
-           )
+           (set-window-configuration (ht-get st-spaces (st-history-match st-history new-address)))
+           (setq st-current-space-address (st-history-match st-history new-address)
+                 st-history (cons st-current-space-address st-history)))
           (t
-           (winner-set workspace)
-           (setq st-current-space-address new-address)
-           (setq st-history (cons st-current-space-address st-history)))))
+           (set-window-configuration (ht-get st-spaces new-address))
+           (setq st-current-space-address new-address
+                 st-history (cons st-current-space-address st-history)))))
   (force-mode-line-update))
-
 
 
 (defun st-current-depth ()
@@ -99,6 +142,7 @@
 
 
 (defun st-switch-current-level (i)
+  
   (st-switch (append (butlast st-current-space-address) `(,i))))
 
 (defun st-name-workspace (name)
@@ -138,43 +182,46 @@
            (concat
             modeline-string
             (mapconcat (lambda (x)
-                         ;;;;debugging
-                         ;;(message (mapconcat (lambda (x) (number-to-string x)) (append level-address `(,x))))
-                         ;;(if (ht-get st-named-workspaces (append level-address `(,x)))
-                         ;;(message "hit")
-                         ;;(message "miss")
-                         ;;)
                          (let* ((workspace-name (ht-get st-named-workspaces (append level-address `(,x))))
                                 (_string (if workspace-name workspace-name (number-to-string x))))
                            (if (equal x level-space)
                                ;; need to change text to update modeline
                                (propertize (concat _string "* ") 'face 'bold)
                              (concat _string " "))))
-                       (reverse (ht-keys node)))
+                       ;; sort (ht-keys node) in ascending order
+                       (sort (ht-keys node) (lambda (a b) (< a b)))
+                       )
             "| ")))))
     (setq modeline-string (substring modeline-string 0 -2))
     (concat "{ " modeline-string "}")))
 
 
 
+(defun st-go-to-last-space ()
+  (interactive)
+  (st-switch (nth 1 st-history)))
 
-;; st
-;; st-spaces
-;; st-history
 
-;; turn the above into a hydra
-;; This Hydro will be useful but it's mainly a testing ground for
-;; global key bindings that are going to end up in the global globally
-;; accessible came up. The reason we stopped into this Hydro first is
-;; because we want to make sure that they actually make economic
-;; sense, and the fact that they are in a hydra and we don't have to
-;; repeatedly invoke the hyWe get a similar looking feel as if he's
-;; key bindings where it's actually Dublin here's a useful
-;; developmental, but there might be some hydra. Probably from the
-;; coding perspective, as soon as we take stains out of this Hydro put
-;; them into the global key bindings it might seem like a good idea to
-;; remove them from the hydra, but I'm not gonna do that because I
-;; want the entire KUI to be encapsulated in the hydra.
+(defun st-go-right ()
+  (interactive)
+  ;; this is the address up to the last point
+  (let ((i (+ 1 (car (last st-current-space-address)))))
+    (when (<= i (st-number-of-spaces-current-level))
+      (st-switch-current-level i))
+    (when (= i (+ 1 (st-number-of-spaces-current-level)))
+      (st-switch-current-level 1))
+    ))
+
+(defun st-go-left ()
+  (interactive)
+  (let ((i (- (car (last st-current-space-address)) 1)))
+    (when (>= i 1) (st-switch-current-level i))
+    (when (= i 0) (st-switch-current-level (st-number-of-spaces-current-level)))
+    ))
+
+
+
+;;;; UI
 (defhydra st-hydra (:color red)
   "spacetree"
   ;; because this is prefixed, this is a nice place to try out the KUI
@@ -226,38 +273,61 @@
  "s-g" (lambda () (interactive) (st-switch `(,(nth 0 st-current-space-address) 5)))
 
  "M-S-<tab>" 'st-switch-space-by-name
- )
+ "M-<tab>" 'st-go-to-last-space
 
+ "C-<tab>" 'st-go-right
+ "C-S-<tab>" 'st-go-left)
 
-;; commit
+;; new-top-level
 
-;; BUG -- saving state of last space not working -- is there a hook
-;; for this?  either winner or lower level?  may be easier to patch
-;; this as using the hook might require rewriting some of the
-;; funcitons
+;; refactor ;; factor the ht access steps into functions to prevent
+;; called ;; eval.append everywhere
 
-;; tab-like scrolling through current level
-;; go to last space -- use history for this, should be very easy
-;; pop space to THING and pop buffer to thing (would obviate need to conditionally clear space out)
-
-;; keybindings are using the integer as the name of the workspace, use it as the *position of the workspace*
-
-;; BUG -- when subdividing by using global key for next level, the workspace is effectively lost -- FIX: need to make sure the first workspace in a level does not wipe the other windows...
-
-;; refactor
-;; factor the ht access steps into functions to prevent called
-;; eval.append everywhere
 ;; naming a workspace higher in the tree
+
+;; pop space to THING and pop buffer to thing (would obviate need to
+;; conditionally clear space out)
+
+
+;; actually implement a history so we can go not just to the last
+;; workspace but traverse through the history
+
+
 
 ;; How does this package relate to magneto??
 
 ;; WIP global non prefixed keybindings (to replace winds)
+;; cut out bookmark view DONE
+;; go to last space -- use history for this, should be very easy DONE
+;; tab-like scrolling through current level DONE
 ;; function clear out all but selected window DONE
 ;; switch named workspace same level WONT DO
 ;; switch by name DONE
 ;; display name DONE
 ;; reverse sort the workspaces in the modeline string DONE
 ;; start at 1 for keyboard ergonomics DONE
+
+;; BUG -- saving state of last space not working -- is there a hook
+;; for this?  either winner or lower level?  may be easier to patch
+;; this as using the hook might require rewriting some of the
+;; funcitons -- This was to do with bookmark you or rather to do with
+;; not using bookmark view, turns out window configuration doesn't
+;; save the points in the current buffer, I'm not sure why that says,
+;; but switching to bookmark for you seem to fix this issue. I wonder
+;; if this is going to slow things down performance wise to what I was
+;; saying coming out would be a shame butI can leave that dor an
+;; optimiztion.  So migrated from winner to bookmark-view. DONE
+
+;; keybindings are using the integer as the name of the workspace, use
+;; it as the *position of the workspace*... actually just sorted the
+;; list -- this ends up being a good default setting, keeping things
+;; positional.  will hold off on implementing the ability to move
+;; things around DONE
+
+;; BUG -- when subdividing by using global key for next level, the
+;; workspace is effectively lost -- FIX: need to make sure the first
+;; workspace in a level does not wipe the other windows... DONE
+
 
 ;; NOTE -- Name is not on the way of describing, but also bookmarking
 ;; the space.  also gives a flat UI to bookamrks that point antwhere
@@ -267,4 +337,7 @@
 ;; (yaml-encode st)
 ;; (yaml-encode st-named-workspaces)
 
+;; edge case -- whatt about if a buffer is deleted in another window
+
 (st-init)
+
