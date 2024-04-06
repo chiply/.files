@@ -42,5 +42,5 @@
     ;;)
   ;;(add-to-list 'brushup-styles '(brushup-all-the-icons))
 
-  :hook (use-package--all-the-icons--post-config . z-brushup)
+  ;;:hook (use-package--all-the-icons--post-config . z-brushup)
   )

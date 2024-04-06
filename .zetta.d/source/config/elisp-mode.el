@@ -4,7 +4,6 @@
 
   :general
   (
-   :states '(normal visual insert)
    :keymaps '(emacs-lisp-mode-map
               lisp-mode-map
               evil-lispy-mode-map

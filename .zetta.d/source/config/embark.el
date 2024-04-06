@@ -18,14 +18,11 @@
 
   :general
   (
-   :keymaps '(override)
-   :states '(normal visual)
+   ;; override alone doesn't work here for some reason
+   :keymaps (append z-modal-states-non-insert '(override))
    "C-." 'embark-act
    "C->" 'embark-act-noquit)
   (
    :keymaps '(vertico-map)
    "C-." 'embark-act
    "C->" 'embark-act-noquit))
-
-
-

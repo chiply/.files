@@ -27,14 +27,12 @@ zstyle ':omz:update' frequency 1
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(
-    codeclimate
-    common-aliases aliases alias-finder
-    copybuffer copyfile copypath
-    dirhistory docker docker-compose extract fd frontend-search gh
-    brew git-extras gitfast git-lfs git-prompt history httpie jsontools pip
-    ripgrep safe-paste screen terraform tmux themes tmuxinator
-    zsh-autosuggestions
-    kube-ps1 aws npm dirpersist kubectl poetry zsh-syntax-highlighting
+    codeclimate common-aliases aliases alias-finder copybuffer
+    copyfile copypath dirhistory docker docker-compose extract fd
+    frontend-search gh brew git-extras gitfast git-lfs git-prompt
+    history httpie jsontools pip ripgrep safe-paste screen terraform
+    tmux themes tmuxinator zsh-autosuggestions kube-ps1 aws npm
+    dirpersist kubectl poetry zsh-syntax-highlighting
 )
 source $ZSH/oh-my-zsh.sh
 export KUBE_PS1_BINARY=kubectl
@@ -196,8 +194,6 @@ function precmd() {
   fi
 }
 
-export PROMPT=$'\n''%n@%m $(git_super_status) $(git rev-parse --show-prefix 2> /dev/null || pwd ) $timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\nx---}-> '
-
-
-
+export PROMPT=$'\n''%n@%m $(git rev-parse --show-toplevel 2> /dev/null | xargs basename || pwd ):$(git_super_status) $timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\n'
+#'x---}-> '
 

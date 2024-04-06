@@ -3,6 +3,7 @@
 
   :init
 
+;;; Code:
   (setq yas-triggers-in-field t
         yas-indent-line 'fixed
         yas-wrap-around-region 'nil
@@ -15,7 +16,6 @@
 
   (yas-global-mode 1)
 
-  
 
 
   (defun z-snippet-file-displayed-p ()
@@ -107,8 +107,8 @@
       ) 
     )
 
-  (z-snip-tangle-and-load (format "%ssource/snippets/.snippets.org" user-emacs-directory))
-
+  ;;(z-snip-tangle-and-load (format "%ssource/snippets/.snippets.org" user-emacs-directory))
+  
   :display
   (z-side "snippet-mode" 'right 1) 
 
@@ -118,53 +118,27 @@
     ("f" z-snip-search-snippets "Go to Snippets" :exit t)
     )
 
-
   :general
-  (
-   :keymaps 'evil-insert-state-map
-   (general-chord ",y") 'hydra-yas/body
-   )
-  (
-   :states '(normal visual)
-   :keymaps 'override
-   :prefix ","
-   "y" 'hydra-yas/body
-   )
   (
    :keymaps 'yas-keymap
    "C-;" 'z-completion-at-point
    "<tab>" 'yas-next-field
    "<S-tab>" 'yas-prev-field
    )
+  (
+   :keymaps 'launch-map
+   "y" 'hydra-yas/body
+   )
+
+  :hook (snippet-mode . (lambda () (text-scale-set -2))))
 
 
-  ;;(eval-after-load 'yasnippet
-  ;;'(progn
-  ;;(define-key yas-keymap (kbd "C-;") 'z-completion-at-point)
-  ;;(define-key yas-keymap (kbd "<tab>") 'yas-next-field)
-  ;;(define-key yas-keymap (kbd "<S-tab>") 'yas-prev-field)
-  ;;)
-  ;;)
-
-  :hook (snippet-mode . (lambda () (text-scale-set -2)))
-  )
-
-
-(use-package yasnippet-snippets
-  )
+(use-package yasnippet-snippets)
 
 (use-package py-snippets
   :after yasnippet
   :config
   (py-snippets-initialize))
-
-;; (use-package sphinx-doc
-;;   :config
-;;   (setq sphinx-doc-include-types nil)
-;;   (add-hook 'python-ts-mode-hook (lambda ()
-;;                                 (require 'sphinx-doc)
-;;                                 (sphinx-doc-mode t)))
-;;   )
 
 ;; not the greatest, but it's one of the better solutions that
 ;; actually supports type hinting
@@ -176,10 +150,9 @@
 
 
 ;; excellent for discoverability.  like autocompletion, but at the top
-;; level for all snippets
-;; a really great demo workflow is to open up a buffer in an
-;; unfamiliar proigramming language and ismply search for 'function',
-;; which will give you the syntax for a function.
+;; level for all snippets a really great demo workflow is to open up a
+;; buffer in an unfamiliar proigramming language and ismply search for
+;; 'function', which will give you the syntax for a function.
 (use-package consult-yasnippet)
 
 

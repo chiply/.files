@@ -2,7 +2,6 @@
   :general
   (
    :keymaps 'override
-   :states '(normal insert visual)
    :prefix "s-b"
    "b" 'bookmark-in-project-jump
    "n" '(lambda () (interactive)

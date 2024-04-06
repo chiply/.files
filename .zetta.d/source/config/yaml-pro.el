@@ -2,7 +2,6 @@
   :after yaml
   :general
   (
-   :states '(normal)
    :keymaps '(yaml-pro-mode-map)
    "C-c C-f" 'yaml-pro-fold-at-point
    "C-c C-o" 'yaml-pro-unfold-at-point

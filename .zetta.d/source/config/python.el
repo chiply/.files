@@ -20,14 +20,12 @@
     (concat pyvenv-virtual-env "bin/python3")
     )
 
-
   :general
   (
-   :states '(normal visual)
    :keymaps 'python-ts-mode-map
-   "==" '(lambda () (interactive)
-           (save-excursion
-             (evil-indent (point-min) (point-max))))
+   "C-c =" '(lambda () (interactive)
+              (save-excursion
+                (evil-indent (point-min) (point-max))))
    )
 
   :hook (

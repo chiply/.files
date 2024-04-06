@@ -32,7 +32,6 @@
 
   :general
   (
-   :states '(insert normal visual)
    :keymaps '(override)
    "s-u" 'org-ref-bibtex-hydra/body
    )

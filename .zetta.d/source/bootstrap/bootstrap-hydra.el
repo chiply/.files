@@ -40,7 +40,7 @@ Arguments are same as of `defhydra'."
           (append (hydra--prop name "/heads") heads)
           :key #'car
           :test #'equal)))
-
+  
   :brushup
   (add-to-list 'brushup-styles
                '(progn
@@ -50,19 +50,28 @@ Arguments are same as of `defhydra'."
                   (set-face-attribute 'hydra-face-blue nil
                                       :foreground brushup-fg-3)))
   
+
   :general
   (
-   :keymaps 'evil-insert-state-map
-   (general-chord ",w") 'hydra-window/body
-   (general-chord ",p") 'hydra-projectile/body
-   )
-  (
-   :keymaps 'override
-   :states '(normal visual)
-   :prefix ","
+   :keymaps 'launch-map
    "w" 'hydra-window/body
    "p" 'hydra-projectile/body
    )
+
+
+  ;;(
+  ;;:keymaps '(evil-insert-state-map)
+  ;;(general-chord ",w") 'hydra-window/body
+  ;;(general-chord ",p") 'hydra-projectile/body
+  ;;)
+  ;;(
+  ;;:keymaps 'override
+  ;;:states '(normal visual)
+  ;;:prefix ","
+  ;;"w" 'hydra-window/body
+  ;;"p" 'hydra-projectile/body
+  ;;)
+
 
   :hook (use-package--hydra--post-config . z-brushup)
   )

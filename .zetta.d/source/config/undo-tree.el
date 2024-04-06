@@ -12,51 +12,48 @@
   ;; https://stackoverflow.com/questions/8370778/remove-glyph-at-end-of-truncated-lines
   (set-display-table-slot standard-display-table 0 ?\ )
 
-  (defun undo-tree-visualize ()
-
-    "Visualize the current buffer's undo tree."
-    (interactive "*")
-    (unless undo-tree-mode
-      (user-error "Undo-tree mode not enabled in buffer"))
-    (deactivate-mark)
-    ;; throw error if undo is disabled in buffer
-    (when (eq buffer-undo-list t)
-      (user-error "No undo information in this buffer"))
-    ;; transfer entries accumulated in `buffer-undo-list' to `buffer-undo-tree'
-    (undo-list-transfer-to-tree)
-    ;; add hook to kill visualizer buffer if original buffer is changed
-    (add-hook 'before-change-functions 'undo-tree-kill-visualizer nil t)
-    ;; prepare *undo-tree* buffer, then draw tree in it
-    (let ((undo-tree buffer-undo-tree)
-          (buff (current-buffer))
-          (display-buffer-mark-dedicated 'soft))
-
-      ;; this line is mine
-      (let ((buf (get-buffer-create undo-tree-visualizer-buffer-name)))
-        (display-buffer buf)
-        (select-window (get-buffer-window buf))
-        )
-
-      (setq undo-tree-visualizer-parent-buffer buff)
-      (setq undo-tree-visualizer-parent-mtime
-            (and (buffer-file-name buff)
-                 (nth 5 (file-attributes (buffer-file-name buff)))))
-      (setq undo-tree-visualizer-initial-node (undo-tree-current undo-tree))
-      (setq undo-tree-visualizer-spacing
-            (undo-tree-visualizer-calculate-spacing))
-      (make-local-variable 'undo-tree-visualizer-timestamps)
-      (make-local-variable 'undo-tree-visualizer-diff)
-      (setq buffer-undo-tree undo-tree)
-      (undo-tree-visualizer-mode)
-      ;; FIXME; don't know why `undo-tree-visualizer-mode' clears this
-      (setq buffer-undo-tree undo-tree)
-      (set (make-local-variable 'undo-tree-visualizer-lazy-drawing)
-           (or (eq undo-tree-visualizer-lazy-drawing t)
-               (and (numberp undo-tree-visualizer-lazy-drawing)
-                    (>= (undo-tree-count undo-tree)
-                        undo-tree-visualizer-lazy-drawing))))
-      (when undo-tree-visualizer-diff (undo-tree-visualizer-show-diff))
-      (let ((inhibit-read-only t)) (undo-tree-draw-tree undo-tree))))
+  ;;(defun undo-tree-visualize ()
+  ;;"Visualize the current buffer's undo tree."
+  ;;(interactive "*")
+  ;;(unless undo-tree-mode
+  ;;(user-error "Undo-tree mode not enabled in buffer"))
+  ;;(deactivate-mark)
+    ;;;; throw error if undo is disabled in buffer
+  ;;(when (eq buffer-undo-list t)
+  ;;(user-error "No undo information in this buffer"))
+    ;;;; transfer entries accumulated in `buffer-undo-list' to `buffer-undo-tree'
+  ;;(undo-list-transfer-to-tree)
+    ;;;; add hook to kill visualizer buffer if original buffer is changed
+  ;;(add-hook 'before-change-functions 'undo-tree-kill-visualizer nil t)
+    ;;;; prepare *undo-tree* buffer, then draw tree in it
+  ;;(let ((undo-tree buffer-undo-tree)
+  ;;(buff (current-buffer))
+  ;;(display-buffer-mark-dedicated 'soft))
+      ;;;; this line is mine
+  ;;(let ((buf (get-buffer-create undo-tree-visualizer-buffer-name)))
+  ;;(display-buffer buf)
+  ;;(select-window (get-buffer-window buf))
+  ;;)
+  ;;(setq undo-tree-visualizer-parent-buffer buff)
+  ;;(setq undo-tree-visualizer-parent-mtime
+  ;;(and (buffer-file-name buff)
+  ;;(nth 5 (file-attributes (buffer-file-name buff)))))
+  ;;(setq undo-tree-visualizer-initial-node (undo-tree-current undo-tree))
+  ;;(setq undo-tree-visualizer-spacing
+  ;;(undo-tree-visualizer-calculate-spacing))
+  ;;(make-local-variable 'undo-tree-visualizer-timestamps)
+  ;;(make-local-variable 'undo-tree-visualizer-diff)
+  ;;(setq buffer-undo-tree undo-tree)
+  ;;(undo-tree-visualizer-mode)
+      ;;;; FIXME; don't know why `undo-tree-visualizer-mode' clears this
+  ;;(setq buffer-undo-tree undo-tree)
+  ;;(set (make-local-variable 'undo-tree-visualizer-lazy-drawing)
+  ;;(or (eq undo-tree-visualizer-lazy-drawing t)
+  ;;(and (numberp undo-tree-visualizer-lazy-drawing)
+  ;;(>= (undo-tree-count undo-tree)
+  ;;undo-tree-visualizer-lazy-drawing))))
+  ;;(when undo-tree-visualizer-diff (undo-tree-visualizer-show-diff))
+  ;;(let ((inhibit-read-only t)) (undo-tree-draw-tree undo-tree))))
 
 
 
@@ -73,16 +70,10 @@
     ("u" undo-tree-undo "Undo")  
     )
 
-
   :general
+
   (
-   :keymaps 'evil-insert-state-map
-   (general-chord ",u") 'undo-tree-visualize
-   )
-  (
-   :states '(normal visual)
-   :keymaps 'override
-   :prefix ","
+   :keymaps 'launch-map
    "u" 'undo-tree-visualize
    )
   (

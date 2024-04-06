@@ -4,8 +4,7 @@
 
   :general
   (
-   :states '(normal visual)
-   :keymaps '(wgrep-mode-map)
+   :keymaps 'wgrep-mode-map
    "<C-return>" 'wgrep-finish-edit
    )
   )

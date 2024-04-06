@@ -109,6 +109,7 @@ When FORCE, enforce update of the active region."
         '(
           emacs-lisp-mode python-ts-mode sql-mode vterm-mode help-mode
           helpful-mode Info-mode messages-buffer-mode org-mode sh-mode yaml-mode json-mode terraform-mode
+          treemacs-mode
           )
         )
 
@@ -125,7 +126,7 @@ When FORCE, enforce update of the active region."
   (setq minimap-recreate-window nil)
   (setq minimap-automatically-delete-window 'visible)
   (setq minimap-display-semantic-overlays nil) ;; did this fix the org issue?
-  (setq minimap-dedicated-window nil) 
+  (setq minimap-dedicated-window t)
 
 
   (remove-hook 'minimap-mode-hook 'hide-mode-line-mode)
@@ -165,7 +166,6 @@ When FORCE, enforce update of the active region."
   :general
   (
    :keymaps 'override
-   :states '(normal visual insert)
    "s-[" 'z-toggle-minimap
    "s-]" 'minimap-update
    "s-}" 'z-toggle-minimap-follow

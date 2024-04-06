@@ -3,7 +3,134 @@
   :demand t
 
   :config
-  (setq tab-line-switch-cycling t tab-line-close-button-show nil)
+  (defun is-buffer (buffer)
+    (bufferp buffer))
+
+  (defun is-occur (buffer)
+    (member (with-current-buffer buffer (symbol-name major-mode)) '("occur-mode")))
+
+  (defun is-grep (buffer)
+    (member (with-current-buffer buffer (symbol-name major-mode)) '("grep-mode")))
+
+  (defun is-terminal-application (buffer)
+    (member (with-current-buffer buffer (symbol-name major-mode)) '("shell-mode" "compilation-mode" "vterm-mode")))
+
+  (defun is-magit (buffer)
+    (member (with-current-buffer buffer (symbol-name major-mode)) '("magit-status-mode")))
+
+  (defun is-helpful (buffer)
+    (member (with-current-buffer buffer (symbol-name major-mode)) '("helpful-mode")))
+
+  (defun is-current-major-mode (buffer)
+    (equal major-mode (with-current-buffer buffer major-mode)))
+
+  (defun is-project-buffer (buffer)
+    (and (boundp 'projectile-mode)
+         (projectile-project-p)
+         (or ;; need both conditions as they don't all add to projectile-project-buffers
+          (member buffer (projectile-project-buffers))
+          (string-match
+           ;; remove trailing / from projectile-project-root
+           (substring (projectile-project-root) 0 -1)
+           (with-current-buffer buffer default-directory)))))
+
+
+  ;; CONDITIONS (for use in z-project-mode-buffers)
+  (setq is-grep-or-occur '(is-grep is-occur))
+  (setq is-magit-or-helpful '(is-magit is-helpful))
+  (setq is-terminal-application '(is-terminal-application))
+
+
+
+
+  ;; HELPERS
+  (defun z-tab-line-test-buffer (buffer conditions)
+    (seq-some (lambda (condition) (funcall condition buffer)) conditions))
+
+  (defun z-tab-line-filter-buffers (buffers conditions)
+    (seq-sort-by
+     #'buffer-name #'string<
+     (seq-filter
+      (lambda (buffer)
+        (and ;; make sure it isn't a closed tab
+         (not (member buffer (window-parameter (selected-window) 'closed-tabs)))
+         (z-tab-line-test-buffer buffer conditions)))
+      buffers)))
+
+
+
+
+
+
+
+  ;; BUFER SCOPES
+  ;; local variable for scope; enables toggling between different scopes
+  ;; create a buffer local variable
+
+  ;; Create a hook to set a window parameter anytime a window is created
+  ;; (set-window-parameter (selected-window) 'z-tab-line-scope 'z-tab-line-scope-project-buffers)
+
+  ;; scopes == each scope is a function that returns a list of buffers
+  (defun z-tab-line-scope-all-buffers ()
+    ;; todo implement all buffers (not just recently visited)?
+    ;;(buffer-list)
+    (z-tab-line-filter-buffers (tab-line-tabs-window-buffers) '(is-buffer)))
+
+  (defun z-tab-line-scope-all-buffers-same-mode ()
+    (z-tab-line-filter-buffers (z-tab-line-scope-all-buffers) '(is-current-major-mode)))
+
+  (defun z-tab-line-scope-project-buffers ()
+    (z-tab-line-filter-buffers (z-tab-line-scope-all-buffers) '(is-project-buffer)))
+
+  (defun z-tab-line-scope-project-buffers-same-mode ()
+    (z-tab-line-filter-buffers (z-tab-line-scope-project-buffers) '(is-current-major-mode)))
+
+  ;; UI for setting scope
+  (defun z-tab-line-toggle-scope ()
+    (interactive)
+    (let ((scopes
+           '(z-tab-line-scope-all-buffers
+             z-tab-line-scope-all-buffers-same-mode
+             z-tab-line-scope-project-buffers
+             z-tab-line-scope-project-buffers-same-mode)))
+      (set-window-parameter (selected-window) 'z-tab-line-scope
+                            (intern (completing-read "Scope: " scopes)))))
+
+
+  (setq tab-line-switch-cycling t tab-line-close-button-show t)
+
+  (defun tab-line-close-tab-1 ()
+    "Close the selected tab.
+If the tab is presented in another window, close the tab by using the `bury-buffer` function.
+If the tab is unique to all existing windows, kill the buffer with the `kill-buffer` function.
+Lastly, if no tabs are left in the window, it is deleted with the `delete-window` function."
+    (interactive)
+    (let* ((window (selected-window))
+           (buffer (current-buffer)))
+      (with-selected-window window
+        (let ((tab-list (tab-line-tabs-window-buffers))
+              (buffer-list (flatten-list
+                            (seq-reduce (lambda (list window)
+                                          (select-window window t)
+                                          (cons (tab-line-tabs-window-buffers) list))
+                                        (window-list) nil))))
+          (select-window window)
+          (if (> (seq-count (lambda (b) (eq b buffer)) buffer-list) 1)
+              (progn
+                (if (eq buffer (current-buffer))
+                    (bury-buffer)
+                  (set-window-prev-buffers window (assq-delete-all buffer (window-prev-buffers)))
+                  (set-window-next-buffers window (delq buffer (window-next-buffers))))
+                (unless (cdr tab-list)
+                  (ignore-errors (delete-window window))))
+            (and (kill-buffer buffer)
+                 (unless (cdr tab-list)
+                   (ignore-errors (delete-window window)))))))
+      (force-mode-line-update)))
+
+
+
+
 
   (defun z-tab-line-close-tab ()
     (interactive)
@@ -12,105 +139,57 @@
        (selected-window)
        'closed-tabs
        (append closed-tabs (list (current-buffer))))
-      (bury-buffer)
-      )
-    )
+      (bury-buffer)))
+
+
+  ;; so this configuration really should look like a list of groups,
+  ;; with each group defined by a predicate
+
+  ;; left off write a macro which returns a cond statement.  The macro
+  ;; should take as input a list of predicates.  whatever it is, the
+  ;; interface should be supplying a group of predicates, not a pair of
+  ;; condition, function that returns buffer list.  before this,
+  ;; refactor the below functions as so we can at least see the pattern
+  ;; in action -- but the semantics are simply listing groups in order
+  ;; of precedence
+
+  (defun z-tab-line-get-scope ()
+    (or
+     (window-parameter (selected-window) 'z-tab-line-scope)
+     'z-tab-line-scope-project-buffers))
 
   (defun z-project-mode-buffers ()
     ;; should be project buffers, for window (union of prev and next)
-    (cond
-     ;; by-mode; show other buffers in this mode
-     ((member
-       (symbol-name major-mode)
-       '(
-         "magit-status-mode"
-         "helpful-mode"
-         "vterm-mode"
-         "shell-mode"
-         "eaf-mode"
-         ))
-      (seq-sort-by
-       #'buffer-name #'string<
-       (z-soda-list-mode-buffers (symbol-name major-mode))
-       )
-      )
-     ;; grep results
-     ((member
-       (symbol-name major-mode)
-       '(
-         "occur-mode"
-         "grep-mode"
-         ))
-      (seq-sort-by
-       #'buffer-name #'string<
-       (-filter
-        (lambda (buf) (and
-                       ;; make sure it's note a marker 
-                       (bufferp buf)
-                       ;; make sure it's project local
-                       ;; strange function here bc occur isn't counted
-                       ;; in projectile project buffers
-                       (or
-                        (when (with-current-buffer buf (equal major-mode 'occur-mode))
-                          (string-match
-                           (projectile-project-root)
-                           (with-current-buffer buf default-directory)
-                           )
-                          )
-                        (when (with-current-buffer buf (equal major-mode 'grep-mode))
-                          (member buf (projectile-project-buffers)))
-                        )
-                       ;; make sure it isn't a closed tab
-                       (not (member buf (window-parameter (selected-window) 'closed-tabs)))))
-        (append
-         (z-soda-list-mode-buffers "grep-mode")
-         (z-soda-list-mode-buffers "occur-mode")
-         ))
+    (let ((buffers (funcall (z-tab-line-get-scope))))
+      (cond
+       ((and (z-tab-line-test-buffer (current-buffer) is-magit-or-helpful)
+             (window-parameter (selected-window) 'window-side))
+        (z-tab-line-filter-buffers buffers is-magit-or-helpful))
+       ((and (z-tab-line-test-buffer (current-buffer) is-grep-or-occur)
+             (window-parameter (selected-window) 'window-side))
+        (z-tab-line-filter-buffers buffers is-grep-or-occur))
+       ((and (z-tab-line-test-buffer (current-buffer) is-terminal-application)
+             (window-parameter (selected-window) 'window-side))
+        (z-tab-line-filter-buffers buffers is-terminal-application))
+       (t (seq-sort-by #'buffer-name #'string< buffers)))))
 
-       
-       )
-      )
-     ;; buffers in projectile projects, show other project buffers
-     ((and (boundp 'projectile-mode) (projectile-project-p))
-      (let ((buffers (tab-line-tabs-window-buffers)))
-        (seq-sort-by
-         #'buffer-name #'string<
-         (-filter
-          (lambda (buf) (and
-                         ;; make sure it's note a marker 
-                         (bufferp buf)
-                         ;; make sure it's project local
-                         (member buf (projectile-project-buffers))
-                         ;; make sure it isn't a closed tab
-                         (not (member buf (window-parameter (selected-window) 'closed-tabs)))))
-          buffers)
-         )
-        )
-      )
-     (t
-      (let ((buffers (tab-line-tabs-window-buffers)))
-        (seq-sort-by
-         #'buffer-name #'string<
-         buffers
-         )
-        )
-      )
-     )
-
-
-    
-    
-    )
-
+  ;; buffers in projectile projects, show other project buffers
+  (defvar ct/circle-numbers-alist
+    '((0 . "⓪")
+      (1 . "①")
+      (2 . "②")
+      (3 . "③")
+      (4 . "④")
+      (5 . "⑤")
+      (6 . "⑥")
+      (7 . "⑦")
+      (8 . "⑧")
+      (9 . "⑨"))
+    "Alist of integers to strings of circled unicode numbers.")
 
   (defun z-tab-line-tab-name-buffer (buffer &optional _buffers)
-    ;; NOTE -- the tab-line does NOT render all-the-icons
-    ;; icons... major issue and reason why I don't have icons in the
-    ;; tab-line
-    (let* (
-           (bufnm (buffer-name buffer))
-           ;; Here we can shorten verbose names... remember we can
-           ;; look at the actual buffer name in the modeline
+    (let* ((buffer-name (buffer-name buffer))
+           (bufnm buffer-name)
            (bufnm (string-replace "helpful function" "H" bufnm))
            (bufnm (string-replace "helpful command" "H" bufnm))
            (bufnm (string-replace "helpful variable" "H" bufnm))
@@ -118,117 +197,58 @@
            (bufnm (string-replace "Embark Collect" "EC" bufnm))
            (bufnm (string-replace "Embark Export Grep" "EE G" bufnm))
            (bufnm (string-replace "Embark Export Occur" "EE O" bufnm))
-           (bufnm (string-replace "Embark Export Dired" "EE D" bufnm))
-           )
-      bufnm
-      )
-    )
+           (bufnm (string-replace "Embark Export Dired" "EE D" bufnm)))
+      (concat
+       ;; make the value below bold
+       (alist-get (+ 1 (cl-position buffer (funcall tab-line-tabs-function))) ct/circle-numbers-alist)
+       bufnm)))
 
+  ;;(setq tab-line-tab-name-function 'z-tab-line-tab-name-buffer)
+  ;;(setq tab-line-tabs-function 'z-project-mode-buffers)
+
+  (setq tab-line-tabs-function 'tab-line-tabs-window-buffers)
   (setq tab-line-tab-name-function 'tab-line-tab-name-buffer)
-  (setq tab-line-tab-name-function 'z-tab-line-tab-name-buffer)
 
-  
+  (global-tab-line-mode 1)
 
-
-
-
-
-
-  ;; need this for the switch tabs funciton
-  (setq tab-line-tabs-function 'z-project-mode-buffers)
-  ;;(setq tab-line-separator "  ")
-
-
-
-  (global-tab-line-mode)
-
-  ;;:brushup
-
-  ;;(add-to-list 'brushup-styles
-               ;;'(progn
-                  ;;(set-face-attribute 'tab-line-tab-current nil
-                                      ;;:overline brushup-fg ;; this isn't working
-                                      ;;:foreground brushup-fg
-                                      ;;:background brushup-bg-1
-                                      ;;:box nil
-                                      ;;:weight 'normal
-                                      ;;:inherit nil
-                                      ;;:height 1.0
-                                      ;;)
-                  ;;(set-face-attribute 'tab-line-tab nil
-                                      ;;:overline t
-                                      ;;:foreground brushup-fg-3
-                                      ;;:background brushup-bg-1
-                                      ;;:weight 'normal
-                                      ;;:box nil
-                                      ;;:height 1.0
-                                      ;;:inherit nil
-                                      ;;)
-                  ;;(set-face-attribute 'tab-line-tab-inactive nil
-                                      ;;:background brushup-bg-1_0
-                                      ;;:foreground brushup-bg-6
-                                      ;;:box nil
-                                      ;;:height 1.0
-                                      ;;:overline nil
-                                      ;;:inherit nil
-                                      ;;)
-                  ;;(set-face-attribute 'tab-line nil
-                                      ;;:background (modus-themes-get-color-value 'bg-blue-nuanced)
-                                      ;;:height 1.2
-                                      ;;:underline "gray"
-                                      ;;;; basically nil
-                                      ;;:overline brushup-bg
-                                      ;;:box nil
-                                      ;;)
-                  ;;)
-               ;;)
+  :brushup
+  (add-to-list
+   'brushup-styles
+   '(progn
+      (set-face-attribute 'tab-line-tab-current nil :box nil :weight 'normal :inherit nil :height 1.0)
+      (set-face-attribute 'tab-line-tab nil :weight 'normal :box nil :height 1.0 :inherit nil)
+      (set-face-attribute 'tab-line-tab-inactive nil :box nil :height 1.0 :inherit nil)
+      (set-face-attribute 'tab-line nil :height 1.0 :underline `(:color ,brushup-bg-1) :overline t :box nil)))
 
   
   :general
   (
    :keymaps 'override
-   ;;:keymaps '(
-              ;;vterm-mode-map shell-mode-map sh-mode-map help-mode-map
-              ;;helpful-mode-map dired-mode-map python-ts-mode-map
-              ;;emacs-lisp-mode-map sql-mode-map yaml-mode-map
-              ;;org-mode-map csv-mode-map pubmed-mode-map
-              ;;lisp-interaction-mode-map text-mode-map grep-mode-map
-              ;;occur-mode-map json-mode-map jsonian-mode-map eww-mode-map
-              ;;embark-collect-mode-map dockerfile-mode-map docker-compose-mode-map
-              ;;docker-image-mode-map docker-container-mode-map eaf-mode-map
-              ;;)
    "C-<tab>" 'tab-line-switch-to-next-tab
    "C-S-<tab>" 'tab-line-switch-to-prev-tab
-   ;; works in modeline version
-   "s-1" '(lambda () (interactive) (switch-to-buffer (nth 0 (z-project-mode-buffers))))
-   "s-2" '(lambda () (interactive) (switch-to-buffer (nth 1 (z-project-mode-buffers))))
-   "s-3" '(lambda () (interactive) (switch-to-buffer (nth 2 (z-project-mode-buffers))))
-   "s-4" '(lambda () (interactive) (switch-to-buffer (nth 3 (z-project-mode-buffers))))
-   "s-5" '(lambda () (interactive) (switch-to-buffer (nth 4 (z-project-mode-buffers))))
-   "s-6" '(lambda () (interactive) (switch-to-buffer (nth 5 (z-project-mode-buffers))))
-   "s-7" '(lambda () (interactive) (switch-to-buffer (nth 6 (z-project-mode-buffers))))
-   "s-8" '(lambda () (interactive) (switch-to-buffer (nth 7 (z-project-mode-buffers))))
-   "s-9" '(lambda () (interactive) (switch-to-buffer (nth 8 (z-project-mode-buffers))))
    )
+  (
+   :states '(normal visual)
+   :keymaps 'override
+   "g1" '(lambda () (interactive) (switch-to-buffer (nth 0 (z-project-mode-buffers))))
+   "g2" '(lambda () (interactive) (switch-to-buffer (nth 1 (z-project-mode-buffers))))
+   "g3" '(lambda () (interactive) (switch-to-buffer (nth 2 (z-project-mode-buffers))))
+   "g4" '(lambda () (interactive) (switch-to-buffer (nth 3 (z-project-mode-buffers))))
+   "g5" '(lambda () (interactive) (switch-to-buffer (nth 4 (z-project-mode-buffers))))
+   "g6" '(lambda () (interactive) (switch-to-buffer (nth 5 (z-project-mode-buffers))))
+   "g7" '(lambda () (interactive) (switch-to-buffer (nth 6 (z-project-mode-buffers))))
+   "g8" '(lambda () (interactive) (switch-to-buffer (nth 7 (z-project-mode-buffers))))
+   "g9" '(lambda () (interactive) (switch-to-buffer (nth 8 (z-project-mode-buffers))))
+   )
+
   (
    :keymaps 'override
    ;; closes tab, doesn't kill buffer
-   "s-w" 'z-tab-line-close-tab
+   ;;"s-w" 'z-tab-line-close-tab
+   "s-w" 'tab-line-close-tab-1
    )
 
-  :hook (
-         ;;((
-           ;;prog-mode
-           ;;;;helpful-mode vterm-mode shell-mode help-mode dired-mode
-           ;;;;python-ts-mode emacs-lisp-mode sql-mode magit-status-mode
-           ;;;;org-mode detached-log-mode detached-compilation-mode detached-tail-mode special-mode text-mode
-           ;;;;fundamental-mode messages-buffer-mode grep-mode
-           ;;;;messages-buffer-mode info-mode occur-mode prog-mode diff-mode
-           ;;;;bookmark-bmenu-mode flycheck-error-list-mode eaf-mode
-           ;;)
-          ;;. tab-line-mode)
-         (use-package--hydra--post-config . z-brushup)
-         )
+  :hook ((fundamental-mode . tab-line-mode))
   )
 
 

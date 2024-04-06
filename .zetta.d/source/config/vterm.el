@@ -2,14 +2,12 @@
   :demand t
   :init
 
-
   (defun z-soda-prompt-term-buffer ()
     (let ((mode-buffers (-map
                          (lambda (x) (buffer-name x))
                          (z-soda-list-mode-buffers "\\term-mode*"))))
       (completing-read "Proces Buffer: " mode-buffers)
       ))
-
 
 
   (defun z-soda-create-and-display-term (buf-or-mode-name)
@@ -104,48 +102,15 @@
   :config
   (setq vterm-shell "zsh")
 
-  (setq vterm-color-palette [vterm-color-black
-                             font-lock-comment-face
-                             vterm-color-white
-                             vterm-color-underline
-                             vterm-color-underline
-                             vterm-color-underline
-                             vterm-color-underline
-                             vterm-color-underline
-                             ])
+  ;; fixes unreadable situation -- comes out brown by default
+  ;; note this is dependent on the terminal that launches emacs, I'm
+  ;; using iterm2
+  (add-to-list 'brushup-styles
+               '(progn
+                  (set-face-attribute 'vterm-color-yellow nil
+                                      :foreground brushup-fg
+                                      :background brushup-bg-3)))
 
-  ;;(add-to-list 'brushup-styles
-               ;;'(progn
-                  ;;(set-face-attribute 'vterm-color-magenta nil
-                                    ;;:foreground brushup-fg
-                                    ;;:background brushup-bg-3
-                                    ;;)
-                  ;;(set-face-attribute 'vterm-color-black nil
-                                    ;;:foreground brushup-fg
-                                    ;;:background brushup-bg-3
-                                    ;;)
-                  ;;(set-face-attribute 'vterm-color-yellow nil
-                                    ;;:foreground brushup-fg
-                                    ;;:background brushup-bg-3
-                                    ;;)
-                  ;;(set-face-attribute 'vterm-color-yellow nil
-                                    ;;:foreground brushup-fg
-                                    ;;:background brushup-bg-3
-                                    ;;)
-                  ;;(set-face-attribute 'term-color-yellow nil
-                                    ;;:foreground brushup-fg
-                                    ;;:background brushup-bg-3
-                                    ;;)
-                  ;;(set-face-attribute 'term-color-magenta nil
-                                    ;;:foreground brushup-fg
-                                    ;;:background brushup-bg-3
-                                    ;;)
-                  ;;(set-face-attribute 'term-color-bright-yellow nil
-                                    ;;:foreground brushup-fg
-                                    ;;:background brushup-bg-3
-                                    ;;)
-                  ;;)
-               ;;)
 
   :display
   (z-side "^\\*zsh*" 'bottom)
@@ -160,7 +125,11 @@
    :states '(insert)
    :keymaps '(vterm-mode-map)
    "C-s" 'vterm-send-C-s
+   "C-x" 'vterm-send-C-x
+   "<escape>" 'vterm-send-escape
+   "C-u" 'universal-argument
    )
+
   (
    :states '(normal)
    :keymaps '(vterm-mode-map)
@@ -178,14 +147,10 @@
     ("S" (lambda () (interactive) (z-soda-cap "\\term-mode*" 1)) "Terminal" )
 
     )
+  
 
-  :hook (
-         (vterm-mode . (lambda ()
+  :hook ((vterm-mode . (lambda ()
                          (setq global-hl-line-mode nil)
-                         (text-scale-set -1)
-                         (toggle-truncate-lines 1)
-                         (display-line-numbers-mode 1)
-                         ))
-         ((vterm-mode shell-mode) . tab-line-mode)
-         )
+                         (toggle-truncate-lines 1) (display-line-numbers-mode 1)))
+         ((vterm-mode shell-mode) . tab-line-mode))
   )
