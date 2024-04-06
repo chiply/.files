@@ -26,7 +26,36 @@
 (setq blink-cursor-mode nil)
 
 (setq frame-title-format
-      '((:eval (format "%s | %s"
-                       (car (car z-ws-alist))
-                       (winds-get-cur-cfg)))))
+      '((:eval
+         (or
+          (when (and (boundp 'evil-mode) evil-mode) "🐍")
+          (when (and (boundp 'meow-mode) meow-mode) "😼")
+          (when (not (or (and (boundp 'evil-mode) evil-mode)
+                         (and (boundp 'meow-mode) meow-mode))) "🦬")))
+        (:eval
+         (or
+          (when (or (and (boundp 'meow-insert-mode) meow-insert-mode)
+                    (and (boundp 'evil-insert-state-minor-mode) evil-insert-state-minor-mode))
+            "🖋")
+          (when (and
+                 ;; in either evil or meow
+                 (or (and (boundp 'evil-mode) evil-mode)
+                     (and (boundp 'meow-mode) meow-mode))
+                 ;; and insert state is not active
+                 (not (or (and (boundp 'meow-insert-mode) meow-insert-mode)
+                          (and (boundp 'evil-insert-state-minor-mode) evil-insert-state-minor-mode))))
+            "🔏")))
+        " "
+        ;;; add recursion level indicator
+        (:eval
+         (let ((recursion-level (minibuffer-depth)))
+           (if (zerop recursion-level)
+               "[R:0]"
+             (format " [R:%d]" recursion-level))))
+        " "
+        (:eval (st-modeline-lighter))
+        "  "
+        (:eval (if (buffer-file-name) (abbreviate-file-name (buffer-file-name)) "%b"))))
+
+
 

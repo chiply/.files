@@ -6,9 +6,8 @@
 
   :general
   (
-   :keymaps '(python-ts-mode-map sql-mode-map css-mode-map
-                                 sh-mode-map terraform-mode-map dockerfile-mode-map)
-   :states '(normal insert visual)
+   ;; just override doesn't work
+   :keymaps '(override meow-normal-state-keymap evil-normal-state-map)
    "M-." 'xref-find-definitions
    "M-," 'xref-go-back
    ;; note the distinct use from find-definitions.  This is more about

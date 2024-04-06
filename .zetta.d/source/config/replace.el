@@ -8,7 +8,6 @@
   :general
   (
    :keymaps '(occur-mode-map)
-   :states '(normal visual)
    "e" 'occur-edit-mode
    )
   )

@@ -51,18 +51,6 @@ A docstring
       )
     )
 
-
-
-
-
-
-
-
-
-
-
-
-
   ;; function that returns the directory for the thing at point 
   (defun z-dired-dir-at-point ()
     (interactive)
@@ -292,7 +280,6 @@ Version 2019-11-04"
 
   :general
   (
-   :states '(normal visual insert)
    :keymaps '(dired-mode-map)
    "<tab>" 'z-dired-subtree-toggle
    "S-<tab>" 'z-dired-subtree-cycle
@@ -317,7 +304,7 @@ Version 2019-11-04"
    "P" 'z-dired-ranger-paste
    "M" 'z-dired-ranger-move
    "B" 'z-dired-open-in-chrome
-   "gg" 'evil-goto-first-line
+   ;;"gg" 'evil-goto-first-line
    "G" 'evil-goto-line
    "<C-return>" 'xah-open-in-external-app
    )

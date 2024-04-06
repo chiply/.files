@@ -21,10 +21,10 @@
 
   :hydra
   (defhydra+ hydra-window ()
-    ("a" windmove-left)
-    ("s" windmove-down)
-    ("w" windmove-up)
-    ("d" windmove-right)
+    ;;("a" windmove-left)
+    ;;("s" windmove-down)
+    ;;("w" windmove-up)
+    ;;("d" windmove-right)
     ("v" (z-split-window "v"))
     ("V" (z-split-window "V"))
     ("h" (z-split-window "h"))

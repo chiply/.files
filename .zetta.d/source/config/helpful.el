@@ -13,18 +13,6 @@
 
   (setq helpful-switch-buffer-function 'display-buffer)
 
-  :general
-  (
-   :keymaps 'evil-insert-state-map
-   (general-chord ",h") 'hydra-helpful/body
-   )
-  (
-   :states '(normal visual)
-   :keymaps 'override
-   :prefix ","
-   "h" 'hydra-helpful/body
-   )
-
   :hydra
 
   (defhydra+ hydra-helpful ()
@@ -42,6 +30,12 @@
   (defhydra+ hydra-run ()
     ("H" (lambda () (interactive) (z-soda-cap "[H|h]elp*" 1)) "Help")
     )
+
+  :general
+  (
+   :keymaps 'launch-map
+   "h" 'hydra-helpful/body
+   )
 
   :hook (helpful-mode . (lambda () (text-scale-set -2)))
   )

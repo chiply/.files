@@ -192,6 +192,7 @@ point."
 
 
 
+
 (defun z-side-window-p (win)
   (window-parameter win 'window-slot)
   )
@@ -318,30 +319,36 @@ point."
     (evil-goto-definition)))
 
 (general-define-key
- :keymaps '(lisp-mode-map lisp-interaction-mode-map emacs-lisp-mode-map lisp-data-mode-map python-ts-mode-map sql-mode-map sh-mode-map dockerfile-mode-map terraform-mode-map css-mode-map)
- :states '(normal) 
+ :keymaps 'launch-map
+ "H" 'z-jump-to-doc)
 
- "gdd" 'evil-goto-definition
- "gdo" 'z-jump-to-def
- "gdh" 'z-jump-to-def-hor
- "gdH" 'z-jump-to-def-hor-1
- "gdv" 'z-jump-to-def-vert
- "gdV" 'z-jump-to-def-vert-1
-
- "gds" 'z-jump-to-def-side
- "gh" 'z-jump-to-doc
- )
-
+;;(general-define-key
+ ;;:keymaps '(lisp-mode-map
+            ;;lisp-interaction-mode-map
+            ;;emacs-lisp-mode-map
+            ;;lisp-data-mode-map
+            ;;python-ts-mode-map
+            ;;sql-mode-map
+            ;;sh-mode-map
+            ;;dockerfile-mode-map
+            ;;terraform-mode-map
+            ;;css-mode-map)
+ ;;:states '(normal) 
+ ;;"gdd" 'evil-goto-definition
+ ;;"gh" 'z-jump-to-doc
+ ;;)
 
 (use-package lsp-ui
   :config
   (setq lsp-ui-sideline-enable nil))
 
 
-(use-package lsp-treemacs
-  :config
-  (lsp-treemacs-sync-mode 1)
-  (setq lsp-treemacs-theme "all-the-icons"))
+;; (use-package lsp-treemacs
+;;   :after treemacs
+;;   :config
+;;   (lsp-treemacs-sync-mode 1)
+;;   (setq lsp-treemacs-theme "all-the-icons")
+;;   )
 
 
 (use-package lsp-pylsp

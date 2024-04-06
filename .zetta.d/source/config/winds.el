@@ -109,23 +109,23 @@ to the previously select ws and updates z-ws-alist"
     (winds-goto :cfg cfg)
     (winds-extra-set-ws-cfg-bv))
 
-  :general
-  (
-   :keymaps '(override)
-   "s-a" (lambda () (interactive) (winds-extra-goto :cfg 1))
-   "s-s" (lambda () (interactive) (winds-extra-goto :cfg 2))
-   "s-d" (lambda () (interactive) (winds-extra-goto :cfg 3))
-   "s-f" (lambda () (interactive) (winds-extra-goto :cfg 4))
-   "s-g" (lambda () (interactive) (winds-extra-goto :cfg 5))
-   "M-S-<tab>" 'winds-extra-goto-ws
-   "M-<tab>" 'winds-extra-switch-to-last-ws
-   )
-
-  :hydra
-  (defhydra+ hydra-window ()
-    ("u" winds-history-undo) 
-    ("U" winds-history-redo)
-    ("C-d" winds-extra-delete-ws :exit t)
-    ("C-r" winds-extra-rename-ws :exit t)
-    )
+  ;;:general
+  ;;(
+   ;;:keymaps '(override)
+   ;;"s-a" (lambda () (interactive) (winds-extra-goto :cfg 1))
+   ;;"s-s" (lambda () (interactive) (winds-extra-goto :cfg 2))
+   ;;"s-d" (lambda () (interactive) (winds-extra-goto :cfg 3))
+   ;;"s-f" (lambda () (interactive) (winds-extra-goto :cfg 4))
+   ;;"s-g" (lambda () (interactive) (winds-extra-goto :cfg 5))
+   ;;"M-S-<tab>" 'winds-extra-goto-ws
+   ;;"M-<tab>" 'winds-extra-switch-to-last-ws
+   ;;)
+;;
+  ;;:hydra
+  ;;(defhydra+ hydra-window ()
+    ;;("u" winds-history-undo) 
+    ;;("U" winds-history-redo)
+    ;;("C-d" winds-extra-delete-ws :exit t)
+    ;;("C-r" winds-extra-rename-ws :exit t)
+    ;;)
   )

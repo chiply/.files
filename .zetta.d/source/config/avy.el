@@ -8,21 +8,9 @@
 
   :general
   (
-   :keymaps 'evil-insert-state-map
-   (general-chord ",j") 'hydra-evil-avy/body
-   )
-  (
-   :states '(normal visual)
-   :keymaps 'override
-   :prefix ","
+   :keymaps 'launch-map
    "j" 'hydra-evil-avy/body
    )
-  (
-   :states '(normal visual)
-   :keymaps 'override
-   "C-s-j" 'evil-avy-goto-word-1
-   )
-
 
   :hydra
   (defhydra+ hydra-evil-avy ()

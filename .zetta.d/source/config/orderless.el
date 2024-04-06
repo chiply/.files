@@ -24,14 +24,13 @@
         orderless-style-dispatchers '(my/orderless-dispatcher-initialism
                                       flex-if-twiddle
                                       without-if-bang)
-        completion-styles '(orderless)
+        completion-styles '(orderless basic)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion))))
   )
 
 
-;; Persist history over Emacs restarts. Vertico sorts by history
-;; position.
+;;Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
   :init
   (savehist-mode)

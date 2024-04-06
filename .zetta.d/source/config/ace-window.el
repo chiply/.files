@@ -30,16 +30,10 @@
           "*Calc Trail*" " *LV*"
           )
         )
-
+  
   :general
   (
-   :keymaps 'evil-insert-state-map
-   (general-chord ",,") 'ace-window
-   )
-  (
-   :states '(normal visual)
-   :keymaps 'override
-   :prefix ","
+   :keymaps 'launch-map
    "," 'ace-window
    )
 

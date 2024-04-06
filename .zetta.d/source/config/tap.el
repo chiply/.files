@@ -66,51 +66,50 @@ used to override thing at point for whatever reason"
 (defun z-comment (&optional thing)
   (interactive)
   (save-excursion
-   (z-select)
-   (call-interactively 'comment-or-uncomment-region)
-   )
+    (z-select)
+    (call-interactively 'comment-or-uncomment-region)
+    )
   )
 
 
 
 
- (general-define-key
-  :states '(normal visual insert)
-  :keymaps '(sql-mode-map lisp-mode-map lisp-interaction-mode-map
-                          emacs-lisp-mode-map elisp python-ts-mode-map
-                          yaml-mode-map sh-mode-map shell-mode-map
-                          lark-mode-map
-                          )
-  "s-j" '(lambda () (interactive)
-           (if (buffer-narrowed-p)
-               (progn (call-interactively 'z-narrow-or-widen)
-                      (focus-next-thing 1)
-                      (call-interactively 'z-narrow-or-widen)
-                      )
-             (focus-next-thing 1))
-           )
-  "s-k" '(lambda () (interactive)
-           (if (buffer-narrowed-p)
-               (progn (call-interactively 'z-narrow-or-widen)
-                      (focus-prev-thing 1)
-                      (call-interactively 'z-narrow-or-widen)
-                      )
-             (focus-prev-thing 1))
-           )
-  "s-h" '(lambda () (interactive)
-           (beginning-of-thing focus-current-thing))
-  "s-l" '(lambda () (interactive)
-           (end-of-thing focus-current-thing)
-           ;; to take care of skipping whitespace, not sure why this
-           ;; happens
-           (re-search-backward "[^[:space:]\n]")
-           (evil-end-of-line)
-           )
-  "s-x v" 'z-pulse
-  "s-x V" 'z-select
-  "s-x t" 'z-set-local-thing
-  "s-/" 'z-comment
-  )
+(general-define-key
+ :keymaps '(
+            sql-mode-map lisp-mode-map lisp-interaction-mode-map
+            emacs-lisp-mode-map elisp python-ts-mode-map
+            yaml-mode-map sh-mode-map shell-mode-map
+            lark-mode-map)
+ "s-j" '(lambda () (interactive)
+          (if (buffer-narrowed-p)
+              (progn (call-interactively 'z-narrow-or-widen)
+                     (focus-next-thing 1)
+                     (call-interactively 'z-narrow-or-widen)
+                     )
+            (focus-next-thing 1))
+          )
+ "s-k" '(lambda () (interactive)
+          (if (buffer-narrowed-p)
+              (progn (call-interactively 'z-narrow-or-widen)
+                     (focus-prev-thing 1)
+                     (call-interactively 'z-narrow-or-widen)
+                     )
+            (focus-prev-thing 1))
+          )
+ "s-h" '(lambda () (interactive)
+          (beginning-of-thing focus-current-thing))
+ "s-l" '(lambda () (interactive)
+          (end-of-thing focus-current-thing)
+          ;; to take care of skipping whitespace, not sure why this
+          ;; happens
+          (re-search-backward "[^[:space:]\n]")
+          (evil-end-of-line)
+          )
+ "s-x v" 'z-pulse
+ "s-x V" 'z-select
+ "s-x t" 'z-set-local-thing
+ "s-/" 'z-comment
+ )
 
 
 
@@ -132,15 +131,17 @@ used to override thing at point for whatever reason"
   :general
   (
    :states '(normal visual)
-   :keymaps '( org-mode-map org-agenda-mode-map sql-mode-map
-               python-ts-mode-map lisp-interaction-mode-map
-               emacs-lisp-mode-map lisp-mode-map dired-mode-map
-               snippet-mode-map shell-mode-map vterm-mode-map
-               embark-collect-mode-map wgrep-mode-map csv-mode-map
-               help-mode-map helpful-mode-map text-mode-map
-               pubmed-show-mode-map json-mode-map eww-mode-map
-               jmespath-mode-map jsonian-mode-map js2-mode-map
-               compilation-mode-map lark-mode-map)
+   :keymaps '(
+              org-mode-map org-agenda-mode-map sql-mode-map
+              python-ts-mode-map lisp-interaction-mode-map
+              emacs-lisp-mode-map lisp-mode-map dired-mode-map
+              snippet-mode-map shell-mode-map vterm-mode-map
+              embark-collect-mode-map wgrep-mode-map csv-mode-map
+              help-mode-map helpful-mode-map text-mode-map
+              pubmed-show-mode-map json-mode-map eww-mode-map
+              jmespath-mode-map jsonian-mode-map js2-mode-map
+              compilation-mode-map lark-mode-map
+              )
    "C-e" 'er/expand-region
    ))
 

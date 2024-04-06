@@ -1,3 +1,5 @@
+(require 'window)
+
 (window-divider-mode -1)
 (setq window-divider-default-places t)
 (setq window-divider-default-bottom-width 5
@@ -7,22 +9,12 @@
 (add-to-list 'brushup-styles
              '(progn
                 (set-face-attribute 'window-divider nil
-                                    :foreground brushup-bg-2
-                                    )
-                )
-             )
-
-;; todo: will be way more complicated than this
-;;(defun z-select-previous-window ()
-  ;;(interactive)
-  ;;(select-window (previous-window))
-  ;;)
+                                    :foreground brushup-bg-2)))
 
 (defhydra+ hydra-window ()
   ;; mneuumonic is that the o is a circle, so gets rid of or relaxes
   ;; tthat visual wireframe
-  ("o" (lambda () (interactive) (call-interactively 'window-divider-mode)))
-  )
+  ("o" (lambda () (interactive) (call-interactively 'window-divider-mode))))
 
 (add-to-list 'window-persistent-parameters '(window-side . writable))
 (add-to-list 'window-persistent-parameters '(window-slot . writable))
@@ -32,6 +24,13 @@
 (add-to-list 'window-persistent-parameters '(min-margins . writable))
 (add-to-list 'window-persistent-parameters '(quit-restore . writable))
 
+
+;; create a hydra for z-state-*
+(defhydra+ z-state-hydra ()
+  "state"
+  ("m" z-state-meow "meow")
+  ("e" z-state-evil "evil")
+  ("E" z-state-emacs "emacs"))
 
 (defhydra+ hydra-window ()
   ("D" delete-window)
@@ -52,6 +51,7 @@
   ("C-t" toggle-truncate-lines)
   ("C-t" toggle-truncate-lines)
   ("C-w" toggle-word-wrap)
+  ("s" z-state-hydra/body)
   )
 
 (defhydra+ hydra-window ()
@@ -105,8 +105,7 @@
   )
 
 (general-define-key
- :states '(normal insert visual)
- :keymaps '(override treemacs-mode-map)
+ :keymaps '(treemacs-mode-map)
  "C-p" 'z-async-blowup)
 
 
@@ -163,7 +162,6 @@
 
 (general-define-key
  :keymaps 'override
- :states '(normal visual insert)
  "s-+" '(lambda () (interactive) (setq-local z-zen-disable t) (call-interactively 'text-scale-increase))
  "s-=" '(lambda () (interactive) (setq-local z-zen-disable t) (call-interactively 'text-scale-increase))
 
@@ -235,4 +233,3 @@
   ("j" (z-tile-split "botleft") "Bottom Left")
   ("l" (z-tile-split "botright") "Bottom Right")
   )
-

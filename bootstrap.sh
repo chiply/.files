@@ -87,11 +87,6 @@ sudo installer -pkg AWSCLIV2.pkg -target /
 # tmuxinator: manage complex tmux sessions easily
 gem install tmuxinator
 
-# cheat.sh (not cheat)
-#curl -s https://cht.sh/:cht.sh | \
-#    sudo tee /usr/local/bin/cht.sh && \
-#    sudo chmod +x /usr/local/bin/cht.sh
-
 # how-2
 npm install -g how-2
 

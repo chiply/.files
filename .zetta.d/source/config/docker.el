@@ -27,7 +27,6 @@
   :general
   (
    :keymaps '(docker-image-mode-map)
-   :states '(normal)
    "<return>" 'convention-start-container-from-docker-image-mode
    "x" 'docker "L" 'docker-image-ls "D" 'docker-image-rm 
    "R" 'docker-image-run "?" 'docker-image-help "F" 'docker-image-pull 
@@ -35,10 +34,10 @@
    "r" 'docker-image-run-selection "T" 'docker-image-tag-selection 
    "j" 'tablist-next-line
    "k" 'tablist-previous-line
+   "m" 'tablist-mark-forward
    )
   (
    :keymaps '(docker-container-mode-map)
-   :states '(normal)
    "<return>" 'convention-dock-from-docker-container-mode
    "<C-return>" 'convention-connect-to-container-from-docker-container-mode
    "x" 'docker "C" 'docker-container-cp "l" 'docker-container-ls 
@@ -53,10 +52,10 @@
    "Y" 'docker-container-cp-from-selection "p" 'docker-container-unpause-selection 
    "j" 'tablist-next-line
    "k" 'tablist-previous-line
+   "m" 'tablist-mark-forward
    )
   (
    :keymaps '(docker-volume-mode-map)
-   :states '(normal)
    "l" 'docker-volume-ls 
    "D" 'docker-volume-rm 
    "?" 'docker-volume-help 
@@ -66,5 +65,6 @@
    "f" 'docker-volume-dired-selection
    "j" 'tablist-next-line
    "k" 'tablist-previous-line
+   "m" 'tablist-mark-forward
    )
   )

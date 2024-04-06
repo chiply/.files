@@ -27,5 +27,3 @@ This repo houses my 'dotfiles' and implements lightweight mechanisms to 'install
 :ID:       674822DC-A547-4B03-B3FA-B835EAF12396
 :END:
 Implemented with gitignore.
-
-

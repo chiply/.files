@@ -10,7 +10,7 @@
 
 
 
-  
+
 
 
 
@@ -64,17 +64,22 @@
   )
 
 (general-define-key
- :keymaps 'evil-insert-state-map
- (general-chord ",l") 'hydra-lookup/body
+ :keymaps 'launch-map
+ "l" 'hydra-lookup/body)
 
- )
 
-(general-define-key
- :states '(normal visual)
- :keymaps 'override
- :prefix ","
- "l" 'hydra-lookup/body
- )
+;;(general-define-key
+;;:keymaps 'evil-insert-state-map
+;;(general-chord ",l") 'hydra-lookup/body
+;;
+;;)
+;;
+;;(general-define-key
+;;:states '(normal visual)
+;;:keymaps 'override
+;;:prefix ","
+;;"l" 'hydra-lookup/body
+;;)
 
 
 

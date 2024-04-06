@@ -1,5 +1,5 @@
 (use-package iedit
-  :config
+  :init
   (defun hydra-iedit-initiate ()
     (interactive)
     (when (not (and (boundp 'iedit-mode) iedit-mode))
@@ -12,24 +12,15 @@
       (iedit-mode))
     )
 
+
+  :config
   (setq iedit-overlay-priority -50)
 
   ;;:brushup
   (add-to-list 'brushup-styles
                '(set-face-attribute 'iedit-occurrence nil
                                     :inherit nil
-                                    :background (face-background 'highlight)
-                                    ))
-
-  :general
-  (
-   :states '(normal visual)
-   ",i" 'hydra-iedit-initiate
-   )
-  (
-   :states '(insert)
-   (general-chord ",i") 'hydra-iedit-initiate
-   )
+                                    :background (face-background 'highlight)))
 
   :hydra
   ;; feel is that you start the hydra with ,i.
@@ -54,6 +45,13 @@
 
     ("r" iedit-replace-occurrences "replace" :column "Edit")
     ("i" evil-insert "edit" :exit t))
+
+  :general
+  (
+   :keymaps 'launch-map
+   "i" 'hydra-iedit-initiate
+   )
+  
 
   :hook (use-package--iedit--post-config . z-brushup)
   )

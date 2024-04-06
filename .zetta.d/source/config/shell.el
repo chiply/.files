@@ -24,12 +24,10 @@
 
   :general
   (
-   :states '(normal visual insert)
    :keymaps 'override
    "s-S" 'hydra-scroll/body
    )
   (
-   :states '(normal visual insert)
    :keymaps '(shell-mode-map)
    "C" 'z-highlight-phrases
    )
@@ -42,4 +40,4 @@
 
 
 (setq shell-file-name "zsh")
-;;(setq shell-command-switch "-i")
+(setq shell-command-switch "-c")

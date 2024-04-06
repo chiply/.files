@@ -67,7 +67,7 @@
       "snapshot-1")))
 
 
-(tab-bar-mode)
+(tab-bar-mode +1)
 
 
 ;;;;;;;;;;;;; ws-cfg views
@@ -100,8 +100,7 @@
   ;; rest
   (let* ((name (or name (completing-read "bv name" '())))
          (bvprefix "bv--")
-         (bm-full-name (concat bvprefix (car (car z-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) (format ": %s" name)))
-         )
+         (bm-full-name (concat bvprefix (car (car z-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) (format ": %s" name))))
     (bookmark-view-save bm-full-name)
     (setf
      (alist-get
@@ -216,13 +215,13 @@
      ((string= dir "next") (z-ws-cfg-bv-switch next-tab)))))     
 
 ;; works nicely!
-(general-define-key
- :keymaps 'override
- :states '(normal visual)
- "C-M-S-<tab>" (lambda () (interactive) (z-ws-cfg-bv-switcher "prev"))
- "C-M-<tab>" (lambda () (interactive) (z-ws-cfg-bv-switcher "next"))
- "g t" (lambda () (interactive) (z-ws-cfg-bv-switch))
- )
+;;(general-define-key
+ ;;:keymaps 'override
+ ;;:states '(normal visual)
+ ;;"C-M-S-<tab>" (lambda () (interactive) (z-ws-cfg-bv-switcher "prev"))
+ ;;"C-M-<tab>" (lambda () (interactive) (z-ws-cfg-bv-switcher "next"))
+ ;;"g t" (lambda () (interactive) (z-ws-cfg-bv-switch))
+ ;;)
 
 
 (defun zpath ()
@@ -239,16 +238,6 @@
   (when
       (string= major-mode "org-mode")
     (concat " > " (org-display-outline-path) "/" (org-get-heading))))
-
-;;;; For tab bar
-(setq tab-bar-format
-      '(z-tab-bar-string zwhitespace zpath zwhitespace
-                         z-org-outline-path
-                         ;; everything here on will be aligned on the right
-                         tab-bar-format-align-right
-                         ;;recursion-indicator--string ;; changes height of the tab bar
-                         " "
-                         tab-bar-format-global))
 
 ;; the interface to making snapshoots -- using consuot bookmark to
 ;; access them
