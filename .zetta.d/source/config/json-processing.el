@@ -49,7 +49,7 @@
   (let* ((default-directory dir)
          (run (z-gh-pick-run dir (concat
                                   (if nosleep "" "sleep 5 && ")
-                                  "gh run list -L 30 -s in_progress --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' .[] | select(.updatedAt > (now - ( 30 * 86400)))'")))
+                                  "gh run list -s in_progress --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[] | select(.updatedAt > (now - ( 30 * 86400)))]'")))
          (id (ht-get run "databaseId"))
          ;; todo add osascript
          (cmd (format
