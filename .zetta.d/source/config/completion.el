@@ -158,47 +158,14 @@ tempel expand?)
 
 (general-define-key
  :states '(insert)
- :keymaps '(python-ts-mode-map
-            lisp-interaction-mode-map
-            emacs-lisp-mode-map
-            lisp-mode-map
-            sql-mode-map
-            web-mode-map
-            js2-mode-map
-            rjsx-mode-map
-            text-mode-map
-            org-mode-map
-            bibtex-mode-map
-            sh-mode-map
-            lark-mode-map
-            dockerfile-mode-map
-            terraform-mode-map
-            )
+ :keymaps '(
+            python-ts-mode-map lisp-interaction-mode-map
+            emacs-lisp-mode-map lisp-mode-map sql-mode-map
+            web-mode-map js2-mode-map rjsx-mode-map text-mode-map
+            org-mode-map bibtex-mode-map sh-mode-map lark-mode-map
+            dockerfile-mode-map terraform-mode-map mermaid-mode-map)
  "C-;" 'indent-for-tab-command
  "<tab>" 'z-completion-at-point
  )
-
-
-;;-- LEFT OFF NEED A MAIN ORG-ROAM CAPTURE TEMPLATE THAT STORES A LINK FROM EWW
-;;
-;;-- order of operations for z-wget (rename to z-remote-pdf-to-node)
-;;-- order of operations for z-wget (rename to z-webpage-to-node)
-;;
-;;-- url is captured
-;;-- a roam node is created and the url is provided as a ref
-;;-- user edits title, this will get converted into a bibtex key, so iuf you want certain prefixes, then apply them in the node title
-;;-- no bibtex is entered by default, but one (must) can be provided when a pdf is to be stored locally.  Think about this step as simply creatinga  local  copy.  We try not to apply edits directly on top of external resources (pdfs)
-;;
-;;-- function: z-roam-download-pdf-from-ref
-
-
-
-
-
-
-
-
-
-
 
 

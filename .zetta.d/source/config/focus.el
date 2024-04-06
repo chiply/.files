@@ -41,17 +41,6 @@
     ("C-f" focus-mode "Next")
     )
 
-  :general
-  (
-   :keymaps 'evil-insert-state-map 
-   (general-chord ",o") 'hydra-focus/body
-   )
-  (
-   :states '(normal visual)
-   :keymaps 'override
-   :prefix ","
-   "C-f" 'hydra-focus/body
-   )
 
   :hook ((emacs-lisp-mode . (lambda () (z-focus-mode 'defun)))
          ((python-ts-mode sql-mode yaml-mode sh-mode) . (lambda () (z-focus-mode 'brick)))

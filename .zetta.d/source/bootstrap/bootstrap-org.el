@@ -149,7 +149,6 @@
 
   :general
   (
-   :states '(normal visual)
    :keymaps '(org-mode-map)
    "C-d" 'delete-window
    "<S-return>" 'org-edit-special
@@ -157,7 +156,6 @@
    "C-_" 'org-table-shrink
    )
   (
-   :states '(normal insert)
    :keymaps '(org-mode-map org-agenda-mode-map)
    "C-c C-S-o" 'z-org-open-at-point
    "C-c C-o" 'org-open-at-point

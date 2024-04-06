@@ -4,12 +4,6 @@
 
 (winner-mode)
 
-;; convenient way to save and restore window configurations
-;; this could help with my own implemntations of multi-d workspaces
-;; maybe this would persist across sessions
-;;(setq my-window-conf (winner-conf))
-;;(winner-set my-window-conf)
-
 
 
 (global-auto-revert-mode 1) ;; you might not want this
@@ -55,9 +49,13 @@
 
 (setq tab-bar-format '(;; everything here on will be aligned on the right
                        tab-bar-format-align-right
-                       recursion-indicator--string
+                       ;;recursion-indicator--string
                        "  "
                        tab-bar-format-global
                        ))
 
+;; Emacs 28 and newer: Hide commands in M-x which do not work in the current
+;; mode.  Vertico commands are hidden in normal buffers. This setting is
+;; useful beyond Vertico.
+(setq read-extended-command-predicate #'command-completion-default-include-p)
 

@@ -53,7 +53,6 @@
 
 (general-define-key 
  :kemaps 'override
- :states '(normal visual insert)
  "s-t" '(lambda () (interactive)
           (setq z-captured-from-win (selected-window))
           (org-capture nil "h")

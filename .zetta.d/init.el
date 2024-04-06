@@ -1,4 +1,3 @@
-
 ;; bootstrap
 (add-to-list 'load-path "~/.files/.zetta.d/source/bootstrap")
 (require 'bootstrap)
@@ -13,121 +12,64 @@
  '("display.el" "interface.el" "desktop.el" "csv-mode.el"
    "super-save.el" "hud.el" "highlight-indent-guides.el"
    "scroll-bar.el" "display-fill-column-indicator.el"
-   "display-line-numbers.el"
-   ;;"linum-relative.el"
-   "undo-tree.el"
-   ;;"visual-fill-column.el"
-   "face.el"
-
-   "vi-tilde-fringe.el"
-   ;;"tree-sitter.el" "tree-sitter-langs.el"
-   "treesit.el"
-   "dimmer.el" "focus.el" "face-remap.el"
-   "default-text-scale.el" "hl-line.el" "lin.el" "hide-mode-line.el"
-   "all-the-icons.el" "remote.el" "minimalize.el" "projectile.el"
-   "treemacs-all-the-icons.el" "treemacs.el" "treemacs-projectile.el"
-   "tokei.el" "security.el" "grep.el" "replace.el" "ag.el" "wgrep.el"
-   "iedit.el" "dap-mode.el" "python.el" "web-mode.el" "js2-mode.el"
-   "rjsx-mode.el" "emmet-mode.el" "shell.el" "sh-script.el"
-   "foreman.el" "foreman_conf.el" "citar.el" "vc.el" "transient.el"
-   "magit.el" "forge.el"
-   "git-gutter.el"
-   "docker.el"
-   "dockerfile-mode.el" "docker-compose-mode.el" "utility.el"
-   "pocket-reader.el" "convention.el" "tree-mode.el" "unidecode.el"
-   "define-word.el" "mw-thesaurus.el" "sx.el" "pubmed.el"
-   "helm-wikipedia.el" "ace-window.el" "windmove.el" "avy.el"
-   "olivetti.el" "winds.el" "evil.el" "evil-anzu.el" "evil-matchit.el"
-   "evil-surround.el" "evil-collection.el" "evil-exchange.el"
-   "evil-indent-plus.el" "evil-search-highlight-persist.el" "keys.el"
-   "dumb-jump.el"
-   "ef-themes.el"
-   "bookmark-view.el"
-   "views.el"
-   "line-utils.el"
-   "dired.el"
-   "sql.el" "sqlite.el" "all-the-icons-dired.el" "dired-subtree.el"
-   "dired-ranger.el" "completion.el" "cape.el" "dabbrev.el"
-   "recursion-indicator.el" "helm.el" "marginalia.el" "orderless.el"
-   "embark.el" "embark-consult.el"  "consult.el" "tap.el"
-   "tap-block.el" "helpful.el" "elisp-mode.el" "narrow.el" "ov.el"
-   "vimish-fold.el" "editing.el" "smartparens.el" "hungry-delete.el"
-   "prose.el" "buffer.el" "ibuffer.el" "bufler.el"
-   "all-the-icons-ibuffer.el"
-   "bookmark.el" "bookmark+.el"
-   "bookmark-in-project.el"
-   "dogears.el" "theme.el" ;;"detached.el"
-   "yaml-mode.el" "yaml-path.el" "yaml.el" "yaml-pro.el"
-   "helm-themes.el" "text-mode.el" "jmespath.el" "highlight-symbol.el"
-   "terraform.el" "ein.el" "adaptive-wrap.el"
-   "xref.el"
-
-   "flycheck.el"
-   "flycheck-indicator.el"
-   ;;"flycheck-pycheckers.el"
-   "magit-diff-flycheck.el" "flycheck-projectile.el"
-   "flycheck-ruff.el"
-
-   ;;"hercules.el"
-   "evil-fringe-mark.el" "modern-fringes.el" "rainbow-mode.el"
-   "image-mode.el" "browse-url.el"
-   ;;"minibar.el"
-   "spray.el"
+   "display-line-numbers.el" "undo-tree.el" "face.el"
+   "vi-tilde-fringe.el" "treesit.el" "dimmer.el" "focus.el"
+   "face-remap.el" "default-text-scale.el" "hl-line.el" "lin.el"
+   "hide-mode-line.el" "all-the-icons.el" "remote.el" "minimalize.el"
+   "projectile.el" "treemacs-all-the-icons.el" "treemacs.el"
+   "treemacs-projectile.el" "tokei.el" "security.el" "grep.el"
+   "replace.el" "ag.el" "wgrep.el" "iedit.el" "dap-mode.el"
+   "python.el" "web-mode.el" "js2-mode.el" "rjsx-mode.el"
+   "emmet-mode.el" "shell.el" "sh-script.el" "foreman.el"
+   "foreman_conf.el" "citar.el" "vc.el" "transient.el" "magit.el"
+   "forge.el" "git-gutter.el" "docker.el" "dockerfile-mode.el"
+   "docker-compose-mode.el" "utility.el" "pocket-reader.el"
+   "convention.el" "tree-mode.el" "unidecode.el" "define-word.el"
+   "mw-thesaurus.el" "sx.el" "pubmed.el" "helm-wikipedia.el"
+   "ace-window.el" "windmove.el" "avy.el" "olivetti.el" "evil.el"
+   "evil-anzu.el" "evil-surround.el" "evil-collection.el"
+   "evil-exchange.el" "evil-indent-plus.el"
+   "evil-search-highlight-persist.el" "evil-fringe-mark.el" "keys.el"
+   "dumb-jump.el" "ef-themes.el" "bookmark-view.el" "line-utils.el"
+   "dired.el" "sql.el" "sqlite.el" "all-the-icons-dired.el"
+   "dired-subtree.el" "dired-ranger.el" "completion.el" "cape.el"
+   "dabbrev.el" "recursion-indicator.el" "helm.el" "marginalia.el"
+   "orderless.el" "embark.el" "embark-consult.el" "consult.el"
+   "tap.el" "tap-block.el" "helpful.el" "elisp-mode.el" "narrow.el"
+   "ov.el" "vimish-fold.el" "editing.el" "smartparens.el"
+   "hungry-delete.el" "prose.el" "buffer.el" "ibuffer.el" "bufler.el"
+   "all-the-icons-ibuffer.el" "bookmark.el" "bookmark+.el"
+   "bookmark-in-project.el" "dogears.el" "theme.el" "yaml-mode.el"
+   "yaml-path.el" "yaml.el" "yaml-pro.el" "helm-themes.el"
+   "text-mode.el" "jmespath.el" "highlight-symbol.el" "terraform.el"
+   "ein.el" "adaptive-wrap.el" "xref.el" "flycheck.el"
+   "flycheck-indicator.el" "magit-diff-flycheck.el"
+   "flycheck-projectile.el" "flycheck-ruff.el" "modern-fringes.el"
+   "rainbow-mode.el" "image-mode.el" "browse-url.el" "spray.el"
    "mermaid-mode.el" "minimap.el" "hyperbole.el" "kubernetes-el.el"
    "kubel.el" "git-link.el" "python-pytest.el" "multi-compile.el"
-    "compile.el" "unicode-fonts.el" "spinner.el" "fancy-compilation.el" "copilot.el"
-   "org-ql.el" "org-capture.el"
-   ;;"org-roam.el" "org-roam-ui.el" "org-roam-timestamps.el" "citar-org-roam.el"
-   "org-ref.el" "org-modern.el" "biblio.el"
-   "org.el"
-   ;;"elfeed-org.el"
-   "ob-mermaid.el"
-   ;;"hi-lock"
-   "lsp.el"
-   "lark.el"
-   "yascroll.el"
-   "nyan-mode.el"
-   "gptel.el"
-   ;;"eaf.el"
-   "popper.el"
-   "highlight.el"
-   "macrostep.el"
-   "obsidian.el" "cleanup.el"
-   "magneto.el"
-))
-
-
-;;"org-noter.el" "pdf-tools.el" "org-pdftools.el" "org-noter-pdftools.el"
+   "compile.el" "unicode-fonts.el" "spinner.el" "fancy-compilation.el"
+   "copilot.el" "org-ql.el" "org-capture.el" "org-ref.el"
+   "org-modern.el" "biblio.el" "org.el" "ob-mermaid.el" "lsp.el"
+   "lark.el" "yascroll.el" "nyan-mode.el" "gptel.el" "popper.el"
+   "highlight.el" "macrostep.el" "obsidian.el" "magneto.el"
+   "know-your-http-well.el" "spacetree.el" "vertico.el" "vterm.el"
+   "tab-line.el" "window.el" "line.el" "snippets.el" "detached.el"
+   "ace-mc.el" "json-mode.el" "jsonian.el" "json-processing.el"
+   "parrot.el"
+   "cleanup.el"))
 
 
 ;; load user-files and provate lisp code
 (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
 (load-file "~/.private.el")
 
-;; z-lisp. slowly migrating from above files into z-lisp
-(load-file "~/.files/.zetta.d/source/config/use-package-file.el")
-
-(add-to-list
- 'load-path
- (expand-file-name
-  (concat user-emacs-directory "source/z-lisp")))
-(setq
- user-files-ext-features
- '(;;"z-tree-sitter" "z-org-agenda" "z-org-super-agenda"
-   ;;"z-dired"
-   "z-vertico" "z-vterm"
-   "z-tab-line"
-   "z-window" "z-snippets" "z-line"))
-;; require all the features
-(-map (lambda (feature) (require (intern feature))) user-files-ext-features)
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "~/.files/.zetta.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "/Users/redacted/.files/.zetta.d/bookmarks")
  '(connection-local-criteria-alist
    '(((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)

@@ -253,6 +253,14 @@ Code:
       path-split "/")
      "/" leaf-dir-name)))
 
+
+(defun z-create-scratch-buffer (mode)
+  "Create a new scratch buffer to work in. (could be any mode)"
+  (interactive "sMode: ")
+  (switch-to-buffer (get-buffer-create (concat "*scratch-" mode "*")))
+  (funcall (intern mode)))
+
+
 (provide 'bootstrap-zettafn)
 
 

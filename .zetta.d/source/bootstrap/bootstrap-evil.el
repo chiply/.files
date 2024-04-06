@@ -2,26 +2,22 @@
   :demand t
   :init
   (setq evil-want-keybinding nil)
-  (add-to-list 'brushup-styles
-               '(setq evil-emacs-state-cursor '("red" box)
-                      evil-visual-state-cursor '("orange" box)
-                      evil-insert-state-cursor '("blue" box)
-                      evil-replace-state-cursor '("green" hollow)
-                      evil-operator-state-cursor '("red" hollow)
-                      evil-normal-state-cursor `(,(face-attribute 'default :foreground)
-                                                 box)))
+  (add-to-list
+   'brushup-styles
+   '(setq evil-emacs-state-cursor '("red" box)
+          evil-visual-state-cursor '("orange" box)
+          evil-insert-state-cursor '("blue" box)
+          evil-replace-state-cursor '("green" hollow)
+          evil-operator-state-cursor '("red" hollow)
+          evil-normal-state-cursor `(,(face-attribute 'default :foreground) box)))
 
   :config
   (setq evil-default-state 'normal)
 
   ;; get emacs kbds in insert-mode
   (setcdr evil-insert-state-map nil)
-  (define-key evil-insert-state-map
-              (read-kbd-macro evil-toggle-key)
-              'evil-emacs-state)
-  (define-key evil-insert-state-map
-              (kbd "<escape>")
-              'evil-force-normal-state)  
+  (define-key evil-insert-state-map (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+  (define-key evil-insert-state-map (kbd "<escape>") 'evil-force-normal-state)  
 
   ;; this stuff is destined for the respective
   ;; use-package calls
@@ -51,7 +47,6 @@
    "C-S-k" (lambda () (interactive) (evil-scroll-up nil))
    "C-j" (lambda () (interactive) (evil-scroll-line-down 1))
    "C-k" (lambda () (interactive) (evil-scroll-line-up 1))
-
    )
   (
    :keymaps '(evil-insert-state-map evil-visual-state-map)

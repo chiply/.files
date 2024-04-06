@@ -1,5 +1,5 @@
 (use-package treemacs
-  :requires (treemacs-all-the-icons)
+  ;;:requires (treemacs-all-the-icons)
   :demand t 
 
   :init
@@ -7,6 +7,15 @@
 
   
   :config
+  ;;(use-package treemacs-nerd-icons
+    ;;:functions treemacs-load-theme
+    ;;:config
+    ;;(treemacs-load-theme "nerd-icons"))
+
+  (use-package treemacs-all-the-icons
+    :config
+    (treemacs-load-theme "all-the-icons"))
+  
   (setq aw-ignored-buffers '("*Calc Trail*" " *LV*"))
 
 
@@ -108,7 +117,6 @@
   :general
   (
    :keymaps '(treemacs-mode-map)
-   :states '(normal)
    "o" 'treemacs-visit-node-ace
    "h" 'treemacs-visit-node-ace-horizontal-split
    "v" 'treemacs-visit-node-ace-vertical-split

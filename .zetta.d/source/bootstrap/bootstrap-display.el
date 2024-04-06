@@ -114,51 +114,51 @@ being displayed, otherwise returns nil"
   ;; exit the defun without doing anything
   (setq foob 'bar)
   ;;(setq display-buffer-alist
-        ;;(-remove
-         ;;(lambda (elt) (cond ((stringp (nth 0 elt)) (string= (nth 0 elt) regex)) ;; remove this entry
-                             ;;((equal (nth 0 elt) 'popper-display-control-p) nil) ;; keep this entry
-                             ;;((equal (nth 0 elt) 'closure)
+  ;;(-remove
+  ;;(lambda (elt) (cond ((stringp (nth 0 elt)) (string= (nth 0 elt) regex)) ;; remove this entry
+  ;;((equal (nth 0 elt) 'popper-display-control-p) nil) ;; keep this entry
+  ;;((equal (nth 0 elt) 'closure)
                                ;;;; parses out mode name used to create closure :-)
-                              ;;(equal (cdr (nth 0 (nth 1 (nth 0 elt)))) regex)) ;; remove this entry
-                             ;;(t nil)))
-         ;;display-buffer-alist))
-;;
+  ;;(equal (cdr (nth 0 (nth 1 (nth 0 elt)))) regex)) ;; remove this entry
+  ;;(t nil)))
+  ;;display-buffer-alist))
+  ;;
   ;;;; if side is top, set height to size
   ;;(let (
-        ;;(height (cond
-                 ;;((and size size2) size)
-                 ;;((equal side 'top) (or size z-side-display-default-height-top))
-                 ;;((equal side 'bottom) (or size z-side-display-default-height-bottom))
-                 ;;((or (equal side 'left)
-                      ;;(equal side 'right))
-                  ;;nil)))
-        ;;(width (cond
-                ;;((and size size2) size2)
-                ;;((equal side 'left) (or size z-side-display-default-width-left))
-                ;;((equal side 'right) (or size z-side-display-default-width-right))
-                ;;((or (equal side 'top)
-                     ;;(equal side 'bottom))
-                 ;;nil)))
-        ;;(slot (or slot 0))
-        ;;)
+  ;;(height (cond
+  ;;((and size size2) size)
+  ;;((equal side 'top) (or size z-side-display-default-height-top))
+  ;;((equal side 'bottom) (or size z-side-display-default-height-bottom))
+  ;;((or (equal side 'left)
+  ;;(equal side 'right))
+  ;;nil)))
+  ;;(width (cond
+  ;;((and size size2) size2)
+  ;;((equal side 'left) (or size z-side-display-default-width-left))
+  ;;((equal side 'right) (or size z-side-display-default-width-right))
+  ;;((or (equal side 'top)
+  ;;(equal side 'bottom))
+  ;;nil)))
+  ;;(slot (or slot 0))
+  ;;)
     ;;;; update
-    ;;(add-to-list
-     ;;'display-buffer-alist
-     ;;(if (string-match "-mode$" regex)
-         ;;`(,(z-soda-mode-name regex)
-           ;;(display-buffer-in-side-window)
-           ;;(side . ,side) (slot . ,slot)
-           ;;(window-height . ,height) (window-width . ,width)
-           ;;(window-parameters . ((no-delete-other-windows . 1))))
-       ;;`(,regex
-         ;;(display-buffer-in-side-window)
-         ;;(side . ,side) (slot . ,slot)
-         ;;(window-height . ,height) (window-width . ,width)
-         ;;(window-parameters . ((no-delete-other-windows . 1))))
-       ;;)
-     ;;nil
-     ;;)
-    ;;)
+  ;;(add-to-list
+  ;;'display-buffer-alist
+  ;;(if (string-match "-mode$" regex)
+  ;;`(,(z-soda-mode-name regex)
+  ;;(display-buffer-in-side-window)
+  ;;(side . ,side) (slot . ,slot)
+  ;;(window-height . ,height) (window-width . ,width)
+  ;;(window-parameters . ((no-delete-other-windows . 1))))
+  ;;`(,regex
+  ;;(display-buffer-in-side-window)
+  ;;(side . ,side) (slot . ,slot)
+  ;;(window-height . ,height) (window-width . ,width)
+  ;;(window-parameters . ((no-delete-other-windows . 1))))
+  ;;)
+  ;;nil
+  ;;)
+  ;;)
   )
 
 
@@ -194,26 +194,26 @@ being displayed, otherwise returns nil"
 
 
 ;;(defun z-soda-switch-buffer ()
-  ;;(interactive)
-  ;;(let ((buffers (cond
+;;(interactive)
+;;(let ((buffers (cond
                   ;;;; order matters here... I should eventually get better regexes
-                  ;;((string-match "shell-mode" (symbol-name major-mode))
-                   ;;(z-soda-list-mode-buffers "shell-mode"))
-                  ;;((string-match "\\dired-mode*" (symbol-name major-mode))
-                   ;;(z-soda-list-mode-buffers "\\dired-mode*"))
-                  ;;((string-match "[H|h]elp*" (symbol-name major-mode))
-                   ;;(z-soda-list-mode-buffers "[H|h]elp*"))
-                  ;;((string-match "\\term-mode*" (symbol-name major-mode))
-                   ;;(z-soda-list-mode-buffers "\\term-mode*"))
-                  ;;)))
-    ;;(if buffers
-        ;;(switch-to-buffer
-         ;;(completing-read
-          ;;"Please select a buffer: "
-          ;;(-map (lambda (x) (buffer-name x)) (delete (current-buffer) buffers))))
-      ;;(ivy-switch-buffer)
-      ;;)
-    ;;))
+;;((string-match "shell-mode" (symbol-name major-mode))
+;;(z-soda-list-mode-buffers "shell-mode"))
+;;((string-match "\\dired-mode*" (symbol-name major-mode))
+;;(z-soda-list-mode-buffers "\\dired-mode*"))
+;;((string-match "[H|h]elp*" (symbol-name major-mode))
+;;(z-soda-list-mode-buffers "[H|h]elp*"))
+;;((string-match "\\term-mode*" (symbol-name major-mode))
+;;(z-soda-list-mode-buffers "\\term-mode*"))
+;;)))
+;;(if buffers
+;;(switch-to-buffer
+;;(completing-read
+;;"Please select a buffer: "
+;;(-map (lambda (x) (buffer-name x)) (delete (current-buffer) buffers))))
+;;(ivy-switch-buffer)
+;;)
+;;))
 
 (defun z-soda-create-and-display-messages (&optional buf-or-mode-name)
   (let ((buf (current-buffer)))
@@ -238,21 +238,12 @@ being displayed, otherwise returns nil"
   )
 
 (general-define-key
- :keymaps 'evil-insert-state-map
- (general-chord ",r") 'hydra-run/body
- )
-
-(general-define-key
- :states '(normal visual)
- :keymaps 'override
- :prefix ","
+ :keymaps 'launch-map
  "r" 'hydra-run/body
- )
-
-
-
+ "w" 'hydra-window/body)
 
 (defalias 'use-package-handler/:display 'use-package-handle-forms)
+
 (defalias 'use-package-normalize/:display 'use-package-normalize-forms)
 
 (add-to-list 'use-package-keywords :display t)

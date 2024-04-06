@@ -25,7 +25,6 @@
     ("f" magit-fetch :exit t)
     ("p" magit-pull :exit t))
 
-
   :display
   (z-side "\\magit-status-mode" 'right 0)
   (z-side "\\magit-diff-mode" 'right 2)
@@ -34,21 +33,18 @@
   (z-side "\\magit-revision-mode" 'right 2)
 
 
+
   :general
   (
-   :keymaps 'text-mode-map
-   :states '(normal visual insert)
-   "C-<return>" 'with-editor-finish
-   ) 
-  (
-   :states '(normal visual)
-   :keymaps 'override
-   :prefix ","
+   :keymaps 'launch-map
    "g" 'hydra-magit/body
    "G" 'z-magit-project
    )
   (
-   :states '(normal visual insert)
+   :keymaps 'text-mode-map
+   "C-<return>" 'with-editor-finish
+   ) 
+  (
    :keymaps '(magit-status-mode-map)
    "C-<tab>" 'tab-line-switch-to-next-tab
    "C-S-<tab>" 'tab-line-switch-to-prev-tab

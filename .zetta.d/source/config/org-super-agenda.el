@@ -145,7 +145,6 @@ where is was when z-refresh-agenda was called"
    "<tab>" nil
    )
   (
-   :states '(normal visual insert)
    :keymaps '( org-agenda-mode-map org-super-agenda-header-map  )
    "vt" '(lambda () (interactive)
            (z-org-agenda "1" org-super-agenda-groups-main))
