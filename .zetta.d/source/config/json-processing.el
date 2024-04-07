@@ -53,7 +53,7 @@
          (id (ht-get run "databaseId"))
          ;; todo add osascript
          (cmd (format
-               "gh run watch -i 1 %s; osascript -e 'display notification \"%s %s\" with title \"%s 🐙 %s\" sound name \"Frog\"'"
+               "gh run watch -i 30 %s; osascript -e 'display notification \"%s %s\" with title \"%s 🐙 %s\" sound name \"Frog\"'"
                id
                (ht-get run "displayTitle")
                (concat "on " (ht-get run "headBranch"))
