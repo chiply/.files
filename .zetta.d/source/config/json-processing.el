@@ -53,21 +53,27 @@
          (id (ht-get run "databaseId"))
          ;; todo add osascript
          (cmd (format
-               "gh run watch %s; osascript -e 'display notification \"%s %s\" with title \"%s 🐙 %s\" sound name \"Frog\"'"
+               "gh run watch -i 1 %s; osascript -e 'display notification \"%s %s\" with title \"%s 🐙 %s\" sound name \"Frog\"'"
                id
                (ht-get run "displayTitle")
                (concat "on " (ht-get run "headBranch"))
                (projectile-project-name dir)
-               (ht-get run "name")
-               )))
-    (let* ((bufnm (format "*GHA: %s 🐙 %s*" (projectile-project-name dir) (ht-get run "name"))))
-      (when (get-buffer bufnm)
-        (kill-buffer bufnm))
-      (let* ((vterm-buffer (save-window-excursion (vterm bufnm)))
-             (vterm-process (get-buffer-process vterm-buffer)))
-        (process-send-string vterm-process (concat cmd "\n"))
-        bufnm
-        (zmc-display-output-buffer bufnm 'top 1)))))
+               (ht-get run "name"))))
+    ;; vterm
+    ;;(let* ((bufnm (format "*GHA: %s 🐙 %s*" (projectile-project-name dir) (ht-get run "name"))))
+      ;;(when (get-buffer bufnm)
+        ;;(kill-buffer bufnm))
+      ;;(let* ((vterm-buffer (save-window-excursion (vterm bufnm)))
+             ;;(vterm-process (get-buffer-process vterm-buffer)))
+        ;;(process-send-string vterm-process (concat cmd "\n"))
+        ;;bufnm
+        ;;(zmc-display-output-buffer bufnm 'top 1)))
+    ;; compile
+    (let ((compilation-buffer-name-function
+           '(lambda (_) (format "*GHA: %s 🐙 %s*" (projectile-project-name dir) (ht-get run "name")))))
+      (save-window-excursion (compile cmd))
+      )
+    ))
 
 (defun z-gh-run-view-log (dir)
   (let* ((default-directory dir)
