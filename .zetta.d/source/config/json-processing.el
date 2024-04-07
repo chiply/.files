@@ -1,10 +1,18 @@
 ;; -*- lexical-binding: t; -*-
 
-
 ;; TODO add time based query to commands, increase limit to something reasonable
-
 ;; TODO - projectile integration to allow the commands to work from
 ;; any buffer and to allow exploring projects if not currently in one
+
+;; code improvements --
+;; use jinja for templating the command
+;; factor out the commands
+
+;; does comint work in compilation mode?
+
+
+
+
 
 (defun prepare-for-completing-read (data)
   (-map (lambda (x)
@@ -18,9 +26,9 @@
 (defun completing-read-value (prompt list)
   (let* (
          ;; TODO attempting to stop orderless from re-ordering
-         (completion-category-overrides nil)
-         (completion-category-defaults nil)
-         (completion-styles '(basic))
+         ;;(completion-category-overrides nil)
+         ;;(completion-category-defaults nil)
+         ;;(completion-styles '(basic))
          (selected-run-key (let ((vertico-sort-function nil)) (completing-read prompt list)))
          (selected-run (alist-get selected-run-key list nil nil 'string=)))
     selected-run))
