@@ -56,7 +56,7 @@
    "know-your-http-well.el" "spacetree.el" "vertico.el" "vterm.el"
    "tab-line.el" "window.el" "line.el" "snippets.el" "detached.el"
    "ace-mc.el" "json-mode.el" "jsonian.el" "json-processing.el"
-   "parrot.el"
+   ;;"parrot.el"
    "cleanup.el"))
 
 

@@ -17,7 +17,7 @@
                   (window-parameter (selected-window) 'ace-window-path)
                   'face 'focus-focused)))
         " "
-        (:eval (if (string= (symbol-name major-mode) "magit-status-mode") (parrot-create)))
+        ;;(:eval (if (string= (symbol-name major-mode) "magit-status-mode") (parrot-create)))
         (:eval (spinner-print spinner-current))
         (:eval (when (eq major-mode 'magit-status-mode) (nyan-create)))
         (:eval
