@@ -1,13 +1,10 @@
-
 ;; -*- lexical-binding: t; -*-
 
 
 ;; TODO add time based query to commands, increase limit to something reasonable
 
-;; loose framework
-;; retrieve json via some lisp function -- simplest form is shell-command-to-string using some cli as long as this outputs json, but could alternatively be using an API or even some other program.  the key is that the output is json.  note that if the raw payload has the entries nested or if the output needs to be manipulated to make is useful, this can be done with jq or some other tool.
-;; making the payloads from the API requests or the CLI commands as useful as possible is the key to scoping that complexity out of elisp and keeping the elisp methods as simple as possible. this is a key design principle.
-;; this json then gets processed for use in an emacs workflow.  these are almost always -- 1. grab a list 2. present for selection and allow user to select 3. do something with the selection.  This process involves simply rendering the contents of each record in the JSON payload into a string that can be used for completion.  If there is no unqiue key in the payload, one should be added
+;; TODO - projectile integration to allow the commands to work from
+;; any buffer and to allow exploring projects if not currently in one
 
 (defun prepare-for-completing-read (data)
   (-map (lambda (x)
@@ -17,8 +14,7 @@
             . ,x))
         data))
 
-
-;; todo define a function that pulls the value out of alist
+;; TODO define a function that pulls the value out of alist
 (defun completing-read-value (prompt list)
   (let* (
          ;; TODO attempting to stop orderless from re-ordering
@@ -29,9 +25,6 @@
          (selected-run (alist-get selected-run-key list nil nil 'string=)))
     selected-run))
 
-
-;; TODO need to always inject an index into the list as so I can use something as an id to pull the value out of runs
-;; this should be very short sequence of characters
 (defun z-gh-pick-run (dir cmd)
   (interactive)
   (let* (;; TODO have projectile prompt for a project or use the default
@@ -73,7 +66,7 @@
     (let* ((bufnm (format "*GHA: %s 🐙 %s*" (projectile-project-name default-directory) (ht-get run "name")))
            (compilation-buffer-name-function
             `(lambda (_) ,bufnm)))
-      (save-window-excursion (compile cmd))
+      (save-window-excursion (detached-compile cmd))
       (zmc-display-output-buffer bufnm 'top 1))))
 
 (defun z-gh-run-view-log (dir)
@@ -84,8 +77,7 @@
     (shell-command cmd)))
 
 
-;;;; to be executed from magit
-;; add an optional argument C-u 
+;; UI
 (defun z-gh-run-watch-interact (&optional arg)
   (interactive "P")
   (z-gh-run-watch default-directory arg))
@@ -98,6 +90,5 @@
  :states '(normal visual)
  :keymaps 'magit-mode-map
  "g a w" 'z-gh-run-watch-interact
- "g a l" 'z-gh-run-view-log-interact
- )
+ "g a l" 'z-gh-run-view-log-interact)
 
