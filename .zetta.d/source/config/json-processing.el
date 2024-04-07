@@ -1,6 +1,5 @@
 ;; -*- lexical-binding: t; -*-
 
-;; TODO add time based query to commands, increase limit to something reasonable
 ;; TODO - projectile integration to allow the commands to work from
 ;; any buffer and to allow exploring projects if not currently in one
 
@@ -8,22 +7,14 @@
 ;; use jinja for templating the command
 ;; factor out the commands
 
-;; does comint work in compilation mode?
-
 (templatel-render-string "{{ i }} {{ foo }}" '(("i" . "j") ("foo" . "bar")))
 
-(defun prepare-for-completing-read (data)
-  (-map
-   (lambda (x)
-     `(,(mapconcat
-         (lambda (x)
-           (if (numberp x) (number-to-string x) x))
-         (ht-values x)
-         " ")
-       . ,x))
-   data))
-
 ;; TODO define a function that pulls the value out of alist
+(setq z-gh-list-run-command-for-watch "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[] | select(.updatedAt > (now - ( 0.1 * 86400))) ]'")
+(setq z-gh-run-watch-command "gh run watch -i 30 %s; osascript -e 'display notification \"%s %s\" with title \"%s 🐙 %s\" sound name \"Frog\"'")
+(setq z-gh-list-run-command-for-view "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[]| select(.updatedAt > (now-( 30 * 86400)))]'")
+(setq z-gh-view-run-command "gh run view %s --log")
+
 (defun completing-read-value (prompt list)
   (let* ((selected-run-key (let ((vertico-sort-function nil)) (completing-read prompt list))))
     (alist-get selected-run-key list nil nil 'string=)))
@@ -34,34 +25,45 @@
          (default-directory dir)
          (json (shell-command-to-string cmd))
          (json-ht (json-parse-string json))
-         (runs (prepare-for-completing-read json-ht)))
+         (runs (z-gh-add-keys-to-record json-ht)))
     (completing-read-value "" runs)))
+
+(defun z-gh-add-keys-to-record (data)
+  (-map
+   (lambda (x)
+     `(,(mapconcat
+         (lambda (x)
+           (if (numberp x) (number-to-string x) x))
+         (ht-values x)
+         " ")
+       . ,x))
+   data))
 
 (defun z-gh-run-watch (dir nosleep)
   (interactive)
   (let* ((default-directory dir)
-         (run (z-gh-pick-run dir (concat
-                                  (if nosleep "" "sleep 5 && ")
-                                  "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[] | select(.updatedAt > (now - ( 0.1 * 86400))) ]'")))
-         (id (ht-get run "databaseId"))
-         (cmd (format
-               "gh run watch -i 30 %s; osascript -e 'display notification \"%s %s\" with title \"%s 🐙 %s\" sound name \"Frog\"'"
-               id
-               (ht-get run "displayTitle")
-               (concat "on " (ht-get run "headBranch"))
-               (projectile-project-name dir)
-               (ht-get run "name")))
-         (bufnm (format "*GHA: %s 🐙 %s*" (projectile-project-name default-directory) (ht-get run "name")))
+         (run (z-gh-pick-run dir (concat (if nosleep "" "sleep 5 && ") z-gh-list-run-command-for-watch)))
+         (cmd (format z-gh-run-watch-command
+                      (ht-get run "databaseId")
+                      (ht-get run "displayTitle")
+                      (concat "on " (ht-get run "headBranch"))
+                      (projectile-project-name dir)
+                      (ht-get run "name")))
+         (bufnm (format "*GHA run: %s 🐙 %s*"
+                        (projectile-project-name default-directory)
+                        (ht-get run "name")))
          (compilation-buffer-name-function `(lambda (_) ,bufnm)))
-    (save-window-excursion (detached-compile cmd))
+    (save-window-excursion (compile cmd))
     (zmc-display-output-buffer bufnm 'top 1)))
 
 (defun z-gh-run-view-log (dir)
   (let* ((default-directory dir)
-         (run (z-gh-pick-run dir "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[]| select(.updatedAt > (now-( 30 * 86400)))]'"))
+         (run (z-gh-pick-run dir z-gh-list-run-command-for-view))
          (id (ht-get run "databaseId"))
-         (cmd (format "gh run view %s --log" id)))
-    (shell-command cmd (format "*GHA: %s 🐙 %s*" (projectile-project-name default-directory) (ht-get run "name")))))
+         (cmd (format z-gh-view-run-command id)))
+    (shell-command cmd (format "*GHA log: %s 🐙 %s*"
+                               (projectile-project-name default-directory)
+                               (ht-get run "name")))))
 
 
 ;; UI
