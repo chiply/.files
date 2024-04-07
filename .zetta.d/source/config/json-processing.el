@@ -7,7 +7,6 @@
 ;; use jinja for templating the command
 ;; factor out the commands
 
-(templatel-render-string "{{ i }} {{ foo }}" '(("i" . "j") ("foo" . "bar")))
 
 ;; TODO define a function that pulls the value out of alist
 (setq z-gh-list-run-command-for-watch "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[] | select(.updatedAt > (now - ( 0.1 * 86400))) ]'")
@@ -31,11 +30,7 @@
 (defun z-gh-add-keys-to-record (data)
   (-map
    (lambda (x)
-     `(,(mapconcat
-         (lambda (x)
-           (if (numberp x) (number-to-string x) x))
-         (ht-values x)
-         " ")
+     `(,(mapconcat (lambda (x) (if (numberp x) (number-to-string x) x)) (ht-values x) " ")
        . ,x))
    data))
 
