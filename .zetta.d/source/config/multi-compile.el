@@ -83,11 +83,8 @@
             (or (when (boundp 'local-transient)
                   local-transient)
                 latest-transient)))
-        (compile-command (or local-cmd latest-cmd))
-        )
-    (save-window-excursion (compile compile-command))
-    )
-  )
+        (compile-command (or local-cmd latest-cmd)))
+    (save-window-excursion (compile compile-command))))
 
 (defun zmc-es-recompile ()
   ;; LEFT OFF how to solve this... combine with latest?  
