@@ -64,7 +64,8 @@
    "speed-type.el" "spray.el" "key-quiz.el" "alert.el" "svg-lib.el"
    "explain-pause-mode.el"
    ;;"kele.el"
-   "markdownfmt.el" "markdown-toc.el" "color-rg.el" "osx-lib.el"
+   ;;"markdownfmt.el"
+   "markdown-toc.el" "color-rg.el" "osx-lib.el"
    "spotlight.el" "restart-emacs"
    "magit-todos.el" ;; doesn't work but leaving it in. started working
    "browse-at-remote.el" "mono-complete.el" "rainbow-delimiters.el"
