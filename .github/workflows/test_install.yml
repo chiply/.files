@@ -15,12 +15,14 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v4
+    - run: mv $GITHUB_WORKSPACE ~/
     - run: |
-        ls -lah
         pwd
+        ls -lah
         cd ~ && pwd
         cd ~ && ls -lah
-    - run: |
-        cd ~ && \
-          chmod +x $GITHUB_WORKSPACE/bootstrap.sh && \
-          $GITHUB_WORKSPACE/bootstrap.sh
+
+    # - run: |
+    #     cd ~ && chmod +x bootstrap.sh && bootstrap.sh
+
+
