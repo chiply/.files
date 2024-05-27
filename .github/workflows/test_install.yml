@@ -18,4 +18,6 @@ jobs:
     - run: |
         ls -lah
         pwd
-    - run: chmod +x bootstrap.sh && ./bootstrap.sh
+        cd ~ && pwd
+        cd ~ && ls -lah
+    #- run: chmod +x bootstrap.sh && ./bootstrap.sh
