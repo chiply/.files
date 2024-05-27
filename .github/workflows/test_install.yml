@@ -14,8 +14,9 @@ jobs:
   bootstrap:
     runs-on: macos-latest
     steps:
-    - run: cd ~
     - uses: actions/checkout@v4
+      with:
+        path: ~
     - run: |
         ls -lah
         pwd
