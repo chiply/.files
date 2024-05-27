@@ -4,11 +4,29 @@
 (use-package magit
   :init
   (setq magit-branch-read-upstream-first 'fallback)
+  ;; TODO change
+  (setq magit-process-popup-time -1)
 
   (defun z-magit-project ()
     (interactive)
     (let ((dir (completing-read "Project: " (projectile-relevant-known-projects))))
       (magit-status dir)))
+
+  (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+
+  :config
+  (require 'magit-margin)
+
+  (setq magit-log-margin-show-shortstat t)
+  (setq magit-status-margin '(t age-abbreviated magit-log-margin-width nil 6))
+  (setq magit-log-margin '(t age-abbreviated magit-log-margin-width nil 6))
+  (add-hook 'magit-status-mode-hook 'magit-toggle-log-margin-style)
+  (add-hook 'magit-log-mode-hook 'magit-toggle-log-margin-style)
+
+  ;; overriding here -- basically not setting to width of shortstat as
+  ;; that ends up cutting off the margin value for forge data
+
+
 
   (defhydra+ hydra-magit ()
     ("g" magit-status :exit t)
@@ -25,13 +43,12 @@
     ("f" magit-fetch :exit t)
     ("p" magit-pull :exit t))
 
-  :display
-  (z-side "\\magit-status-mode" 'right 0)
-  (z-side "\\magit-diff-mode" 'right 2)
-  (z-side "\\magit-log-mode" 'right 1)
-  (z-side "\\magit-refs-mode" 'right 1)
-  (z-side "\\magit-revision-mode" 'right 2)
-
+  ;;:display
+  ;;;;(z-side "\\magit-status-mode" 'right 0)
+  ;;(z-side "\\magit-diff-mode" 'right 2)
+  ;;;;(z-side "\\magit-log-mode" 'right 1)
+  ;;;;(z-side "\\magit-refs-mode" 'right 1)
+  ;;;;(z-side "\\magit-revision-mode" 'right 2)
 
 
   :general
@@ -48,5 +65,10 @@
    :keymaps '(magit-status-mode-map)
    "C-<tab>" 'tab-line-switch-to-next-tab
    "C-S-<tab>" 'tab-line-switch-to-prev-tab
+   ;;"M-S-<tab>" 'st-switch-space-by-name
+   ;;"M-<tab>" 'st-go-to-last-space
    )
+
+
+
   )

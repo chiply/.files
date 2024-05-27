@@ -70,12 +70,12 @@
 ;; note order matters here as there is overlap between org
 ;; roam and org-mode (org-roam is in org mode, but it matches
 ;; for this first, so it displays in slot 2, not slot 1)
-(z-side "^\\*org-roa*" 'right 2 0.20 0.30)
+;;(z-side "^\\*org-roa*" 'right 2 0.20 0.30)
 
 
 
 ;;;;;;;;;;;;;;;;; Literature management
-(z-side "bibliography.bib" 'right 2 0.30)
+;;(z-side "bibliography.bib" 'right 2 0.30)
 
 
 (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body

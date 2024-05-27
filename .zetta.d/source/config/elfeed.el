@@ -127,7 +127,7 @@
   ;;(setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
 ;;
   ;;:display
-  ;;(z-side "^\\*elfeed-score-explanations*" 'bottom)
+  ;;;;(z-side "^\\*elfeed-score-explanations*" 'bottom)
 ;;
   ;;:general
   ;;(

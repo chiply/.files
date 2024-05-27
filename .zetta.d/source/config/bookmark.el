@@ -9,8 +9,8 @@
   (add-to-list 'desktop-globals-to-save 'bookmark-alist)
 
   :display
-  (z-side "^\\*Bookmark List*" 'right -10)
-  (z-side "^\\*Embark Export Bookmarks*" 'right -10)
+  ;;(z-side "^\\*Bookmark List*" 'right -10)
+  ;;(z-side "^\\*Embark Export Bookmarks*" 'right -10)
 
   :general
   (

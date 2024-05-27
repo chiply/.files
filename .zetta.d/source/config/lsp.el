@@ -156,22 +156,33 @@ point."
      (https://kubernetesjsonschema.dev/v1.14.0/deployment-apps-v1.json . ["deployment.yaml"])
      (https://kubernetesjsonschema.dev/v1.10.3-standalone/service-v1.json . ["service.yaml"])))
 
-  (setq lsp-headerline-breadcrumb-icons-enable nil)
+  (setq lsp-headerline-breadcrumb-icons-enable t)
   (setq lsp-headerline-breadcrumb-enable-diagnostics t)
   (setq lsp-headerline-breadcrumb-segments '(symbols))
+  (setq lsp-headerline-breadcrumb-enable-symbol-numbers nil)
 
+  
+
+
+ 
   ;; need to turn on and off for the breadcrumb to be used elsewhere
   (lsp-headerline-breadcrumb-mode 1)
   (lsp-headerline-breadcrumb-mode -1)
 
-  ;;(set-face-attribute 'lsp-headerline-breadcrumb-path-face nil :height 1.0)
-  ;;(set-face-attribute 'lsp-headerline-breadcrumb-separator-face nil :height 0.8)
 
   :commands lsp
 
-  :display
+  :brushup
+  (add-to-list 'brushup-styles
+               '(progn
+                  (set-face-attribute 'lsp-headerline-breadcrumb-symbols-face nil
+                      :weight 'normal
+                      :background brushup-bg-2)
+                  ))
+
+  ;;:display
   ;; for the lsp help buffers
-  (z-side "^\\*L: *" 'right)
+  ;;(z-side "^\\*L: *" 'right)
 
 
 
@@ -187,8 +198,7 @@ point."
   (interactive)
   (condition-case nil
       (helpful-at-point)
-    (error (lsp-describe-thing-at-point-1)))
-  )
+    (error (lsp-describe-thing-at-point-1))))
 
 
 
@@ -323,32 +333,34 @@ point."
  "H" 'z-jump-to-doc)
 
 ;;(general-define-key
- ;;:keymaps '(lisp-mode-map
-            ;;lisp-interaction-mode-map
-            ;;emacs-lisp-mode-map
-            ;;lisp-data-mode-map
-            ;;python-ts-mode-map
-            ;;sql-mode-map
-            ;;sh-mode-map
-            ;;dockerfile-mode-map
-            ;;terraform-mode-map
-            ;;css-mode-map)
- ;;:states '(normal) 
- ;;"gdd" 'evil-goto-definition
- ;;"gh" 'z-jump-to-doc
- ;;)
+;;:keymaps '(lisp-mode-map
+;;lisp-interaction-mode-map
+;;emacs-lisp-mode-map
+;;lisp-data-mode-map
+;;python-ts-mode-map
+;;sql-mode-map
+;;sh-mode-map
+;;dockerfile-mode-map
+;;terraform-mode-map
+;;css-mode-map)
+;;:states '(normal) 
+;;"gdd" 'evil-goto-definition
+;;"gh" 'z-jump-to-doc
+;;)
 
 (use-package lsp-ui
   :config
   (setq lsp-ui-sideline-enable nil))
 
-
-;; (use-package lsp-treemacs
-;;   :after treemacs
-;;   :config
-;;   (lsp-treemacs-sync-mode 1)
-;;   (setq lsp-treemacs-theme "all-the-icons")
-;;   )
+(use-package lsp-treemacs-nerd-icons
+  :straight '(:host github :repo "Velnbur/lsp-treemacs-nerd-icons" :files ("*.el"))
+  :after treemacs
+  )
+(use-package lsp-treemacs
+  :after (treemacs)
+  :config
+  (setq lsp-treemacs-theme "Default")
+  )
 
 
 (use-package lsp-pylsp
@@ -356,6 +368,7 @@ point."
   :custom
   (lsp-pylsp-plugins-flake8-enabled nil)
   )
+
 
 
 

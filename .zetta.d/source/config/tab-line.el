@@ -197,17 +197,31 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
            (bufnm (string-replace "Embark Collect" "EC" bufnm))
            (bufnm (string-replace "Embark Export Grep" "EE G" bufnm))
            (bufnm (string-replace "Embark Export Occur" "EE O" bufnm))
-           (bufnm (string-replace "Embark Export Dired" "EE D" bufnm)))
+           (bufnm (string-replace "Embark Export Dired" "EE D" bufnm))
+           (fname (buffer-file-name buffer))
+           (icon (cond (fname (all-the-icons-icon-for-file fname))
+                       (t (all-the-icons-icon-for-mode (with-current-buffer buffer major-mode))))))
       (concat
        ;; make the value below bold
        (alist-get (+ 1 (cl-position buffer (funcall tab-line-tabs-function))) ct/circle-numbers-alist)
-       bufnm)))
+       ;;bufnm
+       (if fname (file-name-base fname) bufnm)
+       icon
+       )))
 
-  ;;(setq tab-line-tab-name-function 'z-tab-line-tab-name-buffer)
+  
+
+  (setq tab-line-tab-name-function 'z-tab-line-tab-name-buffer)
   ;;(setq tab-line-tabs-function 'z-project-mode-buffers)
 
+
+  (defun foobar (buffer &optional _buffers)
+    (let ((fname (buffer-file-name buffer)))
+      (cond (fname (concat (all-the-icons-icon-for-file fname) (buffer-name buffer)))
+            (t (concat (all-the-icons-icon-for-mode (with-current-buffer buffer major-mode)) (buffer-name buffer))))))
+
   (setq tab-line-tabs-function 'tab-line-tabs-window-buffers)
-  (setq tab-line-tab-name-function 'tab-line-tab-name-buffer)
+  ;;(setq tab-line-tab-name-function 'foobar)
 
   (global-tab-line-mode 1)
 
@@ -215,12 +229,13 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
   (add-to-list
    'brushup-styles
    '(progn
-      (set-face-attribute 'tab-line-tab-current nil :box nil :weight 'normal :inherit nil :height 1.0)
-      (set-face-attribute 'tab-line-tab nil :weight 'normal :box nil :height 1.0 :inherit nil)
-      (set-face-attribute 'tab-line-tab-inactive nil :box nil :height 1.0 :inherit nil)
-      (set-face-attribute 'tab-line nil :height 1.0 :underline `(:color ,brushup-bg-1) :overline t :box nil)))
+      (set-face-attribute 'tab-line-tab-current nil :box nil :weight 'normal :inherit nil :height 1.0 :foreground nil :font "Pt Mono")
+      (set-face-attribute 'tab-line-tab nil :weight 'normal :box nil :height 1.0 :inherit nil :foreground nil :font "Pt Mono")
+      (set-face-attribute 'tab-line-tab-inactive nil :box nil :height 1.0 :inherit nil :foreground nil :font "Pt Mono")
+      (set-face-attribute 'tab-line nil :height 1.0 :underline `(:color ,brushup-bg-1) :overline t :box nil :foreground nil :font "Pt Mono")
+      ))
 
-  
+
   :general
   (
    :keymaps 'override

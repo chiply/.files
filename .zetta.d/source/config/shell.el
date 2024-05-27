@@ -1,3 +1,8 @@
+(setq read-process-output-max (* 64 1024 1024))
+(setq process-adaptive-read-buffering nil)
+;;(let ((process-connection-type nil))
+  ;;(async-shell-command command buffer))
+
 ;; remembering sudo pass
 (require 'em-tramp)
 (setq password-cache t)

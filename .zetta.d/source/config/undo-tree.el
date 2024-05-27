@@ -62,7 +62,7 @@
 
 
   :display
-  (z-side "^ \\*undo-tree*" 'right 1)
+  ;;(z-side "^ \\*undo-tree*" 'right 1)
   
 
   :hydra

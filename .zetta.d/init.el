@@ -54,13 +54,27 @@
    "lark.el" "yascroll.el" "nyan-mode.el" "gptel.el" "popper.el"
    "highlight.el" "macrostep.el" "obsidian.el" "magneto.el"
    "know-your-http-well.el" "spacetree.el" "vertico.el" "vterm.el"
-   "tab-line.el" "window.el" "line.el" "snippets.el" "detached.el"
+   "tab-line.el" "window.el" "line.el" "snippets.el"
+   ;;"detached.el"
    "ace-mc.el" "json-mode.el" "jsonian.el" "json-processing.el"
+   "consult-gh.el" "consult-web.el"
+
+
+   ;;ADDED
+   "speed-type.el" "spray.el" "key-quiz.el" "alert.el" "svg-lib.el"
+   "explain-pause-mode.el"
+   ;;"kele.el"
+   "markdownfmt.el" "markdown-toc.el" "color-rg.el" "osx-lib.el"
+   "spotlight.el" "restart-emacs"
+   "magit-todos.el" ;; doesn't work but leaving it in. started working
+   "browse-at-remote.el" "mono-complete.el" "rainbow-delimiters.el"
+   "magit-file-icons.el" "devdocs.el"
+
    ;;"parrot.el"
    "cleanup.el"))
 
-
 ;; load user-files and provate lisp code
+;; private gets loaded last
 (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
 (load-file "~/.private.el")
 
@@ -69,7 +83,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "/Users/charles.baker/.files/.zetta.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "~/.files/.zetta.d/bookmarks")
  '(connection-local-criteria-alist
    '(((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)
@@ -155,11 +169,13 @@
      (eshell-connection-default-profile
       (eshell-path-env-list))))
  '(custom-safe-themes
-   '("4c7228157ba3a48c288ad8ef83c490b94cb29ef01236205e360c2c4db200bb18" default))
- '(helm-minibuffer-history-key "M-p"))
+   '("1781e8bccbd8869472c09b744899ff4174d23e4f7517b8a6c721100288311fa5" "4c7228157ba3a48c288ad8ef83c490b94cb29ef01236205e360c2c4db200bb18" default))
+ '(helm-minibuffer-history-key "M-p")
+ '(org-fold-core-style 'overlays))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+

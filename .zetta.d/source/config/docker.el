@@ -7,10 +7,10 @@
   :demand t
 
   :display
-  (z-side "^\\*docker-im*" 'top)
-  (z-side "^\\*docker-cont*" 'top)
-  (z-side "^\\*docker-vol*" 'top)
-  (z-side "^\\* docker*" 'top)
+  ;;(z-side "^\\*docker-im*" 'top)
+  ;;(z-side "^\\*docker-cont*" 'top)
+  ;;(z-side "^\\*docker-vol*" 'top)
+  ;;(z-side "^\\* docker*" 'top)
 
   :evil
   (evil-set-initial-state 'docker-volume-mode 'normal)

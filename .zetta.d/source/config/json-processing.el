@@ -1,16 +1,12 @@
 ;; -*- lexical-binding: t; -*-
 
-;; TODO - projectile integration to allow the commands to work from
-;; any buffer and to allow exploring projects if not currently in one
-
-;; code improvements --
+;; TODO:
 ;; use jinja for templating the command
 ;; factor out the commands
+;; projectile integration
 
-
-;; TODO define a function that pulls the value out of alist
 (setq z-gh-list-run-command-for-watch "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[] | select(.updatedAt > (now - ( 0.1 * 86400))) ]'")
-(setq z-gh-run-watch-command "gh run watch -i 30 %s; osascript -e 'display notification \"%s %s\" with title \"%s 🐙 %s\" sound name \"Frog\"'")
+(setq z-gh-run-watch-command "gh run watch -i 10 %s; osascript -e 'display notification \"%s %s\" with title \"%s 🐙 %s\" sound name \"Frog\"'")
 (setq z-gh-list-run-command-for-view "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[]| select(.updatedAt > (now-( 30 * 86400)))]'")
 (setq z-gh-view-run-command "gh run view %s --log")
 
@@ -20,8 +16,7 @@
 
 (defun z-gh-pick-run (dir cmd)
   (interactive)
-  (let* (;; TODO have projectile prompt for a project or use the default
-         (default-directory dir)
+  (let* ((default-directory dir)
          (json (shell-command-to-string cmd))
          (json-ht (json-parse-string json))
          (runs (z-gh-add-keys-to-record json-ht)))
@@ -49,16 +44,23 @@
                         (ht-get run "name")))
          (compilation-buffer-name-function `(lambda (_) ,bufnm)))
     (save-window-excursion (compile cmd))
-    (zmc-display-output-buffer bufnm 'top 1)))
+    ;;(zmc-display-output-buffer bufnm 'top 1)
+    (display-buffer bufnm)
+    ))
 
 (defun z-gh-run-view-log (dir)
   (let* ((default-directory dir)
          (run (z-gh-pick-run dir z-gh-list-run-command-for-view))
          (id (ht-get run "databaseId"))
-         (cmd (format z-gh-view-run-command id)))
-    (shell-command cmd (format "*GHA log: %s 🐙 %s*"
-                               (projectile-project-name default-directory)
-                               (ht-get run "name")))))
+         (cmd (format z-gh-view-run-command id))
+         (bufnm (format "*GHA log: %s 🐙 %s*"
+                        (projectile-project-name default-directory)
+                        (ht-get run "name"))))
+    (shell-command cmd bufnm)
+    ;; run (ansi-color-apply-on-region (point-min) (point-max)) in the bufnm
+    (with-current-buffer bufnm
+      (ansi-color-apply-on-region (point-min) (point-max)))
+    ))
 
 
 ;; UI

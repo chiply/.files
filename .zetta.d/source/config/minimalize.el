@@ -25,13 +25,17 @@
 
 (setq blink-cursor-mode nil)
 
+
+
 (setq frame-title-format
-      '((:eval
+      '(
+        (:eval
          (or
           (when (and (boundp 'evil-mode) evil-mode) "🐍")
-          (when (and (boundp 'meow-mode) meow-mode) "😼")
+          (when (and (boundp 'meow-mode) meow-mode) "🐱")
           (when (not (or (and (boundp 'evil-mode) evil-mode)
-                         (and (boundp 'meow-mode) meow-mode))) "🦬")))
+                         (and (boundp 'meow-mode) meow-mode)))
+            "🦬")))
         (:eval
          (or
           (when (or (and (boundp 'meow-insert-mode) meow-insert-mode)

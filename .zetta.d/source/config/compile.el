@@ -1,5 +1,8 @@
 (use-package compile
   :straight (:type built-in)
-  :general (:keymaps '(override) "s-r" 'recompile))
+  :config (setq compilation-scroll-output nil)
+  :general (:keymaps '(override) "s-r" 'recompile)
+
+  )
 
 
