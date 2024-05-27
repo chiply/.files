@@ -105,46 +105,40 @@ seem to require loading after the client starts up"
            (if brushup-dark-p (color-lighten-name brushup-fg (- 60)) brushup-bg-2)
            :foreground 'unspecified)
 
-          ;;(set-frame-font "Courier 12" nil t)
 
           (setq ansi-term-color-vector [term term-color-black term-color-red
                                              term-color-green term-color-yellow
                                              term-color-blue term-color-magenta
                                              term-color-cyan term-color-white])
 
-          ;;(set-face-attribute
-          ;;'vertical-border nil
-          ;;:background brushup-bg
-          ;;:foreground brushup-bg
-          ;;)
           (set-face-attribute
            'mode-line nil
-           :underline `(:color ,brushup-bg-2)
-           :overline t
+           :background brushup-bg
+           ;;:overline nil
+           ;;:underline nil
+           :font "Pt Mono"
+           ;;:box t
            )
+
           (set-face-attribute
            'mode-line-inactive nil
-           :underline `(:color ,brushup-bg-2)
-           :overline t
+           ;;:overline nil
+           ;;:underline nil
+           :font "Pt Mono"
+           ;;:box t
            )
-          ;;
-          ;;
-          ;;(set-face-attribute
-          ;;'tab-bar nil
-          ;;:height 1.0
-           ;;;;:background (modus-themes-get-color-value 'bg-green-nuanced)
-           ;;;;:foreground brushup-fg-1
-          ;;:inherit nil
-          ;;:underline nil
-          ;;:overline nil
-          ;;)
+
+          (set-face-attribute
+           'header-line nil
+           ;;:height 'unspecified
+           ;;:weight 'normal
+           :font "PT Mono 11"
+           )
 
           (set-face-attribute
            'sh-heredoc nil
            :foreground brushup-fg
            :weight 'normal)
-
-
 
           (set-face-attribute
            'button nil
@@ -188,6 +182,10 @@ seem to require loading after the client starts up"
           ;; set the background of the fringe to black
           (set-face-background 'fringe brushup-bg-1_0)
 
+          (set-face-attribute
+           'default nil
+           :background nil)
+
 
           )
       (error (message "error in z-brushup"))
@@ -201,4 +199,19 @@ seem to require loading after the client starts up"
 
 (add-to-list 'use-package-keywords :brushup t)
 
+(defun my-buffer-face-mode-pt-mono ()
+  "Sets a fixed width (monospace) font in current buffer"
+  (interactive)
+  (setq buffer-face-mode-face '(:family "PT Mono"))
+  (buffer-face-mode))
+
+;; (defun my-buffer-face-mode-pt-mono-p85 ()
+;;   "Sets a fixed width (monospace) font in current buffer"
+;;   (interactive)
+;;   (setq buffer-face-mode-face '(:family "PT Mono" :height 0.87))
+;;   (buffer-face-mode))
+
+
 (provide 'bootstrap-brushup)
+
+

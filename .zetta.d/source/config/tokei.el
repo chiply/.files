@@ -16,5 +16,5 @@
     )
 
   :display
-  (z-side "tokei-mode" 'right 1)
+  ;;(z-side "tokei-mode" 'right 1)
   )

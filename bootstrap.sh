@@ -114,5 +114,8 @@ nvm install node
 
 export GRAPHVIZ_DIR="$(brew --prefix graphviz)"
 
+# markdownfmt
+go install github.com/shurcooL/markdownfmt@latest
+
 
 

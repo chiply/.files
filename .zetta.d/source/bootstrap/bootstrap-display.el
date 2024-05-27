@@ -70,23 +70,11 @@ being displayed, otherwise returns nil"
     (other-window 1))
   (length lst))
 
-
-
-
-
-
-
-
-
-
-
-
 ;;;;;;;;;;;; side windows
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Display buffer alist (leverages soda functions)
 ;; left top right bottom
-
 (setq window-sides-slots '(3 3 3 4))
-                                        ; ;tryign this ou for now
+;; tryign this ou for now
 (setq window-sides-vertical t)
 
 ;; note you need to reevaluate the z-side function
@@ -96,71 +84,56 @@ being displayed, otherwise returns nil"
 (setq z-side-display-default-width-right 0.25)
 
 
+(defun z-side (&rest args)
+  ;; delete old config
+  (let ((regex (or (plist-get args :regex) (error "must supply regex")))
+        (side (or (plist-get args :side) nil))
+        (slot (or (plist-get args :slot) nil))
+        (size (or (plist-get args :size) nil))
+        (size2 (or (plist-get args :size2) nil)))
+    (setq
+     display-buffer-alist
+     (-remove
+      (lambda (elt)
+        (cond
+         ((stringp (nth 0 elt)) (string= (nth 0 elt) regex))
+         ((equal (nth 0 elt) 'popper-display-control-p) nil) ;;keep
+         ((equal (nth 0 elt) 'closure)
+          (equal (cdr (nth 0 (nth 1 (nth 0 elt)))) regex))
+         (t nil)))
+      display-buffer-alist))
+    
+    ;; set height or width if side window
+    (let ((height (cond
+                   ((and size size2) size)
+                   ((equal side 'top) (or size z-side-display-default-height-top))
+                   ((equal side 'bottom) (or size z-side-display-default-height-bottom))
+                   ((or (equal side 'left) (equal side 'right)) nil)))
+          (width (cond
+                  ((and size size2) size2)
+                  ((equal side 'left) (or size z-side-display-default-width-left))
+                  ((equal side 'right) (or size z-side-display-default-width-right))
+                  ((or (equal side 'top) (equal side 'bottom)) nil)))
+          (slot (or slot 0)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; utils
-;;; TODO change the order of the arguments for more settings like file
-;;; (assuming these weren't split into each config)
-
-;; this abstracts a little bit of code, but has a big impact as many
-;; modes sould configure display settnigs, and there is currently no
-;; great solution for doing that.
-
-;; todo.. notion of a default side... almost like how popper assumes this...
-;; todo.. allow for both height an width beinig displayed... should be
-;; easy, just a another cond for if the second size parameter is
-;; there, and if so, read int he height width order.
-(defun z-side (regex &optional side slot size size2)
-  ;; delete old config 
-  ;; exit the defun without doing anything
-  (setq foob 'bar)
-  ;;(setq display-buffer-alist
-  ;;(-remove
-  ;;(lambda (elt) (cond ((stringp (nth 0 elt)) (string= (nth 0 elt) regex)) ;; remove this entry
-  ;;((equal (nth 0 elt) 'popper-display-control-p) nil) ;; keep this entry
-  ;;((equal (nth 0 elt) 'closure)
-                               ;;;; parses out mode name used to create closure :-)
-  ;;(equal (cdr (nth 0 (nth 1 (nth 0 elt)))) regex)) ;; remove this entry
-  ;;(t nil)))
-  ;;display-buffer-alist))
-  ;;
-  ;;;; if side is top, set height to size
-  ;;(let (
-  ;;(height (cond
-  ;;((and size size2) size)
-  ;;((equal side 'top) (or size z-side-display-default-height-top))
-  ;;((equal side 'bottom) (or size z-side-display-default-height-bottom))
-  ;;((or (equal side 'left)
-  ;;(equal side 'right))
-  ;;nil)))
-  ;;(width (cond
-  ;;((and size size2) size2)
-  ;;((equal side 'left) (or size z-side-display-default-width-left))
-  ;;((equal side 'right) (or size z-side-display-default-width-right))
-  ;;((or (equal side 'top)
-  ;;(equal side 'bottom))
-  ;;nil)))
-  ;;(slot (or slot 0))
-  ;;)
-    ;;;; update
-  ;;(add-to-list
-  ;;'display-buffer-alist
-  ;;(if (string-match "-mode$" regex)
-  ;;`(,(z-soda-mode-name regex)
-  ;;(display-buffer-in-side-window)
-  ;;(side . ,side) (slot . ,slot)
-  ;;(window-height . ,height) (window-width . ,width)
-  ;;(window-parameters . ((no-delete-other-windows . 1))))
-  ;;`(,regex
-  ;;(display-buffer-in-side-window)
-  ;;(side . ,side) (slot . ,slot)
-  ;;(window-height . ,height) (window-width . ,width)
-  ;;(window-parameters . ((no-delete-other-windows . 1))))
-  ;;)
-  ;;nil
-  ;;)
-  ;;)
-  )
-
+      ;; update
+      (add-to-list
+       'display-buffer-alist
+       (if (string-match "-mode$" regex)
+           `(,(z-soda-mode-name regex)
+             (display-buffer-reuse-window display-buffer-in-side-window)
+             (reusable-frames . visible)
+             (side . ,side) (slot . ,slot)
+             (window-height . ,height) (window-width . ,width)
+             (window-parameters . ((no-delete-other-windows . 1))))
+         `(,regex
+           (display-buffer-reuse-window display-buffer-in-side-window)
+           (reusable-frames . visible)
+           (side . ,side) (slot . ,slot)
+           (window-height . ,height) (window-width . ,width)
+           (window-parameters . ((no-delete-other-windows . 1)))))
+       nil))
+    ))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Soda drink, cao, and switch to buffer
@@ -193,46 +166,21 @@ being displayed, otherwise returns nil"
     (z-soda-delete target)))
 
 
-;;(defun z-soda-switch-buffer ()
-;;(interactive)
-;;(let ((buffers (cond
-                  ;;;; order matters here... I should eventually get better regexes
-;;((string-match "shell-mode" (symbol-name major-mode))
-;;(z-soda-list-mode-buffers "shell-mode"))
-;;((string-match "\\dired-mode*" (symbol-name major-mode))
-;;(z-soda-list-mode-buffers "\\dired-mode*"))
-;;((string-match "[H|h]elp*" (symbol-name major-mode))
-;;(z-soda-list-mode-buffers "[H|h]elp*"))
-;;((string-match "\\term-mode*" (symbol-name major-mode))
-;;(z-soda-list-mode-buffers "\\term-mode*"))
-;;)))
-;;(if buffers
-;;(switch-to-buffer
-;;(completing-read
-;;"Please select a buffer: "
-;;(-map (lambda (x) (buffer-name x)) (delete (current-buffer) buffers))))
-;;(ivy-switch-buffer)
-;;)
-;;))
-
 (defun z-soda-create-and-display-messages (&optional buf-or-mode-name)
   (let ((buf (current-buffer)))
     (let ((newbuf (get-buffer-create "*Messages*")))
       (switch-to-buffer buf)
-      (display-buffer newbuf)
-      )
-    )
-  )
+      (display-buffer newbuf))))
 
 (defhydra+ hydra-run ()
   ("m" (lambda ()
          (interactive)
          (z-soda-drink (quote z-soda-create-and-display-messages) "*Messages*")
-         ) "Messages")
+         )
+   "Messages")
 
   ("c" calendar "Calendar")
   ("i" info "Info")
-
   ("M" (lambda () (interactive) (z-soda-cap "*Messages*")) "Messages" )
   ("I" (lambda () (interactive) (z-soda-cap "*info*")) "Info")
   )

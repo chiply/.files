@@ -15,7 +15,7 @@
 
   :display
 
-  (z-side "^\\*vc-diff*" 'right)
+  ;;(z-side "^\\*vc-diff*" 'right)
 
   :hydra
   (defhydra+ unpackaged/smerge-hydra
@@ -51,6 +51,12 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
             (bury-buffer))
      "Save and bury buffer" :color blue)
     ("q" nil "cancel" :color blue))
+
+  :general
+  (
+   :keymap 'launch-key
+   "C-c ^ ^"'unpackaged/smerge-hydra/body
+   )
 
   :hook (
          ((diff-mode magit-status-mode magit-diff-mode git-commit-mode) . (lambda () (text-scale-set -2)))

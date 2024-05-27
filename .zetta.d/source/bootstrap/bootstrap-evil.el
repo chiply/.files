@@ -2,14 +2,14 @@
   :demand t
   :init
   (setq evil-want-keybinding nil)
-  (add-to-list
-   'brushup-styles
-   '(setq evil-emacs-state-cursor '("red" box)
-          evil-visual-state-cursor '("orange" box)
-          evil-insert-state-cursor '("blue" box)
-          evil-replace-state-cursor '("green" hollow)
-          evil-operator-state-cursor '("red" hollow)
-          evil-normal-state-cursor `(,(face-attribute 'default :foreground) box)))
+  ;;(add-to-list
+   ;;'brushup-styles
+   ;;'(setq evil-emacs-state-cursor '("red" box)
+          ;;evil-visual-state-cursor '("orange" box)
+          ;;evil-insert-state-cursor '("blue" box)
+          ;;evil-replace-state-cursor '("green" hollow)
+          ;;evil-operator-state-cursor '("red" hollow)
+          ;;evil-normal-state-cursor `(,(face-attribute 'default :foreground) box)))
 
   :config
   (setq evil-default-state 'normal)

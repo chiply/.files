@@ -112,13 +112,19 @@
                                       :background brushup-bg-3)))
 
 
+  ;; set font in vterm -- note some fonts break certain applications.
+  ;; Ex: Vulf font breaks the k9s cli
+
+  (add-hook 'vterm-mode-hook 'my-buffer-face-mode-pt-mono)
+
+
   :display
-  (z-side "^\\*zsh*" 'bottom)
-  (z-side "^\\*bash*" 'bottom)
-  (z-side "^\\*python3*" 'bottom 1)
-  (z-side "^\\*ipython*" 'bottom 1)
-  (z-side "^\\*ssh*" 'bottom 1)
-  (z-side "^\\*sqlite3*" 'bottom 2)
+  ;;(z-side "^\\*zsh*" 'bottom)
+  ;;(z-side "^\\*bash*" 'bottom)
+  ;;(z-side "^\\*python3*" 'bottom 1)
+  ;;(z-side "^\\*ipython*" 'bottom 1)
+  ;;(z-side "^\\*ssh*" 'bottom 1)
+  ;;(z-side "^\\*sqlite3*" 'bottom 2)
 
   :general
   (

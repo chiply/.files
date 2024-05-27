@@ -60,7 +60,7 @@
                ;;)
 
   :display
-  (z-side "^\\*Flycheck*" 'top)
+  ;;(z-side "^\\*Flycheck*" 'top)
 
   :hook (
          (flycheck-error-list . (lambda () (text-scale-set -2)))

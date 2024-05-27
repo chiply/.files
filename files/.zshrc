@@ -32,7 +32,7 @@ plugins=(
     frontend-search gh brew git-extras gitfast git-lfs git-prompt
     history httpie jsontools pip ripgrep safe-paste screen terraform
     tmux themes tmuxinator zsh-autosuggestions kube-ps1 aws npm
-    dirpersist kubectl poetry zsh-syntax-highlighting
+    dirpersist kubectl poetry zsh-syntax-highlighting direnv
 )
 source $ZSH/oh-my-zsh.sh
 export KUBE_PS1_BINARY=kubectl
@@ -110,20 +110,6 @@ zstyle ':autocomplete:*' insert-unambiguous yes
 source ~/.aliases/index
 
 
-# for vterm directory tracking
-vterm_printf(){
-    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
-        # Tell tmux to pass the escape sequences through
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
-    fi
-}
-
-
 # kubernetes autocompletion
 source <(kubectl completion zsh)
 
@@ -196,4 +182,12 @@ function precmd() {
 
 export PROMPT=$'\n''%n@%m $(git rev-parse --show-toplevel 2> /dev/null | xargs basename || pwd ):$(git_super_status) $timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\n'
 #'x---}-> '
+
+
+# for vterm directory tracking
+if [[ "$INSIDE_EMACS" == 'vterm' ]] \
+&& [[ -n ${EMACS_VTERM_PATH} ]] \
+&& [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh ]]; then
+source ${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh
+fi
 

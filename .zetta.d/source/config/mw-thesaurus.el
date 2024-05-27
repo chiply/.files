@@ -1,4 +1,4 @@
 (use-package mw-thesaurus
   :display
-  (z-side "^\\* Merriam-Webster*" 'right 1) 
+  ;;(z-side "^\\* Merriam-Webster*" 'right 1) 
   )
