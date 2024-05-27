@@ -20,4 +20,4 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; display
-(z-side "^\\*indirect*" 'right)
+;;(z-side "^\\*indirect*" 'right)

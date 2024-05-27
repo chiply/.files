@@ -1,21 +1,24 @@
 (use-package treemacs
-  ;;:requires (treemacs-all-the-icons)
   :demand t 
 
   :init
-  (setq treemacs-persist-file (expand-file-name ".data/treemacs/.cache/treemacs-persist" user-emacs-directory))
+  (setq treemacs-persist-file
+        (expand-file-name ".data/treemacs/.cache/treemacs-persist"
+                          user-emacs-directory))
 
   
   :config
-  ;;(use-package treemacs-nerd-icons
-    ;;:functions treemacs-load-theme
-    ;;:config
-    ;;(treemacs-load-theme "nerd-icons"))
-
-  (use-package treemacs-all-the-icons
+  (use-package nerd-icons)
+  (use-package treemacs-nerd-icons
+    :functions treemacs-load-theme
+    :after (treemacs nerd-icons)
     :config
-    (treemacs-load-theme "all-the-icons"))
-  
+    (treemacs-load-theme "nerd-icons"))
+
+  ;; set to the initial default font size (note this is set 1 time, so
+  ;; altering the text scale wont cause the icons to change size)
+  (treemacs-resize-icons (font-get (face-attribute 'default :font) :size))
+
   (setq aw-ignored-buffers '("*Calc Trail*" " *LV*"))
 
 
@@ -44,17 +47,12 @@
   (defun z-refresh-treemacs ()
     (interactive)
     (let ((treemacs-buf (nth 0 (z-soda-mode-displayed-p "treemacs-mode")))
-          (win (selected-window))
-          )
+          (win (selected-window)))
       (when treemacs-buf
         (progn
           (kill-buffer treemacs-buf)
           (treemacs)
-          (select-window win)
-          )
-        )
-      )
-    )
+          (select-window win)))))
 
   :brushup
   (add-to-list 'brushup-styles
@@ -102,15 +100,14 @@
              (if treemacs-tag-follow-mode
                  (progn
                    (treemacs-tag-follow-mode -1)
-                   ;; need this as treemacs tag follow mode -1 affects follow mode
-                   ;; SO STRANGE.. but this seems to sovle the issie of not having proper tracking
-                   ;; to to lack of tags in a file.  I can get file based following in the files where
-                   ;; I run this function.  Not expectetd, but works!
-                   (treemacs-follow-mode 1)
-                   )
-               (treemacs-tag-follow-mode 1))
-             ))
-    )
+                   ;; need this as treemacs tag follow mode -1 affects
+                   ;; follow mode SO STRANGE.. but this seems to sovle
+                   ;; the issie of not having proper tracking to to
+                   ;; lack of tags in a file.  I can get file based
+                   ;; following in the files where I run this
+                   ;; function.  Not expectetd, but works!
+                   (treemacs-follow-mode 1))
+               (treemacs-tag-follow-mode 1)))))
 
 
 
@@ -123,16 +120,10 @@
    "d" 'treemacs-delete-file
    )
 
-  :hook (
-         (use-package--treemacs--post-config . z-brushup)
+  :hook ((use-package--treemacs--post-config . z-brushup)
          (treemacs-mode . (lambda ()
                             (text-scale-set -2)
-                            (toggle-truncate-lines -1)
-                            ))
-         ;; note is somewhat close to the behavior of having frame specific treemacs buffers, or at least satisfies the same usecase
-         ;;((python-ts-mode emacs-lisp-mode sql-mode) . z-setup-treemacs-for-buffer)
-         )
-  )
+                            (toggle-truncate-lines -1)))))
 
 (use-package treemacs-magit)
 

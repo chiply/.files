@@ -5,7 +5,7 @@
   :demand t
 
   :display
-  (z-side "^\\*sql--*" 'top)
+  ;;(z-side "^\\*sql--*" 'top)
   
 
   :general

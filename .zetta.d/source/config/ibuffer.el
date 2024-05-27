@@ -8,7 +8,7 @@
     (ibuffer nil buf-or-mode-name nil []))
 
   :display
-  (z-side "^\\*Ibuffer*" 'left 2 0.10)
+  ;;(z-side "^\\*Ibuffer*" 'left 2 0.10)
   
 
   :hydra

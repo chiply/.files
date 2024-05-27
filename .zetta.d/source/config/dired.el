@@ -265,7 +265,7 @@ Version 2019-11-04"
 
 
   :display
-  (z-side "\\dired-mode" 'left 1 0.10)
+  ;;(z-side "\\dired-mode" 'left 1 0.10)
 
   :hydra
   (defhydra+ hydra-run ()

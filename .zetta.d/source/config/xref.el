@@ -2,7 +2,7 @@
   :straight nil
   :demand t
   :config
-  (z-side "^\\*xref*" 'right -1)
+  ;;(z-side "^\\*xref*" 'right -1)
 
   :general
   (

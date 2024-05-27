@@ -116,6 +116,21 @@ first space will be numbered 1.")
 ;; Utilities
 (defun st-window-state-put-safely (space)
   "Switches to workspace, ignores 'Selecting deleted buffer' error"
+  ;;;; restore buffers
+  ;;;; # doesn't work bc the buffer is #killed-buffer
+  ;;;; LEFT OFF -- trying recording the windows, then deleting the windows AFTER the switch happens
+  ;;;; this will have the affect of not restoring the windows pointing to killed buffers
+  ;;(-map (lambda (x)
+          ;;(pp x)
+          ;;(message (concat "restore" (buffer-name (cadr x))))
+          ;;(if (buffer-file-name (cadr x))
+              ;;(find-file-noselect (buffer-file-name (cadr x)))
+            ;;(get-buffer-create (buffer-name (cadr x)))))
+        ;;(-filter (lambda (x)
+                   ;;(and (bufferp (cadr x)) (not (buffer-live-p (cadr x)))))
+                 ;;(-map 'win-buf-from-leaf
+                       ;;(extract-leaf space))))
+
   (let ((result (condition-case _ (window-state-put space) (error _))))
     (when (string= "Selecting deleted buffer" (cadr result))
       (message "Space contains deleted buffers"))))
@@ -361,12 +376,7 @@ at the current address."
   (st-select-non-side-window)
   (let ((recent-space (ht-get st-address-wconf-tbl address)))
     (unless no-update-wconf
-      (let ((result (condition-case _
-                        (window-state-put recent-space)
-                      (error _))))
-        (when (string= "Selecting deleted buffer" (cadr result))
-          ;; TODO (nice to have) implement buffer restoration
-          (message "Space contains deleted buffers"))))
+      (st-window-state-put-safely recent-space))
     (setq st-current-address address
           st-recent-space-list (cons st-current-address st-recent-space-list))))
 
@@ -529,9 +539,6 @@ the st-tree."
 ;; this will be part of the README,but not part of the package
 
 (general-define-key
-
- ;; TODO macro for these
- ;; top level
  "s-1" (lambda () (interactive) (st-switch-or-create '(1)))
  "s-2" (lambda () (interactive) (st-switch-or-create '(2)))
  "s-3" (lambda () (interactive) (st-switch-or-create '(3)))
@@ -577,6 +584,60 @@ the st-tree."
  )
 
 
+
+
+
+
+
+
+
+(defun extract-leaf (lst)
+  (cond
+   ((or (null lst) (not (listp lst))) nil)
+   ;; if the first of lst is 'leaf then return the whole list
+   ((eq (car lst) 'leaf) (list lst))
+   ((consp (car lst))
+    (append (if (eq (caar lst) 'leaf)
+                (list (car lst))
+              (extract-leaf (car lst)))
+            (extract-leaf (cdr lst))))
+   (t (extract-leaf (cdr lst)))))
+
+
+;; each leaf looks like such (see above).  define a function that can
+;; extract the value of parameters.clone-of and the buffer.  this
+;; function will be called win-buf-from-leaf
+(defun win-buf-from-leaf (leaf)
+  (let ((params (assoc 'parameters leaf))
+        (buf (nth 1 (assoc 'buffer leaf))))
+    (list (cdr (assoc 'clone-of params))
+          buf)))
+
+
+
+;; win-bufs for only windows with non-live buffers
+
+
+
+;; LEFT OFF -- more complicated than expected... need to modify function to delete the leafs, not extract them
+;; can probably do with a refactoring
+;; create an is-leaf function
+;; And even still I think there are edge cases I'm not considering... for example if you have (vc (leaf ...) (leaf ...)) then you need to delete the vc and flatten leafs if removing the leaf only leaves the vc or hc with a single element
+;; Other complexity is that the error handling makes the window-state-put stop as soon as it sees a killed-buffer... but we would want it to try and restore every window, handling the rror for each case, otherwsie it could error out before restoring a window pointing to a live buffer
+
+;; Cruder solution would be to restore the buffers, but I'm also not sure this would work 100% with things like * MINIMAP*
+
+;; what was the original issue i was trying to solve: using minimap.  is minimap worth it?  
+
+
+
+
+
+
+
+
+
+
 ;; init -- move to config
 (st-init)
 
@@ -584,4 +645,8 @@ the st-tree."
 
 (provide 'space-tree)
 ;;; space-tree.el ends here
+
+
+
+
 

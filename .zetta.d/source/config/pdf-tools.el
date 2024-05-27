@@ -4,8 +4,8 @@
 
   :display
   
-  (z-side "pdf-occur-buffer-mode" 'left 1)
-  (z-side "^\\*Outline*" 'left 3)
+  ;;(z-side "pdf-occur-buffer-mode" 'left 1)
+  ;;(z-side "^\\*Outline*" 'left 3)
 
   :general
   (

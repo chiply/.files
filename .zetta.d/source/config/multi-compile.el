@@ -59,20 +59,13 @@
      ((string= program "compile") (zmc-es-compile cmd))
      (t (apply (intern program) `(,cmd))))))
 
-(defun zmc-display-output-buffer (buf side slot)
-  (display-buffer
-   buf
-   ;; todo, conditionally use side window.  can also make use
-   ;; current buffer.  magneto can be used in that situation to
-   ;; reposition the window
-   `((display-buffer-in-side-window)
-     (side . ,side)
-     (slot . ,slot))))
 
 (defun zmc-run (program cmd bufnm side slot select)
   (let* ((original-window (get-buffer-window (current-buffer) ))
          (new-buffer (zmc-execute program cmd bufnm)))
-    (zmc-display-output-buffer new-buffer side slot)
+
+    (display-buffer new-buffer)
+
     (select-window original-window)
     (when (string= "yes" select)
       (select-window (get-buffer-window new-buffer)))))
@@ -102,7 +95,8 @@
 
 
 (defun zmc-es-async-shell-cmd (cmd bufnm)
-  (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient)))
+  (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient))
+        (process-connection-type nil))
     (save-window-excursion
       (window-buffer (async-shell-command cmd bufnm)))))
 
@@ -139,8 +133,8 @@
                                  (expand-file-name (eval-expression directory)))
                                 default-directory))
          (bufnm (ht-get target "bufnm"))
-         (side (intern (or (ht-get target "side") "top")))
-         (slot (or (ht-get target "slot") 1))
+         (side (intern (or (ht-get target "side") "top"))) ;; default
+         (slot (or (ht-get target "slot") 1)) ;; default
          (select (or (ht-get target "select") "no")))
     (setq latest-cmd cmd)
     (set (make-local-variable 'local-cmd) cmd)

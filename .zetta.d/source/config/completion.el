@@ -160,6 +160,7 @@ tempel expand?)
  :states '(insert)
  :keymaps '(
             python-ts-mode-map lisp-interaction-mode-map
+            lisp-data-mode-map
             emacs-lisp-mode-map lisp-mode-map sql-mode-map
             web-mode-map js2-mode-map rjsx-mode-map text-mode-map
             org-mode-map bibtex-mode-map sh-mode-map lark-mode-map

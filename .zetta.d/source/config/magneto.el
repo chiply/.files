@@ -131,6 +131,7 @@
                  (aw-switch-to-window window)
                  (magneto-move-after-select buf-orig)))))
 
+
 (defun magneto-select-win-dest-side (buf-orig)
   (let ((side (cond
                ((member magneto-destination-action '("t" "T")) 'top)
@@ -140,6 +141,12 @@
         (slot (cond
                ((member magneto-destination-action '("t" "b" "r" "l")) 10)
                ((member magneto-destination-action '("T" "B" "R" "L")) -10)))
+        ;; NOTE: kind of mind-boggling -- not sure why other entries in
+        ;; display-buffer-alist are having an affect here.  This is a
+        ;; good general note, for the future.  Whenever using
+        ;; display-buffer directly, probably want to clear
+        ;; display-buffer-alist
+        (display-buffer-alist nil)
         )
     (display-buffer
      buf-orig
@@ -159,6 +166,7 @@
 
 
 (defun magneto-process-source (win-orig)
+  ;; temporarily switch to a different buffer in win-orig.  we should create this buffer
   (cond
    ((string= magneto-source-action "move") (delete-window win-orig))
    ((string= magneto-source-action "pull") (switch-to-prev-buffer win-orig))
@@ -213,7 +221,7 @@
 "
   ;; run the exit function, eg execute the move specifed by 
   ("s-m" magneto-move)
-  ("<return>" magneto-move)
+  ("<return>" magneto-move :exit t)
 
   ;; source actions
   ("m" (magneto-set-magneto-source-action "move") "move" :column "source actions")

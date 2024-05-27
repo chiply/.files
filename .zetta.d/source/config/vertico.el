@@ -92,6 +92,7 @@
             "s-V" 'vertico-repeat)
 
   (:keymaps 'vertico-map
+            
             ;; intellisesne
             "C-S-h" 'z-vertico-IS-help
             "C-S-d" 'z-vertico-IS-find

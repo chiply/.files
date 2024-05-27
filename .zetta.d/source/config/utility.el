@@ -31,7 +31,7 @@
     )
   )
 
-(z-side "^\\*howdoi-*" 'right 1)
+;;(z-side "^\\*howdoi-*" 'right 1)
 
 
 

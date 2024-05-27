@@ -1,10 +1,26 @@
+;; NOTE revisited on May 9th.  Basically the minimap doesn't work well
+;; wiht spacetree.  Tried all different settings to get around this,
+;; but best thing to do is simply not use the interactive version.
+;; frankly I don't think this would ever be necessary outside of a
+;; presentation scenario, and leaving it static will likely keep it
+;; out of the way for the most part (eg not poppoing up in new
+;; contexts were I don't need it)
+
+
+
 ;; org-mode needs to not be in indent mode
 
 
 ;; same behavior for treemacs with the updates?
 
 
-;; The automatic update is cool, but this causes some issues. It will be better to strike a balance between the two. Two functions should be implemented. One for toggling follow mode in the form of switching between a delay of zero and a delay of one of A second function should be implemented to quickly update the mini Mac based on location. These functions should be bound to similar keys and the toggling should be the higher tier binding.
+;; The automatic update is cool, but this causes some issues. It will
+;; be better to strike a balance between the two. Two functions should
+;; be implemented. One for toggling follow mode in the form of
+;; switching between a delay of zero and a delay of one of A second
+;; function should be implemented to quickly update the mini Mac based
+;; on location. These functions should be bound to similar keys and
+;; the toggling should be the higher tier binding.
 
 
 ;; issues
@@ -22,96 +38,93 @@
 ;; given issues when rendering in complex layouts, I will typically use this rarely or when presenting (when I have simple window layouts)
 
 ;; left off (and last for the day... when doing ,w c-S-D, this closes the minimap.  Need to change this special function to change the minimap setting prior to and after )
-;; move on to CDK
-;; move upstairs (workout?)
 
 (use-package minimap
   :demand t
   :config
+
   ;; overwriting the minor mode definition and other functions allows for ignored buffers, which is necessary.  For example agenda --> agenda.org would break all of emacs on me
-  (define-minor-mode minimap-mode
-    "Toggle minimap mode."
-    :global t
-    :group 'minimap
-    :lighter " MMap"
-    (if minimap-mode
-        (progn
-          (when (and minimap-major-modes
-                     ;; CHANGED make sure buffer is not in ignored buffer list
-                     (not (< 0
-                             (length (-filter
-                                      (lambda (ignored-buffer-regex)
-                                        (string-match ignored-buffer-regex (buffer-name (current-buffer))))
-                                      z-minimap-ignored-buffers
-                                      )) 
-                             ))
-                     (apply 'derived-mode-p minimap-major-modes))
-            (unless (minimap-get-window)
-              (minimap-create-window))
-            ;; Create minimap.
-            (minimap-new-minimap))
-          ;; Create timer.
-          (setq minimap-timer-object
-                (run-with-idle-timer minimap-update-delay t 'minimap-update))
-          ;; Hook into other modes.
-          (minimap-setup-hooks))
-      ;; Turn it off
-      (minimap-kill)
-      (minimap-setup-hooks t)))
+  ;;(define-minor-mode minimap-mode
+  ;;"Toggle minimap mode."
+  ;;:global t
+  ;;:group 'minimap
+  ;;:lighter " MMap"
+  ;;(if minimap-mode
+  ;;(progn
+  ;;(when (and minimap-major-modes
+                     ;;;; CHANGED make sure buffer is not in ignored buffer list
+  ;;(not (< 0
+  ;;(length (-filter
+  ;;(lambda (ignored-buffer-regex)
+  ;;(string-match ignored-buffer-regex (buffer-name (current-buffer))))
+  ;;z-minimap-ignored-buffers
+  ;;)) 
+  ;;))
+  ;;(apply 'derived-mode-p minimap-major-modes))
+  ;;(unless (minimap-get-window)
+  ;;(minimap-create-window))
+            ;;;; Create minimap.
+  ;;(minimap-new-minimap))
+          ;;;; Create timer.
+  ;;(setq minimap-timer-object
+  ;;(run-with-idle-timer minimap-update-delay t 'minimap-update))
+          ;;;; Hook into other modes.
+  ;;(minimap-setup-hooks))
+      ;;;; Turn it off
+  ;;(minimap-kill)
+  ;;(minimap-setup-hooks t)))
+  ;;
+  ;;(defun minimap-update (&optional force)
+  ;;"Update minimap sidebar if necessary.
+  ;;This is meant to be called from the idle-timer or the post command hook.
+  ;;When FORCE, enforce update of the active region."
+  ;;(interactive)
+    ;;;; If we are in the minibuffer, do nothing.
+  ;;(unless (active-minibuffer-window)
+  ;;(if (minimap-active-current-buffer-p)
+          ;;;; We are still in the same buffer, so just update the minimap.
+  ;;(minimap-update-current-buffer force)
+        ;;;; The buffer was switched, check if the minimap should switch, too.
+  ;;(if (and minimap-major-modes
+                 ;;;; CHANGED make sure buffer is not in ignored buffer list
+  ;;(not (< 0
+  ;;(length (-filter
+  ;;(lambda (ignored-buffer-regex)
+  ;;(string-match ignored-buffer-regex (buffer-name (current-buffer))))
+  ;;z-minimap-ignored-buffers
+  ;;)) 
+  ;;))
+  ;;
+  ;;(apply 'derived-mode-p minimap-major-modes))
+  ;;(progn
+              ;;;; Create window if necessary...
+  ;;(unless (minimap-get-window)
+  ;;(minimap-create-window))
+              ;;;; ...and re-create minimap with new buffer...
+  ;;(minimap-new-minimap)
+              ;;;; Redisplay
+  ;;(sit-for 0)
+              ;;;; ...and call update again.
+  ;;(minimap-update t))
+          ;;;; We have entered a buffer for which no minimap should be
+          ;;;; displayed. Check if we should de
+  ;;(when (and (minimap-get-window)
+  ;;(minimap-need-to-delete-window))
+            ;;;; We wait a tiny bit before deleting the window, since we
+            ;;;; might only be temporarily in another buffer.
+  ;;(run-with-timer 0.3 nil
+  ;;(lambda ()
+  ;;(when (and (null (minimap-active-current-buffer-p))
+  ;;(minimap-get-window))
+  ;;(delete-window (minimap-get-window))))))))))
+  ;;
+  ;;(setq z-minimap-ignored-buffers '("agenda.org" "agenda_pub.org"))
 
-  (defun minimap-update (&optional force)
-    "Update minimap sidebar if necessary.
-This is meant to be called from the idle-timer or the post command hook.
-When FORCE, enforce update of the active region."
-    (interactive)
-    ;; If we are in the minibuffer, do nothing.
-    (unless (active-minibuffer-window)
-      (if (minimap-active-current-buffer-p)
-          ;; We are still in the same buffer, so just update the minimap.
-          (minimap-update-current-buffer force)
-        ;; The buffer was switched, check if the minimap should switch, too.
-        (if (and minimap-major-modes
-                 ;; CHANGED make sure buffer is not in ignored buffer list
-                 (not (< 0
-                         (length (-filter
-                                  (lambda (ignored-buffer-regex)
-                                    (string-match ignored-buffer-regex (buffer-name (current-buffer))))
-                                  z-minimap-ignored-buffers
-                                  )) 
-                         ))
-
-                 (apply 'derived-mode-p minimap-major-modes))
-            (progn
-              ;; Create window if necessary...
-              (unless (minimap-get-window)
-                (minimap-create-window))
-              ;; ...and re-create minimap with new buffer...
-              (minimap-new-minimap)
-              ;; Redisplay
-              (sit-for 0)
-              ;; ...and call update again.
-              (minimap-update t))
-          ;; We have entered a buffer for which no minimap should be
-          ;; displayed. Check if we should de
-          (when (and (minimap-get-window)
-                     (minimap-need-to-delete-window))
-            ;; We wait a tiny bit before deleting the window, since we
-            ;; might only be temporarily in another buffer.
-            (run-with-timer 0.3 nil
-                            (lambda ()
-                              (when (and (null (minimap-active-current-buffer-p))
-                                         (minimap-get-window))
-                                (delete-window (minimap-get-window))))))))))
-
-  (setq z-minimap-ignored-buffers '("agenda.org" "agenda_pub.org"))
-
-  (setq minimap-major-modes
-        '(
-          emacs-lisp-mode python-ts-mode sql-mode vterm-mode help-mode
-          helpful-mode Info-mode messages-buffer-mode org-mode sh-mode yaml-mode json-mode terraform-mode
-          treemacs-mode
-          )
-        )
+  ;;(setq minimap-major-modes
+  ;;'(
+  ;;prog
+  ;;)
+  ;;)
 
 
 
@@ -123,8 +136,8 @@ When FORCE, enforce update of the active region."
   ;; causes issues with window size when on left... 
   (setq minimap-window-location 'right)
   (setq minimap-enlarge-certain-faces nil)
-  (setq minimap-recreate-window nil)
-  (setq minimap-automatically-delete-window 'visible)
+  (setq minimap-recreate-window t)
+  (setq minimap-automatically-delete-window t)
   (setq minimap-display-semantic-overlays nil) ;; did this fix the org issue?
   (setq minimap-dedicated-window t)
 
@@ -151,17 +164,17 @@ When FORCE, enforce update of the active region."
     (minimap-mode 'toggle)
     )
 
-  ;;:brushup
-  ;;(add-to-list 'brushup-styles
-               ;;'(progn
+  :brushup
+  (add-to-list 'brushup-styles
+               '(progn
                   ;;(set-face-attribute 'minimap-current-line-face nil
                                       ;;:background brushup-bg-2
                                       ;;)
-                  ;;(set-face-attribute 'minimap-active-region-background nil
-                                      ;;:background brushup-bg-1_0
-                                      ;;)
-                 ;; 
-                  ;;))
+                  (set-face-attribute 'minimap-active-region-background nil
+                                      :background brushup-bg-1_0
+                                      )
+                  
+                  ))
 
   :general
   (

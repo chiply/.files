@@ -5,3 +5,5 @@
 ;; not sure why this isn't working in embark -- may not work here either, i think something overrides this
 ;; maybe which key setup in meow?
 (setq prefix-help-command #'embark-prefix-help-command)
+
+(tab-bar-mode +1)

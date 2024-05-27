@@ -18,41 +18,34 @@
   (when (and (boundp 'iedit-mode) iedit-mode)
     (all-the-icons-material
      "find_replace"
-     :height 1.2
-     :v-adjust 0
-     :face 'all-the-icons-lred)))
+     :face 'mode-line )))
 
 (defun z-line-github-icon ()
   (when vc-mode
     (all-the-icons-faicon
      "github"
-     :height 1.2
-     :v-adjust 0
-     :face 'all-the-icons-lred)))
+     :face 'mode-line )))
 
 (defun z-line-modified-icon ()
   (when (buffer-modified-p)
     (all-the-icons-material
      "change_history"
-     :height 1.0
-     :v-adjust 0
-     :face 'all-the-icons-lred)))
+     :face 'mode-line 
+     )))
 
 (defun z-line-tramp-icon ()
   (when (member "ssh" (4mn-get-tramp-hop-types))
     (all-the-icons-faicon "server"
-                          :height 0.8
-                          :v-adjust 0
-                          :face 'all-the-icons-lred))
+                          
+                          :face 'mode-line ))
   )
 
 (defun z-line-docker-icon ()
   (when (member "docker" (4mn-get-tramp-hop-types))
     (all-the-icons-fileicon
      "dockerfile"
-     :height 1.0
-     :v-adjust 0
-     :face 'all-the-icons-lred)))
+     
+     :face 'mode-line )))
 
 (defun z-line-hydra-indicator-icon ()
   (if (and
@@ -64,10 +57,9 @@
        (eq ml-selected-window (selected-window)))
       (all-the-icons-material
        "flare"
-       :height 1.0
-       :v-adjust 0
+       
        ;; make invisible in other buffers
-       :face 'all-the-icons-lred
+       :face 'mode-line 
        )
     nil))
 
