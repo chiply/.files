@@ -15,7 +15,7 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v4
-    - run: cp -a $GITHUB_WORKSPACE/. ~/
+    - run: cp -a $GITHUB_WORKSPACE ~/
     - run: |
         cd ~ && pwd
         cd ~ && ls -lah
