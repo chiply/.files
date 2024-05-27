@@ -17,11 +17,5 @@ jobs:
     - uses: actions/checkout@v4
     - run: mv $GITHUB_WORKSPACE ~/
     - run: |
-
         cd ~ && pwd
         cd ~ && ls -lah
-
-    # - run: |
-    #     cd ~ && chmod +x bootstrap.sh && bootstrap.sh
-
-
