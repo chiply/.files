@@ -95,6 +95,7 @@ npm install -g how-2
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
     ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
+
 # emacs
 chmod +x ~/.files/install_emacs_distros.sh && ~/.files/install_emacs_distros.sh
 
