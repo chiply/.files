@@ -114,8 +114,11 @@ nvm install node
 
 export GRAPHVIZ_DIR="$(brew --prefix graphviz)"
 
+
+# NOTE -- leaving out of my config until i get automated install for go
 # markdownfmt
-go install github.com/shurcooL/markdownfmt@latest
+# go install github.com/shurcooL/markdownfmt@latest
+
 
 
 
