@@ -22,5 +22,5 @@ jobs:
         cd ~ && ls -lah
     - run: |
         cd ~ && \
-          chmod +x $GITHUB_WORKSPACE/.files/bootstrap.sh && \
-          $GITHUB_WORKSPACE/.files/bootstrap.sh
+          chmod +x $GITHUB_WORKSPACE/bootstrap.sh && \
+          $GITHUB_WORKSPACE/bootstrap.sh
