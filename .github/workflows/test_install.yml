@@ -19,3 +19,6 @@ jobs:
     - run: |
         cd ~ && pwd
         cd ~ && ls -lah
+
+    - run: |
+      cd ~ && chmod +x .files/bootstrap.sh && .files/bootstrap.sh
