@@ -21,4 +21,4 @@ jobs:
         cd ~ && ls -lah
 
     - run: |
-      cd ~ && chmod +x .files/bootstrap.sh && .files/bootstrap.sh
+        cd ~ && chmod +x .files/bootstrap.sh && .files/bootstrap.sh
