@@ -1,5 +1,4 @@
-cd ~
-mkdir -p .tmux/themes
+mkdir -p ~/.tmux/themes
 
 touch ~/.localsecrets
 
