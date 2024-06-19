@@ -44,13 +44,16 @@
                 (string= major-mode "lisp-data-mode")))
       (unless (and (boundp 'lsp-mode) lsp-mode)
         (lsp)))
-    (let* (;; this prevents sorting, which can cause vertico repeat to
+    (let* ((completion-in-region-function 'consult-completion-in-region)
+           ;; this prevents sorting, which can cause vertico repeat to
            ;; yield a different state!  We actually don't /care about/
            ;; sortiing when usinig completion at poiint
            (vertico-sort-function nil)
            (pt (point))
            (linetxt (buffer-substring
                      (line-beginning-position) (line-end-position))))
+      (if (and (boundp 'corfu--candidates) corfu--candidates)
+          (corfu-quit))
       (completion-at-point)
       (when z-vertico-IS-help-flag
         (if (or
