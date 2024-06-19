@@ -13,7 +13,7 @@
   (push (lambda (buf) (string= (buffer-name buf) "file-peak"))
         dimmer-buffer-exclusion-predicates)
 
-  (dimmer-mode t)
+  ;;(dimmer-mode t)
 
   :hydra
   (defhydra+ hydra-window ()

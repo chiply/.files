@@ -112,6 +112,6 @@
 
 
 (add-hook 'help-mode-hook (lambda () (text-scale-set -2)))
-(add-hook 'shell-mode-hook (lambda () (text-scale-set -2)))
+;;(add-hook 'shell-mode-hook (lambda () (text-scale-set -2)))
 (add-hook 'Info-mode-hook (lambda () (text-scale-set -2)))
 (add-hook 'calendar-mode-hook (lambda () (text-scale-set 2)))

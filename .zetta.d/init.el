@@ -55,7 +55,7 @@
    "highlight.el" "macrostep.el" "obsidian.el" "magneto.el"
    "know-your-http-well.el" "spacetree.el" "vertico.el" "vterm.el"
    "tab-line.el" "window.el" "line.el" "snippets.el"
-   ;;"detached.el"
+   "detached.el"
    "ace-mc.el" "json-mode.el" "jsonian.el" "json-processing.el"
    "consult-gh.el" "consult-web.el"
 
@@ -69,7 +69,8 @@
    "spotlight.el" "restart-emacs"
    "magit-todos.el" ;; doesn't work but leaving it in. started working
    "browse-at-remote.el" "mono-complete.el" "rainbow-delimiters.el"
-   "magit-file-icons.el" "devdocs.el"
+   "magit-file-icons.el" "devdocs.el" "telephone-line.el"
+   "corfu.el"
 
    ;;"parrot.el"
    "cleanup.el"))
@@ -84,7 +85,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "~/.files/.zetta.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "/Users/redacted/.files/.zetta.d/bookmarks")
  '(connection-local-criteria-alist
    '(((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)
@@ -170,7 +171,9 @@
      (eshell-connection-default-profile
       (eshell-path-env-list))))
  '(custom-safe-themes
-   '("1781e8bccbd8869472c09b744899ff4174d23e4f7517b8a6c721100288311fa5" "4c7228157ba3a48c288ad8ef83c490b94cb29ef01236205e360c2c4db200bb18" default))
+   '("4c7228157ba3a48c288ad8ef83c490b94cb29ef01236205e360c2c4db200bb18" default))
+ '(ede-project-directories
+   '("/Users/redacted/source_code/workflow-activity-registry"))
  '(helm-minibuffer-history-key "M-p")
  '(org-fold-core-style 'overlays))
 (custom-set-faces
