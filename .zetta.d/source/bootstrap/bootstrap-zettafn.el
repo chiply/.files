@@ -190,6 +190,8 @@ Code:
 (defun z-highlight-phrases ()
   (interactive)
   (message "HOOK RAN")
+
+  ;; SQLALCHEMY Logs
   (highlight-phrase "WARNING" 'modus-themes-intense-yellow)
   (highlight-phrase "STEP_SUCCESS" 'modus-themes-subtle-green)
   (highlight-phrase "PIPELINE_SUCCESS" 'modus-themes-intense-green)
@@ -205,18 +207,28 @@ Code:
   (highlight-phrase "UPDATE" 'modus-themes-subtle-green)
   (highlight-phrase "DELETE" 'modus-themes-subtle-green)
 
+  ;; pytest
+  (highlight-phrase "Error" 'modus-themes-subtle-red)
+  (highlight-phrase "error" 'modus-themes-subtle-red)
+  (highlight-phrase "ERROR" 'modus-themes-subtle-red)
+
+  (highlight-phrase "Warning" 'modus-themes-subtle-yellow)
+  (highlight-phrase "warning" 'modus-themes-subtle-yellow)
+  (highlight-phrase "WARNING" 'modus-themes-subtle-yellow)
+
+  (highlight-phrase "Captured stdout call" 'modus-themes-subtle-green)
+  
+
+  ;; http
   (highlight-phrase "400" 'modus-themes-subtle-red)
   (highlight-phrase "401" 'modus-themes-subtle-red)
   (highlight-phrase "402" 'modus-themes-subtle-red)
-
   (highlight-phrase "404" 'modus-themes-subtle-red)
-
   (highlight-phrase "422" 'modus-themes-subtle-magenta)
-
   (highlight-phrase "500" 'modus-themes-intense-red)
-
   (highlight-phrase "200" 'modus-themes-subtle-green)
   (highlight-phrase "201" 'modus-themes-subtle-green)
+
   )
 
 

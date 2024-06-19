@@ -117,7 +117,7 @@ seem to require loading after the client starts up"
            ;;:overline nil
            ;;:underline nil
            :font "Pt Mono"
-           ;;:box t
+           :box nil
            )
 
           (set-face-attribute
@@ -125,7 +125,7 @@ seem to require loading after the client starts up"
            ;;:overline nil
            ;;:underline nil
            :font "Pt Mono"
-           ;;:box t
+           :box nil
            )
 
           (set-face-attribute

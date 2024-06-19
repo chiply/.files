@@ -186,9 +186,7 @@ point."
 
 
 
-  :hook (
-         (python-ts-mode . lsp-deferred)
-         )
+  :hook ((python-ts-mode . lsp-deferred))
   )
 
 

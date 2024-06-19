@@ -1,28 +1,13 @@
-(use-package templatel)
+;; TODO add feature (like tmuxinator) that simply allows you to run multiple targets at once
+
+;; TODO make detached-shell command ebhave liek async shell command wrt to uniquifying buffer name.
+;; don't uniquify unless can make this work with sentinels
 
 ;; better version of multi-compile that has better support from embark
 ;; and consult and also offers parsing of build system targets (eg
 ;; makefile targets).  Integrate automatic pulling of targets with
 ;; this project.
 ;; NOTE can't get all the icons or consult working
-
-;; TODO probably don't need to demand these
-(use-package compile-multi :demand t)
-(use-package consult-compile-multi :demand t :config (consult-compile-multi-mode))
-(use-package all-the-icons-completion
-  :demand t
-  :config
-  (all-the-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
-
-(use-package compile-multi-all-the-icons :demand t)
-
-(use-package compile-multi-embark :demand t :config (compile-multi-embark-mode +1))
-(use-package projection :demand t)
-(use-package projection-multi :demand t)
-(use-package projection-multi-embark :demand t)
-
-(require 'projection-multi-make)
 
 ;; TODO
 ;; cleanup
@@ -36,6 +21,27 @@
 ;; refactor how bufnm is being set
 ;; some indication as to what mode the buffer is in in the modeline
 
+
+;;;;;;;;;;;;;;;; DEPENDENCIES
+(use-package templatel)
+(use-package compile-multi :demand t)
+(use-package consult-compile-multi :demand t :config (consult-compile-multi-mode))
+(use-package all-the-icons-completion
+  :demand t
+  :config
+  (all-the-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
+(use-package compile-multi-all-the-icons :demand t)
+(use-package compile-multi-embark :demand t :config (compile-multi-embark-mode +1))
+(use-package projection :demand t)
+(use-package projection-multi :demand t)
+(use-package projection-multi-embark :demand t)
+(require 'projection-multi-make)
+
+
+;; VARIABLES
+(setq zmc-async-shell-command-spinners-enable nil)
+
 ;;;;;;;;;;;;;;;;;; HELPERS
 (defun zmc-get-hashtbl (args)
   (ht<-alist
@@ -47,29 +53,81 @@
         `(,k . ,v)))
     args)))
 
-;;;;;;;;;;;;;;;;;;;;;; EXECUTORS
-;; boudned complexity: 3 main strategies: compile,
-;; async-shell-command, and vterm.  Each of these has a detached
-;; variant
-(defun zmc-execute (program cmd bufnm)
-  (let ((shell-command-switch "-ic"))
-    (cond
-     ((string= program "async-shell-command") (zmc-es-async-shell-cmd cmd bufnm))
-     ((string= program "vterm") (zmc-es-vterm cmd bufnm))
-     ((string= program "compile") (zmc-es-compile cmd))
-     (t (apply (intern program) `(,cmd))))))
+;;;;;;;;;;;;;;;;;; Enhanced versions of async-shell-command and
+;;;;;;;;;;;;;;;;;; detached-shell-command
+(defun zmc-command-sentinel (process signal)
+  "`zmc-async-shell-command+` is an async/compile variant allowing to
+leverage the high speed features of async-shell-command with the
+convenient error parsing and ergonomics of compilation-mode.
+Also includes mechanisms for notifications, spinners, and
+annotation of output (via highlight phrases).  This functions use
+of process sentinel should serve as a reference implementation
+for doing this with any other subprocess-creating function like
+async-shell-command"
+  (let* ((buf (process-buffer process))
+         (bufnm (buffer-name buf)))
+    (when (memq (process-status process) '(exit signal))
+      (with-current-buffer buf
+        (compilation-minor-mode t)
+        (z-compile-spin-stop buf signal)
+        (z-highlight-phrases)
+        (alert (concat bufnm " exited with signal: " signal)
+               :title "zmc finished"))
+      (shell-command-sentinel process signal))))
 
+
+(defun zmc-async-shell-command+ (command output-buffer &optional error-buffer)
+  (let* ((proc (progn
+                 (async-shell-command command output-buffer error-buffer)
+                 (get-buffer-process output-buffer))))
+    (if (process-live-p proc)
+        (progn
+          (set-process-sentinel proc #'zmc-command-sentinel)
+          output-buffer)
+      (message "No process running"))))
+
+
+(defun zmc-detached-shell-command+ (command output-buffer)
+  (let* ((detached--shell-command-buffer output-buffer)
+         (proc (progn
+                 (detached-shell-command command)
+                 (get-buffer-process output-buffer))))
+    (if (process-live-p proc)
+        (progn
+          (set-process-sentinel proc #'zmc-command-sentinel)
+          output-buffer)
+      (message "No process running"))))
+
+;;;;;;;;;;;;;;;;;;;;;; EXECUTORS
+(defun zmc-execute (program cmd bufnm)
+  (if (not (member
+            program
+            '("detached" "detached+" "async-shell-command"
+              "async-shell-command+" "vterm" "compile"
+              "detached-compile")))
+      (error "zmc-execute: program %s not supported" program))
+  (let* ((shell-command-switch "-ic")
+         (buf (cond
+               ((string= program "detached") (zmc-es-detached cmd bufnm))
+               ((string= program "detached+") (zmc-es-detached+ cmd bufnm))
+               ((string= program "async-shell-command") (zmc-es-async-shell-command cmd bufnm))
+               ((string= program "async-shell-command+") (zmc-es-async-shell-command+ cmd bufnm))
+               ((string= program "vterm") (zmc-es-vterm cmd bufnm))
+               ((string= program "compile") (zmc-es-compile cmd))
+               ((string= program "detached-compile") (zmc-es-detached-compile cmd)))))
+    (if (or (bufferp buf) (bufferp (get-buffer buf)))
+        buf
+      (error "zmc-execute: executor did not return a buffer"))))
 
 (defun zmc-run (program cmd bufnm side slot select)
-  (let* ((original-window (get-buffer-window (current-buffer) ))
+  (let* ((original-window (get-buffer-window (current-buffer)))
          (new-buffer (zmc-execute program cmd bufnm)))
-
     (display-buffer new-buffer)
-
     (select-window original-window)
     (when (string= "yes" select)
       (select-window (get-buffer-window new-buffer)))))
 
+;; individual executors
 (defun zmc-es-compile (cmd)
   (let ((compilation-buffer-name-function
          '(lambda (_)
@@ -79,26 +137,47 @@
         (compile-command (or local-cmd latest-cmd)))
     (save-window-excursion (compile compile-command))))
 
-(defun zmc-es-recompile ()
-  ;; LEFT OFF how to solve this... combine with latest?  
-  ;; this still isn't ideal as switching buffers would cause the
-  ;; buffername to change to something generic again
-  ;; also note this is distinct from command
-  ;; there should be a 'latest buffername function'
-  (interactive)
+(defun zmc-es-detached-compile (cmd)
   (let ((compilation-buffer-name-function
          '(lambda (_)
-            (or (when (boundp 'local-transient) local-transient)
+            (or (when (boundp 'local-transient)
+                  local-transient)
                 latest-transient)))
         (compile-command (or local-cmd latest-cmd)))
-    (save-window-excursion (recompile))))
+    (save-window-excursion (detached-compile compile-command))))
 
-
-(defun zmc-es-async-shell-cmd (cmd bufnm)
+(defun zmc-es-async-shell-command (cmd bufnm)
   (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient))
-        (process-connection-type nil))
+        (process-connection-type nil) ;; performance
+        )
     (save-window-excursion
       (window-buffer (async-shell-command cmd bufnm)))))
+
+(defun zmc-es-async-shell-command+ (cmd bufnm)
+  (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient))
+        (process-connection-type nil) ;; performance
+        (zmc-async-shell-command-spinners-enable t) ;; to enable starting the spinner 
+        )
+    (save-window-excursion
+      (zmc-async-shell-command+ cmd bufnm))))
+
+
+(defun zmc-es-detached (cmd bufnm)
+  (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient))
+        ;;(process-connection-type nil) ;; doesn't work with detached
+        )
+    (let ((detached--shell-command-buffer bufnm))
+      (detached-shell-command cmd))
+    bufnm))
+
+(defun zmc-es-detached+ (cmd bufnm)
+  (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient))
+        ;;(process-connection-type nil) ;; doesn't work with detached
+        (zmc-async-shell-command-spinners-enable t) ;; to enable starting the spinner 
+        )
+    (zmc-detached-shell-command+ cmd bufnm)
+    bufnm))
+
 
 (defun zmc-es-vterm (cmd bufnm)
   ;; if bufnm exists kill it
@@ -108,7 +187,6 @@
     ;; of these options?
     (when (get-buffer bufnm)
       (kill-buffer bufnm))
-    ;; todo -- would save window excursion work here?
     (let* ((vterm-buffer (save-window-excursion (vterm bufnm)))
            (vterm-process (get-buffer-process vterm-buffer)))
       (process-send-string vterm-process (concat cmd "\n"))
@@ -165,39 +243,54 @@
       [;; Action should simply take arguments and override variables
        "Actions"
        ("<return>" "run" zmc-transient-act)
-       ]
-      )))
+       ])))
 
-(defun zmc-detect-targets ()
-  (eval
-   (append
-    '(ht-merge)
-    (-filter
-     (lambda (x) x)
-     (-map
-      (lambda (project-path)
-        ;; todo -- need to handle multiple build files in the same directory / same project
-        ;; basically add a for loop iterating through types. support this only when needed
-        (let ((build-file-name
-               (cond
-                ((file-exists-p (concat project-path "makefile")) "makefile")
-                ((file-exists-p (concat project-path "Makefile")) "Makefile"))))
-          (when build-file-name
-            (ht-from-alist
-             (-map
-              (lambda (target)
-                `(,(concat
-                    (file-name-nondirectory
-                     (directory-file-name project-path))
-                    "--" target)
-                  .
-                  ,(ht-from-alist
-                    `(("template" . ,(concat "make " target))
-                      ("directory" . ,project-path)
-                      ("program" . "compile")))))
-              (projection-multi-make--targets-from-file2
-               (concat project-path build-file-name)))))))
-      projectile-known-projects)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DETECTORS
+(defun zmc-infer-program (build-file-type)
+  (cond
+   ((string= build-file-type "make") "async-shell-command+")
+   ((string= build-file-type "tmuxinator") "vterm")
+   ))
+
+(defun zmc-make-template (build-file-name target)
+  (cond
+   ((string= build-file-type "make")
+    (concat "make -f " build-file-name " " target))
+   ((string= build-file-type "tmuxinator")
+    (concat "tmuxinator start --suppress-tmux-version-warning -p " build-file-name))))
+
+(defun zmc-make-alist (project-path build-file-name build-file-type)
+  (let* ((fname (concat project-path build-file-name))
+         (subtargets (if (string= build-file-type "make")
+                         (projection-multi-make--targets-from-file2 fname)
+                       '("")))
+         (dirname (file-name-nondirectory (directory-file-name project-path)))
+         (alist (--map
+                 `(,(concat dirname "::" build-file-type "::" build-file-name "::" it)
+                   .
+                   ,(ht-from-alist
+                     `(("template" . ,(zmc-make-template build-file-name it))
+                       ("directory" . ,project-path)
+                       ("program" . ,(zmc-infer-program build-file-type)))))
+                 subtargets)))
+    (ht-from-alist alist)))
+
+(defun zmc-get-targets (project-path build-file-type regex)
+  (--map
+   (let* ((build-file-name (when (file-exists-p (concat project-path it)) it)))
+     (when build-file-name
+       (zmc-make-alist project-path build-file-name build-file-type)))
+   (directory-files project-path nil regex t)))
+
+;; This should be the function that we define per build target type
+(defun zmc-detect-make-targets (build-file-type regex)
+  (let* ((projects (--filter (not (string= it "~/")) projectile-known-projects))
+         (lst (--map (zmc-get-targets it build-file-type regex) projects))
+         (lst (--filter it lst))
+         (lst (flatten-list lst)))
+    (eval (append '(ht-merge) lst))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INTERACTIVE FUNCTION
 (defun zmc (&optional arg)
@@ -217,7 +310,13 @@
       (funcall (intern latest-transient))
       (unless (equal arg '(16))
         (execute-kbd-macro (kbd "<return>")))))
-   (t (let* ((detected-targets (zmc-detect-targets))
+   (t (let* ((detected-targets (ht-merge
+                                (zmc-detect-make-targets "make" "makefile\\|Makefile")
+                                (zmc-detect-make-targets "tmuxinator" "\\.tmuxinator\\.yaml")
+                                (eval (append
+                                       '(ht-merge)
+                                       (--filter it (zmc-get-targets
+                                                     "~/.config/tmuxinator/" "tmuxinator" ""))))))
              (config-raw (with-temp-buffer (insert-file-contents "~/.cmds.yaml") (buffer-string)))
              (targets (yaml-parse-string config-raw :object-key-type 'string))
              (targets (ht-merge detected-targets targets))
@@ -250,3 +349,5 @@
  "s-R" '(lambda () (interactive)
           (setq current-prefix-arg '(16))
           (call-interactively 'zmc)))
+
+

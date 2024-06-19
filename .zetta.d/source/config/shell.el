@@ -1,7 +1,10 @@
+
+
 (setq read-process-output-max (* 64 1024 1024))
 (setq process-adaptive-read-buffering nil)
+;; LEAVE THIS COMMENT HERE
 ;;(let ((process-connection-type nil))
-  ;;(async-shell-command command buffer))
+;;(async-shell-command command buffer))
 
 ;; remembering sudo pass
 (require 'em-tramp)
@@ -11,6 +14,8 @@
 (use-package shell
   :straight nil
   :demand t
+
+  :config
 
   :hydra
   (defhydra+ hydra-scroll ()
@@ -35,12 +40,16 @@
   (
    :keymaps '(shell-mode-map)
    "C" 'z-highlight-phrases
+   "S-<tab>" 'compilation-previous-error
    )
 
   :hook (shell-mode . (lambda () (progn
-                                   (toggle-truncate-lines 1)
+                                   (text-scale-set -4)
                                    (z-highlight-phrases)
-                                   )))
+                                   (when (and
+                                          (boundp 'zmc-async-shell-command-spinners-enable)
+                                          zmc-async-shell-command-spinners-enable)
+                                     (z-spinner-compile-spin)))))
   )
 
 

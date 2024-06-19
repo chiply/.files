@@ -1,8 +1,8 @@
 ;; for binding keys
 (use-package general)
 
-;; for key chords, although a better thought of as melodies, becuase
-;; they involve sequential presses of keys
+;; for key "chords", although a better thought of as "melodies",
+;; becuase they involve sequential presses of keys
 (use-package key-chord
   :config
   (setq key-chord-two-keys-delay .05 key-chord-one-key-delay .05)
@@ -11,6 +11,7 @@
 
 ;; provides hints
 (use-package which-key
+  :demand t
   :config
 
   (defun z-cursor-in-which-key-slot ()

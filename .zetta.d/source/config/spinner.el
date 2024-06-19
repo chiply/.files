@@ -1,8 +1,31 @@
-;; Left off, was able to get this working the issues that some of the spinner types actually change the height of the line as they're spinning, and I couldn't figure out a way to do this even with trying to use the font and also the header line height. It just always seems that certain cliffs actually don't even know what they are but certain clips take up more space vertical space than others. Another less severe as she is that the current set of spinners are actually different heights and so if you switch between them, you'd notice some change, however, since I only really intend to use these in compile buffers, It doesn't matter that it changes the height. It really shouldn't be noticeable, but ideally, I'll fix this and then I'll be able to use these little animations everywhere. They're bringing in the spinners from the rust code was useful in terms of mining, a library in spinners, but also teaching me what the possibilities are e.g. you can just paste emoji's in and get animations that way, but also at some of the Limite Shinzo, e.g., some emojis actually custom such as the party pirate thing, and also emoji simply rendered a different size in the max, and it's not necessary easy to control.
+;; Left off, was able to get this working the issues that some of the
+;; spinner types actually change the height of the line as they're
+;; spinning, and I couldn't figure out a way to do this even with
+;; trying to use the font and also the header line height. It just
+;; always seems that certain cliffs actually don't even know what they
+;; are but certain clips take up more space vertical space than
+;; others. Another less severe as she is that the current set of
+;; spinners are actually different heights and so if you switch
+;; between them, you'd notice some change, however, since I only
+;; really intend to use these in compile buffers, It doesn't matter
+;; that it changes the height. It really shouldn't be noticeable, but
+;; ideally, I'll fix this and then I'll be able to use these little
+;; animations everywhere. They're bringing in the spinners from the
+;; rust code was useful in terms of mining, a library in spinners, but
+;; also teaching me what the possibilities are e.g. you can just paste
+;; emoji's in and get animations that way, but also at some of the
+;; Limite Shinzo, e.g., some emojis actually custom such as the party
+;; pirate thing, and also emoji simply rendered a different size in
+;; the max, and it's not necessary easy to control.
 
-;; Update, figured out how to decrease the size of emojis, but some of the non-emoji unicode characters are still too large -- commenting thos out for now as so I can use spinners everywhere .  keeping for now as I don't want to overcomplicate things -- simply prefer emojis for non compile spinners or ones that we know will fit
+;; Update, figured out how to decrease the size of emojis, but some of
+;; the non-emoji unicode characters are still too large -- commenting
+;; thos out for now as so I can use spinners everywhere .  keeping for
+;; now as I don't want to overcomplicate things -- simply prefer
+;; emojis for non compile spinners or ones that we know will fit
 
-;; update - abandoning custom emojis as these are implenented as emojis, the rendering also doesn't really work
+;; update - abandoning custom emojis as these are implenented as
+;; emojis, the rendering also doesn't really work
 
 (use-package spinner
 
@@ -11,12 +34,13 @@
   :config
   ;; set emoji font size to 11 -- I have found this is necessary to
   ;; prevent the spinner characters from being to big and causing the
-  ;; height of the *-line to change.  this may not abstract when text size increases or decreases...
-  (set-fontset-font t 'unicode "Apple Color Emoji 13" nil 'prepend)
-  (set-fontset-font t 'unicode "Arial Unicode MS 13" nil 'prepend)
+  ;; height of the *-line to change.  this may not abstract when text
+  ;; size increases or decreases...
+  (set-fontset-font t 'unicode "Apple Color Emoji 8" nil 'prepend)
+  (set-fontset-font t 'unicode "Arial Unicode MS 10" nil 'prepend)
 
-  ;; Starting
-  ;; commenting out soinners that cause issues with the mode or headerline
+  ;; Starting commenting out spinners that cause issues with the mode
+  ;; or headerline
   ;; 
   ;; copied from https://github.com/FGRibreau/spinners/blob/master/src/utils/spinners_data.rs
   (setq spinner-types

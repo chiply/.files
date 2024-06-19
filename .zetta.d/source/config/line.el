@@ -35,6 +35,7 @@
                  (concat "{" (jsons-get-path-python) "}"))))))
 
 
+;; explain the syntax, why is (:eval) being used
 
 
 (setq default-line-align-left

@@ -41,7 +41,7 @@ The completion strategy used (caveat: ambiguous for
 [completion-at-point]) is reported to the end-user.  The order of
 high-level completion strategies:
 
-1. static expansion (abbrev and yasnippet)
+1. static expansion (abbrev and yasnippet; NOT dabbrev)
 
     1. abbreviations (abbrev)
 
@@ -94,62 +94,66 @@ use brings up a menu where we can chose some non-default (ispell,
 tempel expand?)
 "  
   (interactive "P")
-  (or ;; the or causes this to exit when the first condition is matched
+  (let ((completion-in-region-function 'consult-completion-in-region))
+    (or ;; the or causes this to exit when the first condition is matched
    ;;;;;;;;;;;;;;;;; Literal Matches (Static Expansion)
-   ;; Abbrev
-   (when (expand-abbrev) (message "[Abbrev]"))
-   ;; Snippets
-   (when
-       (if (member (thing-at-point 'word) (yas-active-keys))
-           (yas-expand)
-         nil)
-     (message "[Yas]")
-     )
+     ;; Abbrev
+     (when (expand-abbrev) (message "[Abbrev]"))
+     ;; Snippets
+     (when
+         (if (member (thing-at-point 'word) (yas-active-keys))
+             (yas-expand)
+           nil)
+       (message "[Yas]")
+       )
    ;;;;;;;;;;;;;;;;; Dynamic Completion (Incremental Narrowing Completion)
-   (when
-       (let* ((mode-capf (cond
-                          ((or (string= major-mode "emacs-lisp-mode")
-                               (string= major-mode "lisp-interaction-mode"))
-                           ;; todo -- not making it through to ispell... why?
-                           '(elisp-completion-at-point cape-file))
-                          ((string= major-mode "python-ts-mode")
-                           '(python-completion-at-point cape-file))
-                          ((string= major-mode "org-mode")
-                           '(cape-file
-                             org-roam-complete-everywhere
-                             org-roam-tag-completions
-                             org-roam-complete-link-at-point
-                             cape-ispell))
-                          ((string= major-mode "yaml-mode")
-                           '(cape-file))
-                          ((string= major-mode "sh-mode")
-                           '(cape-file
-                             my-sh-completion-at-point))
-                          ))
-              (completion-at-point-functions mode-capf))
-         (completion-at-point))
-     (message "[completion-at-point]"))
+     (when
+         (let* ((mode-capf (cond
+                            ((or (string= major-mode "emacs-lisp-mode")
+                                 (string= major-mode "lisp-interaction-mode"))
+                             ;; todo -- not making it through to ispell... why?
+                             '(elisp-completion-at-point cape-file))
+                            ((string= major-mode "python-ts-mode")
+                             '(python-completion-at-point cape-file))
+                            ((string= major-mode "org-mode")
+                             '(cape-file
+                               org-roam-complete-everywhere
+                               org-roam-tag-completions
+                               org-roam-complete-link-at-point
+                               cape-ispell))
+                            ((string= major-mode "yaml-mode")
+                             '(cape-file))
+                            ((string= major-mode "sh-mode")
+                             '(cape-file
+                               my-sh-completion-at-point))
+                            ((string= major-mode "makefile-bsdmake-mode")
+                             '(cape-file
+                               makefile-completions-at-point))
+                            ))
+                (completion-at-point-functions mode-capf))
+           (completion-at-point))
+       (message "[completion-at-point]"))
    ;;;;;;;;;;;;;;;; Hippie (Dynamic Expansion)
-   (let ((hippie-expand-try-functions-list '(try-expand-dabbrev
-                                             try-expand-dabbrev-visible
-                                             try-expand-dabbrev-all-buffers
-                                             try-expand-whole-kill
-                                             )))
-     (hippie-expand arg)) ;; takes care of its own messaging
-   (when
-       (let* ((mode-capf (cond
-                          ((or (string= major-mode "emacs-lisp-mode")
-                               (string= major-mode "lisp-interaction-mode"))
-                           ;; todo -- not making it through to ispell... why?
-                           '(cape-ispell))
-                          ((string= major-mode "python-ts-mode")
-                           '(cape-ispell))
-                          ((string= major-mode "org-mode")
-                           '(cape-ispell))))
-              (completion-at-point-functions mode-capf))
-         (completion-at-point))
-     (message "[ispell]"))
-   ))
+     (let ((hippie-expand-try-functions-list '(try-expand-dabbrev
+                                               try-expand-dabbrev-visible
+                                               try-expand-dabbrev-all-buffers
+                                               try-expand-whole-kill
+                                               )))
+       (hippie-expand arg)) ;; takes care of its own messaging
+     (when
+         (let* ((mode-capf (cond
+                            ((or (string= major-mode "emacs-lisp-mode")
+                                 (string= major-mode "lisp-interaction-mode"))
+                             ;; todo -- not making it through to ispell... why?
+                             '(cape-ispell))
+                            ((string= major-mode "python-ts-mode")
+                             '(cape-ispell))
+                            ((string= major-mode "org-mode")
+                             '(cape-ispell))))
+                (completion-at-point-functions mode-capf))
+           (completion-at-point))
+       (message "[ispell]"))
+     )))
 
 
 
@@ -158,13 +162,13 @@ tempel expand?)
 
 (general-define-key
  :states '(insert)
- :keymaps '(
-            python-ts-mode-map lisp-interaction-mode-map
+ :keymaps '(python-ts-mode-map lisp-interaction-mode-map
             lisp-data-mode-map
             emacs-lisp-mode-map lisp-mode-map sql-mode-map
             web-mode-map js2-mode-map rjsx-mode-map text-mode-map
             org-mode-map bibtex-mode-map sh-mode-map lark-mode-map
-            dockerfile-mode-map terraform-mode-map mermaid-mode-map)
+            dockerfile-mode-map terraform-mode-map mermaid-mode-map
+            makefile-bsdmake-mode-map conf-toml-mode-map)
  "C-;" 'indent-for-tab-command
  "<tab>" 'z-completion-at-point
  )
