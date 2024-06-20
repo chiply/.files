@@ -27,7 +27,7 @@
 
 
 ;; export backends
-(require 'ox-beamer)
+;;(require 'ox-beamer)
 (use-package epresent)
 (use-package ox-reveal
   :config
