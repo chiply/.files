@@ -1,5 +1,5 @@
 ;; TODO: some todo
-(set-frame-font "Vulf Mono")
+(set-frame-font "Vulf Mono Code")
 ;;(set-frame-font "PT Mono")
 
 
