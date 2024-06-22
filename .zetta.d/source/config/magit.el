@@ -24,15 +24,16 @@
   (add-hook 'magit-status-mode-hook 'magit-toggle-log-margin-style)
   (add-hook 'magit-log-mode-hook 'magit-toggle-log-margin-style)
 
-  (general-unbind :keymaps 'magit-status-mode-map "M-<tab>")
-  (general-unbind :keymaps 'magit-mode-map "M-<tab>")
-  (general-unbind :keymaps 'magit-section-mode-map "M-<tab>")
+  (general-unbind :keymaps 'magit-status-mode-map :states 'normal "M-<tab>")
+  (general-unbind :keymaps 'magit-mode-map :states 'normal "M-<tab>")
   (general-unbind :keymaps 'magit-section-mode-map :states 'normal "M-<tab>")
+
+  (general-unbind :keymaps 'magit-status-mode-map :states 'normal "C-<tab>")
+  (general-unbind :keymaps 'magit-mode-map :states 'normal "C-<tab>")
+  (general-unbind :keymaps 'magit-section-mode-map :states 'normal "C-<tab>")
 
   ;; overriding here -- basically not setting to width of shortstat as
   ;; that ends up cutting off the margin value for forge data
-
-
 
   (defhydra+ hydra-magit ()
     ("g" magit-status :exit t)
@@ -74,8 +75,6 @@
    "M-S-<tab>" 'st-switch-space-by-name
    "M-<tab>" 'st-go-to-last-space
    )
-
-
 
   )
 
