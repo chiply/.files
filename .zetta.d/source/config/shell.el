@@ -38,12 +38,12 @@
    "s-S" 'hydra-scroll/body
    )
   (
-   :keymaps '(shell-mode-map)
+   :keymaps '(shell-command-mode-map)
    "C" 'z-highlight-phrases
    "S-<tab>" 'compilation-previous-error
    )
 
-  :hook (shell-mode . (lambda () (progn
+  :hook (shell-command-mode . (lambda () (progn
                                    (text-scale-set -4)
                                    (z-highlight-phrases)
                                    (when (and

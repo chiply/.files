@@ -14,7 +14,7 @@
 
   ;; Enable Corfu only for certain modes.
   ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
+  ;;        (shell-command-mode . corfu-mode)
   ;;        (eshell-mode . corfu-mode))
 
   ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can

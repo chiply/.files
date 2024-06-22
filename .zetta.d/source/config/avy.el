@@ -3,7 +3,7 @@
   (setq avy-ignored-modes '(image-mode
                             doc-view-mode
                             pdf-view-mode
-                            shell-mode
+                            shell-command-mode
                             vterm-mode))
 
   :general

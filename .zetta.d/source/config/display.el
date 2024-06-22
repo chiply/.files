@@ -3,7 +3,7 @@
 ;; note this can't have the backslashes...
 (z-side :regex "compilation-mode" :side 'top :slot 1) 
 (z-side :regex "^\\*Async*" :side 'top :slot 1)
-(z-side :regex "shell-mode" :side 'top :slot 1)
+(z-side :regex "shell-command-mode" :side 'top :slot 1)
 (z-side :regex "^\\*Shell*" :side 'top :slot 3)
 (z-side :regex "\\magit-process-mode" :side 'top :slot 1)
 (z-side :regex "^\\*Messages*" :side 'bottom :slot 3)

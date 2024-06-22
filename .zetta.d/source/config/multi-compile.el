@@ -250,6 +250,7 @@ async-shell-command"
 (defun zmc-infer-program (build-file-type)
   (cond
    ((string= build-file-type "make") "async-shell-command+")
+   ((string= build-file-type "pytest") "async-shell-command+")
    ((string= build-file-type "tmuxinator") "vterm")
    ))
 
@@ -258,13 +259,37 @@ async-shell-command"
    ((string= build-file-type "make")
     (concat "make -f " build-file-name " " target))
    ((string= build-file-type "tmuxinator")
-    (concat "tmuxinator start --suppress-tmux-version-warning -p " build-file-name))))
+    (concat "tmuxinator start --suppress-tmux-version-warning -p " build-file-name))
+   ((string= build-file-type "pytest")
+    (concat "poetry run pytest -vvv " build-file-name))
+   ))
 
+(defun zmc-get-pytest-targets-from-project (project-path)
+  (let* ((shell-command-output
+          (shell-command-to-string
+           (concat
+            "cd " project-path " && "
+            "poetry run pytest --co -q --disable-warnings"
+            )))
+         (shell-command-output (nth 0 (split-string shell-command-output "\n\n")))
+         (shell-command-output (split-string shell-command-output "\n")))
+    shell-command-output))
+
+
+;; TODO LEFT OFF -- very slow to pull targets, but does its probably
+;; being called wastefully -- probably need to refactor all these
+;; TODO looks like template isn't being pulled properly
 (defun zmc-make-alist (project-path build-file-name build-file-type)
   (let* ((fname (concat project-path build-file-name))
-         (subtargets (if (string= build-file-type "make")
-                         (projection-multi-make--targets-from-file2 fname)
-                       '("")))
+         (subtargets (cond
+                      ((string= build-file-type "make")
+                       (projection-multi-make--targets-from-file2 fname))
+                      ((and (string= build-file-type "pytest")
+                            (string= (projectile-project-p) (expand-file-name project-path)))
+                       (zmc-get-pytest-targets-from-project project-path))
+                      ((string= build-file-type "tmuxinator")
+                       ;; eg no subtargets
+                       '(""))))
          (dirname (file-name-nondirectory (directory-file-name project-path)))
          (alist (--map
                  `(,(concat dirname "::" build-file-type "::" build-file-name "::" it)
@@ -276,7 +301,7 @@ async-shell-command"
                  subtargets)))
     (ht-from-alist alist)))
 
-(defun zmc-get-targets (project-path build-file-type regex)
+(defun zmc-get-targets (project-path build-file-type &optional regex)
   (--map
    (let* ((build-file-name (when (file-exists-p (concat project-path it)) it)))
      (when build-file-name
@@ -284,7 +309,7 @@ async-shell-command"
    (directory-files project-path nil regex t)))
 
 ;; This should be the function that we define per build target type
-(defun zmc-detect-make-targets (build-file-type regex)
+(defun zmc-detect-targets (build-file-type regex)
   (let* ((projects (--filter (not (string= it "~/")) projectile-known-projects))
          (lst (--map (zmc-get-targets it build-file-type regex) projects))
          (lst (--filter it lst))
@@ -311,8 +336,9 @@ async-shell-command"
       (unless (equal arg '(16))
         (execute-kbd-macro (kbd "<return>")))))
    (t (let* ((detected-targets (ht-merge
-                                (zmc-detect-make-targets "make" "makefile\\|Makefile")
-                                (zmc-detect-make-targets "tmuxinator" "\\.tmuxinator\\.yaml")
+                                (zmc-detect-targets "make" "makefile\\|Makefile")
+                                (zmc-detect-targets "pytest" "pyproject.toml")
+                                (zmc-detect-targets "tmuxinator" "\\.tmuxinator\\.yaml")
                                 (eval (append
                                        '(ht-merge)
                                        (--filter it (zmc-get-targets

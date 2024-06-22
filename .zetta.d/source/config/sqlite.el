@@ -20,7 +20,7 @@
 (defun z-set-async-output-buffer-for-buffer (&optional arg)
   (let* ((user-tag (if (or arg (not (boundp 'z-output-buffer-for-buffer)))
                        (completing-read "Name the output buffer: " (-map (lambda (x) (buffer-name x))
-                                                                         (z-soda-list-mode-buffers "shell-mode")))
+                                                                         (z-soda-list-mode-buffers "shell-command-mode")))
                      z-output-buffer-for-buffer))
 
          (buffer-name (if (string-match "*sql--" user-tag)

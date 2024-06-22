@@ -78,7 +78,7 @@ used to override thing at point for whatever reason"
  :keymaps '(
             sql-mode-map lisp-mode-map lisp-interaction-mode-map
             emacs-lisp-mode-map elisp python-ts-mode-map
-            yaml-mode-map sh-mode-map shell-mode-map
+            yaml-mode-map sh-mode-map shell-command-mode-map
             lark-mode-map)
  "s-j" '(lambda () (interactive)
           (if (buffer-narrowed-p)
@@ -135,7 +135,7 @@ used to override thing at point for whatever reason"
               org-mode-map org-agenda-mode-map sql-mode-map
               python-ts-mode-map lisp-interaction-mode-map
               emacs-lisp-mode-map lisp-mode-map dired-mode-map
-              snippet-mode-map shell-mode-map vterm-mode-map
+              snippet-mode-map shell-command-mode-map vterm-mode-map
               embark-collect-mode-map wgrep-mode-map csv-mode-map
               help-mode-map helpful-mode-map text-mode-map
               pubmed-show-mode-map json-mode-map eww-mode-map

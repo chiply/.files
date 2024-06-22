@@ -158,5 +158,5 @@
   :hook ((vterm-mode . (lambda ()
                          (setq global-hl-line-mode nil)
                          (toggle-truncate-lines 1) (display-line-numbers-mode 1)))
-         ((vterm-mode shell-mode) . tab-line-mode))
+         ((vterm-mode shell-command-mode) . tab-line-mode))
   )
