@@ -13,7 +13,7 @@
     (member (with-current-buffer buffer (symbol-name major-mode)) '("grep-mode")))
 
   (defun is-terminal-application (buffer)
-    (member (with-current-buffer buffer (symbol-name major-mode)) '("shell-mode" "compilation-mode" "vterm-mode")))
+    (member (with-current-buffer buffer (symbol-name major-mode)) '("shell-command-mode" "compilation-mode" "vterm-mode")))
 
   (defun is-magit (buffer)
     (member (with-current-buffer buffer (symbol-name major-mode)) '("magit-status-mode")))
