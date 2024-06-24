@@ -1,7 +1,9 @@
-;; TODO add feature (like tmuxinator) that simply allows you to run multiple targets at once
+;; TODO LEFT OFF -- pytest is very slow to pull targets, but does its probably
+;; being called wastefully -- probably need to refactor all these
 
-;; TODO make detached-shell command ebhave liek async shell command wrt to uniquifying buffer name.
-;; don't uniquify unless can make this work with sentinels
+;; TODO make detached-shell command ebhave liek async shell command
+;; wrt to uniquifying buffer name.  don't uniquify unless can make
+;; this work with sentinels
 
 ;; better version of multi-compile that has better support from embark
 ;; and consult and also offers parsing of build system targets (eg
@@ -261,9 +263,11 @@ async-shell-command"
    ((string= build-file-type "tmuxinator")
     (concat "tmuxinator start --suppress-tmux-version-warning -p " build-file-name))
    ((string= build-file-type "pytest")
-    (concat "poetry run pytest -vvv " build-file-name))
-   ))
+    (concat "poetry run pytest -vvv " target))))
 
+
+
+;; TODO Add in dir and file level -- eg branches
 (defun zmc-get-pytest-targets-from-project (project-path)
   (let* ((shell-command-output
           (shell-command-to-string
@@ -276,9 +280,6 @@ async-shell-command"
     shell-command-output))
 
 
-;; TODO LEFT OFF -- very slow to pull targets, but does its probably
-;; being called wastefully -- probably need to refactor all these
-;; TODO looks like template isn't being pulled properly
 (defun zmc-make-alist (project-path build-file-name build-file-type)
   (let* ((fname (concat project-path build-file-name))
          (subtargets (cond
@@ -294,6 +295,8 @@ async-shell-command"
          (alist (--map
                  `(,(concat dirname "::" build-file-type "::" build-file-name "::" it)
                    .
+                   ;; TODO add point aware things like function name? file name?
+                   ;; need a reliably (eg treesit) approach to doing this
                    ,(ht-from-alist
                      `(("template" . ,(zmc-make-template build-file-name it))
                        ("directory" . ,project-path)
