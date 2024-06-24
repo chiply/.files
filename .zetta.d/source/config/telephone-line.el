@@ -1,5 +1,6 @@
 (use-package telephone-line
   :config
+
   (telephone-line-defsegment zt-ace-1 ()
     (propertize
      (window-parameter (selected-window) 'ace-window-path)
