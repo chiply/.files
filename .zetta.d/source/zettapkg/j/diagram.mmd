@@ -1,6 +1,6 @@
 flowchart TD
 
-    A["`Default Template VVValues
+    A["`Default Template Values
     _builtin_,custom`"] --inherited by--> B[Template Values]
     C["`Dynamic Template Values
     _directory_,point`"] --inherited by--> B
@@ -35,3 +35,7 @@ flowchart TD
 
     Transient -- 5. pushes history to --> session_hist[Transient Session History]
     Transient -- 5. pushes history to --> cross_session_hist[Transient Persistant History]
+    subgraph subgroup1
+        template_generator_configuration -- configures --> template_generator
+        template_generator -- generates --> target_templates
+    end

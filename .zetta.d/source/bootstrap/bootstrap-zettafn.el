@@ -216,6 +216,10 @@ Code:
   (highlight-phrase "warning" 'modus-themes-subtle-yellow)
   (highlight-phrase "WARNING" 'modus-themes-subtle-yellow)
 
+  (highlight-phrase "Failed" 'modus-themes-subtle-yellow)
+  (highlight-phrase "failed" 'modus-themes-subtle-yellow)
+  (highlight-phrase "FAILED" 'modus-themes-subtle-yellow)
+
   (highlight-phrase "Captured stdout call" 'modus-themes-subtle-green)
   
 
