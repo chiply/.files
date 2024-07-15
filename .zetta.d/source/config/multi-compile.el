@@ -267,17 +267,32 @@ async-shell-command"
 
 
 
-;; TODO Add in dir and file level -- eg branches
+
+(defun zmc-get-parent-dirs (path)
+  (let* ((path (string-join (butlast (split-string path "/")) "/"))
+         (path (if (string= path "") "/" path)))
+    (if (string= path "/") '() (cons path (zmc-get-parent-dirs path)))))
+
 (defun zmc-get-pytest-targets-from-project (project-path)
-  (let* ((shell-command-output
-          (shell-command-to-string
-           (concat
-            "cd " project-path " && "
-            "poetry run pytest --co -q --disable-warnings"
-            )))
-         (shell-command-output (nth 0 (split-string shell-command-output "\n\n")))
-         (shell-command-output (split-string shell-command-output "\n")))
-    shell-command-output))
+  (let* ((paths (shell-command-to-string
+                                (concat
+                                 "cd " project-path " && "
+                                 "poetry run pytest "
+                                 "--co -q --disable-warnings")))
+         (paths (nth 0 (split-string paths "\n\n")))
+         (paths (split-string paths "\n"))
+         (paths (--map (substring it 0 (string-match "\\[" it))
+                                      paths))
+         (paths (append
+                                ;; function level
+                                (delete-dups paths) 
+                                ;; file level
+                                (delete-dups (--map (nth 0 (split-string it "::"))
+                                                    paths)) 
+                                ;; parent dir level
+                                (delete-dups (-flatten (--map (zmc-get-parent-dirs it)
+                                                              paths))))))
+    paths))
 
 
 (defun zmc-make-alist (project-path build-file-name build-file-type)
@@ -293,7 +308,7 @@ async-shell-command"
                        '(""))))
          (dirname (file-name-nondirectory (directory-file-name project-path)))
          (alist (--map
-                 `(,(concat dirname "::" build-file-type "::" build-file-name "::" it)
+                 `(,(concat dirname " > " build-file-type " > " build-file-name " > " it)
                    .
                    ;; TODO add point aware things like function name? file name?
                    ;; need a reliably (eg treesit) approach to doing this
