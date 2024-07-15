@@ -6,7 +6,7 @@
 ;; projectile integration
 
 (setq z-gh-list-run-command-for-watch "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[] | select(.updatedAt > (now - ( 0.1 * 86400))) ]'")
-(setq z-gh-run-watch-command "gh run watch -i 10 %s; osascript -e 'display notification \"%s %s\" with title \"%s 🐙 %s\" sound name \"Frog\"'")
+(setq z-gh-run-watch-command "gh run watch -i 10 %s; osascript -e 'display notification \"%s %s\" with title \"%s || %s\" sound name \"Frog\"'")
 (setq z-gh-list-run-command-for-view "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[]| select(.updatedAt > (now-( 30 * 86400)))]'")
 (setq z-gh-view-run-command "gh run view %s --log")
 
@@ -39,7 +39,7 @@
                       (concat "on " (ht-get run "headBranch"))
                       (projectile-project-name dir)
                       (ht-get run "name")))
-         (bufnm (format "*GHA run: %s 🐙 %s*"
+         (bufnm (format "*GHA run: %s || %s*"
                         (projectile-project-name default-directory)
                         (ht-get run "name")))
          (compilation-buffer-name-function `(lambda (_) ,bufnm)))
@@ -53,7 +53,7 @@
          (run (z-gh-pick-run dir z-gh-list-run-command-for-view))
          (id (ht-get run "databaseId"))
          (cmd (format z-gh-view-run-command id))
-         (bufnm (format "*GHA log: %s 🐙 %s*"
+         (bufnm (format "*GHA log: %s || %s*"
                         (projectile-project-name default-directory)
                         (ht-get run "name"))))
     (shell-command cmd bufnm)

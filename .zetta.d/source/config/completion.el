@@ -115,6 +115,9 @@ tempel expand?)
                              '(elisp-completion-at-point cape-file))
                             ((string= major-mode "python-ts-mode")
                              '(python-completion-at-point cape-file))
+                            ((string= major-mode "markdown-mode")
+                             '(cape-file
+                               cape-ispell))
                             ((string= major-mode "org-mode")
                              '(cape-file
                                org-roam-complete-everywhere
@@ -168,7 +171,7 @@ tempel expand?)
             web-mode-map js2-mode-map rjsx-mode-map text-mode-map
             org-mode-map bibtex-mode-map sh-mode-map lark-mode-map
             dockerfile-mode-map terraform-mode-map mermaid-mode-map
-            makefile-bsdmake-mode-map conf-toml-mode-map)
+            makefile-bsdmake-mode-map conf-toml-mode-map markdown-mode-map)
  "C-;" 'indent-for-tab-command
  "<tab>" 'z-completion-at-point
  )

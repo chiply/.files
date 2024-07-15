@@ -1,6 +1,5 @@
-;; TODO: some todo
-(set-frame-font "Vulf Mono Code")
-;;(set-frame-font "PT Mono")
+;;(set-frame-font "Vulf Mono Code")
+(set-frame-font "PT Mono")
 
 
 (winner-mode)
@@ -14,7 +13,7 @@
 
 (pixel-scroll-precision-mode 1)
 
-(setq scroll-margin 5
+(setq scroll-margin 0 ;; setting this above 0 causes issues with jumping while scrolling
       scroll-conservatively 9999
       scroll-step 1)
 
