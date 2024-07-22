@@ -106,8 +106,9 @@ point."
   (add-to-list 'lsp-language-id-configuration '(sh-mode . "bash"))
   ;; sql
   (add-to-list 'lsp-language-id-configuration '(sql-mode . "sql"))
-  ;; tf
-  ;; just to avoid an error
+  ;; typescript
+  (add-to-list 'lsp-language-id-configuration '(typescript-ts-mode . "typescript"))
+  ;; tf just to avoid an error
   (add-to-list 'lsp-language-id-configuration '(terraform-mode . "terraform"))
 
 

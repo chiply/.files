@@ -5,7 +5,7 @@
   :init
   (setq magit-branch-read-upstream-first 'fallback)
   ;; TODO change
-  (setq magit-process-popup-time -1)
+  (setq magit-process-popup-time 0)
 
   (defun z-magit-project ()
     (interactive)

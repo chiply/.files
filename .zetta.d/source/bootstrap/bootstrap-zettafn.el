@@ -221,6 +221,15 @@ Code:
   (highlight-phrase "FAILED" 'modus-themes-subtle-yellow)
 
   (highlight-phrase "Captured stdout call" 'modus-themes-subtle-green)
+
+  (highlight-phrase " \\+ " 'modus-themes-subtle-green)
+  (highlight-phrase " \\- " 'modus-themes-subtle-red)
+  (highlight-phrase "!=" 'modus-themes-subtle-cyan)
+
+  (highlight-phrase "debug" 'modus-themes-subtle-yellow)
+
+
+
   
 
   ;; http
@@ -228,11 +237,22 @@ Code:
   (highlight-phrase "401" 'modus-themes-subtle-red)
   (highlight-phrase "402" 'modus-themes-subtle-red)
   (highlight-phrase "404" 'modus-themes-subtle-red)
-  (highlight-phrase "422" 'modus-themes-subtle-magenta)
   (highlight-phrase "500" 'modus-themes-intense-red)
+
+  (highlight-phrase "422" 'modus-themes-subtle-magenta)
+  
   (highlight-phrase "200" 'modus-themes-subtle-green)
   (highlight-phrase "201" 'modus-themes-subtle-green)
 
+  ;; highlight uuids
+  (highlight-phrase "[a-f0-9]\\{8\\}-[a-f0-9]\\{4\\}-[a-f0-9]\\{4\\}-[a-f0-9]\\{4\\}-[a-f0-9]\\{12\\}" 'modus-themes-subtle-blue)
+
+  ;; -->
+  (highlight-phrase "-->" 'modus-themes-subtle-green)
+
+  ;; temporal
+  (highlight-phrase "Starting workflow" 'modus-themes-subtle-cyan)
+  
   )
 
 

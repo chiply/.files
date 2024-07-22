@@ -15,10 +15,13 @@
 ;; cleanup
 ;; display buffer function
 ;; replacement logic -- lay out all the different use casces and options
+;; update: I'm going to call this a replace-buffer-function as this is operating at the buffer name level... 
 ;;;; *replace* eg kill original,
-;;;; *display* original,
 ;;;; *switch* to original (display and select),
-;;;; *create* with new buffername (simply prompt with what would have been used)
+;;;; *display* to original (display and don't select),
+;;;; *create* with new buffername (simply prompt with what would have been used, eg provide a randomized thing as default)
+;;;; *warn* 
+;;;; *nothing* to ease the change, implement a policy that does nothing (currently there is not really a policy, it just does nothing). note this would default to the underlying executor's default behavior.  eg for async-shell-command, it would simply warn you that the buffer already exists and do nothing.  I would typically prefer to set things explicitly
 ;; DONE select v noselect
 ;; refactor how bufnm is being set
 ;; some indication as to what mode the buffer is in in the modeline
@@ -41,6 +44,14 @@
 (require 'projection-multi-make)
 
 
+;; LEFT OFF - grow phase, organize todos and need to refactor
+;; TODO refactoring -- funcctionalty wrt (zmc-compute-bufnm), headerline stuff, transient name.  should be consolidated... probably already is (derived from key) so should be easy to solve
+;; todo add custom buffer names
+;; TODO side key not working for vterm -- using magento in mid term
+
+
+;; TODO - timing of setting local and latest-transient -- should only happen once the transient has been executed, but this may be challenging or require more refactoring
+
 ;; VARIABLES
 (setq zmc-async-shell-command-spinners-enable nil)
 
@@ -54,6 +65,9 @@
              (v (string-join (cdr kv) "=")))
         `(,k . ,v)))
     args)))
+
+(defun zmc-compute-bufnm ()
+  (or (when (boundp 'local-transient) local-transient) latest-transient))
 
 ;;;;;;;;;;;;;;;;;; Enhanced versions of async-shell-command and
 ;;;;;;;;;;;;;;;;;; detached-shell-command
@@ -100,63 +114,88 @@ async-shell-command"
           output-buffer)
       (message "No process running"))))
 
+
 ;;;;;;;;;;;;;;;;;;;;;; EXECUTORS
-(defun zmc-execute (program cmd bufnm)
+(setq default-buffer-replace-policy "nothing") ;; TODO keep an eye on this - may cause issues
+(defun zmc-execute (program cmd bufnm &optional buffer-replace-policy transient-name)
   (if (not (member
             program
             '("detached" "detached+" "async-shell-command"
               "async-shell-command+" "vterm" "compile"
               "detached-compile")))
       (error "zmc-execute: program %s not supported" program))
+
+  ;; TODO doesn't currently work, but this is the idea for the replace policy. current issue is that the bufnm is a supplied bufnm, not a calculated bufnm
+  ;; TODO Actually -- is bufnm being used anywhere? looks like it gets overridden in most functions, may want ot change this
+  ;; 
+  (let ((bufnm (zmc-compute-bufnm))
+        (buffer-replace-policy (or buffer-replace-policy default-buffer-replace-policy)))
+    (cond ((string= buffer-replace-policy "replace")
+           (when (get-buffer bufnm)
+             (kill-buffer bufnm)))
+          ((string= buffer-replace-policy "switch")
+           (when (get-buffer bufnm)
+             (switch-to-buffer bufnm)))
+          ((string= buffer-replace-policy "display")
+           (when (get-buffer bufnm)
+             (display-buffer bufnm)))
+          ((string= buffer-replace-policy "create")
+           (when (get-buffer bufnm)
+             (let ((bufnm (generate-new-buffer-name bufnm)))
+               (display-buffer bufnm))))
+          ((string= buffer-replace-policy "warn")
+           (when (get-buffer bufnm)
+             (message "Buffer %s already exists" bufnm)))
+          ((string= buffer-replace-policy "nothing")
+           (message "no replacing"))
+          (t (message "Buffer %s already exists" bufnm))))
+
   (let* ((shell-command-switch "-ic")
          (buf (cond
-               ((string= program "detached") (zmc-es-detached cmd bufnm))
-               ((string= program "detached+") (zmc-es-detached+ cmd bufnm))
-               ((string= program "async-shell-command") (zmc-es-async-shell-command cmd bufnm))
-               ((string= program "async-shell-command+") (zmc-es-async-shell-command+ cmd bufnm))
-               ((string= program "vterm") (zmc-es-vterm cmd bufnm))
+               ((string= program "detached") (zmc-es-detached cmd))
+               ((string= program "detached+") (zmc-es-detached+ cmd))
+               ((string= program "async-shell-command") (zmc-es-async-shell-command cmd))
+               ((string= program "async-shell-command+") (zmc-es-async-shell-command+ cmd))
+               ((string= program "vterm") (zmc-es-vterm cmd))
                ((string= program "compile") (zmc-es-compile cmd))
                ((string= program "detached-compile") (zmc-es-detached-compile cmd)))))
+    (save-window-excursion
+      (switch-to-buffer buf)
+      (set (make-local-variable 'local-transient) transient-name))
     (if (or (bufferp buf) (bufferp (get-buffer buf)))
         buf
-      (error "zmc-execute: executor did not return a buffer"))))
+      (error "zmc-execute: executor did not return a buffer"))
+    ))
 
-(defun zmc-run (program cmd bufnm side slot select)
+(defun zmc-run (program cmd bufnm side slot select &optional buffer-replace-policy transient-name)
   (let* ((original-window (get-buffer-window (current-buffer)))
-         (new-buffer (zmc-execute program cmd bufnm)))
+         (new-buffer (zmc-execute program cmd bufnm buffer-replace-policy transient-name)))
     (display-buffer new-buffer)
     (select-window original-window)
     (when (string= "yes" select)
       (select-window (get-buffer-window new-buffer)))))
 
+
 ;; individual executors
 (defun zmc-es-compile (cmd)
-  (let ((compilation-buffer-name-function
-         '(lambda (_)
-            (or (when (boundp 'local-transient)
-                  local-transient)
-                latest-transient)))
+  (let ((compilation-buffer-name-function '(lambda (_) (zmc-compute-bufnm)))
         (compile-command (or local-cmd latest-cmd)))
     (save-window-excursion (compile compile-command))))
 
 (defun zmc-es-detached-compile (cmd)
-  (let ((compilation-buffer-name-function
-         '(lambda (_)
-            (or (when (boundp 'local-transient)
-                  local-transient)
-                latest-transient)))
+  (let ((compilation-buffer-name-function '(lambda (_) (zmc-compute-bufnm)))
         (compile-command (or local-cmd latest-cmd)))
     (save-window-excursion (detached-compile compile-command))))
 
-(defun zmc-es-async-shell-command (cmd bufnm)
-  (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient))
+(defun zmc-es-async-shell-command (cmd)
+  (let ((bufnm (zmc-compute-bufnm))
         (process-connection-type nil) ;; performance
         )
     (save-window-excursion
       (window-buffer (async-shell-command cmd bufnm)))))
 
-(defun zmc-es-async-shell-command+ (cmd bufnm)
-  (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient))
+(defun zmc-es-async-shell-command+ (cmd)
+  (let ((bufnm (zmc-compute-bufnm))
         (process-connection-type nil) ;; performance
         (zmc-async-shell-command-spinners-enable t) ;; to enable starting the spinner 
         )
@@ -164,16 +203,16 @@ async-shell-command"
       (zmc-async-shell-command+ cmd bufnm))))
 
 
-(defun zmc-es-detached (cmd bufnm)
-  (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient))
+(defun zmc-es-detached (cmd)
+  (let ((bufnm (zmc-compute-bufnm))
         ;;(process-connection-type nil) ;; doesn't work with detached
         )
     (let ((detached--shell-command-buffer bufnm))
       (detached-shell-command cmd))
     bufnm))
 
-(defun zmc-es-detached+ (cmd bufnm)
-  (let ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient))
+(defun zmc-es-detached+ (cmd)
+  (let ((bufnm (zmc-compute-bufnm))
         ;;(process-connection-type nil) ;; doesn't work with detached
         (zmc-async-shell-command-spinners-enable t) ;; to enable starting the spinner 
         )
@@ -181,9 +220,9 @@ async-shell-command"
     bufnm))
 
 
-(defun zmc-es-vterm (cmd bufnm)
+(defun zmc-es-vterm (cmd)
   ;; if bufnm exists kill it
-  (let* ((bufnm (or (when (boundp 'local-transient) local-transient) latest-transient)))
+  (let* ((bufnm (zmc-compute-bufnm)))
     ;; todo make this configurable, should it kill, switch to it,
     ;; create new with uniquify name, prompt for name? prompt for any
     ;; of these options?
@@ -215,10 +254,13 @@ async-shell-command"
          (bufnm (ht-get target "bufnm"))
          (side (intern (or (ht-get target "side") "top"))) ;; default
          (slot (or (ht-get target "slot") 1)) ;; default
-         (select (or (ht-get target "select") "no")))
+         (select (or (ht-get target "select") "no"))
+         (buffer-replace-policy (or (ht-get target "buffer-replace-policy") "nothing"))
+         (transient-name (string-replace " " "-" (ht-get target "key"))) ; TODO redundant logic
+         )
     (setq latest-cmd cmd)
     (set (make-local-variable 'local-cmd) cmd)
-    (apply 'zmc-run `(,program ,cmd ,bufnm ,side ,slot ,select))))
+    (apply 'zmc-run `(,program ,cmd ,bufnm ,side ,slot ,select ,buffer-replace-policy ,transient-name))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;; TRANSIENT
@@ -275,23 +317,23 @@ async-shell-command"
 
 (defun zmc-get-pytest-targets-from-project (project-path)
   (let* ((paths (shell-command-to-string
-                                (concat
-                                 "cd " project-path " && "
-                                 "poetry run pytest "
-                                 "--co -q --disable-warnings")))
+                 (concat
+                  "cd " project-path " && "
+                  "poetry run pytest "
+                  "--co -q --disable-warnings")))
          (paths (nth 0 (split-string paths "\n\n")))
          (paths (split-string paths "\n"))
          (paths (--map (substring it 0 (string-match "\\[" it))
-                                      paths))
+                       paths))
          (paths (append
-                                ;; function level
-                                (delete-dups paths) 
-                                ;; file level
-                                (delete-dups (--map (nth 0 (split-string it "::"))
-                                                    paths)) 
-                                ;; parent dir level
-                                (delete-dups (-flatten (--map (zmc-get-parent-dirs it)
-                                                              paths))))))
+                 ;; function level
+                 (delete-dups paths) 
+                 ;; file level
+                 (delete-dups (--map (nth 0 (split-string it "::"))
+                                     paths)) 
+                 ;; parent dir level
+                 (delete-dups (-flatten (--map (zmc-get-parent-dirs it)
+                                               paths))))))
     paths))
 
 
