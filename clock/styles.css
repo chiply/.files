@@ -1,0 +1,40 @@
+.clock {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  border: 3px solid black;
+  border-radius: 50%;
+}
+
+.hand {
+  width: 45%;
+  height: 2px;
+  background: black;
+  position: absolute;
+  bottom: 50%;
+  transform-origin: right;
+  transition: all 0.05s;
+  transition-timing-function: steps(1, end);
+}
+
+.hour-hand {
+  height: 4px;
+  width: 25%;
+  right: 50%;
+}
+
+.minute-hand {
+  right: 50%;
+  width: 40%;
+  background: black;
+}
+
+.second-hand {
+  background: blue;
+  right: 50%;
+}
+
+.hour {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}

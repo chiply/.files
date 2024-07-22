@@ -18,7 +18,7 @@
  "x" 'execute-extended-command
  "f" 'z-projectile-find-file
  "F" 'find-file
- "k" 'kill-this-buffer)
+ "k" 'kill-current-buffer)
 
 (general-define-key
  :keymaps '(evil-insert-state-map
