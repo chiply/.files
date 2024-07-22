@@ -44,7 +44,7 @@
    )
 
   :hook (shell-command-mode . (lambda () (progn
-                                   (text-scale-set -4)
+                                   (text-scale-set -2)
                                    (z-highlight-phrases)
                                    (when (and
                                           (boundp 'zmc-async-shell-command-spinners-enable)

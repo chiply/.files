@@ -105,6 +105,9 @@ where is was when z-refresh-agenda was called"
     (highlight-regexp "Block" 'modus-themes-nuanced-red)
     (highlight-regexp "Sync" 'modus-themes-refine-green)
     (highlight-regexp "Async" 'modus-themes-nuanced-green)
+
+    ;; tracebacks
+    (highlight-regexp "-->" 'modus-themes-refine-red)
     )
 
 

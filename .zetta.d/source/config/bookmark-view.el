@@ -1,4 +1,4 @@
-;;(use-package bookmark-view)
+(use-package bookmark-view)
 
 
 

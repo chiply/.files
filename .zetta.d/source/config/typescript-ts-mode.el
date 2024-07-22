@@ -1,5 +1,5 @@
 (use-package typescript-ts-mode
-  :builtin t
+  :straight (:type built-in)
   :config
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
   )

@@ -1,4 +1,4 @@
-;; bootstrap
+; bootstrap
 (add-to-list 'load-path "~/.files/.zetta.d/source/bootstrap")
 (require 'bootstrap)
 
@@ -70,6 +70,7 @@
    "browse-at-remote.el" "mono-complete.el" "rainbow-delimiters.el"
    "magit-file-icons.el" "devdocs.el" "telephone-line.el"
    "corfu.el" "casual-suite.el" "gptel-quick.el" "typescript-ts-mode.el"
+   "apheleia.el" "spot4e.el"
 
    ;;"activities.el"
 
@@ -87,7 +88,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "/Users/redacted/.files/.zetta.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "~/.files/.zetta.d/bookmarks")
  '(connection-local-criteria-alist
    '(((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)

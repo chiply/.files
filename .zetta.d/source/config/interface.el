@@ -49,8 +49,19 @@
   (let ((icon (z-line-hydra-indicator-icon))) (when icon "H"))
   )
 
+(defun zmc-modeline-indicator ()
+  (concat
+   "🏃‍♀️‍➡️"
+   (when (boundp 'local-transient) local-transient)
+   " || "
+   "🌎 "
+   (when (boundp 'latest-transient) latest-transient)
+   ))
+
 (setq tab-bar-format '(;; everything here on will be aligned on the right
                        ;;z-tab-bar-hydra
+                       zmc-modeline-indicator
+
                        ;; doesn't work in tab bar as it doesn't get
                        ;; updated reliably... note that even when
                        ;; using the entry and exist hooks it doesn't
