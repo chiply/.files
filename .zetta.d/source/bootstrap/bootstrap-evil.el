@@ -3,13 +3,13 @@
   :init
   (setq evil-want-keybinding nil)
   ;;(add-to-list
-   ;;'brushup-styles
-   ;;'(setq evil-emacs-state-cursor '("red" box)
-          ;;evil-visual-state-cursor '("orange" box)
-          ;;evil-insert-state-cursor '("blue" box)
-          ;;evil-replace-state-cursor '("green" hollow)
-          ;;evil-operator-state-cursor '("red" hollow)
-          ;;evil-normal-state-cursor `(,(face-attribute 'default :foreground) box)))
+  ;;'brushup-styles
+  ;;'(setq evil-emacs-state-cursor '("red" box)
+  ;;evil-visual-state-cursor '("orange" box)
+  ;;evil-insert-state-cursor '("blue" box)
+  ;;evil-replace-state-cursor '("green" hollow)
+  ;;evil-operator-state-cursor '("red" hollow)
+  ;;evil-normal-state-cursor `(,(face-attribute 'default :foreground) box)))
 
   :config
   (setq evil-default-state 'normal)
@@ -52,6 +52,10 @@
    :keymaps '(evil-insert-state-map evil-visual-state-map)
    (general-chord "kj") 'evil-normal-state
    (general-chord "jk") 'evil-normal-state
+   ;; I dislike how sometimes the chording can turn off or even when
+   ;; it is on seems to be inconsistent, this is an alternative that
+   ;; will always work.  The key is free and the semantics feel right
+   "s-i" 'evil-normal-state
    )
   )
 
