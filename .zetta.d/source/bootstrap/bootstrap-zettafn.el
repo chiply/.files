@@ -185,11 +185,16 @@ Code:
     ))
 
 
-;; TODO doesn't belong here as its specific to a dagster project....
-;; might need to put this and the hooking stuff into private
+;;(setq hi-lock-use-overlays t)
+
+;; create a face inherits from 'link, except uses purple as the color
+(defface z-link-face
+  '((t :inherit link :foreground "purple"))
+  "Face for links."
+  :group 'basic-faces)
+
 (defun z-highlight-phrases ()
   (interactive)
-  (message "HOOK RAN")
 
   ;; SQLALCHEMY Logs
   (highlight-phrase "WARNING" 'modus-themes-intense-yellow)
@@ -222,15 +227,13 @@ Code:
 
   (highlight-phrase "Captured stdout call" 'modus-themes-subtle-green)
 
-  (highlight-phrase " \\+ " 'modus-themes-subtle-green)
-  (highlight-phrase " \\- " 'modus-themes-subtle-red)
+  ;; regex should match exactly 1 space either side of the + sign
+  (highlight-regexp " \\+ " 'modus-themes-subtle-green)
+  ;; regex should match exactly 1 space either side of the - sign
+  (highlight-regexp " - " 'modus-themes-subtle-red)
   (highlight-phrase "!=" 'modus-themes-subtle-cyan)
 
   (highlight-phrase "debug" 'modus-themes-subtle-yellow)
-
-
-
-  
 
   ;; http
   (highlight-phrase "400" 'modus-themes-subtle-red)
@@ -252,8 +255,17 @@ Code:
 
   ;; temporal
   (highlight-phrase "Starting workflow" 'modus-themes-subtle-cyan)
-  
+
+  ;; paths
+  (highlight-regexp "\\(/\\|~\\)[^ ]+\\.[a-zA-Z0-9]+" 'z-link-face)
+
+  ;; urls
+  (highlight-regexp "http\\(s\\)?://[^ ]+" 'link)
+
+  ;; highlight case insensitive occurneces of "token"
+  (highlight-phrase "token" 'modus-themes-subtle-blue)
   )
+
 
 
 (defun z-touch-maybe (path)

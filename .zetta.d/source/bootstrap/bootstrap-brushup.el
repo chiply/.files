@@ -102,7 +102,7 @@ seem to require loading after the client starts up"
           (set-face-attribute
            'region nil
            :background
-           (if brushup-dark-p (color-lighten-name brushup-fg (- 60)) brushup-bg-2)
+           (if brushup-dark-p (color-lighten-name brushup-fg (- 60)) brushup-bg-3)
            :foreground 'unspecified)
 
 

@@ -21,7 +21,7 @@
 ;;;; *display* to original (display and don't select),
 ;;;; *create* with new buffername (simply prompt with what would have been used, eg provide a randomized thing as default)
 ;;;; *warn* 
-;;;; *nothing* to ease the change, implement a policy that does nothing (currently there is not really a policy, it just does nothing). note this would default to the underlying executor's default behavior.  eg for async-shell-command, it would simply warn you that the buffer already exists and do nothing.  I would typically prefer to set things explicitly
+;;;; *default-buffer-replace-policy* to ease the change, implement a policy that does default-buffer-replace-policy (currently there is not really a policy, it just does default-buffer-replace-policy). note this would default to the underlying executor's default behavior.  eg for async-shell-command, it would simply warn you that the buffer already exists and do default-buffer-replace-policy.  I would typically prefer to set things explicitly
 ;; DONE select v noselect
 ;; refactor how bufnm is being set
 ;; some indication as to what mode the buffer is in in the modeline
@@ -95,6 +95,8 @@ async-shell-command"
 (defun zmc-async-shell-command+ (command output-buffer &optional error-buffer)
   (let* ((proc (progn
                  (async-shell-command command output-buffer error-buffer)
+                 (with-current-buffer output-buffer
+                   (z-highlight-phrases))
                  (get-buffer-process output-buffer))))
     (if (process-live-p proc)
         (progn
@@ -107,6 +109,8 @@ async-shell-command"
   (let* ((detached--shell-command-buffer output-buffer)
          (proc (progn
                  (detached-shell-command command)
+                 (with-current-buffer output-buffer
+                   (z-highlight-phrases))
                  (get-buffer-process output-buffer))))
     (if (process-live-p proc)
         (progn
@@ -116,7 +120,7 @@ async-shell-command"
 
 
 ;;;;;;;;;;;;;;;;;;;;;; EXECUTORS
-(setq default-buffer-replace-policy "nothing") ;; TODO keep an eye on this - may cause issues
+(setq default-buffer-replace-policy "default-buffer-replace-policy") ;; TODO keep an eye on this - may cause issues
 (defun zmc-execute (program cmd bufnm &optional buffer-replace-policy transient-name)
   (if (not (member
             program
@@ -124,15 +128,21 @@ async-shell-command"
               "async-shell-command+" "vterm" "compile"
               "detached-compile")))
       (error "zmc-execute: program %s not supported" program))
-
-  ;; TODO doesn't currently work, but this is the idea for the replace policy. current issue is that the bufnm is a supplied bufnm, not a calculated bufnm
-  ;; TODO Actually -- is bufnm being used anywhere? looks like it gets overridden in most functions, may want ot change this
-  ;; 
   (let ((bufnm (zmc-compute-bufnm))
         (buffer-replace-policy (or buffer-replace-policy default-buffer-replace-policy)))
     (cond ((string= buffer-replace-policy "replace")
            (when (get-buffer bufnm)
-             (kill-buffer bufnm)))
+             ;; kill the process associated with the buffer
+             (let ((proc (get-buffer-process bufnm)))
+               (when (process-live-p proc)
+                 (progn
+                   (kill-process proc)
+                   (let ((timeout 2)
+                         (start-time (current-time)))
+                     (while (and (process-live-p proc)
+                                 (< (time-to-seconds (time-since start-time))
+                                    timeout))
+                       (sleep-for 0.05))))))))
           ((string= buffer-replace-policy "switch")
            (when (get-buffer bufnm)
              (switch-to-buffer bufnm)))
@@ -146,7 +156,7 @@ async-shell-command"
           ((string= buffer-replace-policy "warn")
            (when (get-buffer bufnm)
              (message "Buffer %s already exists" bufnm)))
-          ((string= buffer-replace-policy "nothing")
+          ((string= buffer-replace-policy "default-buffer-replace-policy")
            (message "no replacing"))
           (t (message "Buffer %s already exists" bufnm))))
 
@@ -168,10 +178,30 @@ async-shell-command"
     ))
 
 (defun zmc-run (program cmd bufnm side slot select &optional buffer-replace-policy transient-name)
-  (let* ((original-window (get-buffer-window (current-buffer)))
+  (let* ((original-buffer (current-buffer))
+         (original-window (get-buffer-window original-buffer))
          (new-buffer (zmc-execute program cmd bufnm buffer-replace-policy transient-name)))
-    (display-buffer new-buffer)
-    (select-window original-window)
+    (unless (string= (buffer-name original-buffer)
+                     (cond
+                      ((bufferp new-buffer)
+                         (buffer-name new-buffer))
+                      ;; case it is a string
+                      ((stringp new-buffer) new-buffer)))
+      ;; removes from the current window's tab list, this has the impact
+      ;; of avoiding polluting the tab list of the buffer from which zmc
+      ;; is called with potentially unnecessary tabs pointing to the
+      ;; created buffer
+      (switch-to-buffer new-buffer)
+      ;; got this part from bury-buffer function
+      (set-window-dedicated-p nil nil)
+      (switch-to-prev-buffer nil 'bury)
+      ;; display the buffer.  The point here is that
+      ;; display-buffer-alist settings are resepected by default but
+      ;; these can also be overridden by the user NYI TODO implement
+      ;; overrideable display
+      (display-buffer new-buffer)
+      (select-window original-window)
+      )
     (when (string= "yes" select)
       (select-window (get-buffer-window new-buffer)))))
 
@@ -255,7 +285,7 @@ async-shell-command"
          (side (intern (or (ht-get target "side") "top"))) ;; default
          (slot (or (ht-get target "slot") 1)) ;; default
          (select (or (ht-get target "select") "no"))
-         (buffer-replace-policy (or (ht-get target "buffer-replace-policy") "nothing"))
+         (buffer-replace-policy (or (ht-get target "buffer-replace-policy") "default-buffer-replace-policy"))
          (transient-name (string-replace " " "-" (ht-get target "key"))) ; TODO redundant logic
          )
     (setq latest-cmd cmd)

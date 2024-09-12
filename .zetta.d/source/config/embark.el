@@ -13,16 +13,18 @@
   (setq prefix-help-command #'embark-prefix-help-command)
 
   :display
-  (define-key embark-general-map (kbd "!") 'hlt-highlight-symbol)
-  (define-key embark-general-map (kbd "C-!") 'hlt-unhighlight-symbol)
+  (define-key embark-general-map (kbd "!") 'symbol-overlay-put)
+  (define-key embark-general-map (kbd "C-!") 'symbol-overlay-remove-all)
 
   :general
   (
    ;; override alone doesn't work here for some reason
    :keymaps (append z-modal-states-non-insert '(override))
    "C-." 'embark-act
-   "C->" 'embark-act-noquit)
+   "C->" 'embark-act-all
+   )
   (
    :keymaps '(vertico-map)
    "C-." 'embark-act
-   "C->" 'embark-act-noquit))
+   "C->" 'embark-act-all
+   ))

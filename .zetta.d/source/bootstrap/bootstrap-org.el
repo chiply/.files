@@ -87,6 +87,17 @@
   ;; display
   (add-to-list 'org-emphasis-alist '("*" (:foreground "black" :background "yellow")))
 
+  ;; make all headings the default font size
+  (set-face-attribute 'org-level-1 nil :height 1.0)
+  (set-face-attribute 'org-level-2 nil :height 1.0)
+  (set-face-attribute 'org-level-3 nil :height 1.0)
+  (set-face-attribute 'org-level-4 nil :height 1.0)
+  (set-face-attribute 'org-level-5 nil :height 1.0)
+  (set-face-attribute 'org-level-6 nil :height 1.0)
+  (set-face-attribute 'org-level-7 nil :height 1.0)
+  (set-face-attribute 'org-level-8 nil :height 1.0)
+  
+
   :evil
   (evil-set-initial-state 'org-mode 'normal)
 
@@ -170,11 +181,11 @@
                                   (auto-fill-mode -1)
                                   (visual-line-mode t) 
                                   (progn
-                                   (setq visual-fill-column-width 80)
-                                   ;; interesting, but not necessary
-                                   ;;(setq visual-fill-column-center-text t)
-                                   (setq visual-fill-column-width 80)
-                                   )
+                                    (setq visual-fill-column-width 80)
+                                    ;; interesting, but not necessary
+                                    ;;(setq visual-fill-column-center-text t)
+                                    (setq visual-fill-column-width 80)
+                                    )
                                   )))
          (org-mode . (lambda () (setq-local fill-column 60)))
          (org-mode . (lambda () (text-scale-set -2)))

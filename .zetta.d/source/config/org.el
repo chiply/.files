@@ -1,29 +1,15 @@
 (use-package origami)
 
-
-;;(use-package org-bullets
-;;:hook (org-mode . (lambda () (org-bullets-mode 1)))
-;;)
-
 ;; basic tweaks and bindings
 (setenv "BROWSER" "chrome")
-
 
 ;; by default, make inline images look like thumbnails.  If using
 ;; actual width of the image, then it takes up too much space in the
 ;; buffer
 (setq org-image-actual-width 200)
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Flow / tasks
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  Super Agenda
-
-
-
 
 
 ;; export backends
@@ -32,8 +18,7 @@
 (use-package ox-reveal
   :config
   (setq org-reveal-root "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/"
-        org-reveal-mathjax t)
-  )
+        org-reveal-mathjax t))
 (use-package htmlize )
 (use-package ox-jekyll-md)
 
@@ -73,17 +58,13 @@
 ;;(z-side "^\\*org-roa*" 'right 2 0.20 0.30)
 
 
-
 ;;;;;;;;;;;;;;;;; Literature management
 ;;(z-side "bibliography.bib" 'right 2 0.30)
 
-
 (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
-      ;;org-ref-insert-cite-function 'org-ref-cite-insert-ivy
       org-ref-insert-label-function 'org-ref-insert-label-link
       org-ref-insert-ref-function 'org-ref-insert-ref-link
       org-ref-cite-onclick-function (lambda (_) (org-ref-citation-hydra/body)))
-
 
 
 (defun gpc/open-node-roam-ref-url ()
@@ -105,7 +86,6 @@
                                      '(("^-\\{5,\\}"  0 '(:foreground "red" :weight bold))))))
 
 (setq org-id-link-to-org-use-id t)
-
 
 (setq org-time-stamp-formats
       '("<%Y-%m-%d %a>" . "<%Y-%m-%d %a %H:%M:%S>"))
@@ -158,17 +138,7 @@
   "Analogous to `org-md-publish-to-md'."
   (org-publish-org-to 'mymd filename ".md" plist pub-dir))
 
-
-
-
 (setq org-pandoc-options-for-markdown '((wrap . none)))
-
-
-
-
-
-
-
 
 
 
