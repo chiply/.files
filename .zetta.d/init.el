@@ -49,8 +49,16 @@
    "mermaid-mode.el" "minimap.el" "hyperbole.el" "kubernetes-el.el"
    "kubel.el" "git-link.el" "python-pytest.el" "multi-compile.el"
    "compile.el" "unicode-fonts.el" "spinner.el" "fancy-compilation.el"
-   "copilot.el" "org-ql.el" "org-capture.el" "org-ref.el"
-   "org-modern.el" "biblio.el" "org.el" "ob-mermaid.el" "lsp.el"
+   "copilot.el"
+
+   "org-ql.el"
+   "org-capture.el"
+   "org-ref.el"
+   ;;"org-modern.el"
+   "org.el"
+   "ob-mermaid.el"
+
+   "biblio.el"  "lsp.el"
    "lark.el" "yascroll.el" "nyan-mode.el" "gptel.el" "popper.el"
    "highlight.el" "macrostep.el" "obsidian.el" "magneto.el"
    "know-your-http-well.el" "spacetree.el" "vertico.el" "vterm.el"
@@ -66,15 +74,12 @@
    ;;"markdownfmt.el"
    "markdown-toc.el" "color-rg.el" "osx-lib.el" "spotlight.el"
    "restart-emacs" "magit-todos.el"
-   ;; doesn't work but leaving it in. started working
    "browse-at-remote.el" "mono-complete.el" "rainbow-delimiters.el"
    "magit-file-icons.el" "devdocs.el" "telephone-line.el"
    "corfu.el" "casual-suite.el" "gptel-quick.el" "typescript-ts-mode.el"
-   "apheleia.el" "spot4e.el"
-
+   "apheleia.el" "spot4e.el" "symbol-overlay.el"
+   "hi-lock.el" "beacon.el"
    ;;"activities.el"
-
-   ;;"parrot.el"
    "cleanup.el"))
 
 ;; load user-files and provate lisp code
@@ -175,6 +180,7 @@
  '(ede-project-directories
    '("/Users/redacted/source_code/workflow-activity-registry"))
  '(helm-minibuffer-history-key "M-p")
+ '(org-agenda-files '("/Users/redacted/.files/org-roam/daily/agenda.org"))
  '(org-fold-core-style 'overlays))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

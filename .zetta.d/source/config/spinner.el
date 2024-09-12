@@ -43,6 +43,11 @@
   ;; or headerline
   ;; 
   ;; copied from https://github.com/FGRibreau/spinners/blob/master/src/utils/spinners_data.rs
+
+  ;; ideas for spinners -- fruit and veg, kind of like slot machine vibes
+  ;; ability for certain processes to request a certain spinner.
+
+  ;; For example, would be nice for something like monitoring CI to be different from running unit tests
   (setq spinner-types
         '(
           ;; TODO remove 2 comemnts to get old list, going simple for now
