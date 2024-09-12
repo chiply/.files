@@ -4,7 +4,7 @@
   :config
   ;; modes
   (add-hook 'prog-mode-hook 'copilot-mode)
-  (add-hook 'mardown-mode-hook 'copilot-mode)
+  (add-hook 'markdown-mode-hook 'copilot-mode)
   (add-hook 'org-mode-hook 'copilot-mode)
   (add-hook 'sql-mode-hook 'copilot-mode)
   (add-hook 'mermaid-mode-hook 'copilot-mode)

@@ -74,6 +74,20 @@
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 
+;; ;; disabling automatic overlays for now and just sticking with copilot + corfu.
+;; ;; this gives very little extra info at the expense of crowding things
+;; (use-package corfu-candidate-overlay
+;;   :config
+;;   (corfu-candidate-overlay-mode 1)
+;;   (global-set-key (kbd "C-f") 'corfu-candidate-overlay-complete-at-point)
+;;   )
+
+
+
+
+
+
+
 
 
 

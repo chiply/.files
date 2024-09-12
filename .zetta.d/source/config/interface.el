@@ -58,6 +58,15 @@
    (when (boundp 'latest-transient) latest-transient)
    ))
 
+(setq pom nil)
+(defun pomodoro! ()
+  ;; toggle the value of global variable pom
+  (interactive)
+  (setq pom (not pom)))
+
+(defun pom-ind ()
+  (when pom "🍅 "))
+
 (setq tab-bar-format '(;; everything here on will be aligned on the right
                        ;;z-tab-bar-hydra
                        zmc-modeline-indicator
@@ -70,6 +79,7 @@
                        tab-bar-format-align-right
                        recursion-indicator--string
                        "  "
+                       pom-ind
                        tab-bar-format-global
                        ))
 

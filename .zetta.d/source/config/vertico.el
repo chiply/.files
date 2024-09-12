@@ -1,3 +1,13 @@
+(use-package vertico-posframe
+  :config
+  ;;(vertico-posframe-mode 1)
+  (setq vertico-posframe-parameters
+        '((left-fringe . 8)
+          (right-fringe . 8)))
+  ;; TODO compute this dynamically
+  (setq vertico-posframe-width 180)
+  (setq vertico-posframe-height nil))
+
 (use-package vertico
   :straight (:files (:defaults "extensions/*"))
 
@@ -6,6 +16,18 @@
   (vertico-mouse-mode 1)
   (vertico-flat-mode 1)
   (vertico-multiform-mode 1)
+
+  ;; TODO no using posframe yet as I couldn't get it to play nicely with vertico
+  ;; (even if I can get the conditional styling to work, toggling still
+  ;; brings completion into the minibuffer which isn't good)
+
+  ;;(setq vertico-multiform-commands
+  ;;'((consult-line
+  ;;posframe
+           ;;;; NEED to do both here
+  ;;(vertico-flat-mode . -1)
+  ;;(vertico-vertical-mode . 1))
+  ;;(t posframe)))
 
   (setq
    vertico-buffer-hide-prompt nil
@@ -95,6 +117,8 @@
             "s-V" 'vertico-repeat)
 
   (:keymaps 'vertico-map
+            ;; embark-select
+            "C-SPC" 'embark-select
             
             ;; intellisesne
             "C-S-h" 'z-vertico-IS-help
@@ -164,6 +188,5 @@
          (minibuffer-setup . vertico-repeat-save)
          )
   )
-
 
 

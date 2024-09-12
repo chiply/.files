@@ -132,6 +132,8 @@ tempel expand?)
                             ((string= major-mode "makefile-bsdmake-mode")
                              '(cape-file
                                makefile-completions-at-point))
+                            ((string= major-mode "conf-toml-mode")
+                             '(cape-file))
                             ))
                 (completion-at-point-functions mode-capf))
            (completion-at-point))

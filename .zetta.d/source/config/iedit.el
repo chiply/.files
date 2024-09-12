@@ -14,7 +14,7 @@
 
 
   :config
-  (setq iedit-overlay-priority -50)
+  (setq iedit-overlay-priority 100)
 
   ;;:brushup
   (add-to-list 'brushup-styles

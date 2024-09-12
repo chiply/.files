@@ -106,7 +106,9 @@
   (cond
    ;; switch-buffer is candidateless, this would never be supplied by
    ;; embark
-   (magneto-embark-action (funcall magneto-embark-action magneto-embark-candidate))
+   (magneto-embark-action (if magneto-embark-candidate
+                              (funcall magneto-embark-action magneto-embark-candidate)
+                            (funcall magneto-embark-action)))
    ((string= magneto-action-action "switch-buffer")
     (switch-to-buffer buf-orig))
    ;; candidates possibly coming from embark
@@ -191,7 +193,6 @@
     (magneto-process-select win-orig win-dest)))
 
 
-
 (defun magneto-set-magneto-source-action (setting)
   (interactive)
   (setq magneto-source-action setting))
@@ -265,7 +266,6 @@
   (hydra-magneto/body))
 
 
-
 ;; embark integration
 (defun my/embark-magneto-action (keymap action key-sequence)
   ;; define a functions and bind it to a key
@@ -276,14 +276,16 @@
          (with-demoted-errors "%s"
            (magneto-restore-defaults)
            (magneto-set-magneto-source-action "copy")
-           (setq magneto-embark-candidate (read-from-minibuffer "")
-                 magneto-embark-action ',action)
+           ;; set candidate and action
+           (setq magneto-embark-candidate (read-from-minibuffer ""))
+           (setq magneto-embark-action ',action)
            (hydra-magneto/body)))
        (condition-case nil
            (define-key ,keymap ,(kbd (concat "s-o " key-sequence)) ',function-name)
          (error (message ,(concat (symbol-name keymap) " " (symbol-name function-name) " didn't work")))
          )
        )))
+
 
 ;; embark general map
 (general-define-key :keymaps 'override "s-m" 'magneto)
@@ -302,29 +304,32 @@
      keymap)
     (nreverse result)))
 
+
 ;;;; filter out digit arguments
 ;;;; filter out magneto actoins
 (defun my/embark-bind-keys (keymap)
   (-map
    (lambda (x)
      (eval (my/embark-magneto-action keymap (car x) (cadr x))))
-   (-filter (lambda (x)
-              (not (or
-                    (s-contains? "digit-arg" (symbol-name (car x)))
-                    (s-contains? "collect" (symbol-name (car x)))
-                    (s-contains? "export" (symbol-name (car x)))
-                    (s-contains? "become" (symbol-name (car x)))
-                    (s-contains? "my/embark" (symbol-name (car x)))
-                    (s-contains? "embark-org-link-map" (symbol-name (car x))))))
-            (parse-keymap (eval keymap)))))
+   (-filter
+    (lambda (x)
+      (not (or
+            ;; TODO why does z-projectile-find-file get filtered out?
+            (s-contains? "digit-arg" (symbol-name (car x)))
+            ;; TODO collect and export should work
+            (s-contains? "collect" (symbol-name (car x)))
+            (s-contains? "export" (symbol-name (car x)))
+            (s-contains? "become" (symbol-name (car x)))
+            (s-contains? "my/embark" (symbol-name (car x)))
+            (s-contains? "embark-org-link-map" (symbol-name (car x))))))
+    (parse-keymap (eval keymap)))))
+
 
 (setq embark-maps-list (-map (lambda (x) (if (listp (cdr x)) (car (cdr x)) (cdr x))) embark-keymap-alist))
 
-;; (-map (lambda (x)
-;;         (condition-case nil
-;;             (progn (my/embark-bind-keys x))
-;;           (error (message (concat (symbol-name x) " didn't work")))))
-;;       embark-maps-list)
 
-
-
+(-map (lambda (x)
+        (condition-case nil
+            (progn (my/embark-bind-keys x))
+          (error (message (concat (symbol-name x) " didn't work")))))
+      embark-maps-list)

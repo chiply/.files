@@ -5,7 +5,7 @@
   :init
   (setq magit-branch-read-upstream-first 'fallback)
   ;; TODO change
-  (setq magit-process-popup-time 0)
+  (setq magit-process-popup-time -1)
 
   (defun z-magit-project ()
     (interactive)
@@ -69,7 +69,7 @@
    "C-<return>" 'with-editor-finish
    ) 
   (
-   :keymaps '(magit-status-mode-map)
+   :keymaps '(magit-status-mode-map magit-process-mode-map)
    "C-<tab>" 'tab-line-switch-to-next-tab
    "C-S-<tab>" 'tab-line-switch-to-prev-tab
    "M-S-<tab>" 'st-switch-space-by-name

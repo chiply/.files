@@ -141,6 +141,7 @@ used to override thing at point for whatever reason"
               pubmed-show-mode-map json-mode-map eww-mode-map
               jmespath-mode-map jsonian-mode-map js2-mode-map
               compilation-mode-map lark-mode-map css-mode-map
+              fundamental-mode-map
               )
    "C-e" 'er/expand-region
    ))
