@@ -13,6 +13,8 @@
   (setq prefix-help-command #'embark-prefix-help-command)
 
   :display
+  (define-key embark-general-map (kbd "C-b") 'z-bookmark-create)
+
   (define-key embark-general-map (kbd "!") 'symbol-overlay-put)
   (define-key embark-general-map (kbd "C-!") 'symbol-overlay-remove-all)
 

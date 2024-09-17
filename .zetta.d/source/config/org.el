@@ -3,6 +3,9 @@
 ;; basic tweaks and bindings
 (setenv "BROWSER" "chrome")
 
+;; ob-restclient and ob-http alternatives
+(use-package verb)
+
 ;; by default, make inline images look like thumbnails.  If using
 ;; actual width of the image, then it takes up too much space in the
 ;; buffer

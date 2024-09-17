@@ -1,3 +1,4 @@
+;;;;;;;;;;;;;;; REST
 ; bootstrap
 (add-to-list 'load-path "~/.files/.zetta.d/source/bootstrap")
 (require 'bootstrap)
@@ -76,7 +77,7 @@
    "restart-emacs" "magit-todos.el"
    "browse-at-remote.el" "mono-complete.el" "rainbow-delimiters.el"
    "magit-file-icons.el" "devdocs.el" "telephone-line.el"
-   "corfu.el" "casual-suite.el" "gptel-quick.el" "typescript-ts-mode.el"
+   "corfu.el" "casual-suite.el" "typescript-ts-mode.el"
    "apheleia.el" "spot4e.el" "symbol-overlay.el"
    "hi-lock.el" "beacon.el"
    ;;"activities.el"

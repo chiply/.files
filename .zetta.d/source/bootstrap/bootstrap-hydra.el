@@ -1,7 +1,8 @@
 (use-package hydra
-  :demand t 
+  :demand t
 
   :config
+
   (setq hydra-registry '())
   (defun z-hydra-init (name)
     "Function used to instantiate a hydra following a special
@@ -75,6 +76,8 @@ Arguments are same as of `defhydra'."
 
   :hook (use-package--hydra--post-config . z-brushup)
   )
+
+
 
 (defalias 'use-package-handler/:hydra 'use-package-handle-forms)
 (defalias 'use-package-normalize/:hydra 'use-package-normalize-forms)
