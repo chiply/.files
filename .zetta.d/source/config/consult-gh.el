@@ -1,5 +1,5 @@
 (use-package consult-gh
-  :straight (consult-gh :type git :host github :repo "armindarvish/consult-gh")
+  :straight (consult-gh :type git :host github :repo "armindarvish/consult-gh" :branch "main" :files ("*.el"))
   :after consult
 
   :config
@@ -10,8 +10,7 @@
   (setq consult-gh-default-orgs-list (append consult-gh-default-orgs-list (remove "" (split-string (or (consult-gh--command-to-string "org" "list") "") "\n"))))
 
   ;; set the default folder for cloning repositories, By default Consult-GH will confirm this before cloning
-  (setq consult-gh-default-clone-directory "~/")
+  (setq consult-gh-default-clone-directory "~/source_code/")
   (require 'consult-gh-embark)
 )
-
 
