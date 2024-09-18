@@ -45,10 +45,10 @@
     (let ((program (dap-pytest-at-point-program))
           (env-vars (read-env-file
                      (expand-file-name
-                      (concat (projectile-project-root) ".env")))))
+                      (concat (project-root (project-current nil default-directory)) ".env")))))
       (dap-debug
        (list :type "python"
-             :cwd (projectile-project-root)
+             :cwd (project-root (project-current nil default-directory))
              :args "-vvv"
              :program program
              :module "pytest"

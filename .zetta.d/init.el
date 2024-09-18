@@ -79,7 +79,7 @@
    "magit-file-icons.el" "devdocs.el" "telephone-line.el"
    "corfu.el" "casual-suite.el" "typescript-ts-mode.el"
    "apheleia.el" "spot4e.el" "symbol-overlay.el"
-   "hi-lock.el" "beacon.el"
+   "hi-lock.el" "beacon.el" "project.el"
    ;;"activities.el"
    "cleanup.el"))
 

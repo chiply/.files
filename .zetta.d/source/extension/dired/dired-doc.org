@@ -370,19 +370,19 @@ Documentation: nil
 Code:
 #+BEGIN_SRC emacs-lisp
 (lambda (&optional buf-or-mode-name)
-  (if (projectile-project-p) (let ((buf (current-buffer)))
+  (if (cdr (project-current nil)) (let ((buf (current-buffer)))
                                (dired (concat (if (not (string= "" (4mn-get-tramp-remote-part)))
                                                   (concat "/"
                                                           (4mn-get-tramp-remote-part)
                                                           ":")
                                                 "")
-                                              (if (string-match ":" (projectile-project-root)) (nth 0 (last
+                                              (if (string-match ":" (project-root (project-current nil default-directory))) (nth 0 (last
 
 
                                                                                                        (split-string
-                                                                                                        (projectile-project-root)
+                                                                                                        (project-root (project-current nil default-directory))
                                                                                                         ":")))
-                                                (projectile-project-root))))
+                                                (project-root (project-current nil default-directory)))))
                                (select-window (get-buffer-window buf)))
     (if buffer-file-name (let ((buf (current-buffer)))
                            (dired (file-name-directory (or load-file-name buffer-file-name)))

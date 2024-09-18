@@ -25,14 +25,15 @@
     (equal major-mode (with-current-buffer buffer major-mode)))
 
   (defun is-project-buffer (buffer)
-    (and (boundp 'projectile-mode)
-         (projectile-project-p)
-         (or ;; need both conditions as they don't all add to projectile-project-buffers
-          (member buffer (projectile-project-buffers))
-          (string-match
-           ;; remove trailing / from projectile-project-root
-           (substring (projectile-project-root) 0 -1)
-           (with-current-buffer buffer default-directory)))))
+    (and
+     ;;(boundp 'projectile-mode)
+     (cdr (project-current nil))
+     (or ;; need both conditions as they don't all add to 
+      (member buffer (project-buffers (project-current nil default-directory)))
+      (string-match
+       ;; remove trailing / from project root
+       (substring (project-root (project-current nil default-directory)) 0 -1)
+       (with-current-buffer buffer default-directory)))))
 
 
   ;; CONDITIONS (for use in z-project-mode-buffers)
