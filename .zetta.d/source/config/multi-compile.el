@@ -26,7 +26,6 @@
 ;; refactor how bufnm is being set
 ;; some indication as to what mode the buffer is in in the modeline
 
-
 ;;;;;;;;;;;;;;;; DEPENDENCIES
 (use-package templatel)
 (use-package compile-multi :demand t)
@@ -54,6 +53,14 @@
 
 ;; VARIABLES
 (setq zmc-async-shell-command-spinners-enable nil)
+;; solution for monorepos:
+(setq zmc-extra-project-paths
+      '("~/source_code/workflow-activity-registry/pipeline/patient/"
+        "~/source_code/workflow-activity-registry/pipeline/dp/"
+        "~/source_code/workflow-activity-registry/pipeline/hie/"
+        "~/source_code/workflow-activity-registry/pipeline/order-service/"
+        "~/source_code/workflow-activity-registry/pipeline/reports/"
+        "~/source_code/workflow-activity-registry/pipeline/data-share/"))
 
 ;;;;;;;;;;;;;;;;;; HELPERS
 (defun zmc-get-hashtbl (args)
@@ -86,7 +93,7 @@ async-shell-command"
       (with-current-buffer buf
         (compilation-minor-mode t)
         (z-compile-spin-stop buf signal)
-        (z-highlight-phrases)
+        ;;(z-highlight-phrases)
         (alert (concat bufnm " exited with signal: " signal)
                :title "zmc finished"))
       (shell-command-sentinel process signal))))
@@ -184,7 +191,7 @@ async-shell-command"
     (unless (string= (buffer-name original-buffer)
                      (cond
                       ((bufferp new-buffer)
-                         (buffer-name new-buffer))
+                       (buffer-name new-buffer))
                       ;; case it is a string
                       ((stringp new-buffer) new-buffer)))
       ;; removes from the current window's tab list, this has the impact
@@ -338,8 +345,6 @@ async-shell-command"
     (concat "poetry run pytest -vvv " target))))
 
 
-
-
 (defun zmc-get-parent-dirs (path)
   (let* ((path (string-join (butlast (split-string path "/")) "/"))
          (path (if (string= path "") "/" path)))
@@ -367,14 +372,22 @@ async-shell-command"
     paths))
 
 
+;; issue -- this doesn't work -- but running the command does.... lol...
 (defun zmc-make-alist (project-path build-file-name build-file-type)
   (let* ((fname (concat project-path build-file-name))
          (subtargets (cond
                       ((string= build-file-type "make")
                        (projection-multi-make--targets-from-file2 fname))
                       ((and (string= build-file-type "pytest")
-                            (string= (projectile-project-p) (expand-file-name project-path)))
-                       (zmc-get-pytest-targets-from-project project-path))
+                            (or
+                             (string= (projectile-project-p) (expand-file-name project-path))
+                             ;; TODO after fixing zmc-get-pytest-targets-from-project
+                             ;;(member project-path zmc-extra-project-paths) 
+                             )
+                            )
+                       (zmc-get-pytest-targets-from-project project-path)
+                       )
+                      
                       ((string= build-file-type "tmuxinator")
                        ;; eg no subtargets
                        '(""))))
@@ -391,6 +404,7 @@ async-shell-command"
                  subtargets)))
     (ht-from-alist alist)))
 
+
 (defun zmc-get-targets (project-path build-file-type &optional regex)
   (--map
    (let* ((build-file-name (when (file-exists-p (concat project-path it)) it)))
@@ -398,13 +412,19 @@ async-shell-command"
        (zmc-make-alist project-path build-file-name build-file-type)))
    (directory-files project-path nil regex t)))
 
+
 ;; This should be the function that we define per build target type
 (defun zmc-detect-targets (build-file-type regex)
-  (let* ((projects (--filter (not (string= it "~/")) projectile-known-projects))
+  (let* ((projects (--filter (not (string= it "~/"))
+                             (append
+                              projectile-known-projects
+                              zmc-extra-project-paths)))
          (lst (--map (zmc-get-targets it build-file-type regex) projects))
          (lst (--filter it lst))
          (lst (flatten-list lst)))
     (eval (append '(ht-merge) lst))))
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INTERACTIVE FUNCTION
@@ -427,7 +447,8 @@ async-shell-command"
         (execute-kbd-macro (kbd "<return>")))))
    (t (let* ((detected-targets (ht-merge
                                 (zmc-detect-targets "make" "makefile\\|Makefile")
-                                (zmc-detect-targets "pytest" "pyproject.toml")
+                                ;; TODO fix
+                                ;;(zmc-detect-targets "pytest" "pyproject.toml")
                                 (zmc-detect-targets "tmuxinator" "\\.tmuxinator\\.yaml")
                                 (eval (append
                                        '(ht-merge)

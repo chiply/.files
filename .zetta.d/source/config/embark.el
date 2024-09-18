@@ -12,7 +12,6 @@
   ;; note this also affects which-key
   (setq prefix-help-command #'embark-prefix-help-command)
 
-  :display
   (define-key embark-general-map (kbd "C-b") 'z-bookmark-create)
 
   (define-key embark-general-map (kbd "!") 'symbol-overlay-put)
