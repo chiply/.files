@@ -282,9 +282,17 @@
            (hydra-magneto/body)))
        (condition-case nil
            (define-key ,keymap ,(kbd (concat "s-o " key-sequence)) ',function-name)
-         (error (message ,(concat (symbol-name keymap) " " (symbol-name function-name) " didn't work")))
-         )
-       )))
+         (error (message ,(concat
+                           (symbol-name keymap)
+                           " "
+                           (symbol-name function-name)
+                           " didn't work")))))))
+
+(defun magneto-embark-export ()
+  (interactive)
+  (call-interactively 'embark-export)
+  (hydra-magneto/body))
+
 
 
 ;; embark general map
@@ -311,17 +319,29 @@
   (-map
    (lambda (x)
      (eval (my/embark-magneto-action keymap (car x) (cadr x))))
+   ;; filtered list of keymaps
    (-filter
     (lambda (x)
-      (not (or
-            ;; TODO why does z-projectile-find-file get filtered out?
-            (s-contains? "digit-arg" (symbol-name (car x)))
-            ;; TODO collect and export should work
-            (s-contains? "collect" (symbol-name (car x)))
-            (s-contains? "export" (symbol-name (car x)))
-            (s-contains? "become" (symbol-name (car x)))
-            (s-contains? "my/embark" (symbol-name (car x)))
-            (s-contains? "embark-org-link-map" (symbol-name (car x))))))
+      (and
+       ;; Binding only certain commands, but looking in every keymap.
+       ;; moving away from creating a magneto for everything
+       (or
+        (s-contains? "find-file" (symbol-name (car x)))
+        (s-contains? "consult-bookmark" (symbol-name (car x)))
+        (s-contains? "goto-grep" (symbol-name (car x)))
+        )
+       ;; avoid rebinding digit arg / my/embark 
+       (not (or
+             ;; TODO why does z-projectile-find-file get filtered out?
+             (s-contains? "digit-arg" (symbol-name (car x)))
+             ;; TODO collect and export should work
+             ;;(s-contains? "collect" (symbol-name (car x)))
+             ;;(s-contains? "export" (symbol-name (car x)))
+             ;;(s-contains? "become" (symbol-name (car x)))
+             (s-contains? "my/embark" (symbol-name (car x)))
+             (s-contains? "embark-org-link-map" (symbol-name (car x)))))
+       )
+      )
     (parse-keymap (eval keymap)))))
 
 

@@ -13,6 +13,7 @@
 
   ;; face
   (set-face-attribute 'copilot-overlay-face nil :foreground "purple" :inherit 'default)
+  (setq copilot-indent-offset-warning-disable t)
   
   :general (:keymaps '(copilot-completion-map)
                      "C-<return>" 'copilot-accept-completion

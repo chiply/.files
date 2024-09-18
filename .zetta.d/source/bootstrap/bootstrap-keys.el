@@ -192,13 +192,11 @@
   (meow-global-mode 1)
   (message "meow enabled"))
 
-
 (defun z-state-evil ()
   (interactive)
   (evil-mode t)
   (meow-global-mode -1)
   (message "evil enabled"))
-
 
 (defun z-state-emacs ()
   (interactive)
@@ -206,18 +204,11 @@
   (meow-global-mode -1)
   (message "emacs state enabled"))
 
-
-
 (general-define-key
  :keymaps 'override
  "s-z m" 'z-state-meow
  "s-z e" 'z-state-evil
  "s-z E" 'z-state-emacs)
-
-
-;;(defun z-insert-comma () (interactive) (insert ","))
-;; create launch map (similar to what other modal editing systems call
-;; 'leader', but I'm avoiding this name to avoid confusion
 
 ;; There are different key systems that can be used.  emacs, evil,
 ;; meow.  the issue is that evil and meow are modal editing systems
@@ -238,9 +229,13 @@
 ;; emacs states.  This setup is robust to the addition of new modal
 ;; editing systems such as
 
-;; note on easing migration -- as I am migrating from evil to meow, I can still rely on evil muscle memory, or even differential functionality, by quick dropping into evil mode.  This is useful not only for easing migration, but as a general feature of my configuration. Can almost consider this as a meta state.  Maybe 'modal state'.  And the idea would be to live in meow MOST of the time, while only swithcing to evil or emacs when necessary. 
-
-
+;; note on easing migration -- as I am migrating from evil to meow, I
+;; can still rely on evil muscle memory, or even differential
+;; functionality, by quick dropping into evil mode.  This is useful
+;; not only for easing migration, but as a general feature of my
+;; configuration. Can almost consider this as a meta state.  Maybe
+;; 'modal state'.  And the idea would be to live in meow MOST of the
+;; time, while only swithcing to evil or emacs when necessary.
 
 ;; define the launch-map
 (define-prefix-command 'launch-map)
@@ -255,18 +250,15 @@
                                     meow-motion-state-keymap
                                     meow-normal-state-keymap))
 
+;; Bind launch map to , in non insert states
 (general-define-key :keymaps z-modal-states-non-insert launch-key 'launch-map)
-;; TODO -- do i need this?
-;;(general-define-key :keymaps z-modal-states-insert launch-key 'z-insert-comma)
+
+;; Bind launch map to C-, in insert states.  Compatible with meow and embark-become
 (general-define-key (concat "C-" launch-key) 'launch-map)
 
 
 ;; then actually edit code to use direct general bindings instead of my custom function
 ;; define code for easily switching between modes -- use whatever is bound to c-z but make it cylce through
-
-;; then look into hercules for repeat mode; failing that look into emacs 29's repeat form
-;; then think about combobulate vs binding either ts's things or combobulate;s things (is there a library of things?)
-;; then look into tomorrow's tasks, plan tomorrow (cooking and gym, add tasks like PTO medialab etc...), do general housekeeping prep
 
 ;; not used, but may be used in the future if general chord will be used
 (defun define-launch-key (pairs)
