@@ -190,7 +190,7 @@
   )
 (defun 4mn-get-sqlite3dbpath ()
   ;; todo -- maybe something more sophisticated
-  (let* ((dir (projectile-project-root))
+  (let* ((dir (project-root (project-current nil default-directory)))
          (sqlite3dbpath (concat dir "main.db"))
          )
     (if (file-exists-p sqlite3dbpath)
@@ -287,7 +287,8 @@
                              ("workflow_file" . ,(g "workflow_file"))
                              ("secret_file_path" . ,(g "secret_file_path"))
                              ("event_path" . ,(g "event_path"))
-                             ("projectile-project-name" . ,(projectile-project-root))
+                             ;; TODO update this attribute if I use foreman again
+                             ;;("(project-name (project-current nil default-directory))" . ,(project-root (project-current nil default-directory)))
                              ;; docker
                              ("dockerfile" . ,(g "dockerfile"))
                              ("image-name" . ,(g "image-name"))

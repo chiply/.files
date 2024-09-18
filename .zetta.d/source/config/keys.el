@@ -4,8 +4,8 @@
 
 (defun z-projectile-find-file ()
   (interactive)
-  (if (projectile-project-p)
-      (projectile-find-file)
+  (if (cdr (project-current nil))
+      (project-find-file)
     (call-interactively 'find-file)
     )
   )
@@ -16,7 +16,7 @@
  "b" 'consult-buffer
  "B" 'consult-buffer
  "x" 'execute-extended-command
- "f" 'z-projectile-find-file
+ "f" 'project-find-file
  "F" 'find-file
  "k" 'kill-current-buffer)
 

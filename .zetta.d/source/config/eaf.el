@@ -55,7 +55,7 @@
   (eaf-bind-key consult-buffer ",b" eaf-browser-keybinding)
   (eaf-bind-key consult-buffer ",B" eaf-browser-keybinding)
   (eaf-bind-key execute-extended-command ",x" eaf-browser-keybinding)
-  (eaf-bind-key z-projectile-find-file ",p" eaf-browser-keybinding)
+  (eaf-bind-key project-find-file ",p" eaf-browser-keybinding)
   (eaf-bind-key find-file ",f" eaf-browser-keybinding)
   (eaf-bind-key kill-current-buffer ",b" eaf-browser-keybinding)
   (eaf-bind-key z-eaf-org-agenda ",a" eaf-browser-keybinding)

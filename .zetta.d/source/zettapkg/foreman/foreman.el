@@ -100,7 +100,7 @@ by TRAMP when inside of a remote buffer"
 ;;   (replace-regexp-in-string
 ;;    (regexp-quote ".") "__"
 ;;    (f-filename (or
-;;                 (projectile-project-root)
+;;                 (project-root (project-current nil default-directory))
 ;;                 default-directory))))
 
 ;; (defun tmux-get-file-window-name ()
@@ -120,8 +120,8 @@ by TRAMP when inside of a remote buffer"
 
 (defun 4mn-get-key ()
   (cond
-   ((and (buffer-file-name) (projectile-project-p))
-    (concat "project_dir:" (projectile-project-p) "___" "file:" (buffer-file-name)))
+   ((and (buffer-file-name) (cdr (project-current nil)))
+    (concat "project_dir:" (cdr (project-current nil)) "___" "file:" (buffer-file-name)))
    ((buffer-file-name)
     (concat "dir:" default-directory "___" "file:" (buffer-file-name)))
    ((not (buffer-file-name))

@@ -71,9 +71,9 @@
         (if title
             title
           ""
-          ;;(if (string= (projectile-project-name) "-")
+          ;;(if (string= ((project-name (project-current nil default-directory))) "-")
           ;;file
-          ;;(projectile-project-name))
+          ;;((project-name (project-current nil default-directory))))
           ))
       ))
 

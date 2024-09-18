@@ -16,7 +16,7 @@ A docstring
   )
 
 (defun z-soda-create-and-display-dired (&optional buf-or-mode-name)
-  (if (projectile-project-p)
+  (if (cdr (project-current nil))
       (let ((buf (current-buffer)))
         ;; can yield unexpect results on remote, so manually
         ;; assembling the file name here
@@ -29,9 +29,9 @@ A docstring
                      )
                   ""
                   )
-                (if (string-match ":" (projectile-project-root))
-                    (nth 0 (last (split-string (projectile-project-root) ":")))
-                  (projectile-project-root))
+                (if (string-match ":" (project-root (project-current nil default-directory)))
+                    (nth 0 (last (split-string (project-root (project-current nil default-directory)) ":")))
+                  (project-root (project-current nil default-directory)))
                 ))
         (select-window (get-buffer-window buf))
         )

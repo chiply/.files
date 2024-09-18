@@ -380,7 +380,7 @@ async-shell-command"
                        (projection-multi-make--targets-from-file2 fname))
                       ((and (string= build-file-type "pytest")
                             (or
-                             (string= (projectile-project-p) (expand-file-name project-path))
+                             (string= (cdr (project-current nil)) (expand-file-name project-path))
                              ;; TODO after fixing zmc-get-pytest-targets-from-project
                              ;;(member project-path zmc-extra-project-paths) 
                              )
@@ -417,7 +417,7 @@ async-shell-command"
 (defun zmc-detect-targets (build-file-type regex)
   (let* ((projects (--filter (not (string= it "~/"))
                              (append
-                              projectile-known-projects
+                              (project-known-project-roots)
                               zmc-extra-project-paths)))
          (lst (--map (zmc-get-targets it build-file-type regex) projects))
          (lst (--filter it lst))

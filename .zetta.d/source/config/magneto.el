@@ -332,7 +332,6 @@
         )
        ;; avoid rebinding digit arg / my/embark 
        (not (or
-             ;; TODO why does z-projectile-find-file get filtered out?
              (s-contains? "digit-arg" (symbol-name (car x)))
              ;; TODO collect and export should work
              ;;(s-contains? "collect" (symbol-name (car x)))

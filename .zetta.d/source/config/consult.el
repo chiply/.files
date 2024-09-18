@@ -4,7 +4,7 @@
   (recentf-mode)
   
   (setq recentf-save-file (expand-file-name ".data/recentf/recentf" user-emacs-directory))
-  (setq consult-project-root-function #'projectile-project-root
+  (setq consult-project-root-function #'(project-root (project-current nil default-directory))
         ;;consult-narrow-key "<"
         consult-narrow-key nil
         ;; IMPORTANT!  otherwise completion-at-point doesn't use vertico!
