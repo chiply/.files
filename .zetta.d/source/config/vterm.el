@@ -27,9 +27,9 @@
                          "")
                        "--"
                        buf-or-mode-name "*"))
-           (filepath (if (string-match ":" (or (projectile-project-root) default-directory))
-                         (nth 0 (last (split-string (or (projectile-project-root) default-directory) ":")))
-                       (or (projectile-project-root) default-directory)))
+           (filepath (if (string-match ":" (or (project-root (project-current nil default-directory)) default-directory))
+                         (nth 0 (last (split-string (or (project-root (project-current nil default-directory)) default-directory) ":")))
+                       (or (project-root (project-current nil default-directory)) default-directory)))
            )
       (let ((container (4mn-get-tramp-context--containername))
             (host (4mn-get-tramp-context--hostname)))

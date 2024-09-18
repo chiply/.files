@@ -9,7 +9,7 @@
 
   (defun z-magit-project ()
     (interactive)
-    (let ((dir (completing-read "Project: " (projectile-relevant-known-projects))))
+    (let ((dir (completing-read "Project: " (project-known-project-roots))))
       (magit-status dir)))
 
   (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)

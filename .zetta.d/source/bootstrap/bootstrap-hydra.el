@@ -56,7 +56,7 @@ Arguments are same as of `defhydra'."
   (
    :keymaps 'launch-map
    "w" 'hydra-window/body
-   "p" 'hydra-projectile/body
+   "p" 'hydra-project/body
    )
 
 

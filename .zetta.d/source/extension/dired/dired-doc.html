@@ -779,19 +779,19 @@ Code:
 </p>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #5317ac;">lambda</span> (<span style="color: #005a5f;">&amp;optional</span> buf-or-mode-name)
-  (<span style="color: #5317ac;">if</span> (projectile-project-p) (<span style="color: #5317ac;">let</span> ((buf (current-buffer)))
+  (<span style="color: #5317ac;">if</span> (cdr (project-current nil)) (<span style="color: #5317ac;">let</span> ((buf (current-buffer)))
                                (dired (concat (<span style="color: #5317ac;">if</span> (not (string= <span style="color: #2544bb;">""</span> (4mn-get-tramp-remote-part)))
                                                   (concat <span style="color: #2544bb;">"/"</span>
                                                           (4mn-get-tramp-remote-part)
                                                           <span style="color: #2544bb;">":"</span>)
                                                 <span style="color: #2544bb;">""</span>)
-                                              (<span style="color: #5317ac;">if</span> (string-match <span style="color: #2544bb;">":"</span> (projectile-project-root)) (nth 0 (last
+                                              (<span style="color: #5317ac;">if</span> (string-match <span style="color: #2544bb;">":"</span> (project-root (project-current nil default-directory))) (nth 0 (last
 
 
                                                                                                        (split-string
-                                                                                                        (projectile-project-root)
+                                                                                                        (project-root (project-current nil default-directory))
                                                                                                         <span style="color: #2544bb;">":"</span>)))
-                                                (projectile-project-root))))
+                                                (project-root (project-current nil default-directory)))))
                                (select-window (get-buffer-window buf)))
     (<span style="color: #5317ac;">if</span> buffer-file-name (<span style="color: #5317ac;">let</span> ((buf (current-buffer)))
                            (dired (file-name-directory (<span style="color: #5317ac;">or</span> load-file-name buffer-file-name)))

@@ -37,10 +37,10 @@
                       (ht-get run "databaseId")
                       (ht-get run "displayTitle")
                       (concat "on " (ht-get run "headBranch"))
-                      (projectile-project-name dir)
+                      (project-name (project-current nil default-directory))
                       (ht-get run "name")))
          (bufnm (format "*GHA run: %s || %s*"
-                        (projectile-project-name default-directory)
+                        (project-name (project-current nil default-directory))
                         (ht-get run "name")))
          (compilation-buffer-name-function `(lambda (_) ,bufnm)))
     (save-window-excursion (compile cmd))
@@ -54,7 +54,7 @@
          (id (ht-get run "databaseId"))
          (cmd (format z-gh-view-run-command id))
          (bufnm (format "*GHA log: %s || %s*"
-                        (projectile-project-name default-directory)
+                        (project-name (project-current nil default-directory))
                         (ht-get run "name"))))
     (shell-command cmd bufnm)
     ;; run (ansi-color-apply-on-region (point-min) (point-max)) in the bufnm

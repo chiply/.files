@@ -55,7 +55,7 @@
   )
 
 (defhydra+ hydra-window ()
-  ("f" z-projectile-find-file)
+  ("f" project-find-file)
   ("F" find-file)
   ("x" execute-extended-command)
   )

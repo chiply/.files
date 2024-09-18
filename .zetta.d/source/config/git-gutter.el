@@ -27,7 +27,7 @@
                                       ;;:background brushup-git-gutter-background)))
 
   :hydra
-  (defhydra+ hydra-projectile ()
+  (defhydra+ hydra-project ()
     ("g" git-gutter "Gutter" :column "Git Gutter")
     ("j" git-gutter:next-hunk)
     ("k" git-gutter:previous-hunk))

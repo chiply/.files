@@ -1,7 +1,7 @@
 (use-package projectile
   :config
   (setq projectile-cache-file (expand-file-name ".data/projectile/projectile.cache" user-emacs-directory)
-        projectile-known-projects-file (expand-file-name ".data/projectile/projectile-bookmarks.eld" user-emacs-directory)
+        (project-known-project-roots)-file (expand-file-name ".data/projectile/projectile-bookmarks.eld" user-emacs-directory)
         projectile-completion-system 'auto
         projectile-project-root-files-bottom-up
         '(".projectile" ".git"))
@@ -23,7 +23,7 @@
 
     ("p"   projectile-switch-project "switch project" :exit t :column "Goto")
     ("d"   projectile-find-dir "dir")
-    ("f"   projectile-find-file "file") 
+    ("f"   project-find-file "file") 
     ("r"   projectile-recentf "recent")
 
 
