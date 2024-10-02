@@ -15,6 +15,15 @@
   (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
 
   :config
+  ;; project.el
+  (keymap-substitute project-prefix-map #'project-vc-dir #'magit)
+  (cl-nsubstitute-if
+   '(magit "magit")
+   (pcase-lambda (`(,cmd _)) (eq cmd #'project-vc-dir))
+   project-switch-commands)
+
+
+
   (require 'magit-margin)
   (require 'magit-section)
 

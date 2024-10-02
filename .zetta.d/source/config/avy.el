@@ -3,8 +3,9 @@
   (setq avy-ignored-modes '(image-mode
                             doc-view-mode
                             pdf-view-mode
-                            shell-command-mode
-                            vterm-mode))
+                            ;;shell-command-mode
+                            ;;vterm-mode
+                            ))
 
   :general
   (

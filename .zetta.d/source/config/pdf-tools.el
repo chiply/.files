@@ -2,7 +2,7 @@
   :config
   (pdf-tools-install)
 
-  :display
+  ;;:display
   
   ;;(z-side "pdf-occur-buffer-mode" 'left 1)
   ;;(z-side "^\\*Outline*" 'left 3)

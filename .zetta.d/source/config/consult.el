@@ -20,6 +20,14 @@
    consult-bookmark
    consult-project-buffer
    :preview-key "C-+")
+
+  ;; project.el
+  ;; TODO don't like how verbose and multi-step this is.
+  (keymap-substitute project-prefix-map #'project-find-regexp #'consult-ripgrep)
+  (cl-nsubstitute-if
+   '(consult-ripgrep "Find regexp")
+   (pcase-lambda (`(,cmd _)) (eq cmd #'project-find-regexp))
+   project-switch-commands)
   
   :hydra
   (defhydra+ hydra-window ()
@@ -34,10 +42,10 @@
    "S" 'consult-line
    )
   ;;(
-   ;;:keymaps '(meow-motion-state-keymap meow-normal-state-keymap meow-beacon)
-   ;;"/" 'consult-line
+  ;;:keymaps '(meow-motion-state-keymap meow-normal-state-keymap meow-beacon)
+  ;;"/" 'consult-line
    ;;;; left off -- add reverse mode and test this out --- could be close-ish to what i want
-   ;;)
+  ;;)
   )
 
 (use-package consult-dir)
