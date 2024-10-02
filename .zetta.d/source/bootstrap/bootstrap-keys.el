@@ -1,5 +1,5 @@
 ;; for binding keys
-(use-package general :demand t  )
+(use-package general :demand t )
 
 ;; for key "chords", although a better thought of as "melodies",
 ;; becuase they involve sequential presses of keys

@@ -58,9 +58,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
    "C-c ^ ^"'unpackaged/smerge-hydra/body
    )
 
-  :hook (
-         ((diff-mode magit-status-mode magit-diff-mode git-commit-mode) . (lambda () (text-scale-set -2)))
-         )
+  ;;:hook (
+         ;;((diff-mode magit-status-mode magit-diff-mode git-commit-mode) . (lambda () (text-scale-set -2)))
+         ;;)
   )
 
 

@@ -83,6 +83,7 @@ Arguments are same as of `defhydra'."
 (defalias 'use-package-normalize/:hydra 'use-package-normalize-forms)
 (add-to-list 'use-package-keywords :hydra t)
 
+
 (provide 'bootstrap-hydra)
 
 

@@ -26,12 +26,12 @@
                                       without-if-bang)
         completion-styles '(orderless basic)
         completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion))))
+        completion-category-overrides '((file (styles basic partial-completion))))
   ;; to plase corfu
   (add-to-list 'completion-styles-alist
                '(tab completion-basic-try-completion ignore
                      "Completion style which provides TAB completion only."))
-  (setq completion-styles '(tab orderless basic))
+  ;;(setq completion-styles '(tab orderless basic))
 
   )
 
