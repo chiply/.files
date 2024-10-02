@@ -102,6 +102,15 @@
   :config
   (setq vterm-shell "zsh")
 
+  ;; project.el
+  ;; todo replace with vterm in project
+  (keymap-substitute project-prefix-map #'project-eshell #'vterm)
+  (cl-nsubstitute-if
+   '(vterm "vterm")
+   (pcase-lambda (`(,cmd _)) (eq cmd #'project-eshell))
+   project-switch-commands)
+
+
   ;; fixes unreadable situation -- comes out brown by default
   ;; note this is dependent on the terminal that launches emacs, I'm
   ;; using iterm2

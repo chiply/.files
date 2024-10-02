@@ -26,6 +26,8 @@
                          "--ignore-sys-deps")
              )
 
+  :demand t
+
   ;; Evil mode doesn't work well with eaf keybindings.
   :init (evil-set-initial-state 'eaf-mode 'emacs)
 
@@ -41,7 +43,6 @@
     (org-agenda-redo) 
     )
   ) 
-
 
 ;; note: started up with super weird display settings
 (use-package eaf-browser
@@ -81,3 +82,5 @@
   :config
   (eaf-bind-key nil "," eaf-org-previewer-keybinding)
   )
+
+(setq eaf-python-command "~/.pyenv/shims/python3")

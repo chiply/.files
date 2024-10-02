@@ -2,7 +2,7 @@
 ;; for performance
 (setq gc-cons-threshold 100000000)
 (setq lsp-use-plists t)
-(setq read-process-output-max (* 1024 1024)) 
+(setq read-process-output-max (* 1024 1024))
 
 
 (use-package lsp-mode
@@ -19,7 +19,7 @@
    lsp-eldoc-render-all nil
    lsp-eldoc-enable-hover nil
    ;; needs to be set.  we are activating flycheck separately
-   lsp-diagnostics-provider :none
+   lsp-diagnostics-provider :auto ;; :none
    lsp-semantic-highlighting nil
    lsp-signature-render-documentation nil
    lsp-signature-auto-activate nil
@@ -327,6 +327,7 @@ point."
                                           )))
     (evil-goto-definition)))
 
+
 (general-define-key
  :keymaps 'launch-map
  "H" 'z-jump-to-doc)
@@ -353,21 +354,20 @@ point."
 
 (use-package lsp-treemacs-nerd-icons
   :straight '(:host github :repo "Velnbur/lsp-treemacs-nerd-icons" :files ("*.el"))
-  :after treemacs
-  )
+  :after treemacs)
+
 (use-package lsp-treemacs
   :after (treemacs)
   :config
-  (setq lsp-treemacs-theme "Default")
-  )
-
+  (setq lsp-treemacs-theme "Default"))
 
 (use-package lsp-pylsp
   :straight nil
   :custom
-  (lsp-pylsp-plugins-flake8-enabled nil)
-  )
+  (lsp-pylsp-plugins-flake8-enabled nil))
 
 
-
-
+;; (with-eval-after-load 'lsp-mode
+;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.my-folder\\'")
+;;   ;; or
+;;   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'"))

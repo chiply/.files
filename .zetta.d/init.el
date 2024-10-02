@@ -3,7 +3,6 @@
 (add-to-list 'load-path "~/.files/.zetta.d/source/bootstrap")
 (require 'bootstrap)
 
-;; use dash to do the loop
 (setq z-files-that-need-creating '("~/.dir-locals.el" "~/.private.el"))
 
 (-each z-files-that-need-creating 'z-touch-maybe)
@@ -45,7 +44,11 @@
    "text-mode.el" "jmespath.el" "highlight-symbol.el" "terraform.el"
    "ein.el" "adaptive-wrap.el" "xref.el" "flycheck.el"
    "flycheck-indicator.el" "magit-diff-flycheck.el"
-   "flycheck-projectile.el" "flycheck-ruff.el" "modern-fringes.el"
+   "flycheck-projectile.el"
+
+   ;;"flycheck-ruff.el"
+
+   "modern-fringes.el"
    "rainbow-mode.el" "image-mode.el" "browse-url.el" "spray.el"
    "mermaid-mode.el" "minimap.el" "hyperbole.el" "kubernetes-el.el"
    "kubel.el" "git-link.el" "python-pytest.el" "multi-compile.el"
@@ -58,6 +61,11 @@
    ;;"org-modern.el"
    "org.el"
    "ob-mermaid.el"
+
+   "org-noter.el"
+   "org-noter-pdftools.el"
+   "pdf-tools.el"
+   "org-pdftools.el"
 
    "biblio.el"  "lsp.el"
    "lark.el" "yascroll.el" "nyan-mode.el" "gptel.el" "popper.el"
@@ -80,7 +88,13 @@
    "corfu.el" "casual-suite.el" "typescript-ts-mode.el"
    "apheleia.el" "spot4e.el" "symbol-overlay.el"
    "hi-lock.el" "beacon.el" "project.el"
+   ;;"wombag.el"
    ;;"activities.el"
+   "eaf.el"
+
+   "smerge-mode.el" "elysium.el"
+   ;;"indent-bars.el" ;; not great, but didn't try customizing
+
    "cleanup.el"))
 
 ;; load user-files and provate lisp code
