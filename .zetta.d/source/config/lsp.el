@@ -6,6 +6,7 @@
 
 
 (use-package lsp-mode
+
   :init
   (setq
    lsp-enable-completion-at-point t
@@ -165,7 +166,7 @@ point."
   
 
 
- 
+  
   ;; need to turn on and off for the breadcrumb to be used elsewhere
   (lsp-headerline-breadcrumb-mode 1)
   (lsp-headerline-breadcrumb-mode -1)
@@ -177,8 +178,8 @@ point."
   (add-to-list 'brushup-styles
                '(progn
                   (set-face-attribute 'lsp-headerline-breadcrumb-symbols-face nil
-                      :weight 'normal
-                      :background brushup-bg-2)
+                                      :weight 'normal
+                                      :background brushup-bg-2)
                   ))
 
   ;;:display
@@ -353,7 +354,7 @@ point."
   (setq lsp-ui-sideline-enable nil))
 
 (use-package lsp-treemacs-nerd-icons
-  :straight '(:host github :repo "Velnbur/lsp-treemacs-nerd-icons" :files ("*.el"))
+  :ensure (lsp-treemacs-nerd-icons :host github :repo "Velnbur/lsp-treemacs-nerd-icons" :files ("*.el"))
   :after treemacs)
 
 (use-package lsp-treemacs

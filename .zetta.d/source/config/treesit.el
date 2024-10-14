@@ -1,7 +1,7 @@
 
 ;; `M-x combobulate' (default: `C-c o o') to start using Combobulate
 (use-package treesit
-  :straight nil ;; its builtin to emacs
+  :ensure nil ;; its builtin to emacs
   :preface
   (defun mp-setup-install-grammars ()
     "Install Tree-sitter grammars if they are absent."

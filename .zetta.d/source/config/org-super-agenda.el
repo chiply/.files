@@ -110,6 +110,8 @@ where is was when z-refresh-agenda was called"
     (highlight-regexp "-->" 'modus-themes-refine-red)
     )
 
+  (general-define-key :keymaps 'menu-run-keymap "a" 'z-org-agenda-main)
+
 
   (org-super-agenda-mode)
 
@@ -128,10 +130,10 @@ where is was when z-refresh-agenda was called"
                )
 
 
-  :hydra
-  (defhydra+ hydra-run ()
-    ("a" z-org-agenda-main "Org Agenda")
-    )
+  ;;:hydra
+  ;;(defhydra+ hydra-run ()
+    ;;("a" z-org-agenda-main "Org Agenda")
+    ;;)
 
 
   :general

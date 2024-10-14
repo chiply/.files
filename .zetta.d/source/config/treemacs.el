@@ -54,6 +54,38 @@
           (treemacs)
           (select-window win)))))
 
+  (general-define-key
+   :keymaps 'menu-run-keymap
+   "t" (lambda () (interactive)
+         (let* ((bufnm (current-buffer))
+                (win (get-buffer-window bufnm))
+                (treemacs-buf (nth 0 (z-soda-mode-displayed-p "treemacs-mode")))
+                )
+           (if treemacs-buf
+               (select-window (get-buffer-window treemacs-buf))
+             (progn
+               (treemacs)
+               (select-window win)
+               )
+             )))
+   "T" 'treemacs
+   "C-t" 'z-refresh-treemacs
+
+   "M-t" (lambda () (interactive)
+           (if treemacs-tag-follow-mode
+               (progn
+                 (treemacs-tag-follow-mode -1)
+                 ;; need this as treemacs tag follow mode -1 affects
+                 ;; follow mode SO STRANGE.. but this seems to sovle
+                 ;; the issie of not having proper tracking to to
+                 ;; lack of tags in a file.  I can get file based
+                 ;; following in the files where I run this
+                 ;; function.  Not expectetd, but works!
+                 (treemacs-follow-mode 1))
+             (treemacs-tag-follow-mode 1)))
+
+   )
+
   :brushup
   (add-to-list 'brushup-styles
                '(progn
@@ -79,35 +111,37 @@
 
   ;; toggle treemacs with ,t;;; so it's  ,d for dired, ,b for buffer ,t for treemacs
 
-  :hydra
-  (defhydra+ hydra-run () 
-    ("t" (lambda () (interactive)
-           (let* ((bufnm (current-buffer))
-                  (win (get-buffer-window bufnm))
-                  (treemacs-buf (nth 0 (z-soda-mode-displayed-p "treemacs-mode")))
-                  )
-             (if treemacs-buf
-                 (select-window (get-buffer-window treemacs-buf))
-               (progn
-                 (treemacs)
-                 (select-window win)
-                 )
-               ) 
-             )))
-    ("T" treemacs) 
-    ("C-t" z-refresh-treemacs)
-    ("M-t" (lambda () (interactive)
-             (if treemacs-tag-follow-mode
-                 (progn
-                   (treemacs-tag-follow-mode -1)
-                   ;; need this as treemacs tag follow mode -1 affects
-                   ;; follow mode SO STRANGE.. but this seems to sovle
-                   ;; the issie of not having proper tracking to to
-                   ;; lack of tags in a file.  I can get file based
-                   ;; following in the files where I run this
-                   ;; function.  Not expectetd, but works!
-                   (treemacs-follow-mode 1))
-               (treemacs-tag-follow-mode 1)))))
+                                        ;:hydra
+                                        ;(defhydra+ hydra-run () 
+                                        ;("t" (lambda () (interactive)
+                                        ;(let* ((bufnm (current-buffer))
+                                        ;(win (get-buffer-window bufnm))
+                                        ;(treemacs-buf (nth 0 (z-soda-mode-displayed-p "treemacs-mode")))
+                                        ;)
+                                        ;(if treemacs-buf
+                                        ;(select-window (get-buffer-window treemacs-buf))
+                                        ;(progn
+                                        ;(treemacs)
+                                        ;(select-window win)
+                                        ;)
+                                        ;) 
+                                        ;)))
+                                        ;("T" treemacs) 
+                                        ;("C-t" z-refresh-treemacs)
+                                        ;("M-t" (lambda () (interactive)
+                                        ;(if treemacs-tag-follow-mode
+                                        ;(progn
+                                        ;(treemacs-tag-follow-mode -1)
+                   ;;; need this as treemacs tag follow mode -1 affects
+                   ;;; follow mode SO STRANGE.. but this seems to sovle
+                   ;;; the issie of not having proper tracking to to
+                   ;;; lack of tags in a file.  I can get file based
+                   ;;; following in the files where I run this
+                   ;;; function.  Not expectetd, but works!
+                                        ;(treemacs-follow-mode 1))
+                                        ;(treemacs-tag-follow-mode 1)))))
+
+  
 
 
 

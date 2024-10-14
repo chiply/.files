@@ -21,6 +21,7 @@
   :bind (:map isearch-mode-map ("C-o" . casual-isearch-tmenu)))
 
 (use-package ibuffer
+  :ensure nil
   :hook (ibuffer-mode . ibuffer-auto-mode)
   :defer t)
 (use-package casual-ibuffer
@@ -40,6 +41,7 @@
   :after (ibuffer))
 
 (use-package re-builder
+  :ensure nil
   :defer t)
 (use-package casual-re-builder
   :ensure nil

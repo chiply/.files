@@ -48,7 +48,6 @@
 (add-to-list 'hades-registry `("hlt-map" ,hlt-map))
 (add-to-list 'hades-registry `("lsp-mode-map" ,lsp-mode-map))
 
-
 ;; create all the hades
 (defun hades-create-hydras ()
   (-map (lambda (tpl) (hades tpl)) hades-registry))

@@ -1,3 +1,3 @@
 (use-package simple
-  :straight (:type built-in)
+  :ensure nil ;; builtin
   )

@@ -2,6 +2,10 @@
   :config
   (setq symbol-overlay-idle-time 0.05)
   (setq symbol-overlay-priority 90)
+  ;; disable default keybindings, will use transient, hydra, hercules,
+  ;; etc... instead
+  (setq symbol-overlay-map (make-sparse-keymap))
+
 
   ;; keybindings
   (global-set-key (kbd "M-i") 'symbol-overlay-put)
@@ -43,6 +47,6 @@
 
   ;; modes
   :hook ((sql-mode python-ts-mode emacs-lisp-mode yaml-mode
-                   jsonian-mode json-mode web-mode shell-command-mode sh-mode
+                   jsonian-mode json-mode web-mode shell-command-mode sh-mode grep-mode
                    lark-mode makefile-mode) .
                    symbol-overlay-mode))

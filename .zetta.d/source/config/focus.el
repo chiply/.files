@@ -37,10 +37,14 @@
     ("P" focus-unpin "Unpin")
     )
 
-  (defhydra+ hydra-window ()
-    ("C-f" focus-mode "Next")
-    )
+  ;;(defhydra+ hydra-window ()
+  ;;("C-f" focus-mode "Next")
+  ;;)
 
+  :general
+  (
+   :keymaps 'menu-window-keymap
+   "C-f" 'focus-mode)
 
   :hook ((emacs-lisp-mode . (lambda () (z-focus-mode 'defun)))
          ((python-ts-mode sql-mode yaml-mode sh-mode) . (lambda () (z-focus-mode 'brick)))

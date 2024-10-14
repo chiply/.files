@@ -1,5 +1,7 @@
 (use-package consult-gh
-  :straight (consult-gh :type git :host github :repo "armindarvish/consult-gh" :branch "main" :files ("*.el"))
+  ;;:straight (consult-gh :type git :host github :repo "armindarvish/consult-gh" :branch "main" :files ("*.el"))
+  :ensure (:wait t)
+  :demand t
   :after consult
 
   :config

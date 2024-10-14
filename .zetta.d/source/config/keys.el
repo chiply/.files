@@ -12,7 +12,7 @@
 
 (general-define-key
  :keymaps 'launch-map
- "o" 'hydra-org/body
+ ;;"o" 'hydra-org/body
  "b" 'consult-buffer
  "B" 'consult-buffer
  "x" 'execute-extended-command

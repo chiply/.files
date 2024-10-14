@@ -1,6 +1,6 @@
 (use-package org
-  :straight (org :type git :host github :repo "bzg/org-mode")
-  :demand t
+  ;;:ensure (org :type git :host github :repo "bzg/org-mode" :wait t)
+  :ensure nil
 
   :mode ("\\.org" . org-mode)
 

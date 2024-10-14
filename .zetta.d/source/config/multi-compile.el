@@ -38,9 +38,12 @@
 (use-package compile-multi-all-the-icons :demand t)
 (use-package compile-multi-embark :demand t :config (compile-multi-embark-mode +1))
 (use-package projection :demand t)
-(use-package projection-multi :demand t)
+(use-package projection-multi
+  :demand t
+  :config
+  (require 'projection-multi-make))
 (use-package projection-multi-embark :demand t)
-(require 'projection-multi-make)
+
 
 
 ;; LEFT OFF - grow phase, organize todos and need to refactor
@@ -351,6 +354,7 @@ async-shell-command"
     (if (string= path "/") '() (cons path (zmc-get-parent-dirs path)))))
 
 (defun zmc-get-pytest-targets-from-project (project-path)
+  (message "got to A")
   (let* ((paths (shell-command-to-string
                  (concat
                   "cd " project-path " && "
@@ -358,6 +362,7 @@ async-shell-command"
                   "--co -q --disable-warnings")))
          (paths (nth 0 (split-string paths "\n\n")))
          (paths (split-string paths "\n"))
+         (_ (message "got to B"))
          (paths (--map (substring it 0 (string-match "\\[" it))
                        paths))
          (paths (append
@@ -380,11 +385,16 @@ async-shell-command"
                        (projection-multi-make--targets-from-file2 fname))
                       ((and (string= build-file-type "pytest")
                             (or
-                             (string= (cdr (project-current nil)) (expand-file-name project-path))
-                             ;; TODO after fixing zmc-get-pytest-targets-from-project
-                             ;;(member project-path zmc-extra-project-paths) 
-                             )
-                            )
+                             ;; Current project
+                             (string=
+                              (expand-file-name (cadr (cdr (project-current nil))))
+                              (expand-file-name project-path))
+                             ;; CONDITION: We are in a subproject of zmc-extra-project-paths or zmc-extra-project-paths
+                             ;; how can we determine the project path?
+                             ;; if we are in a subdir, should we do tests for the current project or all projects?
+                             ;; TODO fix this -- this will fire in any project, which will cause the program to run for a long time
+                             ;;(member project-path zmc-extra-project-paths)
+                             ))
                        (zmc-get-pytest-targets-from-project project-path)
                        )
                       
@@ -448,7 +458,7 @@ async-shell-command"
    (t (let* ((detected-targets (ht-merge
                                 (zmc-detect-targets "make" "makefile\\|Makefile")
                                 ;; TODO fix
-                                ;;(zmc-detect-targets "pytest" "pyproject.toml")
+                                (zmc-detect-targets "pytest" "pyproject.toml")
                                 (zmc-detect-targets "tmuxinator" "\\.tmuxinator\\.yaml")
                                 (eval (append
                                        '(ht-merge)

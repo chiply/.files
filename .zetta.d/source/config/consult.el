@@ -29,12 +29,17 @@
    (pcase-lambda (`(,cmd _)) (eq cmd #'project-find-regexp))
    project-switch-commands)
   
-  :hydra
-  (defhydra+ hydra-window ()
-    ("s" consult-ripgrep :exit t)
-    ("S" consult-line :exit t))
+  ;;:hydra
+  ;;(defhydra+ hydra-window ()
+  ;;("s" consult-ripgrep :exit t)
+  ;;("S" consult-line :exit t))
 
   :general
+  (
+   :keymaps 'menu-window-keymap
+   "s" 'consult-ripgrep
+   "S" 'consult-line
+   )
   (
    :keymaps 'launch-map
    "v" 'consult-yank-from-kill-ring

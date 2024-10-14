@@ -6,3 +6,5 @@ export LSP_USE_PLISTS=true
 
 
 
+
+. "$HOME/.cargo/env"

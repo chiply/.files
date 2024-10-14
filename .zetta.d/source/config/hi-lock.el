@@ -1,5 +1,5 @@
 (use-package hi-lock
-  :straight (:type built-in)
+  :ensure nil ;; builtin
   :demand t
   :config
   ;; prevents issues with precedence over hl-line
