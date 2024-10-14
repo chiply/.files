@@ -1,4 +1,5 @@
 (use-package evil
+  :ensure (:wait t)
   :demand t
   :init
   (setq evil-want-keybinding nil)

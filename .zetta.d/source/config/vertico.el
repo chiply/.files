@@ -9,7 +9,7 @@
   (setq vertico-posframe-height nil))
 
 (use-package vertico
-  :straight (:files (:defaults "extensions/*"))
+  ;;:straight (:files (:defaults "extensions/*"))
 
   :init
   (vertico-mode 1)

@@ -1,13 +1,12 @@
 ;; for binding keys
-(use-package general :demand t )
+(use-package general :demand t :ensure (:wait t))
 
 ;; for key "chords", although a better thought of as "melodies",
 ;; becuase they involve sequential presses of keys
 (use-package key-chord
   :config
   (setq key-chord-two-keys-delay .05 key-chord-one-key-delay .05)
-  (key-chord-mode 1)
-  )
+  (key-chord-mode 1))
 
 ;; provides hints
 (use-package which-key
@@ -18,8 +17,7 @@
     (and
      (eq 0 (window-parameter (selected-window) 'window-slot))
      (eq 'top (window-parameter (selected-window) 'window-side))
-     )
-    )
+     ))
 
   (setq which-key-popup-type 'custom)
   (defun which-key-custom-popup-max-dimensions-function (ignore)
@@ -41,16 +39,26 @@
                                ))
                     (slot . 0)
                     )))
-      (if (get-buffer-window which-key--buffer)
-          (display-buffer-reuse-window which-key--buffer alist)
-        (display-buffer-in-side-window which-key--buffer alist))
+      (display-buffer-no-window which-key--buffer alist)
+      ;;(if (get-buffer-window which-key--buffer)
+      ;;(display-buffer-reuse-window which-key--buffer alist)
+      ;;(display-buffer-in-side-window which-key--buffer alist)
+      ;;)
       ))
+
+  ;;(defun which-key-custom-show-popup-function1 (act-popup-dim)
+  ;;nil)
 
   (defun which-key-custom-hide-popup-function ()
     (when (buffer-live-p which-key--buffer)
       (quit-windows-on which-key--buffer)))
 
   (setq
+   ;; more useful hinting as it remains open (at least the way i use
+   ;; it)
+   which-key-persistent-popup t
+   ;; include more in the which key buffer
+   which-key-compute-remaps t
    ;; Allow C-h to trigger which-key before it is done automatically
    which-key-show-early-on-C-h t
    ;; make sure which-key doesn't show normally but refreshes quickly
@@ -73,6 +81,33 @@
    )
 
   (which-key-mode 1)
+  ;; because which-ley-mode sets prefix-help-command to which-key-C-h-dispatch
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  (defun which-key--create-buffer-and-show
+      (&optional prefix-keys from-keymap filter prefix-title)
+    "Fill `which-key--buffer' with key descriptions and reformat.
+Finally, show the buffer."
+    (let ((start-time (current-time))
+          (formatted-keys (which-key--get-bindings
+                           ;; updated -- added t to show the full keymap
+                           prefix-keys from-keymap filter t))
+          (prefix-desc (key-description prefix-keys)))
+      (cond ((null formatted-keys)
+             (message "%s-  which-key: There are no keys to show" prefix-desc))
+            ((listp which-key-side-window-location)
+             (setq which-key--last-try-2-loc
+                   (apply #'which-key--try-2-side-windows
+                          formatted-keys prefix-keys prefix-title
+                          which-key-side-window-location)))
+            (t (setq which-key--pages-obj
+                     (which-key--create-pages
+                      formatted-keys prefix-keys prefix-title))
+               (which-key--show-page)))
+      (which-key--debug-message
+       "On prefix \"%s\" which-key took %.0f ms." prefix-desc
+       (* 1000 (float-time (time-since start-time))))))
+
   )
 
 

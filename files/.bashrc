@@ -12,3 +12,5 @@ unexport VIRTUAL_ENV
 source /Users/redacted/Library/Application\ Support/org.dystroy.broot/launcher/bash/br
 
 source /Users/redacted/.config/broot/launcher/bash/br
+
+. "$HOME/.cargo/env"

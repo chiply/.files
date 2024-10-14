@@ -40,7 +40,11 @@ eww-bookmarks
 .zetta.d/source/straight/build/
 .zetta.d/source/straight/repos/
 .zetta.d/source/straight/build-cache.el
-build-cache.el
+
+.zetta.d/elpaca/builds/
+.zetta.d/elpaca/repos/
+.zetta.d/elpaca/cache/
+build-cache.
 keybindings.org
 .snippets.org
 eln-cache/

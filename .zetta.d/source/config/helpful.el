@@ -12,6 +12,10 @@
 
   (setq helpful-switch-buffer-function 'display-buffer)
 
+  (general-define-key
+   :keymaps 'menu-run-keymap
+   "H" (lambda () (interactive) (z-soda-cap "[H|h]elp*" 1)))
+
   :hydra
 
   (defhydra+ hydra-helpful ()
@@ -26,9 +30,9 @@
     ("i" info "Info" :column "Manual" :exit t)
     )
 
-  (defhydra+ hydra-run ()
-    ("H" (lambda () (interactive) (z-soda-cap "[H|h]elp*" 1)) "Help")
-    )
+  ;;(defhydra+ hydra-run ()
+    ;;("H" (lambda () (interactive) (z-soda-cap "[H|h]elp*" 1)) "Help")
+    ;;)
 
   :general
   (

@@ -26,11 +26,16 @@
                                       ;;:foreground brushup-git-gutter-foreground
                                       ;;:background brushup-git-gutter-background)))
 
-  :hydra
-  (defhydra+ hydra-project ()
-    ("g" git-gutter "Gutter" :column "Git Gutter")
-    ("j" git-gutter:next-hunk)
-    ("k" git-gutter:previous-hunk))
+  (general-define-key :keymaps 'menu-project-keymap
+                      "g" 'git-gutter
+                      "j" 'git-gutter:next-hunk
+                      "k" 'git-gutter:previous-hunk)
+
+  ;;:hydra
+  ;;(defhydra+ hydra-project ()
+    ;;("g" git-gutter "Gutter" :column "Git Gutter")
+    ;;("j" git-gutter:next-hunk)
+    ;;("k" git-gutter:previous-hunk))
 
   :hook (use-package--git-gutter--post-config . z-brushup)
   )

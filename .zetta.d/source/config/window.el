@@ -10,11 +10,33 @@
              '(progn
                 (set-face-attribute 'window-divider nil
                                     :foreground brushup-bg-2)))
+(general-define-key
+ :keymaps 'menu-window-keymap
+ "o" '(lambda () (interactive) (call-interactively 'window-divider-mode))
+ "D" 'delete-window
+ "C-S-d" 'delete-other-windows
+ "C-S-S" 'window-toggle-side-windows
+ "C-S-b b" '(lambda () (interactive) (if (get-scroll-bar-mode) (set-scroll-bar-mode nil) (set-scroll-bar-mode 'left)))
+ "C-S-b h" 'horizontal-scroll-bar-mode
+ "mm" 'balance-windows
+ "mk" 'minimize-window
+ "mj" 'maximize-window
+ "C-v" 'visual-line-mode
+ "C-t" 'toggle-truncate-lines
+ "C-t" 'toggle-truncate-lines
+ "C-w" 'toggle-word-wrap
+ "s" 'z-state-hydra/body
+ "f" 'project-find-file
+ "F" 'find-file
+ "x" 'execute-extended-command
+ "r" 'hydra-resize/body
+ "M" 'hydra-tile/body
+ )
 
-(defhydra+ hydra-window ()
-  ;; mneuumonic is that the o is a circle, so gets rid of or relaxes
-  ;; tthat visual wireframe
-  ("o" (lambda () (interactive) (call-interactively 'window-divider-mode))))
+;;(defhydra+ hydra-window ()
+  ;;;; mneuumonic is that the o is a circle, so gets rid of or relaxes
+  ;;;; tthat visual wireframe
+;;("o" (lambda () (interactive) (call-interactively 'window-divider-mode))))
 
 (add-to-list 'window-persistent-parameters '(window-side . writable))
 (add-to-list 'window-persistent-parameters '(window-slot . writable))
@@ -32,37 +54,37 @@
   ("e" z-state-evil "evil")
   ("E" z-state-emacs "emacs"))
 
-(defhydra+ hydra-window ()
-  ("D" delete-window)
-  ("C-S-d" delete-other-windows)
-  ("C-S-S" window-toggle-side-windows)
-  ("C-S-b b" (lambda ()
-               (interactive)
-               (if (get-scroll-bar-mode)
-                   (set-scroll-bar-mode nil)
-                 (set-scroll-bar-mode 'left))
-               )
-   )
-  ("C-S-b h" horizontal-scroll-bar-mode)
-  ("mm" balance-windows)
-  ("mk" minimize-window)
-  ("mj" maximize-window)
-  ("C-v" visual-line-mode)
-  ("C-t" toggle-truncate-lines)
-  ("C-t" toggle-truncate-lines)
-  ("C-w" toggle-word-wrap)
-  ("s" z-state-hydra/body)
-  )
+;;(defhydra+ hydra-window ()
+;;("D" delete-window)
+;;("C-S-d" delete-other-windows)
+;;("C-S-S" window-toggle-side-windows)
+;;("C-S-b b" (lambda ()
+;;(interactive)
+;;(if (get-scroll-bar-mode)
+;;(set-scroll-bar-mode nil)
+;;(set-scroll-bar-mode 'left))
+;;)
+;;)
+;;("C-S-b h" horizontal-scroll-bar-mode)
+;;("mm" balance-windows)
+;;("mk" minimize-window)
+;;("mj" maximize-window)
+;;("C-v" visual-line-mode)
+;;("C-t" toggle-truncate-lines)
+;;("C-t" toggle-truncate-lines)
+;;("C-w" toggle-word-wrap)
+;;("s" z-state-hydra/body)
+;;)
 
-(defhydra+ hydra-window ()
-  ("f" project-find-file)
-  ("F" find-file)
-  ("x" execute-extended-command)
-  )
+;; (defhydra+ hydra-window ()
+;;   ("f" project-find-file)
+;;   ("F" find-file)
+;;   ("x" execute-extended-command)
+;;   )
 
-(defhydra+ hydra-window ()
-  ("r" hydra-resize/body :exit t)
-  )
+;; (defhydra+ hydra-window ()
+;;   ("r" hydra-resize/body :exit t)
+;;   )
 
 (defhydra+ hydra-resize ()
   ("w" hydra-window/body :exit t)
@@ -80,9 +102,14 @@
   ("C-S-k" (lambda () (interactive) (enlarge-window 4)) "4")
   )
 
-(defhydra+ hydra-run ()
-  ("r" window-toggle-side-windows "Toggle Side Windows")
-  )
+(general-define-key
+ :keymaps 'menu-run-keymap
+ "r" 'window-toggle-side-windows
+ )
+
+;;(defhydra+ hydra-run ()
+  ;;("r" window-toggle-side-windows "Toggle Side Windows")
+  ;;)
 
 
 (defun z-async-blowup ()
@@ -218,9 +245,10 @@
   )
 
 
-(defhydra+ hydra-window ()
-  ("M" hydra-tile/body :exit t)
-  )
+;;(defhydra+ hydra-window ()
+  ;;("M" hydra-tile/body :exit t)
+  ;;)
+
 (defhydra+ hydra-tile ()
   ("w" hydra-window/body :exit t)
   ("m" toggle-frame-maximized "Maximize" :column "Full")

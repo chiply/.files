@@ -1,4 +1,10 @@
 (use-package bookmark+
+  :ensure (bookmark+
+           :fetcher github
+           :repo "emacsmirror/bookmark-plus"
+           :files (:defaults
+                   "*.el")
+           :main "bookmark+.el")
   :config
   (defun z-bookmark-create ()
     (interactive)
@@ -10,7 +16,6 @@
   (
    :keymaps 'override
    :prefix "s-b"
-   ;;"b" 'bookmark-in-project-jump
    "n" 'z-bookmark-create
    )
   :hook ((org-mode python-ts-mode emacs-lisp-mode)

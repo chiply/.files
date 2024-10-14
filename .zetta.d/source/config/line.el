@@ -126,6 +126,8 @@
         (:eval (let ((icon (z-line-hydra-indicator-icon))) (when icon "H")))
         (:eval (anzu--update-mode-line))
         (:eval (let ((icon (z-line-iedit-icon))) (when icon iedit-mode-line)))
+        (:eval repeat-echo-mode-line-string)
+        
         )
       )
 

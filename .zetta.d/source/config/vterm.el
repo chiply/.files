@@ -126,6 +126,15 @@
 
   (add-hook 'vterm-mode-hook 'my-buffer-face-mode-pt-mono)
 
+  (general-define-key
+   :keymaps 'menu-run-keymap
+   "s" (lambda ()
+         (interactive)
+         (z-soda-drink (quote z-soda-create-and-display-term) (z-soda-prompt-term-buffer))
+         )
+   "S" (lambda () (interactive) (z-soda-cap "\\term-mode*" 1))
+   )
+
 
   :display
   ;;(z-side "^\\*zsh*" 'bottom)
@@ -153,15 +162,15 @@
    "C-j" 'vterm-send-down
    )
 
-  :hydra
-  (defhydra+ hydra-run ()
-    ("s" (lambda ()
-           (interactive)
-           (z-soda-drink (quote z-soda-create-and-display-term) (z-soda-prompt-term-buffer))
-           ) "shell" :exit t)
-    ("S" (lambda () (interactive) (z-soda-cap "\\term-mode*" 1)) "Terminal" )
-
-    )
+  ;;:hydra
+  ;;(defhydra+ hydra-run ()
+    ;;("s" (lambda ()
+           ;;(interactive)
+           ;;(z-soda-drink (quote z-soda-create-and-display-term) (z-soda-prompt-term-buffer))
+           ;;) "shell" :exit t)
+    ;;("S" (lambda () (interactive) (z-soda-cap "\\term-mode*" 1)) "Terminal" )
+;;
+    ;;)
   
 
   :hook ((vterm-mode . (lambda ()

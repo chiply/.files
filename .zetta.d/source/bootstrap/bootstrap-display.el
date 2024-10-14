@@ -172,29 +172,38 @@ being displayed, otherwise returns nil"
       (switch-to-buffer buf)
       (display-buffer newbuf))))
 
-(defhydra+ hydra-run ()
-  ("m" (lambda ()
-         (interactive)
-         (z-soda-drink (quote z-soda-create-and-display-messages) "*Messages*")
-         )
-   "Messages")
 
-  ("c" calendar "Calendar")
-  ("i" info "Info")
-  ("M" (lambda () (interactive) (z-soda-cap "*Messages*")) "Messages" )
-  ("I" (lambda () (interactive) (z-soda-cap "*info*")) "Info")
-  )
+;; (defhydra+ hydra-run ()
+;;   ("m" (lambda ()
+;;          (interactive)
+;;          (z-soda-drink (quote z-soda-create-and-display-messages) "*Messages*")
+;;          )
+;;    "Messages")
+
+;;   ("c" calendar "Calendar")
+;;   ("i" info "Info")
+;;   ("M" (lambda () (interactive) (z-soda-cap "*Messages*")) "Messages" )
+;;   ("I" (lambda () (interactive) (z-soda-cap "*info*")) "Info")
+;;   )
 
 (general-define-key
- :keymaps 'launch-map
- "r" 'hydra-run/body
- "w" 'hydra-window/body)
+ :keymaps 'menu-run-keymap
+ "m" (lambda () (interactive) (z-soda-drink (quote z-soda-create-and-display-messages) "*Messages*"))
+ "c"  'calendar
+ "i"  'info
+ "M" (lambda () (interactive) (z-soda-cap "*Messages*"))
+ "I" (lambda () (interactive) (z-soda-cap "*info*"))
+ )
+
+;; (general-define-key
+;;  :keymaps 'launch-map
+;;  "r" 'hydra-run/body
+;;  "w" 'hydra-window/body)
 
 (defalias 'use-package-handler/:display 'use-package-handle-forms)
-
 (defalias 'use-package-normalize/:display 'use-package-normalize-forms)
-
 (add-to-list 'use-package-keywords :display t)
 
 (provide 'bootstrap-display)
+
 

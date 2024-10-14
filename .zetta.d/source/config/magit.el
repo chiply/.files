@@ -1,5 +1,4 @@
-(use-package compat
-  :demand t)
+(use-package compat :ensure nil :demand t)
 
 (use-package magit
   :init
@@ -22,8 +21,6 @@
    (pcase-lambda (`(,cmd _)) (eq cmd #'project-vc-dir))
    project-switch-commands)
 
-
-
   (require 'magit-margin)
   (require 'magit-section)
 
@@ -43,21 +40,20 @@
 
   ;; overriding here -- basically not setting to width of shortstat as
   ;; that ends up cutting off the margin value for forge data
-
-  (defhydra+ hydra-magit ()
-    ("g" magit-status :exit t)
-    ("B" magit-branch :exit t)
-    ("b" magit-blame :exit t)
-    ("t" magit-tag :exit t)
-    ("s" magit-stage :exit t)
-    ("S" magit-stage-modified :exit t)
-    ("p" magit-push :exit t)
-    ("c" magit-commit :exit t)
-    ("l" magit-log :exit t)
-    ("r" magit-show-refs :exit t)
-    ("d" vc-diff :exit t)
-    ("f" magit-fetch :exit t)
-    ("p" magit-pull :exit t))
+  ;;(defhydra+ hydra-magit ()
+    ;;("g" magit-status :exit t)
+    ;;("B" magit-branch :exit t)
+    ;;("b" magit-blame :exit t)
+    ;;("t" magit-tag :exit t)
+    ;;("s" magit-stage :exit t)
+    ;;("S" magit-stage-modified :exit t)
+    ;;("p" magit-push :exit t)
+    ;;("c" magit-commit :exit t)
+    ;;("l" magit-log :exit t)
+    ;;("r" magit-show-refs :exit t)
+    ;;("d" vc-diff :exit t)
+    ;;("f" magit-fetch :exit t)
+    ;;("p" magit-pull :exit t))
 
   ;;:display
   ;;;;(z-side "\\magit-status-mode" 'right 0)
@@ -67,17 +63,32 @@
   ;;;;(z-side "\\magit-revision-mode" 'right 2)
 
 
-  :general
-  (
+  (general-define-key
+   :keymaps 'menu-vc-keymap
+    "g" 'magit-status
+    "B" 'magit-branch
+    "b" 'magit-blame
+    "t" 'magit-tag
+    "s" 'magit-stage
+    "S" 'magit-stage-modified
+    "p" 'magit-push
+    "c" 'magit-commit
+    "l" 'magit-log
+    "r" 'magit-show-refs
+    "d" 'vc-diff
+    "f" 'magit-fetch
+    "p" 'magit-pull
+   )
+  (general-define-key
    :keymaps 'launch-map
-   "g" 'hydra-magit/body
+   "g" 'menu-vc-keymap
    "G" 'z-magit-project
    )
-  (
+  (general-define-key
    :keymaps 'text-mode-map
    "C-<return>" 'with-editor-finish
    ) 
-  (
+  (general-define-key
    :keymaps '(magit-status-mode-map magit-process-mode-map)
    "C-<tab>" 'tab-line-switch-to-next-tab
    "C-S-<tab>" 'tab-line-switch-to-prev-tab
@@ -86,5 +97,4 @@
    )
 
   )
-
 
