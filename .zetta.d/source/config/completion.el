@@ -120,9 +120,9 @@ tempel expand?)
                                cape-ispell))
                             ((string= major-mode "org-mode")
                              '(cape-file
-                               org-roam-complete-everywhere
-                               org-roam-tag-completions
-                               org-roam-complete-link-at-point
+                               ;;org-roam-complete-everywhere
+                               ;;org-roam-tag-completions
+                               ;;org-roam-complete-link-at-point
                                cape-ispell))
                             ((string= major-mode "yaml-mode")
                              '(cape-file))

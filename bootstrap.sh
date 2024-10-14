@@ -34,6 +34,9 @@ mkdir -p ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/poetry
 poetry completions zsh > \
        ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/poetry/_poetry
 
+# uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
 # symlink
 python ~/.files/main.py
 

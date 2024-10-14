@@ -1,1 +1,2 @@
-(use-package smerge-mode :straight (:type built-in))
+(use-package smerge-mode :ensure nil ;; builtin
+  )

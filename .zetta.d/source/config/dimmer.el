@@ -15,9 +15,14 @@
 
   ;;(dimmer-mode t)
 
-  :hydra
-  (defhydra+ hydra-window ()
-    ;; awkward, but clearing space
-    ("C-S-F D" dimmer-mode)
-    )
+  ;;:hydra
+  ;;(defhydra+ hydra-window ()
+    ;;;; awkward, but clearing space
+  ;;("C-S-F D" dimmer-mode)
+  ;;)
+
+  :general
+  (
+   :keymaps 'menu-window-keymap
+   "C-S-F D" 'dimmer-mode)
   )

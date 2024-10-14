@@ -18,13 +18,10 @@
 
   (telephone-line-defsegment zt-icon-copilot ()
     (when (and (boundp 'copilot-mode) copilot-mode)
-      (all-the-icons-icon-for-mode 'copilot-mode))
-    )
-
+      (all-the-icons-icon-for-mode 'copilot-mode)))
 
   (telephone-line-defsegment zt-icon-side-window ()
     (when (z-side-window-p (selected-window)) " {S} "))
-
 
   (telephone-line-defsegment zt-path ()
     (let ((path (abbreviate-file-name default-directory)))
@@ -62,7 +59,6 @@
       (when (and result (string= result "true\n"))
         (vc-git--symbolic-ref (or (buffer-file-name) default-directory)))))
 
-
   (telephone-line-defsegment zt-flycheck-segment ()
     (let ((text (flycheck-indicator--mode-line)))
       (if (string= " not-checked" text) "" text)))
@@ -71,8 +67,7 @@
     (concat (or (if (boundp 'latest-transient) latest-transient) (if (boundp 'local-transient) local-transient)) " "))
 
   (telephone-line-defsegment zt-postition-segment ()
-    "%c|%l(%p)"
-    )
+    "%c|%l(%p)")
 
   (telephone-line-defsegment zt-indicators-segment ()
     ;; note making letters now as there are still issues with
@@ -89,10 +84,12 @@
     ;; icon-for commands
     ;; TODO separate this out
     (concat
+     (when repeat-in-progress "R")
      (let ((icon (z-line-tramp-icon))) (when icon "T"))
      (let ((icon (z-line-docker-icon))) (when icon "D"))
      (let ((icon (z-line-narrowed-icon))) (when icon "N"))
-     (let ((icon (z-line-hydra-indicator-icon))) (when icon "H"))))
+     (let ((icon (z-line-hydra-indicator-icon))) (when icon "H"))
+     ))
 
   (telephone-line-defsegment zt-anzu-segment ()
     (anzu--update-mode-line)
@@ -102,10 +99,10 @@
     (let ((icon (z-line-iedit-icon)))
       (when icon 
         ;; the car of iedit-mode-line unioned with the cdr of iedit-mode-line
-        (cons (replace-regexp-in-string " " "" 
-                                        (car iedit-mode-line) )
-              (cdr iedit-mode-line)
-              ))))
+        (cons (replace-regexp-in-string
+               " " "" 
+               (car iedit-mode-line) )
+              (cdr iedit-mode-line)))))
 
   (setq telephone-line-primary-left-separator 'telephone-line-halfcos-left
         telephone-line-primary-right-separator 'telephone-line-halfcos-right
@@ -125,6 +122,8 @@
           ))
 
   (setq telephone-line-subseparator-faces '())
+
+
 
   (setq telephone-line-lhs
         '((evil . (telephone-line-evil-tag-segment telephone-line-meow-tag-segment))
@@ -147,11 +146,6 @@
   (setq telephone-line-evil-use-short-tag t)
   (setq telephone-line-height 14) ;; lower and it doesn't render correctly
   (setq telephone-line-separator-extra-padding 0)
+  (setq telephone-line-height 18)
 
-  (telephone-line-mode 1)
-
-  )
-
-
-
-
+  (telephone-line-mode 1))

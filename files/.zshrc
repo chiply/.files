@@ -191,3 +191,13 @@ if [[ "$INSIDE_EMACS" == 'vterm' ]] \
 source ${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh
 fi
 
+
+# pnpm
+export PNPM_HOME="/Users/charles.baker/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+. "$HOME/.cargo/env"

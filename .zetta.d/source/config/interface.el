@@ -1,9 +1,7 @@
 ;;(set-frame-font "Vulf Mono Code")
 (set-frame-font "PT Mono")
 
-
 (winner-mode)
-
 
 (global-auto-revert-mode 1) ;; you might not want this
 (setq auto-revert-verbose nil) ;; or this
@@ -38,25 +36,26 @@
 
 (setq enable-local-variables :all)
 
-(defhydra+ hydra-window ()
-  ("C-S" z-scratch :exit t)
-  ("C-S-<backspace>" z-server-shutdown-save-desktop))
+;;(defhydra+ hydra-window ()
+;;("C-S" z-scratch :exit t)
+;;("C-S-<backspace>" z-server-shutdown-save-desktop))
+
+(general-define-key :keymaps 'menu-window-keymap
+                    "C-S" 'z-scratch
+                    "C-S-<backspace>" 'z-server-shutdown-save-desktop)
 
 (setq-default left-margin-width 2)
 (setq-default right-margin-width 2)
 
 (defun z-tab-bar-hydra ()
-  (let ((icon (z-line-hydra-indicator-icon))) (when icon "H"))
-  )
+  (let ((icon (z-line-hydra-indicator-icon))) (when icon "H")))
 
 (defun zmc-modeline-indicator ()
   (concat
    "🏃‍♀️‍➡️"
    (when (boundp 'local-transient) local-transient)
-   " || "
-   "🌎 "
-   (when (boundp 'latest-transient) latest-transient)
-   ))
+   " || " "🌎 "
+   (when (boundp 'latest-transient) latest-transient)))
 
 (setq pom nil)
 (defun pomodoro! ()
@@ -67,16 +66,19 @@
 (defun pom-ind ()
   (when pom "🍅 "))
 
+(defun repeat-indicator-icon ()
+  (if (and (boundp 'menu-indicator) menu-indicator) "** " "__ "))
+
 (setq tab-bar-format '(;; everything here on will be aligned on the right
                        ;;z-tab-bar-hydra
                        zmc-modeline-indicator
-
                        ;; doesn't work in tab bar as it doesn't get
                        ;; updated reliably... note that even when
                        ;; using the entry and exist hooks it doesn't
                        ;; work
                        ;;key-state
                        tab-bar-format-align-right
+                       repeat-indicator-icon
                        recursion-indicator--string
                        "  "
                        pom-ind
@@ -87,7 +89,6 @@
 ;; mode.  Vertico commands are hidden in normal buffers. This setting is
 ;; useful beyond Vertico.
 (setq read-extended-command-predicate #'command-completion-default-include-p)
-
 
 ;; note can change the minibuffer font in this way.  not doing this
 ;; for now because the echo area height is determined by teh default

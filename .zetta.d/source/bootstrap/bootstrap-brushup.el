@@ -1,4 +1,6 @@
-(use-package color)
+(use-package color :ensure nil)
+
+(set-face-attribute 'default nil :height 160)
 
 (defun brushup-init ()
   (setq brushup-dark-p (equal
@@ -116,7 +118,7 @@ seem to require loading after the client starts up"
            :background brushup-bg
            ;;:overline nil
            ;;:underline nil
-           :font "Pt Mono"
+           ;;:font "Pt Mono"
            :box nil
            )
 
@@ -124,7 +126,7 @@ seem to require loading after the client starts up"
            'mode-line-inactive nil
            ;;:overline nil
            ;;:underline nil
-           :font "Pt Mono"
+           ;;:font "Pt Mono"
            :box nil
            )
 
@@ -194,10 +196,6 @@ seem to require loading after the client starts up"
   )
 
 
-(defalias 'use-package-handler/:brushup 'use-package-handle-forms)
-(defalias 'use-package-normalize/:brushup 'use-package-normalize-forms)
-
-(add-to-list 'use-package-keywords :brushup t)
 
 (defun my-buffer-face-mode-pt-mono ()
   "Sets a fixed width (monospace) font in current buffer"
@@ -211,6 +209,9 @@ seem to require loading after the client starts up"
 ;;   (setq buffer-face-mode-face '(:family "PT Mono" :height 0.87))
 ;;   (buffer-face-mode))
 
+(defalias 'use-package-handler/:brushup 'use-package-handle-forms)
+(defalias 'use-package-normalize/:brushup 'use-package-normalize-forms)
+(add-to-list 'use-package-keywords :brushup t)
 
 (provide 'bootstrap-brushup)
 

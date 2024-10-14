@@ -8,9 +8,6 @@
 (message "poet-theme")
 (use-package poet-theme)
 
-(message "github-theme")
-(use-package github-theme)
-
 (message "heroku-theme")
 (use-package heroku-theme)
 

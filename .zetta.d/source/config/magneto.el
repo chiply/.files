@@ -344,11 +344,16 @@
     (parse-keymap (eval keymap)))))
 
 
+
 (setq embark-maps-list (-map (lambda (x) (if (listp (cdr x)) (car (cdr x)) (cdr x))) embark-keymap-alist))
 
+(defun z-embark-bind-keys ()
+  (-map (lambda (x)
+          (condition-case nil
+              (progn (my/embark-bind-keys x))
+            (error (message (concat (symbol-name x) " didn't work")))))
+        embark-maps-list)
+  )
 
-(-map (lambda (x)
-        (condition-case nil
-            (progn (my/embark-bind-keys x))
-          (error (message (concat (symbol-name x) " didn't work")))))
-      embark-maps-list)
+(add-hook 'elpaca-after-init-hook (lambda () (z-embark-bind-keys)))
+

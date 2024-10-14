@@ -67,6 +67,8 @@
   (when (buffer-narrowed-p) "N"))
 
 
+
+
 (defun z-get-repo-name ()
   (last (split-string
          (nth 0 (split-string

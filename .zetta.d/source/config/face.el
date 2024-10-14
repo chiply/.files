@@ -13,13 +13,20 @@
   (set-frame-parameter (selected-frame) 'alpha value))
 (transparency 93)
 
-(defhydra+ hydra-window ()
-  ("T" transparency :exit t)
-  )
+;;(defhydra+ hydra-window ()
+  ;;("T" transparency :exit t)
+  ;;)
+;;
+;;(defhydra+ hydra-window ()
+  ;;("t" hydra-theme/body :exit t)
+  ;;)
 
-(defhydra+ hydra-window ()
-  ("t" hydra-theme/body :exit t)
-  )
+(general-define-key
+ :keymaps 'menu-window-keymap
+ "t" 'hydra-theme/body
+ "T" 'transparency
+ )
+
 (defhydra+ hydra-theme ()
   ("w" hydra-window/body :exit t)
   ("T" z-brushup "Brushup" :column "Brushup") 

@@ -1,3 +1,15 @@
+;;; -*- lexical-binding: t -*-
+
+
+;; LEFT OFF -- look into hercules instead since it gives better, more
+;; 'integrated' hints.  keep in mind repeat mode takes a typical
+;; command and turns it into a repeater... this is very different from
+;; how hydra/transient/herc work
+;; Also check out repeat-help for the 'integrated hints' for the repeat menu
+
+;; philosophy
+;; move towards using built-ins for most use cases.  default to adding to native emacs keymaps (eg with defvar-keymap) to leverage the existing API and existing usage of it (think how many hydra or transient like popup menus there are in emacs keymaps, both built-in and distributed).
+
 ;; key setup requirements
 ;; 1. easy to define keys for meow, evil, and vanilla emacs; support for general chord
 ;; 2. use of built-ins for simple usecases like repeat mode
@@ -7,63 +19,122 @@
 (defun command1 () (interactive) (message "command1"))
 (defun command2 () (interactive) (message "command2"))
 (defun command3 () (interactive) (message "command3"))
+(defun command4 () (interactive) (message "command4"))
+(defun command5 () (interactive) (message "command5"))
 
 
-;; keymap
-(defvar some-map (make-sparse-keymap))
+;;;;;;;;;;;;; REPEAT_MODE
+;; use case: define a new keymap that repeats the last command, but
+;; also has a few other commands that can be run -- aggregates
+;; functionality from multiple features
 
-(general-define-key
- :keymaps 'some-map
- "1" 'command1
- "2" 'command2
- "3" 'command3
- "41" 'command1
- "42" 'command2)
+;; can repeat-mode be temprarily turned on?
+(defmacro z-crud-repeat-map (keymap key command &optional repeat hint)
+  `(progn
+     ;; bind key
+     ;; todo use general instead?  what are the advantages there?
+     ;; that's just an optimization
+     (keymap-set ,keymap ,key ,command)
+     ;; repeat
+     (if ,repeat (put ,command 'repeat-map ',keymap)
+       (remprop ,command 'repeat-map))
+     (if ,hint (put ,command 'repeat-hint ,hint)
+       (remprop ,command 'repeat-hint))))
 
-;; TODO -- replace with define-launch-key bind some-map a key
-(global-set-key (kbd "C-=") some-map)
+;; define a macro that can be used to run z-crud-repeat-map for a set
+;; of commands, supplied with the following syntax
+(defmacro z-crud-repeat-map-set (keymap &rest commands)
+  `(progn
+     (when (not (keymapp ,keymap)) (defvar ,keymap))
+     ,@(mapcar (lambda (command)
+                 `(z-crud-repeat-map
+                   ,keymap
+                   ,(nth 0 command)
+                   ,(nth 1 command)
+                   ,(nth 2 command)
+                   ,(nth 3 command)))
+               commands)))
 
-(define-launch-key 'some-map)
+;; eg
+;;(z-crud-repeat-map comma-repeat-map "1" #'command1 t "command 1")
 
+(z-crud-repeat-map-set
+ comma-repeat-map
+ ("1" #'command1 t "command 1")
+ ("2" #'command2 t "command 2")
+ ("3" #'command3 t "command 3")
+ ("4" #'command4 t "command 4")
+ ("5" #'command5 t "command 5"))
 
-;;;;;;;;;;;;; REPEAT
-
-;; (defvar-keymap comma-repeat-map
-;;     :repeat (:enter (command1) :exit (command3))
-;;     "1" #'command1
-;;     "2" #'command2
-;;     "3" #'command3)
-
-;;;; repeatize for existing keymaps
-;; (defun repeatize (keymap)
-;;   "Add `repeat-mode' support to a KEYMAP."
-;;   (map-keymap
-;;    (lambda (_key cmd)
-;;      (when (symbolp cmd)
-;;        (put cmd 'repeat-map keymap)))
-;;    (symbol-value keymap)))
-;; (repeatize 'some-map)
-
-;;;; define-repeat-map.el (probably redundant)
-;; (use-package define-repeat-map
-;;   :straight (define-repeat-map :type git :host nil :repo "https://tildegit.org/acdw/define-repeat-map.el" ))
-;; (define-repeat-map command1
-;;     ("1" command1
-;;      "2" command2
-;;      ))
-
-;; maybe redundnat, but provides interesting feature of turning an entire keymap into a repeat map... although doesn't repeatize do this?  so maybe hercules over repeatize as it is finer grained?
-;; (use-package hercules)
-;; (hercules-def
-;;  :toggle-funs #'command1
-;;  :keymap 'some-map
-;;  :transient t)
+(define-key global-map (kbd "C-+") comma-repeat-map)
 
 
+
+;;;;;;;;;;;;;;; HERC
+;; TODO -- function that takes a keyseq and keymap and creates a hercules from the keymap
+;; 2 macros - 1 to create the hercules and 1 to bind it to the key
+(defun herc-command1 () (interactive) (message "command1"))
+(defun herc-command2 () (interactive) (message "command2"))
+(use-package hercules)
+
+;; keymap can be altered with any command -- note special ones (eg not
+;; general-) need to be used for things like repeat keys, but these
+;; manipulate the same keymaps
+(defvar zmenu-1 (make-sparse-keymap))
+(general-define-key :keymaps 'zmenu-1 "1" 'herc-command1 "2" 'herc-command2)
+
+;; INPUT: keymap (zmenu-1)
+;;(hercules-def :toggle-funs #'zmenu-1-fun :keymap 'zmenu-1 :transient t)
+(hercules-def :toggle-funs 'zmenu-1-fun :keymap 'zmenu-1 :transient t)
+(define-key global-map (kbd "C-=") 'zmenu-1-fun)
+
+;; macro to bind a key to a keymap -- it creates the herc-def if it doesn't exist already
+;; TODO commit then start migrating -- 1 create the macro -- 2 replace all defhydras with general-define-key -- 3 replace all general jjjjjjjjjjjjjjjjjjjjjjjj
 
 
 ;;;;;;;;;;; UI
 
 ;; hydra
-
 ;; transient
+;; hydra-registry
+
+
+;;;;; get repeat maps on demand...
+;;;; still clunky though
+(defun repeated-prefix-help-command ()
+  (interactive)
+  (when-let* ((keys (this-command-keys-vector))
+              (prefix (seq-take keys (1- (length keys))))
+              (orig-keymap (key-binding prefix 'accept-default))
+              (keymap (copy-keymap orig-keymap))
+              (exit-func (set-transient-map keymap t #'which-key-abort)))
+    (define-key keymap [remap keyboard-quit]
+                (lambda () (interactive) (funcall exit-func)))
+    (which-key--create-buffer-and-show nil keymap)))
+(setq prefix-help-command #'repeated-prefix-help-command)
+
+
+;; keymap can be altered with any command -- note special ones (eg not
+;; general-) need to be used for things like repeat keys, but these
+;; manipulate the same keymaps
+(defun repeater-command1 () "really useful docstring" (interactive) (message "command1"))
+(defun repeater-command2 () "really useful docstring" (interactive) (message "command2"))
+(defvar repeater-demo (make-sparse-keymap))
+(define-key repeater-demo "1" 'repeater-command1)
+(define-key repeater-demo "2" 'repeater-command2)
+(define-key repeater-demo "3"
+            (lambda ()
+              (interactive)
+              (completing-read "test" '("a" "b" "c" "d" "e" "f" "q"))))
+(define-key repeater-demo "44" (lambda () (interactive) (message "44")))
+(defvar repeater-demo2 (make-sparse-keymap))
+(define-key repeater-demo2 "1" 'repeater-command1)
+
+
+
+;; NOTE -- got which key piece working!  It's a matter of setting which keys display action to dispkay-buffer-no-window, then using `which-key--create-buffer-and-show` to show without waiting for keyboard input from the user, so the we can defer the display of the buffer to display-buffer.  note this also allows us to aviod the issue running cimpleting re
+;; TODO not working on multiple
+(repeater repeater-demo)
+(repeater repeater-demo2)
+
+
