@@ -1,4 +1,4 @@
-;; pytest -- implement caching, special flag (maybe C-u for detecting targets)
+;; pytest -- implement caching, special flag (maybe C-u for detecting targets) to speed things up
 
 ;; TODO make detached-shell command ebhave liek async shell command
 ;; wrt to uniquifying buffer name.  don't uniquify unless can make
@@ -54,6 +54,7 @@
 ;; TODO - timing of setting local and latest-transient -- should only happen once the transient has been executed, but this may be challenging or require more refactoring
 
 ;; VARIABLES
+(defvar zmc-extra-project-paths '())
 (setq zmc-async-shell-command-spinners-enable nil)
 ;; solution for monorepos:
 
