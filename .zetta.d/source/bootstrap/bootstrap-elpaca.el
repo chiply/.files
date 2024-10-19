@@ -85,6 +85,11 @@
 ;;Useful for configuring built-in emacs features.
 ;; (use-package emacs :ensure nil :config (setq ring-bell-function #'ignore))
 
+
+(global-set-key (kbd "s-u") 'elpaca-fetch-all)
+;; not using merge because i want to do this from anywhere
+(global-set-key (kbd "s-U") 'elpaca-pull-all)
+
 (provide 'bootstrap-elpaca)
 
 

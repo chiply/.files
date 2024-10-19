@@ -54,8 +54,9 @@
   (concat
    "🏃‍♀️‍➡️"
    (when (boundp 'local-transient) local-transient)
-   " || " "🌎 "
-   (when (boundp 'latest-transient) latest-transient)))
+   ;;" || " "🌎 "
+   ;;(when (boundp 'latest-transient) latest-transient)
+   ))
 
 (setq pom nil)
 (defun pomodoro! ()

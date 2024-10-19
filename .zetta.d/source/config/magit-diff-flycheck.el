@@ -1,1 +1,1 @@
-(use-package magit-diff-flycheck)
+;; (use-package magit-diff-flycheck)

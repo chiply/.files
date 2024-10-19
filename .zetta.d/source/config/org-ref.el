@@ -30,9 +30,9 @@
         bibtex-autokey-titleword-length 5
         )
 
-  :general
-  (
-   :keymaps '(override)
-   "s-u" 'org-ref-bibtex-hydra/body
-   )
+  ;;:general
+  ;;(
+   ;;:keymaps '(override)
+   ;;"s-u" 'org-ref-bibtex-hydra/body
+   ;;)
   )

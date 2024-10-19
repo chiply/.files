@@ -345,9 +345,10 @@
 
 
 
-(setq embark-maps-list (-map (lambda (x) (if (listp (cdr x)) (car (cdr x)) (cdr x))) embark-keymap-alist))
+
 
 (defun z-embark-bind-keys ()
+  (setq embark-maps-list (-map (lambda (x) (if (listp (cdr x)) (car (cdr x)) (cdr x))) embark-keymap-alist))
   (-map (lambda (x)
           (condition-case nil
               (progn (my/embark-bind-keys x))

@@ -1,5 +1,4 @@
-;; TODO LEFT OFF -- pytest is very slow to pull targets, but does its probably
-;; being called wastefully -- probably need to refactor all these
+;; pytest -- implement caching, special flag (maybe C-u for detecting targets)
 
 ;; TODO make detached-shell command ebhave liek async shell command
 ;; wrt to uniquifying buffer name.  don't uniquify unless can make
@@ -57,13 +56,7 @@
 ;; VARIABLES
 (setq zmc-async-shell-command-spinners-enable nil)
 ;; solution for monorepos:
-(setq zmc-extra-project-paths
-      '("~/source_code/workflow-activity-registry/pipeline/patient/"
-        "~/source_code/workflow-activity-registry/pipeline/dp/"
-        "~/source_code/workflow-activity-registry/pipeline/hie/"
-        "~/source_code/workflow-activity-registry/pipeline/order-service/"
-        "~/source_code/workflow-activity-registry/pipeline/reports/"
-        "~/source_code/workflow-activity-registry/pipeline/data-share/"))
+
 
 ;;;;;;;;;;;;;;;;;; HELPERS
 (defun zmc-get-hashtbl (args)
@@ -354,7 +347,7 @@ async-shell-command"
     (if (string= path "/") '() (cons path (zmc-get-parent-dirs path)))))
 
 (defun zmc-get-pytest-targets-from-project (project-path)
-  (message "got to A")
+  (message "Extracting pytest targets from %s..." project-path)
   (let* ((paths (shell-command-to-string
                  (concat
                   "cd " project-path " && "
@@ -362,7 +355,6 @@ async-shell-command"
                   "--co -q --disable-warnings")))
          (paths (nth 0 (split-string paths "\n\n")))
          (paths (split-string paths "\n"))
-         (_ (message "got to B"))
          (paths (--map (substring it 0 (string-match "\\[" it))
                        paths))
          (paths (append
@@ -380,24 +372,42 @@ async-shell-command"
 ;; issue -- this doesn't work -- but running the command does.... lol...
 (defun zmc-make-alist (project-path build-file-name build-file-type)
   (let* ((fname (concat project-path build-file-name))
+         (project-path (expand-file-name project-path))
+         (project-current-path (expand-file-name (cadr (cdr (project-current nil)))))
          (subtargets (cond
                       ((string= build-file-type "make")
                        (projection-multi-make--targets-from-file2 fname))
                       ((and (string= build-file-type "pytest")
                             (or
                              ;; Current project
-                             (string=
-                              (expand-file-name (cadr (cdr (project-current nil))))
-                              (expand-file-name project-path))
-                             ;; CONDITION: We are in a subproject of zmc-extra-project-paths or zmc-extra-project-paths
-                             ;; how can we determine the project path?
-                             ;; if we are in a subdir, should we do tests for the current project or all projects?
-                             ;; TODO fix this -- this will fire in any project, which will cause the program to run for a long time
+                             (string= project-current-path (expand-file-name project-path))
+                             ;; DOESN'T WORK
+                             (and
+                              ;; the current project-path is within in
+                              ;; the current project
+                              (> (length project-path) (length project-current-path))
+                              (string=
+                               (substring project-path 0 (length project-current-path))
+                               project-current-path)
+                              ;; the current directory (as given by
+                              ;; default-directory) within the
+                              ;; project-path
+                              (and
+                               (>= (length default-directory) (length project-path))
+                               (or
+                                (string= default-directory project-path)
+                                (string=
+                                 (substring default-directory 0 (length project-path))
+                                 project-path)))
+                              )
+                             ;; TODO fix this -- this will fire in any
+                             ;; project, which will cause the program
+                             ;; to run for a long time
                              ;;(member project-path zmc-extra-project-paths)
                              ))
-                       (zmc-get-pytest-targets-from-project project-path)
-                       )
-                      
+                       (progn
+                         ;;(message "getting targets for %" project-path)
+                         (zmc-get-pytest-targets-from-project project-path)))
                       ((string= build-file-type "tmuxinator")
                        ;; eg no subtargets
                        '(""))))
@@ -422,6 +432,8 @@ async-shell-command"
        (zmc-make-alist project-path build-file-name build-file-type)))
    (directory-files project-path nil regex t)))
 
+
+(-map (lambda (x) (message x)) (project-known-project-roots))
 
 ;; This should be the function that we define per build target type
 (defun zmc-detect-targets (build-file-type regex)

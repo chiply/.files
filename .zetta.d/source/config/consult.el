@@ -19,6 +19,7 @@
    consult-buffer
    consult-bookmark
    consult-project-buffer
+   consult-yank-pop
    :preview-key "C-+")
 
   ;; project.el
@@ -35,6 +36,8 @@
   ;;("S" consult-line :exit t))
 
   :general
+  (:keymaps 'override
+            "M-y" 'consult-yank-pop)
   (
    :keymaps 'menu-window-keymap
    "s" 'consult-ripgrep

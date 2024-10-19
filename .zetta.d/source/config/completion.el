@@ -117,13 +117,13 @@ tempel expand?)
                              '(python-completion-at-point cape-file))
                             ((string= major-mode "markdown-mode")
                              '(cape-file
-                               cape-ispell))
+                               cape-dict))
                             ((string= major-mode "org-mode")
                              '(cape-file
                                ;;org-roam-complete-everywhere
                                ;;org-roam-tag-completions
                                ;;org-roam-complete-link-at-point
-                               cape-ispell))
+                               cape-dict))
                             ((string= major-mode "yaml-mode")
                              '(cape-file))
                             ((string= major-mode "sh-mode")
@@ -150,11 +150,11 @@ tempel expand?)
                             ((or (string= major-mode "emacs-lisp-mode")
                                  (string= major-mode "lisp-interaction-mode"))
                              ;; todo -- not making it through to ispell... why?
-                             '(cape-ispell))
+                             '(cape-dict))
                             ((string= major-mode "python-ts-mode")
-                             '(cape-ispell))
+                             '(cape-dict))
                             ((string= major-mode "org-mode")
-                             '(cape-ispell))))
+                             '(cape-dict))))
                 (completion-at-point-functions mode-capf))
            (completion-at-point))
        (message "[ispell]"))
