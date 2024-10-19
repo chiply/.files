@@ -1,0 +1,98 @@
+(setq z-files-that-need-creating '("~/.dir-locals.el" "~/.private.el"))
+
+(setq
+ user-files
+ '("display.el" "interface.el" "desktop.el" "csv-mode.el"
+   "super-save.el" "hud.el" "highlight-indent-guides.el"
+   "scroll-bar.el" "display-fill-column-indicator.el"
+   "display-line-numbers.el" "undo-tree.el" "face.el"
+   "vi-tilde-fringe.el" "treesit.el" "dimmer.el" "focus.el"
+   "face-remap.el" "default-text-scale.el" "hl-line.el" "lin.el"
+   "hide-mode-line.el" "all-the-icons.el" "remote.el" "minimalize.el"
+   ;;"projectile.el"
+   "treemacs-all-the-icons.el" "treemacs.el"
+   ;;"treemacs-projectile.el"
+   "tokei.el" "security.el" "grep.el"
+   "replace.el" "ag.el" "wgrep.el" "iedit.el" "dap-mode.el"
+   "python.el" "web-mode.el" "js2-mode.el" "rjsx-mode.el"
+   "emmet-mode.el" "shell.el" "sh-script.el" "foreman.el"
+   "foreman_conf.el" "citar.el" "vc.el" "transient.el" "magit.el"
+   "forge.el" "git-gutter.el" "docker.el" "dockerfile-mode.el"
+   "docker-compose-mode.el" "utility.el" "pocket-reader.el"
+   "convention.el" "tree-mode.el" "unidecode.el" "define-word.el"
+   "mw-thesaurus.el" "sx.el" "pubmed.el" "helm-wikipedia.el"
+   "ace-window.el" "windmove.el" "avy.el" "olivetti.el" "evil.el"
+   "evil-anzu.el" "evil-surround.el" "evil-collection.el"
+   "evil-exchange.el" "evil-indent-plus.el"
+   "evil-search-highlight-persist.el" "evil-fringe-mark.el" "keys.el"
+   "dumb-jump.el" "ef-themes.el" "bookmark-view.el" "line-utils.el"
+   "dired.el" "sql.el" "sqlite.el" "all-the-icons-dired.el"
+   "dired-subtree.el" "dired-ranger.el" "completion.el" "cape.el"
+   "dabbrev.el" "recursion-indicator.el" "helm.el" "marginalia.el"
+   "orderless.el" "embark.el" "embark-consult.el" "consult.el"
+   "tap.el" "tap-block.el" "helpful.el" "elisp-mode.el" "narrow.el"
+   "ov.el" "vimish-fold.el" "editing.el" "smartparens.el"
+   "hungry-delete.el" "prose.el" "buffer.el" "ibuffer.el" "bufler.el"
+   "all-the-icons-ibuffer.el" "bookmark.el" "bookmark+.el"
+   "bookmark-in-project.el" "dogears.el" "theme.el" "yaml-mode.el"
+   "yaml-path.el" "yaml.el" "yaml-pro.el" "helm-themes.el"
+   "text-mode.el" "jmespath.el" "highlight-symbol.el" "terraform.el"
+   "ein.el" "adaptive-wrap.el" "xref.el" "flycheck.el"
+   "flycheck-indicator.el" "magit-diff-flycheck.el"
+   ;;"flycheck-projectile.el"
+
+   ;;"flycheck-ruff.el"
+
+   "modern-fringes.el"
+   "rainbow-mode.el" "image-mode.el" "browse-url.el" "spray.el"
+   "mermaid-mode.el" "minimap.el" "hyperbole.el" "kubernetes-el.el"
+   "kubel.el" "git-link.el" "python-pytest.el" "multi-compile.el"
+   "compile.el" "unicode-fonts.el" "spinner.el" "fancy-compilation.el"
+   "ai.el"
+
+   "org-ql.el"
+   "org-capture.el"
+   "org-ref.el"
+   ;;"org-modern.el"
+   "org.el"
+   "ob-mermaid.el"
+
+   "org-noter.el"
+   "org-noter-pdftools.el"
+   "pdf-tools.el"
+   "org-pdftools.el"
+
+   "biblio.el"  "lsp.el"
+   "lark.el" "yascroll.el" "nyan-mode.el" "popper.el"
+   "highlight.el" "macrostep.el" "obsidian.el" "magneto.el"
+   "know-your-http-well.el" "spacetree.el" "vertico.el" "vterm.el"
+   "tab-line.el" "window.el" "line.el" "snippets.el"
+   "detached.el"
+   "ace-mc.el" "json-mode.el" "jsonian.el"
+   ;;"json-processing.el"
+   "consult-gh.el" "consult-web.el"
+
+   ;;ADDED
+   "speed-type.el" "spray.el" "key-quiz.el" "alert.el" "svg-lib.el"
+   "explain-pause-mode.el"
+   ;;"kele.el"
+   ;;"markdownfmt.el"
+   "markdown-toc.el" "color-rg.el" "osx-lib.el" "spotlight.el"
+   "restart-emacs" "magit-todos.el"
+   "browse-at-remote.el" "mono-complete.el" "rainbow-delimiters.el"
+   "magit-file-icons.el" "devdocs.el" "telephone-line.el"
+   "corfu.el" "casual-suite.el" "typescript-ts-mode.el"
+   "apheleia.el" "spot4e.el" "symbol-overlay.el"
+   "hi-lock.el" "beacon.el" "project.el"
+   ;;"wombag.el"
+   ;;"activities.el"
+   "eaf.el"
+
+   "smerge-mode.el" 
+   ;;"indent-bars.el" ;; not great, but didn't try customizing
+
+   "repeat-mode.el"
+
+   "cleanup.el"))
+
+(provide 'init-data)

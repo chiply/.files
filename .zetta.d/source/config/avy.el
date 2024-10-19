@@ -1,26 +1,11 @@
 (use-package avy
+  :ensure (:wait t)
+  :demand t
   :config
-  (setq avy-ignored-modes '(image-mode
-                            doc-view-mode
-                            pdf-view-mode
-                            ;;shell-command-mode
-                            ;;vterm-mode
-                            ))
+  (setq avy-ignored-modes
+        '(image-mode doc-view-mode pdf-view-mode))
 
-  :general
-  (
-   :keymaps 'launch-map
-   "j" 'hydra-evil-avy/body
-   )
+  (general-define-key :keymaps 'override
+                      "s-o" 'evil-avy-goto-char-timer)
 
-  :hydra
-  (defhydra+ hydra-evil-avy ()
-    ("w" evil-avy-goto-word-0 "Go to word" :exit t)
-    ("j" evil-avy-goto-word-1 "Go to word 1" :exit t)
-    ("c" evil-avy-goto-char "Go to char" :exit t)
-    ("W" evil-avy-goto-line "Go to line" :exit t)
-    )
-
-  :hook (use-package--avy--post-config . z-brushup)
-
-  )
+  :hook (use-package--avy--post-config . z-brushup))

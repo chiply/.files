@@ -39,15 +39,7 @@
                                ))
                     (slot . 0)
                     )))
-      (display-buffer-no-window which-key--buffer alist)
-      ;;(if (get-buffer-window which-key--buffer)
-      ;;(display-buffer-reuse-window which-key--buffer alist)
-      ;;(display-buffer-in-side-window which-key--buffer alist)
-      ;;)
-      ))
-
-  ;;(defun which-key-custom-show-popup-function1 (act-popup-dim)
-  ;;nil)
+      (display-buffer-no-window which-key--buffer alist)))
 
   (defun which-key-custom-hide-popup-function ()
     (when (buffer-live-p which-key--buffer)
