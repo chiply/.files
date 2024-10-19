@@ -132,9 +132,8 @@ seem to require loading after the client starts up"
 
           (set-face-attribute
            'header-line nil
-           ;;:height 'unspecified
            ;;:weight 'normal
-           :font "PT Mono 11"
+           :font "PT Mono 15"
            )
 
           (set-face-attribute
