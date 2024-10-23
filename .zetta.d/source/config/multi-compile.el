@@ -55,6 +55,7 @@
 
 ;; VARIABLES
 (defvar zmc-extra-project-paths '())
+(defvar zmc-cache nil)
 (setq zmc-async-shell-command-spinners-enable nil)
 ;; solution for monorepos:
 
@@ -329,8 +330,7 @@ async-shell-command"
   (cond
    ((string= build-file-type "make") "async-shell-command+")
    ((string= build-file-type "pytest") "async-shell-command+")
-   ((string= build-file-type "tmuxinator") "vterm")
-   ))
+   ((string= build-file-type "tmuxinator") "vterm")))
 
 (defun zmc-make-template (build-file-name target)
   (cond
@@ -382,25 +382,18 @@ async-shell-command"
                             (or
                              ;; Current project
                              (string= project-current-path (expand-file-name project-path))
-                             ;; DOESN'T WORK
                              (and
-                              ;; the current project-path is within in
-                              ;; the current project
                               (> (length project-path) (length project-current-path))
                               (string=
                                (substring project-path 0 (length project-current-path))
                                project-current-path)
-                              ;; the current directory (as given by
-                              ;; default-directory) within the
-                              ;; project-path
                               (and
                                (>= (length default-directory) (length project-path))
                                (or
                                 (string= default-directory project-path)
                                 (string=
                                  (substring default-directory 0 (length project-path))
-                                 project-path)))
-                              )
+                                 project-path))))
                              ;; TODO fix this -- this will fire in any
                              ;; project, which will cause the program
                              ;; to run for a long time
@@ -449,42 +442,75 @@ async-shell-command"
 
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INTERACTIVE FUNCTION
 (defun zmc (&optional arg)
-  "Choice target and start compile."
+  "Choice target and start compile.
+CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
   (interactive "P")
   ;; call recent transient if it exists
   (cond
-   ((and arg (boundp 'local-transient))
+   ((and arg (not (equal arg '(64))) (boundp 'local-transient))
     (progn
       (setq latest-transient local-transient)
       (funcall (intern local-transient))
       (unless (equal arg '(16))
         (execute-kbd-macro (kbd "<return>")))))
-   ((and arg latest-transient)
+   ((and arg (not (equal arg '(64))) latest-transient)
     (progn
       (setq-local local-transient latest-transient)
       (funcall (intern latest-transient))
       (unless (equal arg '(16))
         (execute-kbd-macro (kbd "<return>")))))
-   (t (let* ((detected-targets (ht-merge
-                                (zmc-detect-targets "make" "makefile\\|Makefile")
-                                ;; TODO fix
-                                (zmc-detect-targets "pytest" "pyproject.toml")
-                                (zmc-detect-targets "tmuxinator" "\\.tmuxinator\\.yaml")
-                                (eval (append
-                                       '(ht-merge)
-                                       (--filter it (zmc-get-targets
-                                                     "~/.config/tmuxinator/" "tmuxinator" ""))))))
-             (config-raw (with-temp-buffer (insert-file-contents "~/.cmds.yaml") (buffer-string)))
-             (targets (yaml-parse-string config-raw :object-key-type 'string))
-             (targets (ht-merge detected-targets targets))
+   (t (let* ((targets
+              (if (and (not (equal arg '(64)))
+                       (file-exists-p "~/.zmc-cache.yaml"))
+                  (progn
+                    (message "using cache")
+                    (if zmc-cache
+                        zmc-cache
+                      (setq zmc-cache
+                            (yaml-parse-string
+                             (with-temp-buffer
+                               (insert-file-contents "~/.zmc-cache.yaml")
+                               (buffer-string))
+                             :object-key-type 'string))))
+                (let* ((_ (message "refreshing cache targets"))
+                       (make-targets (zmc-detect-targets
+                                      "make" "makefile\\|Makefile"))
+                       (pytest-targets (zmc-detect-targets
+                                        "pytest" "pyproject.toml"))
+                       (tmuxinator-targets (zmc-detect-targets
+                                            "tmuxinator" "\\.tmuxinator\\.yaml"))
+                       ;; TODO do i have to use eval here
+                       (tmuxinator-targets-extra (eval
+                                                  (append
+                                                   '(ht-merge)
+                                                   (--filter
+                                                    it (zmc-get-targets
+                                                        "~/.config/tmuxinator/"
+                                                        "tmuxinator" "")))))
+                       (detected-targets (ht-merge make-targets
+                                                   pytest-targets
+                                                   tmuxinator-targets
+                                                   tmuxinator-targets-extra))
+                       (config-raw (with-temp-buffer
+                                     (insert-file-contents "~/.cmds.yaml")
+                                     (buffer-string)))
+                       (targets (yaml-parse-string config-raw :object-key-type 'string))
+                       (targets (ht-merge detected-targets targets))
+                       ;; write the targets to cache
+                       (_ (progn
+                            (setq zmc-cache targets)
+                            (with-temp-buffer (insert (yaml-encode targets))
+                                              (write-file "~/.zmc-cache.yaml")))))
+                  targets)))
              (target-keys (ht-keys (ht-select
                                     (lambda (k v) (if t t (eval (ht-get v "if"))))
                                     targets)))
-             (key (completing-read "target " target-keys)) ; needed to pass key into target object
-             (target (ht-get targets key)) ; the hash table representing the cmd and its attributes
+             ;; needed to pass key into target object
+             (key (completing-read "target " target-keys))
+             ;; the hash table representing the cmd and its attributes
+             (target (ht-get targets key)) 
              (_ (ht-set! target "key" key))
              (transient-name (string-replace " " "-" key))
              ;; feature NYI: calls transient if exists (to benefti from getting
@@ -508,6 +534,14 @@ async-shell-command"
           (call-interactively 'zmc))
  "s-R" '(lambda () (interactive)
           (setq current-prefix-arg '(16))
-          (call-interactively 'zmc)))
+          (call-interactively 'zmc))
 
+ ;; TODO better keybinding for this
+ "C-S-s-r" '(lambda () (interactive)
+              (setq current-prefix-arg '(64))
+              (call-interactively 'zmc))
+
+ ;; TODO wether or not to collect the 'slow' detectors, but see how we
+ ;; go with cacheing
+ )
 
