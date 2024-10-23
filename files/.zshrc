@@ -1,9 +1,8 @@
 source ~/.localsecrets
+source ~/.tokens
 
 # this script assumes thigns have already been bootstrapped
 export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew:$PATH
-
-
 
 source ~/zsh-snap/znap.zsh
 

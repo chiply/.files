@@ -1,6 +1,7 @@
 mkdir -p ~/.tmux/themes
 
 touch ~/.localsecrets
+touch ~/.tokens
 
 # macos thing
 xcode-select --install
