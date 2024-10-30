@@ -330,7 +330,11 @@ async-shell-command"
   (cond
    ((string= build-file-type "make") "async-shell-command+")
    ((string= build-file-type "pytest") "async-shell-command+")
-   ((string= build-file-type "tmuxinator") "vterm")))
+   ((string= build-file-type "tmuxinator") "vterm")
+   ;; NOTE this is for things like bash scripts that might run
+   ;; installations (which typically come with complex spinners that
+   ;; don't render all the way in async-shell-command)
+   ((string= build-file-type "shell script") "vterm")))
 
 (defun zmc-make-template (build-file-name target)
   (cond
@@ -339,7 +343,10 @@ async-shell-command"
    ((string= build-file-type "tmuxinator")
     (concat "tmuxinator start --suppress-tmux-version-warning -p " build-file-name))
    ((string= build-file-type "pytest")
-    (concat "poetry run pytest -vvv " target))))
+    (concat "poetry run pytest -vvv " target))
+   ((string= build-file-type "shell script")
+    (concat "./" build-file-name))
+   ))
 
 
 (defun zmc-get-parent-dirs (path)
@@ -393,18 +400,16 @@ async-shell-command"
                                 (string= default-directory project-path)
                                 (string=
                                  (substring default-directory 0 (length project-path))
-                                 project-path))))
-                             ;; TODO fix this -- this will fire in any
-                             ;; project, which will cause the program
-                             ;; to run for a long time
-                             ;;(member project-path zmc-extra-project-paths)
-                             ))
+                                 project-path))))))
                        (progn
-                         ;;(message "getting targets for %" project-path)
                          (zmc-get-pytest-targets-from-project project-path)))
                       ((string= build-file-type "tmuxinator")
                        ;; eg no subtargets
-                       '(""))))
+                       '(""))
+                      ((string= build-file-type "shell script")
+                       ;; eg no subtargets
+                       '(""))
+                      ))
          (dirname (file-name-nondirectory (directory-file-name project-path)))
          (alist (--map
                  `(,(concat dirname " > " build-file-type " > " build-file-name " > " it)
@@ -426,8 +431,6 @@ async-shell-command"
        (zmc-make-alist project-path build-file-name build-file-type)))
    (directory-files project-path nil regex t)))
 
-
-(-map (lambda (x) (message x)) (project-known-project-roots))
 
 ;; This should be the function that we define per build target type
 (defun zmc-detect-targets (build-file-type regex)
@@ -481,7 +484,9 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                                         "pytest" "pyproject.toml"))
                        (tmuxinator-targets (zmc-detect-targets
                                             "tmuxinator" "\\.tmuxinator\\.yaml"))
-                       ;; TODO do i have to use eval here
+                       (bash-script-targets (zmc-detect-targets
+                                             "shell script" "\\.sh"))
+                       ;; TODO do i have to use eval here?
                        (tmuxinator-targets-extra (eval
                                                   (append
                                                    '(ht-merge)
@@ -492,7 +497,8 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                        (detected-targets (ht-merge make-targets
                                                    pytest-targets
                                                    tmuxinator-targets
-                                                   tmuxinator-targets-extra))
+                                                   tmuxinator-targets-extra
+                                                   bash-script-targets))
                        (config-raw (with-temp-buffer
                                      (insert-file-contents "~/.cmds.yaml")
                                      (buffer-string)))
