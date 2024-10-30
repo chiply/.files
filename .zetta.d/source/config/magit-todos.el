@@ -7,7 +7,9 @@
          ("FIXME"  . "#FF0000")
          ("DEBUG"  . "#A020F0")
          ("GOTCHA" . "#FF4500")
-         ("STUB"   . "#1E90FF")))
+         ("STUB"   . "#1E90FF")
+         ("LEFTOFF"   . "#0000FA")
+         ))
    :hook ((prog-mode markdown-mode) . hl-todo-mode))
 
 ;; (use-package magit-todos

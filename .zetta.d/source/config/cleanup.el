@@ -7,3 +7,7 @@
 (setq prefix-help-command #'embark-prefix-help-command)
 
 (tab-bar-mode +1)
+
+
+(if debug-on-error
+ (toggle-debug-on-error))
