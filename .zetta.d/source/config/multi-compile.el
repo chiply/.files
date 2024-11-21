@@ -326,10 +326,13 @@ async-shell-command"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DETECTORS
+
+
 (defun zmc-infer-program (build-file-type)
   (cond
    ((string= build-file-type "make") "async-shell-command+")
    ((string= build-file-type "pytest") "async-shell-command+")
+   ((string= build-file-type "python-test") "async-shell-command+")
    ((string= build-file-type "tmuxinator") "vterm")
    ;; NOTE this is for things like bash scripts that might run
    ;; installations (which typically come with complex spinners that
@@ -344,23 +347,102 @@ async-shell-command"
     (concat "tmuxinator start --suppress-tmux-version-warning -p " build-file-name))
    ((string= build-file-type "pytest")
     (concat "poetry run pytest -vvv " target))
+   ((string= build-file-type "python-test")
+    (concat "poetry run pytest -vvv"))
    ((string= build-file-type "shell script")
     (concat "./" build-file-name))
    ))
 
+;; history
+(defun parse-zsh-history ()
+  "Parse the Zsh history file located at ~/.zsh_history and return a list of unique commands sorted by timestamp."
+  (let ((history-file (expand-file-name "~/.zsh_history"))
+        (commands '())
+        (unique-commands (make-hash-table :test #'equal)))
+    (with-temp-buffer
+      (insert-file-contents history-file)
+      (goto-char (point-min))
+      (while (re-search-forward "^: \\([0-9]+\\):[0-9]+;\\(.*\\)$" nil t)
+        (let ((command (match-string 2)))
+          (unless (gethash command unique-commands)
+            (push (cons (string-to-number (match-string 1)) command) commands)
+            (puthash command t unique-commands)))))
+    (setq commands (sort commands (lambda (a b) (< (car a) (car b)))))
+    (setq commands (mapcar #'cdr commands))
+    ;; remove any command starting with ls
+    (-filter
+     (lambda (cmd)
+       ;; TODO move list to config
+       (or
+        ;; string contains
+        (string-match-p "python" cmd)
+        (string-match-p "python3" cmd)
+        (string-match-p "poetry" cmd)
+        (string-match-p "/bin/sh" cmd)
+        (string-match-p "bash" cmd)
+        (string-match-p "pip" cmd)
+        (string-match-p "brew" cmd)
+        (string-match-p "pytest" cmd)
+        (string-match-p "docker" cmd)
+        (string-match-p "docker-compose" cmd)
+        (string-match-p "npm" cmd)
+        (string-match-p "node" cmd)
+        (string-match-p "pyreverse" cmd)
+        (string-match-p "code2flow" cmd)
+        (string-match-p "kubectl" cmd)
+        (string-match-p "tilt" cmd)
+        (string-match-p "dagster" cmd)
+        (string-match-p "wget" cmd)
+        (string-match-p "makefile2dot" cmd)
+        (string-match-p "pyan" cmd)
+        (string-match-p "alembic" cmd)
+        (string-match-p "litecli" cmd)
+        (string-match-p "temporal" cmd)
+        (string-match-p "sqlite" cmd)
+        (string-match-p "ipython" cmd)
+        (string-match-p "dbcli" cmd)
+        (string-match-p "nx" cmd)
+        ))
+     commands)
+    )) ; Return only the commands, sorted by timestamp
 
 (defun zmc-get-parent-dirs (path)
   (let* ((path (string-join (butlast (split-string path "/")) "/"))
          (path (if (string= path "") "/" path)))
     (if (string= path "/") '() (cons path (zmc-get-parent-dirs path)))))
 
+
+
+
+
+
+
+;; (let ((default-directory "~/source_code/gdx-dataplatform-sdk-v2/sdk/internal"))
+;;   (shell-command-to-string
+;;    "echo 'poetry run pytest --co -q --disable-warnings' > collection.sh && chmod +x collection.sh && ./collection.sh && rm collection.sh"))
+
+;; LEFT OFF --
+;; FAIL try without dir locals
+;; FAIL try writing as a script?
+;; WORKS bc it uses vterm also test install langservers, does that actually work? lol -- should create w python 3.11
+;; WORKS try script again after restarting 
+;; TODO add .dir-locals to every subrepo or make this part of the scripts
+
+
 (defun zmc-get-pytest-targets-from-project (project-path)
   (message "Extracting pytest targets from %s..." project-path)
-  (let* ((paths (shell-command-to-string
-                 (concat
-                  "cd " project-path " && "
-                  "poetry run pytest "
-                  "--co -q --disable-warnings")))
+  (let* ((default-directory project-path)
+         (cmd (concat
+               ;;"echo 'poetry run pytest --co -q --disable-warnings' > collection.sh && chmod +x collection.sh && ./collection.sh && rm collection.sh"
+               ;;"poetry env info -p"
+               "cd " project-path " && "
+               "poetry run pytest "
+               "--co -q --disable-warnings"
+               ))
+         (_ (message cmd))
+         (paths (shell-command-to-string
+                 cmd))
+         (_ (message paths))
          (paths (nth 0 (split-string paths "\n\n")))
          (paths (split-string paths "\n"))
          (paths (--map (substring it 0 (string-match "\\[" it))
@@ -403,12 +485,10 @@ async-shell-command"
                                  project-path))))))
                        (progn
                          (zmc-get-pytest-targets-from-project project-path)))
-                      ((string= build-file-type "tmuxinator")
-                       ;; eg no subtargets
-                       '(""))
-                      ((string= build-file-type "shell script")
-                       ;; eg no subtargets
-                       '(""))
+                      ;; eg no subtargets
+                      ((string= build-file-type "python-test") '(""))
+                      ((string= build-file-type "tmuxinator") '(""))
+                      ((string= build-file-type "shell script") '(""))
                       ))
          (dirname (file-name-nondirectory (directory-file-name project-path)))
          (alist (--map
@@ -478,14 +558,11 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                                (buffer-string))
                              :object-key-type 'string))))
                 (let* ((_ (message "refreshing cache targets"))
-                       (make-targets (zmc-detect-targets
-                                      "make" "makefile\\|Makefile"))
-                       (pytest-targets (zmc-detect-targets
-                                        "pytest" "pyproject.toml"))
-                       (tmuxinator-targets (zmc-detect-targets
-                                            "tmuxinator" "\\.tmuxinator\\.yaml"))
-                       (bash-script-targets (zmc-detect-targets
-                                             "shell script" "\\.sh"))
+                       (make-targets (zmc-detect-targets "make" "makefile\\|Makefile"))
+                       (pytest-targets (zmc-detect-targets "pytest" "pyproject.toml"))
+                       (python-test-targets (zmc-detect-targets "python-test" "pyproject.toml"))
+                       (tmuxinator-targets (zmc-detect-targets "tmuxinator" "\\.tmuxinator\\.yaml"))
+                       (bash-script-targets (zmc-detect-targets "shell script" "\\.sh"))
                        ;; TODO do i have to use eval here?
                        (tmuxinator-targets-extra (eval
                                                   (append
@@ -496,9 +573,11 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                                                         "tmuxinator" "")))))
                        (detected-targets (ht-merge make-targets
                                                    pytest-targets
+                                                   python-test-targets
                                                    tmuxinator-targets
                                                    tmuxinator-targets-extra
-                                                   bash-script-targets))
+                                                   bash-script-targets
+                                                   ))
                        (config-raw (with-temp-buffer
                                      (insert-file-contents "~/.cmds.yaml")
                                      (buffer-string)))

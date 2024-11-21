@@ -26,6 +26,8 @@ echo doing pyenv init
 eval "$(pyenv init -)"
 
 pyenv install -v 3.10.0
+pyenv install -v 3.11.6
+pyenv install -v 3.11.9
 echo python version is $(python --version)
 pyenv local
 
@@ -125,6 +127,7 @@ export GRAPHVIZ_DIR="$(brew --prefix graphviz)"
 # markdownfmt
 # go install github.com/shurcooL/markdownfmt@latest
 
-
+# install mathjax
+npm i mathjax
 
 
