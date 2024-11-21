@@ -1,5 +1,6 @@
 source ~/.localsecrets
 source ~/.tokens
+source ~/.jfrog_credentials
 
 # this script assumes thigns have already been bootstrapped
 export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew:$PATH
@@ -179,7 +180,7 @@ function precmd() {
   fi
 }
 
-export PROMPT=$'\n''%n@%m $(git rev-parse --show-toplevel 2> /dev/null | xargs basename || pwd ):$(git_super_status) $timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\n'
+export PROMPT=$'\n''%n@%m'$'\n''$(git rev-parse --show-toplevel 2> /dev/null | xargs basename || pwd ):$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\n'
 #'x---}-> '
 
 

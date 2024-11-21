@@ -1,7 +1,0 @@
-(use-package highlight-symbol
-  :config
-  (setq highlight-symbol-idle-delay 0.05)
-
-  :hook ((python-ts-mode emacs-lisp-mode yaml-mode jsonian-mode json-mode web-mode shell-command-mode) . highlight-symbol-mode)
-
-  )
