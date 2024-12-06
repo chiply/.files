@@ -118,12 +118,9 @@
           (foo . (modus-themes-subtle-blue . modus-themes-nuanced-blue))
           (bar . (modus-themes-subtle-magenta . modus-themes-nuanced-magenta))
           (barr . (modus-themes-intense-magenta . modus-themes-nuanced-magenta))
-          (iedit . (iedit-occurrence . iedit-occurrence))
-          ))
+          (iedit . (iedit-occurrence . iedit-occurrence))))
 
   (setq telephone-line-subseparator-faces '())
-
-
 
   (setq telephone-line-lhs
         '((evil . (telephone-line-evil-tag-segment telephone-line-meow-tag-segment))
@@ -138,8 +135,7 @@
           (bar . (zt-iedit-segment))
           (accent . (zt-anzu-segment))
           (nil . (zt-flycheck-segment))
-          (nil . (zt-postition-segment))
-          ))
+          (nil . (zt-postition-segment))))
 
 
   (setq telephone-line-rhs nil)

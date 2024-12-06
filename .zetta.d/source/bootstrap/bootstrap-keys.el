@@ -74,7 +74,7 @@
 
   (which-key-mode 1)
   ;; because which-ley-mode sets prefix-help-command to which-key-C-h-dispatch
-  (setq prefix-help-command #'embark-prefix-help-command)
+  ;;(setq prefix-help-command #'embark-prefix-help-command)
 
   (defun which-key--create-buffer-and-show
       (&optional prefix-keys from-keymap filter prefix-title)

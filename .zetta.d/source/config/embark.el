@@ -11,7 +11,7 @@
   (setq embark-indicators '(embark-verbose-indicator embark-highlight-indicator embark-minimal-indicator))
 
   ;; note this also affects which-key
-  (setq prefix-help-command #'embark-prefix-help-command)
+  ;;(setq prefix-help-command #'embark-prefix-help-command)
 
   (define-key embark-general-map (kbd "C-b") 'z-bookmark-create)
 

@@ -111,7 +111,7 @@
     (define-key keymap [remap keyboard-quit]
                 (lambda () (interactive) (funcall exit-func)))
     (which-key--create-buffer-and-show nil keymap)))
-(setq prefix-help-command #'repeated-prefix-help-command)
+;;(setq prefix-help-command #'repeated-prefix-help-command)
 
 
 ;; keymap can be altered with any command -- note special ones (eg not

@@ -18,6 +18,7 @@
 key that is available in many contexts"
     `(progn
        (defmenu ,name ,map)
+       ;; TODO add meow
        (general-define-key :keymaps 'launch-map
                            ,key ',name)
        (general-define-key :keymaps '(evil-insert-state-map)
@@ -34,18 +35,6 @@ key that is available in many contexts"
   ;; TODO move to magit -- not used here
   (defmenu+ menu-vc menu-vc-keymap "g")
 
-
-  ;; NOTE: could guide an LLM on what menus you want to create.  can
-  ;; build a lot of UI from very little effort.  could prompt to build
-  ;; menus for different things (think about the categories that casual
-  ;; provides)
-
-  ;; TODO try 'nested' menus
-  ;; TODO migrate other hydras
-  ;; TODO finish the versatile C-h function
-  ;; TODO name?
-  )
-
-(setq prefix-help-command 'versatile-C-h)
+  (setq prefix-help-command 'versatile-C-h))
 
 (provide 'bootstrap-menu)
