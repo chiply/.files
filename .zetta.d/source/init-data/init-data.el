@@ -53,9 +53,12 @@
    "restart-emacs" "magit-todos.el" "browse-at-remote.el"
    "mono-complete.el" "rainbow-delimiters.el" "magit-file-icons.el"
    "devdocs.el" "telephone-line.el" "corfu.el" "typescript-ts-mode.el"
-   "apheleia.el" "spot4e.el" "symbol-overlay.el" "hi-lock.el"
+   "apheleia.el"  "symbol-overlay.el" "hi-lock.el"
    "beacon.el" "project.el" "eaf.el" "gnus.el" "gha.el"
    "outline-indent.el" "persist.el" "smerge-mode.el" "repeat-mode.el"
-   "cleanup.el"))
+   "hl-todo.el"
+   "cleanup.el"
+   ;; "spot4e.el"
+   ))
 
 (provide 'init-data)

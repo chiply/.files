@@ -1,6 +1,35 @@
+;; write a function that finds the first parent directory with a pyproject.toml
+;; the function should return nil if no such directory is found
+(defun z-find-poetry-project-root ()
+  (interactive)
+  (let ((dir (file-name-directory (buffer-file-name))))
+    (while (and
+            dir
+            (not (file-exists-p (concat dir "pyproject.toml")))
+            (not (string= dir "/")))
+      (setq dir (file-name-directory (directory-file-name dir))))
+    (if (string= dir "/") nil dir)))
+
 (use-package pyvenv
+  :after lsp-mode
   :init
-  (pyvenv-mode))
+  (pyvenv-mode)
+  :config
+  ;;(setq pyvenv-post-activate-hooks '())
+  (defun z-pyvenv-activate-poetry ()
+    (interactive)
+    (when (and (eq major-mode 'python-ts-mode)
+               (z-find-poetry-project-root))
+      (if (and (boundp 'z-pyvenv-virtual-env) z-pyvenv-virtual-env)
+          (pyvenv-activate z-pyvenv-virtual-env)
+        (let* ((_ (pyvenv-deactivate))
+               (cmd "poetry env info --path")
+               (output (shell-command-to-string cmd))
+               (venv (replace-regexp-in-string "\n" "" output)))
+          (pyvenv-activate venv)
+          (setq-local z-pyvenv-virtual-env venv)))
+      (unless lsp-mode (lsp-deferred))))
+  (add-hook 'buffer-list-update-hook 'z-pyvenv-activate-poetry))
 
 (use-package poetry)
 

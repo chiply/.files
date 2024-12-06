@@ -331,18 +331,26 @@ async-shell-command"
 (defun zmc-infer-program (build-file-type)
   (cond
    ((string= build-file-type "make") "async-shell-command+")
+   ((string= build-file-type "nx") "async-shell-command+")
+   ((string= build-file-type "nx-run-many") "async-shell-command+")
    ((string= build-file-type "pytest") "async-shell-command+")
    ((string= build-file-type "python-test") "async-shell-command+")
    ((string= build-file-type "tmuxinator") "vterm")
    ;; NOTE this is for things like bash scripts that might run
    ;; installations (which typically come with complex spinners that
    ;; don't render all the way in async-shell-command)
-   ((string= build-file-type "shell script") "vterm")))
+   ((string= build-file-type "shell script") "vterm")
+   ;; becuase of the ridiculous spinner
+   ))
 
 (defun zmc-make-template (build-file-name target)
   (cond
    ((string= build-file-type "make")
     (concat "make -f " build-file-name " " target))
+   ((string= build-file-type "nx")
+    (concat "nx run -t " target))
+   ((string= build-file-type "nx-run-many")
+    (concat "nx run-many -t " target))
    ((string= build-file-type "tmuxinator")
     (concat "tmuxinator start --suppress-tmux-version-warning -p " build-file-name))
    ((string= build-file-type "pytest")
@@ -350,8 +358,22 @@ async-shell-command"
    ((string= build-file-type "python-test")
     (concat "poetry run pytest -vvv"))
    ((string= build-file-type "shell script")
-    (concat "./" build-file-name))
-   ))
+    (concat "./" build-file-name))))
+
+
+;; nx
+;; TODO WIP
+;; also need to consider the ability to run-many
+;; this would involve taking the monorepo dir, unioning all targets and using those in the
+;; run-many.... could avoid this by simply adding a run-many to any targte found in the subdirs... is there a delete dups already for targets?
+(defun parse-nx-targets (file)
+  (let* ((config-raw (with-temp-buffer
+                       (insert-file-contents (expand-file-name file))
+                       (buffer-string)))
+         (targets (json-parse-string config-raw )))
+    (ht-keys (ht-get targets "targets"))))
+
+
 
 ;; history
 (defun parse-zsh-history ()
@@ -433,20 +455,15 @@ async-shell-command"
   (message "Extracting pytest targets from %s..." project-path)
   (let* ((default-directory project-path)
          (cmd (concat
-               ;;"echo 'poetry run pytest --co -q --disable-warnings' > collection.sh && chmod +x collection.sh && ./collection.sh && rm collection.sh"
-               ;;"poetry env info -p"
                "cd " project-path " && "
                "poetry run pytest "
-               "--co -q --disable-warnings"
-               ))
+               "--co -q --disable-warnings"))
          (_ (message cmd))
-         (paths (shell-command-to-string
-                 cmd))
+         (paths (shell-command-to-string cmd))
          (_ (message paths))
          (paths (nth 0 (split-string paths "\n\n")))
          (paths (split-string paths "\n"))
-         (paths (--map (substring it 0 (string-match "\\[" it))
-                       paths))
+         (paths (--map (substring it 0 (string-match "\\[" it)) paths))
          (paths (append
                  ;; function level
                  (delete-dups paths) 
@@ -459,14 +476,46 @@ async-shell-command"
     paths))
 
 
+
+(defun get-parent-repo (subrepo)
+  (let* ((subrepo (expand-file-name subrepo))
+         (repos 
+          (-map
+           (lambda (repo) (expand-file-name repo))
+           (-filter
+            (lambda (repo)
+              (not (string= repo "~/")))
+            (append
+             (project-known-project-roots)
+             zmc-extra-project-paths)))))
+    (car (-filter
+          (lambda (repo)
+            (and
+             (> (length subrepo) (length repo))
+             (string=
+              (substring subrepo 0 (length repo))
+              repo)))
+          repos))))
+
+
 ;; issue -- this doesn't work -- but running the command does.... lol...
 (defun zmc-make-alist (project-path build-file-name build-file-type)
   (let* ((fname (concat project-path build-file-name))
          (project-path (expand-file-name project-path))
+         ;; set parent repo for targets that are found in subrepos,
+         ;; but need to be run in parent repos (eg nx run-many).  Note
+         ;; this is somewhat of an edge-case
+         (parent-repo (when (and (member build-file-type
+                                         '("nx-run-many"))
+                                 (get-parent-repo project-path))))
          (project-current-path (expand-file-name (cadr (cdr (project-current nil)))))
          (subtargets (cond
                       ((string= build-file-type "make")
                        (projection-multi-make--targets-from-file2 fname))
+                      ((string= build-file-type "nx")
+                       (parse-nx-targets fname))
+                      ((string= build-file-type "nx-run-many")
+                       (parse-nx-targets fname))
                       ((and (string= build-file-type "pytest")
                             (or
                              ;; Current project
@@ -488,20 +537,23 @@ async-shell-command"
                       ;; eg no subtargets
                       ((string= build-file-type "python-test") '(""))
                       ((string= build-file-type "tmuxinator") '(""))
-                      ((string= build-file-type "shell script") '(""))
-                      ))
-         (dirname (file-name-nondirectory (directory-file-name project-path)))
+                      ((string= build-file-type "shell script") '(""))))
+         (dir (or parent-repo project-path))
+         (dirname (file-name-nondirectory (directory-file-name dir)))
          (alist (--map
+                 ;; TODO make conditional for nx
                  `(,(concat dirname " > " build-file-type " > " build-file-name " > " it)
                    .
                    ;; TODO add point aware things like function name? file name?
                    ;; need a reliably (eg treesit) approach to doing this
                    ,(ht-from-alist
                      `(("template" . ,(zmc-make-template build-file-name it))
-                       ("directory" . ,project-path)
+                       ("directory" . ,dir)
                        ("program" . ,(zmc-infer-program build-file-type)))))
                  subtargets)))
     (ht-from-alist alist)))
+
+
 
 
 (defun zmc-get-targets (project-path build-file-type &optional regex)
@@ -559,6 +611,9 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                              :object-key-type 'string))))
                 (let* ((_ (message "refreshing cache targets"))
                        (make-targets (zmc-detect-targets "make" "makefile\\|Makefile"))
+                       ;; TODO clunky that this is detected twice
+                       (nx-targets (zmc-detect-targets "nx" "project.json"))
+                       (nx-many-targets (zmc-detect-targets "nx-run-many" "project.json"))
                        (pytest-targets (zmc-detect-targets "pytest" "pyproject.toml"))
                        (python-test-targets (zmc-detect-targets "python-test" "pyproject.toml"))
                        (tmuxinator-targets (zmc-detect-targets "tmuxinator" "\\.tmuxinator\\.yaml"))
@@ -572,6 +627,8 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                                                         "~/.config/tmuxinator/"
                                                         "tmuxinator" "")))))
                        (detected-targets (ht-merge make-targets
+                                                   nx-targets
+                                                   nx-many-targets
                                                    pytest-targets
                                                    python-test-targets
                                                    tmuxinator-targets
