@@ -54,6 +54,7 @@
   (concat
    "🏃‍♀️‍➡️"
    (when (boundp 'local-transient) local-transient)
+   " "
    ;;" || " "🌎 "
    ;;(when (boundp 'latest-transient) latest-transient)
    ))
@@ -70,9 +71,19 @@
 (defun repeat-indicator-icon ()
   (if (and (boundp 'menu-indicator) menu-indicator) "** " "__ "))
 
+(defun z-pyvenv-activate-poetry-modeline ()
+  (and (boundp 'z-pyvenv-virtual-env)
+       (concat "{venv:"
+               (z-minify-path z-pyvenv-virtual-env)
+               "/"
+               (car (last (split-string z-pyvenv-virtual-env "/")))
+               "}")))
+
+
 (setq tab-bar-format '(;; everything here on will be aligned on the right
                        ;;z-tab-bar-hydra
                        zmc-modeline-indicator
+                       z-pyvenv-activate-poetry-modeline
                        ;; doesn't work in tab bar as it doesn't get
                        ;; updated reliably... note that even when
                        ;; using the entry and exist hooks it doesn't
