@@ -201,3 +201,7 @@ esac
 # pnpm end
 
 . "$HOME/.cargo/env"
+
+source ~/.sh_utility_functions.sh
+
+. "$HOME/.local/share/../bin/env"

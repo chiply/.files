@@ -14,3 +14,5 @@ source /Users/charles.baker/Library/Application\ Support/org.dystroy.broot/launc
 source /Users/charles.baker/.config/broot/launcher/bash/br
 
 . "$HOME/.cargo/env"
+
+. "$HOME/.local/share/../bin/env"

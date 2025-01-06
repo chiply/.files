@@ -65,6 +65,8 @@
   ;;;;(z-side "\\magit-revision-mode" 'right 2)
 
 
+  (define-prefix-command 'menu-vc-keymap)
+
   (general-define-key
    :keymaps 'menu-vc-keymap
    "g" 'magit-status
@@ -81,11 +83,13 @@
    "f" 'magit-fetch
    "p" 'magit-pull
    )
+  
   (general-define-key
    :keymaps 'launch-map
    "g" 'menu-vc-keymap
    "G" 'z-magit-project
    )
+  
   (general-define-key
    :keymaps 'text-mode-map
    "C-<return>" 'with-editor-finish
