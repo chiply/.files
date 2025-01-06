@@ -2,11 +2,14 @@
 
 ;; REFACTOR!
 ;; separate modeline functions
-;; this will make it read much much clearner
+;; this will make it read much much clearner and make it easier to
+;; test these functions which is important as these functions need to
+;; be very efficient
 ;; z-line-...
 
-
-(setq default-line-align-left-devel
+;; TODO
+;; need 1 per line
+(setq default-line-align-left-devel-1
       '(
         ;; leaving this out for now as its easy to see what it is with a command
         ;;(:eval (when (string= major-mode "python-ts-mode")
@@ -22,10 +25,12 @@
         " "
         ;;(:eval (if (string= (symbol-name major-mode) "magit-status-mode") (parrot-create)))
         (:eval (spinner-print spinner-current))
-        (:eval (when (eq major-mode 'magit-status-mode) (nyan-create)))
+        " "
         (:eval
-         (when (string= major-mode "org-mode")
-           (concat " > " (org-display-outline-path) "/" (org-get-heading))))
+         (let ((path (abbreviate-file-name default-directory)))
+           (if (> (length path) 30) (z-minify-path default-directory) path)))
+        " "
+        "%c|%l(%p)"
         " "
         (:eval (cond
                 ((or (equal major-mode 'docker-compose-mode)
@@ -34,10 +39,24 @@
                 ((or (equal major-mode 'jsonian-mode))
                  (concat "{" (jsons-get-path-python) "}"))))))
 
+(setq default-line-align-left-devel-2
+      '(
+        (:eval
+         (cond
+          ;; use lsp breadcrumbs if lsp-mode is active
+          ((and (boundp 'lsp-mode) lsp-mode)
+           (window-parameter nil 'lsp-headerline--string))
+          ;; use org breadcrumbs if in org-mode
+          ((string= major-mode "org-mode")
+           (propertize (org-display-outline-path nil t "/" t)
+                       ;; to avoid growing headerline when
+                       ;; using native headerline
+                       'face '(:height 0.8)))
+          ;; fallback to imenu breadcrumbs
+          (t (breadcrumb-imenu-crumbs))))))
+
 
 ;; explain the syntax, why is (:eval) being used
-
-
 (setq default-line-align-left
       '(
         (:eval (propertize
@@ -67,9 +86,6 @@
                  (all-the-icons-icon-for-mode 'copilot-mode)))
         (:eval (when (z-side-window-p (selected-window)) " {S} "))
         " "
-        (:eval
-         (let ((path (abbreviate-file-name default-directory)))
-           (if (> (length path) 30) (z-minify-path default-directory) path)))
         
         (:eval (let ((result (shell-command-to-string
                               "git rev-parse --is-inside-work-tree")))
@@ -97,7 +113,6 @@
         (:eval (let ((text (flycheck-indicator--mode-line)))
                  (if (string= " not-checked" text) "" text)))
         (:eval (concat (or (if (boundp 'latest-transient) latest-transient) (if (boundp 'local-transient) local-transient)) " "))
-        (:eval  "%c|%l(%p)")
         (:eval (when (or
                       (z-line-tramp-icon)
                       (z-line-docker-icon)
@@ -127,9 +142,7 @@
         (:eval (anzu--update-mode-line))
         (:eval (let ((icon (z-line-iedit-icon))) (when icon iedit-mode-line)))
         (:eval repeat-echo-mode-line-string)
-        
-        )
-      )
+        (:eval (when (eq major-mode 'magit-status-mode) (nyan-create)))))
 
 
 (setq default-line-align-middle '(""))
@@ -138,9 +151,8 @@
 
 (setq anzu-cons-mode-line-p nil)
 
-
-(setq-default mode-line-format (z-get-line-format default-line-align-left "" ""))
-(setq-default header-line-format (z-get-line-format default-line-align-left-devel "" ""))
+;;(setq-default mode-line-format (z-get-line-format default-line-align-left "" ""))
+;;(setq-default header-line-format (z-get-line-format default-line-align-left-devel-1 "" "" ))
 
 
 ;; for apps that strangely don't take the defaults

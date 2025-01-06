@@ -25,4 +25,7 @@
   (popper-mode +1)
   (popper-echo-mode +1)
   :config
-  (setq popper-mode-line (all-the-icons-material "fullscreen_exit")))
+  ;; if nil then the mode line never shows up, likely a bug
+  (setq popper-mode-line "")
+  (setq popper-echo-lines 5)
+  )

@@ -1,19 +1,23 @@
 (use-package org
-  ;;:ensure (org :type git :host github :repo "bzg/org-mode" :wait t)
   :ensure nil
-
   :mode ("\\.org" . org-mode)
 
   :config
+  (setq-default org-indent-mode nil) ;; NOTE doesn't work?
   (setq org-confirm-babel-evaluate nil
+        ;; although aesthetically less pleasing, the indent mode can
+        ;; cause issues, sometimes text snaps out of indent mode
+        
         org-agenda-files '(
                            ;; order matters
-                           "~/.files/org-roam/daily/sprint.org"
-                           "~/.files/org-roam/daily/agenda.org"
-                           "~/.files/org-roam/daily/agenda_pub.org"
+                           "~/obsidian/vaults/main/emacs.org"
                            )
-        org-persist-directory (expand-file-name ".data/org-persist" user-emacs-directory)
-        org-id-locations-file (expand-file-name ".data/org/.org-id-locations" user-emacs-directory)
+        org-persist-directory (expand-file-name
+                               ".data/org-persist"
+                               user-emacs-directory)
+        org-id-locations-file (expand-file-name
+                               ".data/org/.org-id-locations"
+                               user-emacs-directory)
         org-hide-leading-stars t
         org-startup-folded (quote overview)
         org-startup-indented t
@@ -24,25 +28,16 @@
         org-refile-targets '((nil :maxlevel . 10) ;; current buf
                              (org-agenda-files :maxlevel . 10))
         org-src-window-setup 'plain
-        org-src-lang-modes '(("bash" . sh) ("beamer" . latex) ("calc" . fundamental)
-                             ("emacs-lisp" . emacs-lisp) ("shell" . sh) ("sqlite" . sql)
-                             ("html" . web) ("js" . js2) ("jsx" . rjsx)
-                             )
-        org-table-shrunk-column-indicator "|"
-        )
-
-
-
+        org-src-lang-modes
+        '(("bash" . sh) ("beamer" . latex) ("calc" . fundamental)
+          ("emacs-lisp" . emacs-lisp) ("shell" . sh) ("sqlite" . sql)
+          ("html" . web) ("js" . js2) ("jsx" . rjsx))
+        org-table-shrunk-column-indicator "|")
 
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '(
-     (python . t) (emacs-lisp . t) (sql . t)
-     (C . t) (sqlite . t) (js . t)
-     (ditaa . t) (dot . t)
-     (shell . t ) (latex . t )
-     )
-   )
+   '((python . t) (emacs-lisp . t) (sql . t) (C . t) (sqlite . t)
+     (js . t) (ditaa . t) (dot . t) (shell . t ) (latex . t )))
 
   (defun orgtree-forward-orgtree (&optional arg)
     "Move ARG times to start of a set of the same orgtree characters."
@@ -179,18 +174,17 @@
          (org-ctrl-c-ctrl-c-final . org-table-shrink)
          (org-mode . (lambda () (progn
                                   (auto-fill-mode -1)
-                                  (visual-line-mode t) 
-                                  (progn
-                                    (setq visual-fill-column-width 80)
-                                    ;; interesting, but not necessary
-                                    ;;(setq visual-fill-column-center-text t)
-                                    (setq visual-fill-column-width 80)
-                                    )
+                                  (org-indent-mode -1)
+                                  (toggle-truncate-lines 1) 
+                                  ;;(progn
+                                  ;;(setq visual-fill-column-width 80)
+                                    ;;;; interesting, but not necessary
+                                    ;;;;(setq visual-fill-column-center-text t)
+                                  ;;(setq visual-fill-column-width 80)
+                                  ;;)
                                   )))
-         (org-mode . (lambda () (setq-local fill-column 60)))
-         (org-mode . (lambda () (text-scale-set -2)))
-         )
-  )
+         ;;(org-mode . (lambda () (setq-local fill-column 60)))
+         (org-mode . (lambda () (text-scale-set -2)))))
 
 (provide 'bootstrap-org)
 

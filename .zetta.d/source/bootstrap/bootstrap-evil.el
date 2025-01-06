@@ -51,6 +51,7 @@
    )
   (
    :keymaps '(evil-insert-state-map evil-visual-state-map)
+   ;;"C-;" 'evil-normal-state
    (general-chord "kj") 'evil-normal-state
    (general-chord "jk") 'evil-normal-state
    ;; I dislike how sometimes the chording can turn off or even when

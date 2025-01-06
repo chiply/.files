@@ -57,6 +57,9 @@
    "beacon.el" "project.el" "eaf.el" "gnus.el" "gha.el"
    "outline-indent.el" "persist.el" "smerge-mode.el" "repeat-mode.el"
    "hl-todo.el"
+   "dual-header.el"
+   "breadcrumb.el"
+   "parrot.el"
    "cleanup.el"
    ;; "spot4e.el"
    ))
