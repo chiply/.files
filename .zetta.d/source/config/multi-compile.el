@@ -1,17 +1,4 @@
-;; pytest -- implement caching, special flag (maybe C-u for detecting targets) to speed things up
-
-;; TODO make detached-shell command ebhave liek async shell command
-;; wrt to uniquifying buffer name.  don't uniquify unless can make
-;; this work with sentinels
-
-;; better version of multi-compile that has better support from embark
-;; and consult and also offers parsing of build system targets (eg
-;; makefile targets).  Integrate automatic pulling of targets with
-;; this project.
-;; NOTE can't get all the icons or consult working
-
 ;; TODO
-;; cleanup
 ;; display buffer function
 ;; replacement logic -- lay out all the different use casces and options
 ;; update: I'm going to call this a replace-buffer-function as this is operating at the buffer name level... 
@@ -21,9 +8,6 @@
 ;;;; *create* with new buffername (simply prompt with what would have been used, eg provide a randomized thing as default)
 ;;;; *warn* 
 ;;;; *default-buffer-replace-policy* to ease the change, implement a policy that does default-buffer-replace-policy (currently there is not really a policy, it just does default-buffer-replace-policy). note this would default to the underlying executor's default behavior.  eg for async-shell-command, it would simply warn you that the buffer already exists and do default-buffer-replace-policy.  I would typically prefer to set things explicitly
-;; DONE select v noselect
-;; refactor how bufnm is being set
-;; some indication as to what mode the buffer is in in the modeline
 
 ;;;;;;;;;;;;;;;; DEPENDENCIES
 (use-package templatel)
@@ -43,14 +27,6 @@
   (require 'projection-multi-make))
 (use-package projection-multi-embark :demand t)
 
-
-
-;; LEFT OFF - grow phase, organize todos and need to refactor
-;; TODO refactoring -- funcctionalty wrt (zmc-compute-bufnm), headerline stuff, transient name.  should be consolidated... probably already is (derived from key) so should be easy to solve
-;; todo add custom buffer names
-;; TODO side key not working for vterm -- using magento in mid term
-
-
 ;; TODO - timing of setting local and latest-transient -- should only happen once the transient has been executed, but this may be challenging or require more refactoring
 
 ;; VARIABLES
@@ -58,6 +34,7 @@
 (defvar zmc-cache nil)
 (setq zmc-async-shell-command-spinners-enable nil)
 ;; solution for monorepos:
+
 
 
 ;;;;;;;;;;;;;;;;;; HELPERS
@@ -125,16 +102,19 @@ async-shell-command"
 
 
 ;;;;;;;;;;;;;;;;;;;;;; EXECUTORS
-(setq default-buffer-replace-policy "default-buffer-replace-policy") ;; TODO keep an eye on this - may cause issues
+;; TODO keep an eye on this - may cause issues
+(setq default-buffer-replace-policy "default-buffer-replace-policy")
+
 (defun zmc-execute (program cmd bufnm &optional buffer-replace-policy transient-name)
-  (if (not (member
-            program
-            '("detached" "detached+" "async-shell-command"
-              "async-shell-command+" "vterm" "compile"
-              "detached-compile")))
+  (if (not (member program
+                   '("detached" "detached+" "async-shell-command"
+                     "async-shell-command+" "vterm" "compile"
+                     "detached-compile")))
       (error "zmc-execute: program %s not supported" program))
   (let ((bufnm (zmc-compute-bufnm))
-        (buffer-replace-policy (or buffer-replace-policy default-buffer-replace-policy)))
+        (buffer-replace-policy (or buffer-replace-policy
+                                   default-buffer-replace-policy)))
+    ;; TODO - factor out the buffer-replace-policy logic
     (cond ((string= buffer-replace-policy "replace")
            (when (get-buffer bufnm)
              ;; kill the process associated with the buffer
@@ -164,8 +144,8 @@ async-shell-command"
           ((string= buffer-replace-policy "default-buffer-replace-policy")
            (message "no replacing"))
           (t (message "Buffer %s already exists" bufnm))))
-
   (let* ((shell-command-switch "-ic")
+         ;; TODO - factor out the executor logic
          (buf (cond
                ((string= program "detached") (zmc-es-detached cmd))
                ((string= program "detached+") (zmc-es-detached+ cmd))
@@ -179,13 +159,13 @@ async-shell-command"
       (set (make-local-variable 'local-transient) transient-name))
     (if (or (bufferp buf) (bufferp (get-buffer buf)))
         buf
-      (error "zmc-execute: executor did not return a buffer"))
-    ))
+      (error "zmc-execute: executor did not return a buffer"))))
 
 (defun zmc-run (program cmd bufnm side slot select &optional buffer-replace-policy transient-name)
   (let* ((original-buffer (current-buffer))
          (original-window (get-buffer-window original-buffer))
          (new-buffer (zmc-execute program cmd bufnm buffer-replace-policy transient-name)))
+    ;; if the buffer is not the original buffer, switch to it
     (unless (string= (buffer-name original-buffer)
                      (cond
                       ((bufferp new-buffer)
@@ -201,17 +181,18 @@ async-shell-command"
       (set-window-dedicated-p nil nil)
       (switch-to-prev-buffer nil 'bury)
       ;; display the buffer.  The point here is that
-      ;; display-buffer-alist settings are resepected by default but
+      ;; display-buffer-alist settings are respected by default but
       ;; these can also be overridden by the user NYI TODO implement
       ;; overrideable display
       (display-buffer new-buffer)
-      (select-window original-window)
-      )
+      (select-window original-window))
+    ;; if select is yes, switch to the buffer
     (when (string= "yes" select)
       (select-window (get-buffer-window new-buffer)))))
 
 
-;; individual executors
+;; individual executors NOTE (process-connection-type nil) is a
+;; performance optimization, but doesn't work with detached
 (defun zmc-es-compile (cmd)
   (let ((compilation-buffer-name-function '(lambda (_) (zmc-compute-bufnm)))
         (compile-command (or local-cmd latest-cmd)))
@@ -224,33 +205,27 @@ async-shell-command"
 
 (defun zmc-es-async-shell-command (cmd)
   (let ((bufnm (zmc-compute-bufnm))
-        (process-connection-type nil) ;; performance
+        (process-connection-type nil)
         )
     (save-window-excursion
       (window-buffer (async-shell-command cmd bufnm)))))
 
 (defun zmc-es-async-shell-command+ (cmd)
   (let ((bufnm (zmc-compute-bufnm))
-        (process-connection-type nil) ;; performance
-        (zmc-async-shell-command-spinners-enable t) ;; to enable starting the spinner 
-        )
+        (process-connection-type nil)
+        (zmc-async-shell-command-spinners-enable t))
     (save-window-excursion
       (zmc-async-shell-command+ cmd bufnm))))
 
-
 (defun zmc-es-detached (cmd)
-  (let ((bufnm (zmc-compute-bufnm))
-        ;;(process-connection-type nil) ;; doesn't work with detached
-        )
+  (let ((bufnm (zmc-compute-bufnm)))
     (let ((detached--shell-command-buffer bufnm))
       (detached-shell-command cmd))
     bufnm))
 
 (defun zmc-es-detached+ (cmd)
   (let ((bufnm (zmc-compute-bufnm))
-        ;;(process-connection-type nil) ;; doesn't work with detached
-        (zmc-async-shell-command-spinners-enable t) ;; to enable starting the spinner 
-        )
+        (zmc-async-shell-command-spinners-enable t))
     (zmc-detached-shell-command+ cmd bufnm)
     bufnm))
 
@@ -258,11 +233,10 @@ async-shell-command"
 (defun zmc-es-vterm (cmd)
   ;; if bufnm exists kill it
   (let* ((bufnm (zmc-compute-bufnm)))
-    ;; todo make this configurable, should it kill, switch to it,
+    ;; TODO make this configurable, should it kill, switch to it,
     ;; create new with uniquify name, prompt for name? prompt for any
     ;; of these options?
-    (when (get-buffer bufnm)
-      (kill-buffer bufnm))
+    (when (get-buffer bufnm) (kill-buffer bufnm))
     (let* ((vterm-buffer (save-window-excursion (vterm bufnm)))
            (vterm-process (get-buffer-process vterm-buffer)))
       (process-send-string vterm-process (concat cmd "\n"))
@@ -282,16 +256,19 @@ async-shell-command"
          (cmd (templatel-render-string command-template (ht->alist target)))
          (_ (ht-set! target "target" cmd))
          (directory (ht-get target "directory"))
-         (default-directory (or (and
-                                 directory
-                                 (expand-file-name (eval-expression directory)))
-                                default-directory))
+         (default-directory (or
+                             (and
+                              directory
+                              (expand-file-name (eval-expression directory)))
+                             default-directory))
          (bufnm (ht-get target "bufnm"))
          (side (intern (or (ht-get target "side") "top"))) ;; default
          (slot (or (ht-get target "slot") 1)) ;; default
          (select (or (ht-get target "select") "no"))
-         (buffer-replace-policy (or (ht-get target "buffer-replace-policy") "default-buffer-replace-policy"))
-         (transient-name (string-replace " " "-" (ht-get target "key"))) ; TODO redundant logic
+         (buffer-replace-policy (or (ht-get target "buffer-replace-policy")
+                                    "default-buffer-replace-policy"))
+         ;; TODO redundant logic
+         (transient-name (string-replace " " "-" (ht-get target "key")))
          )
     (setq latest-cmd cmd)
     (set (make-local-variable 'local-cmd) cmd)
@@ -318,23 +295,22 @@ async-shell-command"
           (lambda (k v)
             `(,(concat "-" (substring k 0 1)) ,k ,(concat "--" (string-replace " " "-" k) "=")))
           htbl)))
-      ;; Actions
-      [;; Action should simply take arguments and override variables
-       "Actions"
-       ("<return>" "run" zmc-transient-act)
-       ])))
+      ;; Action: should simply take arguments and override variables
+      ["Actions"
+       ("<return>" "run" zmc-transient-act)])))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DETECTORS
-
-
 (defun zmc-infer-program (build-file-type)
   (cond
    ((string= build-file-type "make") "async-shell-command+")
+   ((string= build-file-type "install-python-project-and-lsp-deps") "async-shell-command+")
    ((string= build-file-type "nx") "async-shell-command+")
    ((string= build-file-type "nx-run-many") "async-shell-command+")
    ((string= build-file-type "pytest") "async-shell-command+")
    ((string= build-file-type "python-test") "async-shell-command+")
+   ((string= build-file-type "ipython") "vterm")
+   ((string= build-file-type "python") "vterm")
    ((string= build-file-type "tmuxinator") "vterm")
    ;; NOTE this is for things like bash scripts that might run
    ;; installations (which typically come with complex spinners that
@@ -343,10 +319,13 @@ async-shell-command"
    ;; becuase of the ridiculous spinner
    ))
 
+;; TODO is there a difference bt build-file-name and build-file-type
 (defun zmc-make-template (build-file-name target)
   (cond
    ((string= build-file-type "make")
     (concat "make -f " build-file-name " " target))
+   ((string= build-file-type "install-python-project-and-lsp-deps")
+    (concat "install_all_lsp_servers \"$(pwd)\""))
    ((string= build-file-type "nx")
     (concat "nx run -t " target))
    ((string= build-file-type "nx-run-many")
@@ -357,26 +336,22 @@ async-shell-command"
     (concat "poetry run pytest -vvv " target))
    ((string= build-file-type "python-test")
     (concat "poetry run pytest -vvv"))
+   ((string= build-file-type "ipython")
+    (concat "poetry run ipython"))
+   ((string= build-file-type "python")
+    (concat "poetry run python"))
    ((string= build-file-type "shell script")
     (concat "./" build-file-name))))
 
-
-;; nx
-;; TODO WIP
-;; also need to consider the ability to run-many
-;; this would involve taking the monorepo dir, unioning all targets and using those in the
-;; run-many.... could avoid this by simply adding a run-many to any targte found in the subdirs... is there a delete dups already for targets?
-(defun parse-nx-targets (file)
+(defun zmc-parse-nx-targets (file)
   (let* ((config-raw (with-temp-buffer
                        (insert-file-contents (expand-file-name file))
                        (buffer-string)))
-         (targets (json-parse-string config-raw )))
+         (targets (json-parse-string config-raw)))
     (ht-keys (ht-get targets "targets"))))
 
-
-
 ;; history
-(defun parse-zsh-history ()
+(defun zmc-parse-zsh-history ()
   "Parse the Zsh history file located at ~/.zsh_history and return a list of unique commands sorted by timestamp."
   (let ((history-file (expand-file-name "~/.zsh_history"))
         (commands '())
@@ -433,24 +408,6 @@ async-shell-command"
          (path (if (string= path "") "/" path)))
     (if (string= path "/") '() (cons path (zmc-get-parent-dirs path)))))
 
-
-
-
-
-
-
-;; (let ((default-directory "~/source_code/gdx-dataplatform-sdk-v2/sdk/internal"))
-;;   (shell-command-to-string
-;;    "echo 'poetry run pytest --co -q --disable-warnings' > collection.sh && chmod +x collection.sh && ./collection.sh && rm collection.sh"))
-
-;; LEFT OFF --
-;; FAIL try without dir locals
-;; FAIL try writing as a script?
-;; WORKS bc it uses vterm also test install langservers, does that actually work? lol -- should create w python 3.11
-;; WORKS try script again after restarting 
-;; TODO add .dir-locals to every subrepo or make this part of the scripts
-
-
 (defun zmc-get-pytest-targets-from-project (project-path)
   (message "Extracting pytest targets from %s..." project-path)
   (let* ((default-directory project-path)
@@ -475,9 +432,7 @@ async-shell-command"
                                                paths))))))
     paths))
 
-
-
-(defun get-parent-repo (subrepo)
+(defun zmc-get-parent-repo (subrepo)
   (let* ((subrepo (expand-file-name subrepo))
          (repos 
           (-map
@@ -498,7 +453,6 @@ async-shell-command"
           repos))))
 
 
-;; issue -- this doesn't work -- but running the command does.... lol...
 (defun zmc-make-alist (project-path build-file-name build-file-type)
   (let* ((fname (concat project-path build-file-name))
          (project-path (expand-file-name project-path))
@@ -507,15 +461,16 @@ async-shell-command"
          ;; this is somewhat of an edge-case
          (parent-repo (when (and (member build-file-type
                                          '("nx-run-many"))
-                                 (get-parent-repo project-path))))
+                                 (zmc-get-parent-repo project-path))))
          (project-current-path (expand-file-name (cadr (cdr (project-current nil)))))
+         ;; TODO factor out the subtarget logic
          (subtargets (cond
                       ((string= build-file-type "make")
                        (projection-multi-make--targets-from-file2 fname))
                       ((string= build-file-type "nx")
-                       (parse-nx-targets fname))
+                       (zmc-parse-nx-targets fname))
                       ((string= build-file-type "nx-run-many")
-                       (parse-nx-targets fname))
+                       (zmc-parse-nx-targets fname))
                       ((and (string= build-file-type "pytest")
                             (or
                              ;; Current project
@@ -536,16 +491,17 @@ async-shell-command"
                          (zmc-get-pytest-targets-from-project project-path)))
                       ;; eg no subtargets
                       ((string= build-file-type "python-test") '(""))
+                      ((string= build-file-type "ipython") '(""))
+                      ((string= build-file-type "python") '(""))
                       ((string= build-file-type "tmuxinator") '(""))
-                      ((string= build-file-type "shell script") '(""))))
+                      ((string= build-file-type "shell script") '(""))
+                      ((string= build-file-type "install-python-project-and-lsp-deps") '(""))
+                      ))
          (dir (or parent-repo project-path))
          (dirname (file-name-nondirectory (directory-file-name dir)))
          (alist (--map
-                 ;; TODO make conditional for nx
                  `(,(concat dirname " > " build-file-type " > " build-file-name " > " it)
                    .
-                   ;; TODO add point aware things like function name? file name?
-                   ;; need a reliably (eg treesit) approach to doing this
                    ,(ht-from-alist
                      `(("template" . ,(zmc-make-template build-file-name it))
                        ("directory" . ,dir)
@@ -554,27 +510,24 @@ async-shell-command"
     (ht-from-alist alist)))
 
 
-
-
-(defun zmc-get-targets (project-path build-file-type &optional regex)
+(defun zmc-get-targets (project-path build-file-type &optional build-file-regexp)
   (--map
-   (let* ((build-file-name (when (file-exists-p (concat project-path it)) it)))
+   (let* ((build-file-name (when (file-exists-p
+                                  (concat project-path it)) it)))
      (when build-file-name
        (zmc-make-alist project-path build-file-name build-file-type)))
-   (directory-files project-path nil regex t)))
+   (directory-files project-path nil build-file-regexp t)))
 
 
-;; This should be the function that we define per build target type
-(defun zmc-detect-targets (build-file-type regex)
+(defun zmc-detect-targets (build-file-type build-file-regexp)
   (let* ((projects (--filter (not (string= it "~/"))
                              (append
                               (project-known-project-roots)
                               zmc-extra-project-paths)))
-         (lst (--map (zmc-get-targets it build-file-type regex) projects))
+         (lst (--map (zmc-get-targets it build-file-type build-file-regexp) projects))
          (lst (--filter it lst))
          (lst (flatten-list lst)))
     (eval (append '(ht-merge) lst))))
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INTERACTIVE FUNCTION
@@ -611,13 +564,22 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                              :object-key-type 'string))))
                 (let* ((_ (message "refreshing cache targets"))
                        (make-targets (zmc-detect-targets "make" "makefile\\|Makefile"))
+                       ;; TODO this is a hack, but it works for now --
+                       ;; to be fixed in refactoring of the detection
+                       (python-lsp-targets
+                        (zmc-detect-targets "install-python-project-and-lsp-deps" "nx.json")) ;; monorepo
+                       (python-lsp-targets-1
+                        (zmc-detect-targets "install-python-project-and-lsp-deps" "pyproject.toml")) ;; other
                        ;; TODO clunky that this is detected twice
                        (nx-targets (zmc-detect-targets "nx" "project.json"))
                        (nx-many-targets (zmc-detect-targets "nx-run-many" "project.json"))
                        (pytest-targets (zmc-detect-targets "pytest" "pyproject.toml"))
                        (python-test-targets (zmc-detect-targets "python-test" "pyproject.toml"))
+                       (ipython-targets (zmc-detect-targets "ipython" "pyproject.toml"))
+                       (python-targets (zmc-detect-targets "python" "pyproject.toml"))
                        (tmuxinator-targets (zmc-detect-targets "tmuxinator" "\\.tmuxinator\\.yaml"))
                        (bash-script-targets (zmc-detect-targets "shell script" "\\.sh"))
+                       
                        ;; TODO do i have to use eval here?
                        (tmuxinator-targets-extra (eval
                                                   (append
@@ -626,15 +588,28 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                                                     it (zmc-get-targets
                                                         "~/.config/tmuxinator/"
                                                         "tmuxinator" "")))))
-                       (detected-targets (ht-merge make-targets
-                                                   nx-targets
-                                                   nx-many-targets
-                                                   pytest-targets
-                                                   python-test-targets
-                                                   tmuxinator-targets
-                                                   tmuxinator-targets-extra
-                                                   bash-script-targets
-                                                   ))
+                       ;;(detected-targets (ht-merge make-targets
+                       ;;python-lsp-targets
+                       ;;python-lsp-targets-1
+                       ;;nx-targets
+                       ;;nx-many-targets
+                       ;;pytest-targets
+                       ;;python-test-targets
+                       ;;ipython-targets
+                       ;;python-targets
+                       ;;tmuxinator-targets
+                       ;;tmuxinator-targets-extra
+                       ;;bash-script-targets
+                       ;;))
+                       (detected-targets (eval (append
+                                                '(ht-merge)
+                                                (ht-map
+                                                 (lambda (k v)
+                                                   (zmc-detect-targets
+                                                    (ht-get v "build-file-type")
+                                                    (ht-get v "build-file-regexp")))
+                                                 zmc-config)))
+                                         )
                        (config-raw (with-temp-buffer
                                      (insert-file-contents "~/.cmds.yaml")
                                      (buffer-string)))
@@ -687,3 +662,80 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
  ;; go with cacheing
  )
 
+
+;;;;;;;;;; CONFIG
+;; TODO fix templates use jinja instead
+;; TODO determine how to mix custom functions (like pytest collection)
+;; with this config -- note that subtargets and targets are somehwat
+;; synonymous, check the render template function for this
+(setq
+ zmc-config
+ (ht
+  ("make-targets"
+   (ht
+    ("build-file-type" "make")
+    ("build-file-regexp" "makefile\\|Makefile")
+    ("template" "make -f ${build-file-name} ${target}")
+    ("program" "async-shell-command+")))
+  ("python-lsp-targets"
+   (ht
+    ("build-file-type" "install-python-project-and-lsp-deps")
+    ("build-file-regexp" "nx.json")
+    ("template" "install_all_lsp_servers \"$(pwd)\"")
+    ("program" "async-shell-command+")))
+  ("python-lsp-targets-1"
+   (ht
+    ("build-file-type" "install-python-project-and-lsp-deps")
+    ("build-file-regexp" "pyproject.toml")
+    ("template" "install_all_lsp_servers \"$(pwd)\"")
+    ("program" "async-shell-command+")))
+  ("nx-targets"
+   (ht
+    ("build-file-type" "nx")
+    ("build-file-regexp" "project.json")
+    ("template" "nx run -t ${target}")
+    ("program" "async-shell-command+")))
+  ("nx-many-targets"
+   (ht
+    ("build-file-type" "nx-run-many")
+    ("build-file-regexp" "project.json")
+    ("template" "nx run-many -t ${target}")
+    ("program" "async-shell-command+")))
+  ("pytest-targets"
+   (ht
+    ("build-file-type" "pytest")
+    ("build-file-regexp" "pyproject.toml")
+    ("template" "poetry run pytest -vvv ${target}")
+    ("program" "async-shell-command+")))
+  ("python-test-targets"
+   (ht
+    ("build-file-type" "python-test")
+    ("build-file-regexp" "pyproject.toml")
+    ("template" "poetry run pytest -vvv")
+    ("program" "async-shell-command+")))
+  ("ipython-targets"
+   (ht
+    ("build-file-type" "ipython")
+    ("build-file-regexp" "pyproject.toml")
+    ("template" "poetry run ipython")
+    ("program" "vterm")))
+  ("python-targets"
+   (ht
+    ("build-file-type" "python")
+    ("build-file-regexp" "pyproject.toml")
+    ("template" "poetry run python")
+    ("program" "vterm")))
+  ("tmuxinator-targets"
+   (ht
+    ("build-file-type" "tmuxinator")
+    ("build-file-regexp" "\\.tmuxinator\\.yaml")
+    ("template" "tmuxinator start --suppress-tmux-version-warning -p ${build-file-name}")
+    ("program" "vterm")))
+  ("bash-script-targets"
+   (ht
+    ("build-file-type" "shell script")
+    ("build-file-regexp" "\\.sh")
+    ("template" "./${build-file-name}")
+    ("program" "vterm")))
+  ;; TODO add tmuxinator-targets-extra
+  ))

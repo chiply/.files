@@ -19,8 +19,9 @@
    consult-buffer
    consult-bookmark
    consult-project-buffer
-   consult-yank-pop
+   ;;consult-yank-pop
    :preview-key "C-+")
+  
 
   ;; project.el
   ;; TODO don't like how verbose and multi-step this is.

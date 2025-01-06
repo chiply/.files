@@ -18,17 +18,15 @@ brew upgrade
 brew install pyenv
 
 # pyenv
-echo doing pyenv stuff
 export PYENV_ROOT="$HOME/.pyenv"
-echo doing pyenv command
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-echo doing pyenv init
 eval "$(pyenv init -)"
 
+# only install if the versions don't already exist
 pyenv install -v 3.10.0
 pyenv install -v 3.11.6
 pyenv install -v 3.11.9
-echo python version is $(python --version)
+pyenv install -v 3.12.7
 pyenv local
 
 # poetry 

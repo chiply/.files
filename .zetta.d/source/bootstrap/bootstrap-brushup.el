@@ -116,23 +116,19 @@ seem to require loading after the client starts up"
           (set-face-attribute
            'mode-line nil
            :background brushup-bg
-           ;;:overline nil
-           ;;:underline nil
-           ;;:font "Pt Mono"
            :box nil
            )
 
           (set-face-attribute
            'mode-line-inactive nil
-           ;;:overline nil
-           ;;:underline nil
-           ;;:font "Pt Mono"
            :box nil
            )
 
           (set-face-attribute
            'header-line nil
            ;;:weight 'normal
+           :background brushup-bg
+           :underline t
            :font "PT Mono 15"
            )
 
@@ -178,7 +174,7 @@ seem to require loading after the client starts up"
 
           ;;(set-face-attribute 'minibuffer-prompt nil
           ;;:foreground brushup-fg
-          ;;:background brushup-bg-1)
+          ;;:background brushup-bg)
 
           ;; set the background of the fringe to black
           (set-face-background 'fringe brushup-bg-1_0)

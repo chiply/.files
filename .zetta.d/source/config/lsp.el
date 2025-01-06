@@ -6,14 +6,14 @@
 
 
 (use-package lsp-mode
-
   :init
   (setq
    lsp-enable-completion-at-point t
    lsp-completion-provider :none
    lsp-idle-delay 0.500
    lsp-tooltip-idle-delay 0.500
-   lsp-headerline-breadcrumb-enable t
+   lsp-headerline-breadcrumb-enable nil
+   lsp-headerline-breadcrumb-enable-1 t
    lsp-enable-snippet nil
    lsp-enable-indentation nil
    lsp-enable-xref t
@@ -97,6 +97,49 @@ point."
       )
     )
 
+  (defun lsp-headerline--enable-breadcrumb-1 ()
+    "Enable headerline breadcrumb mode."
+    (when (and lsp-headerline-breadcrumb-enable-1
+               (lsp-feature? "textDocument/documentSymbol"))
+      (lsp-headerline-breadcrumb-mode-1 1)))
+
+  (defun lsp-headerline--disable-breadcrumb-1 ()
+    "Disable headerline breadcrumb mode."
+    (lsp-headerline-breadcrumb-mode-1 -1))
+
+  (define-minor-mode lsp-headerline-breadcrumb-mode-1
+    "Toggle breadcrumb on headerline."
+    :group 'lsp-headerline
+    :global nil
+    (cond
+     (lsp-headerline-breadcrumb-mode-1
+      ;; make sure header-line-format, if non-nil, is a list.  as
+      ;; mode-line-format says: "The value may be nil, a string, a
+      ;; symbol or a list."
+      (add-hook 'xref-after-jump-hook #'lsp-headerline--check-breadcrumb nil t)
+
+      (add-hook 'lsp-on-idle-hook #'lsp-headerline--check-breadcrumb nil t)
+      (add-hook 'lsp-configure-hook #'lsp-headerline--enable-breadcrumb-1 nil t)
+      (add-hook 'lsp-unconfigure-hook #'lsp-headerline--disable-breadcrumb-1 nil t))
+     (t
+      (remove-hook 'lsp-on-idle-hook #'lsp-headerline--check-breadcrumb t)
+      (remove-hook 'lsp-configure-hook #'lsp-headerline--enable-breadcrumb-1 t)
+      (remove-hook 'lsp-unconfigure-hook #'lsp-headerline--disable-breadcrumb-1 t)
+
+      (remove-hook 'xref-after-jump-hook #'lsp-headerline--check-breadcrumb t)
+
+      (setq lsp-headerline--path-up-to-project-segments nil)
+      )))
+
+  ;; TODO turn into a function
+  (add-hook 'lsp-configure-hook (lambda()
+                                  ;; need this to load the other functions
+                                  ;; in breadcrumb mode that are not
+                                  ;; re-implemented above
+                                  (message "ran hook lsp-mode-hook")
+                                  (lsp-headerline-breadcrumb-mode 0) 
+                                  (lsp-headerline-breadcrumb-mode-1 1)))
+
   ;; python
   (setq lsp-language-id-configuration '())
   (add-to-list 'lsp-language-id-configuration '(python-ts-mode . "python"))
@@ -158,10 +201,11 @@ point."
      (https://kubernetesjsonschema.dev/v1.14.0/deployment-apps-v1.json . ["deployment.yaml"])
      (https://kubernetesjsonschema.dev/v1.10.3-standalone/service-v1.json . ["service.yaml"])))
 
-  (setq lsp-headerline-breadcrumb-icons-enable t)
+  (setq lsp-headerline-breadcrumb-icons-enable nil)
   (setq lsp-headerline-breadcrumb-enable-diagnostics t)
   (setq lsp-headerline-breadcrumb-segments '(symbols))
   (setq lsp-headerline-breadcrumb-enable-symbol-numbers nil)
+  (setq lsp-headerline-arrow ">")
 
   
 
@@ -170,7 +214,8 @@ point."
   ;; need to turn on and off for the breadcrumb to be used elsewhere
   (lsp-headerline-breadcrumb-mode 1)
   (lsp-headerline-breadcrumb-mode -1)
-
+  (lsp-headerline-breadcrumb-mode-1 1)
+  (lsp-headerline-breadcrumb-mode-1 -1)
 
   :commands lsp
 
@@ -190,7 +235,6 @@ point."
 
   :hook ((python-ts-mode . lsp-deferred))
   )
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Jumping to docs from point
@@ -288,11 +332,7 @@ point."
         (split-window-right)
         (windmove-right)
         (switch-to-buffer buf)
-        (evil-goto-definition)
-        )
-      )
-    ) 
-  )
+        (evil-goto-definition)))))
 
 (defun z-jump-to-def-hor-1 ()
   (interactive)
@@ -308,11 +348,7 @@ point."
       (progn
         (split-window-right)
         (switch-to-buffer buf)
-        (evil-goto-definition)
-        )
-      )
-    ) 
-  )
+        (evil-goto-definition)))))
 
 
 (defun z-jump-to-def-side ()
@@ -332,22 +368,6 @@ point."
 (general-define-key
  :keymaps 'launch-map
  "H" 'z-jump-to-doc)
-
-;;(general-define-key
-;;:keymaps '(lisp-mode-map
-;;lisp-interaction-mode-map
-;;emacs-lisp-mode-map
-;;lisp-data-mode-map
-;;python-ts-mode-map
-;;sql-mode-map
-;;sh-mode-map
-;;dockerfile-mode-map
-;;terraform-mode-map
-;;css-mode-map)
-;;:states '(normal) 
-;;"gdd" 'evil-goto-definition
-;;"gh" 'z-jump-to-doc
-;;)
 
 (use-package lsp-ui
   :config

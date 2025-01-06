@@ -14,3 +14,5 @@ source /Users/redacted/Library/Application\ Support/org.dystroy.broot/launcher/b
 source /Users/redacted/.config/broot/launcher/bash/br
 
 . "$HOME/.cargo/env"
+
+. "$HOME/.local/share/../bin/env"

@@ -23,9 +23,6 @@
   (telephone-line-defsegment zt-icon-side-window ()
     (when (z-side-window-p (selected-window)) " {S} "))
 
-  (telephone-line-defsegment zt-path ()
-    (let ((path (abbreviate-file-name default-directory)))
-      (if (> (length path) 30) (z-minify-path default-directory) path)))
 
   (telephone-line-defsegment zt-vc-segment-repo-icon ()
     (let ((result (shell-command-to-string
@@ -66,9 +63,6 @@
   (telephone-line-defsegment zt-zmc-segment ()
     (concat (or (if (boundp 'latest-transient) latest-transient) (if (boundp 'local-transient) local-transient)) " "))
 
-  (telephone-line-defsegment zt-postition-segment ()
-    "%c|%l(%p)")
-
   (telephone-line-defsegment zt-indicators-segment ()
     ;; note making letters now as there are still issues with
     ;; faces for SVG branch of all-the-icons
@@ -104,6 +98,19 @@
                (car iedit-mode-line) )
               (cdr iedit-mode-line)))))
 
+  (telephone-line-defsegment zt-nyan ()
+    (when (eq major-mode 'magit-status-mode) (nyan-create)))
+
+  (telephone-line-defsegment zt-parrot ()
+    (if (string= (symbol-name major-mode) "magit-status-mode") (parrot-create)))
+
+  (telephone-line-defsegment zt-popper-popup ()
+    (if (and (boundp 'popper-popup-status) popper-popup-status)
+        (all-the-icons-vscode-codicons "layout-sidebar-left")
+      ""
+      )
+    )
+
   (setq telephone-line-primary-left-separator 'telephone-line-halfcos-left
         telephone-line-primary-right-separator 'telephone-line-halfcos-right
         telephone-line-secondary-left-separator 'telephone-line-nil
@@ -125,8 +132,7 @@
   (setq telephone-line-lhs
         '((evil . (telephone-line-evil-tag-segment telephone-line-meow-tag-segment))
           (accent . (zt-ace-1))
-          (foo . (zt-icon-file-or-buffer zt-icon-copilot zt-icon-lsp))
-          (bar . (zt-icon-side-window zt-path)) ;;foo
+          (foo . (zt-icon-file-or-buffer zt-icon-copilot zt-icon-lsp zt-popper-popup))
           (barr . (zt-vc-segment-repo-icon
                    ;; TODO: move this info to the title bar or tab-bar?  lots of space there...
                    ;;zt-vc-segment-repo zt-vc-segment-branch
@@ -135,13 +141,15 @@
           (bar . (zt-iedit-segment))
           (accent . (zt-anzu-segment))
           (nil . (zt-flycheck-segment))
-          (nil . (zt-postition-segment))))
+          (nil . (zt-nyan))))
 
 
-  (setq telephone-line-rhs nil)
+  (setq telephone-line-target 'mode-line)
+  (setq telephone-line-rhs '((nil . (zt-parrot))))
   (setq telephone-line-evil-use-short-tag t)
-  (setq telephone-line-height 14) ;; lower and it doesn't render correctly
   (setq telephone-line-separator-extra-padding 0)
-  (setq telephone-line-height 18)
+  (setq telephone-line-height 20)
 
-  (telephone-line-mode 1))
+  (telephone-line-mode -1) ;; helps when making edits (resets the mode-line)
+  (telephone-line-mode 1)
+  )

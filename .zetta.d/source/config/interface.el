@@ -46,6 +46,9 @@
 
 (setq-default left-margin-width 2)
 (setq-default right-margin-width 2)
+;;(setq-default left-fringe-width 5)
+;;(setq-default right-fringe-width 5)
+
 
 (defun z-tab-bar-hydra ()
   (let ((icon (z-line-hydra-indicator-icon))) (when icon "H")))
@@ -79,6 +82,15 @@
                (car (last (split-string z-pyvenv-virtual-env "/")))
                "}")))
 
+(defun new-line () "\n")
+(defun new-line-1 () "2")
+(defun new-line-2 () "\n")
+
+(defun z-nyan ()
+  (nyan-create))
+
+
+
 
 (setq tab-bar-format '(;; everything here on will be aligned on the right
                        ;;z-tab-bar-hydra
@@ -89,12 +101,17 @@
                        ;; using the entry and exist hooks it doesn't
                        ;; work
                        ;;key-state
+                       ;;                       new-line
+                       ;;z-nyan
+                       new-line
+
+
                        tab-bar-format-align-right
-                       repeat-indicator-icon
                        recursion-indicator--string
-                       "  "
+                       ;;"  "
                        pom-ind
                        tab-bar-format-global
+                       repeat-indicator-icon
                        ))
 
 ;; Emacs 28 and newer: Hide commands in M-x which do not work in the current

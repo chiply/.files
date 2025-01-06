@@ -21,8 +21,8 @@ key that is available in many contexts"
        ;; TODO add meow
        (general-define-key :keymaps 'launch-map
                            ,key ',name)
-       (general-define-key :keymaps '(evil-insert-state-map)
-                           (general-chord ,(concat "," key)) ',name)
+       ;;(general-define-key :keymaps '(evil-insert-state-map)
+                           ;;(general-chord ,(concat "," key)) ',name)
        (general-define-key :keymaps 'override :states '(normal visual)
                            :prefix ","
                            ,key ',name)))

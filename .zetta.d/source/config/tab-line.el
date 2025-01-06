@@ -224,16 +224,31 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
   (setq tab-line-tabs-function 'tab-line-tabs-window-buffers)
   ;;(setq tab-line-tab-name-function 'foobar)
 
+
+  ;; NOTE results in annoying message
+  ;;(setq-default tab-line-format '(
+                                  ;;(:eval "-->|")
+                                  ;;(:eval (tab-line-format))))
+
   (global-tab-line-mode 1)
+
 
   :brushup
   (add-to-list
    'brushup-styles
    '(progn
-      (set-face-attribute 'tab-line-tab-current nil :box nil :weight 'normal :inherit nil :height 1.0 :foreground nil :font "Pt Mono")
-      (set-face-attribute 'tab-line-tab nil :weight 'normal :box nil :height 1.0 :inherit nil :foreground nil :font "Pt Mono")
-      (set-face-attribute 'tab-line-tab-inactive nil :box nil :height 1.0 :inherit nil :foreground nil :font "Pt Mono")
-      (set-face-attribute 'tab-line nil :height 1.0 :underline `(:color ,brushup-bg-1) :overline t :box nil :foreground nil :font "Pt Mono")
+      (set-face-attribute 'tab-line-tab-current nil :box nil :weight 'normal :inherit nil :height 1.0 :foreground nil :font "Pt Mono"
+                          ;;:background nil
+                          )
+      (set-face-attribute 'tab-line-tab nil :weight 'normal :box nil :height 1.0 :inherit nil :foreground nil :font "Pt Mono"
+                          ;;:background nil
+                          )
+      (set-face-attribute 'tab-line-tab-inactive nil :box nil :height 1.0 :inherit nil :foreground nil :font "Pt Mono"
+                          ;;:background nil
+                          )
+      (set-face-attribute 'tab-line nil :height 1.0 :underline `(:color ,brushup-bg) :overline t :box nil :foreground nil :font "Pt Mono"
+                          ;;:background brushup-bg
+                          )
       ))
 
 
