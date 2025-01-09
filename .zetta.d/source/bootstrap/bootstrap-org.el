@@ -8,9 +8,11 @@
         ;; although aesthetically less pleasing, the indent mode can
         ;; cause issues, sometimes text snaps out of indent mode
         
+        org-hide-leading-stars nil
         org-agenda-files '(
                            ;; order matters
-                           "~/obsidian/vaults/main/emacs.org"
+                           "~/logseq/graphs/main/pages/emacs.org"
+                           "~/logseq/graphs/main/pages/todo.org"
                            )
         org-persist-directory (expand-file-name
                                ".data/org-persist"
@@ -18,11 +20,11 @@
         org-id-locations-file (expand-file-name
                                ".data/org/.org-id-locations"
                                user-emacs-directory)
-        org-hide-leading-stars t
-        org-startup-folded (quote overview)
+        org-startup-folded (quote nofold) ;; everything but drawers
         org-startup-indented t
         org-refile-use-outline-path 'file
         org-log-refile 'time
+        org-log-into-drawer t
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
         org-refile-targets '((nil :maxlevel . 10) ;; current buf
@@ -32,7 +34,41 @@
         '(("bash" . sh) ("beamer" . latex) ("calc" . fundamental)
           ("emacs-lisp" . emacs-lisp) ("shell" . sh) ("sqlite" . sql)
           ("html" . web) ("js" . js2) ("jsx" . rjsx))
-        org-table-shrunk-column-indicator "|")
+        org-table-shrunk-column-indicator "|"
+        ;; these match Plain Org's states as their custom state
+        ;; feature doesn't actually work
+        org-todo-keywords
+        '((sequence
+           ;; self-explanatory
+           "TODO(t!)"
+           ;; in progress, aka 'DOING' 'WORKING ON' 'OPEN'
+           "STARTED(s!)"
+           ;; waiting on someone else, but still actively being
+           ;; worked on.
+           "WAITING(w!)" 
+           ;; on hold, not actively being worked on or
+           ;; with another team with an unknown
+           ;; timeline. aka 'BLOCKED'
+           "HOLD(h!)"
+           ;; things that are high priority to bring
+           ;; into the 'TODO' state next. use infrequently
+           "NEXT(n!)"
+           "|"
+           ;; self-explanatory
+           "DONE(d!)"
+           ;; self-explanatory
+           "CANCELLED(c!)"
+           ;; use infrequently, different from
+           ;; cancelled in that this is something that
+           ;; is not necessary any longer due to the
+           ;; fact that its purpose is being fulfilled
+           ;; by something else.  cancelled is meant to
+           ;; capture the cancellation of a task for
+           ;; some other reason, whether a
+           ;; reprioritization or scope-change
+           "OBSOLETE(o!)"
+           ))
+        )
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -156,7 +192,6 @@
   :general
   (
    :keymaps '(org-mode-map)
-   "C-d" 'delete-window
    "<S-return>" 'org-edit-special
    "C-+" 'org-table-expand
    "C-_" 'org-table-shrink
@@ -175,16 +210,12 @@
          (org-mode . (lambda () (progn
                                   (auto-fill-mode -1)
                                   (org-indent-mode -1)
-                                  (toggle-truncate-lines 1) 
-                                  ;;(progn
-                                  ;;(setq visual-fill-column-width 80)
-                                    ;;;; interesting, but not necessary
-                                    ;;;;(setq visual-fill-column-center-text t)
-                                  ;;(setq visual-fill-column-width 80)
-                                  ;;)
+                                  (visual-line-mode -1)
+                                  (toggle-truncate-lines -1) 
                                   )))
          ;;(org-mode . (lambda () (setq-local fill-column 60)))
-         (org-mode . (lambda () (text-scale-set -2)))))
+         ;;(org-mode . (lambda () (text-scale-set -2)))
+         ))
 
 (provide 'bootstrap-org)
 

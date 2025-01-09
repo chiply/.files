@@ -10,6 +10,7 @@
   (add-hook 'mermaid-mode-hook 'copilot-mode)
   (add-hook 'emacs-lisp-mode 'copilot-mode)
   (add-hook 'lisp-interaction-mode 'copilot-mode)
+  (add-hook 'yaml-mode-hook 'copilot-mode)
 
   ;; face
   (set-face-attribute 'copilot-overlay-face nil :foreground "purple" :inherit 'default)

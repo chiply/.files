@@ -13,15 +13,15 @@
 (defun tag (line-1 font-size-1 font-family-1 foreground-1
                    line-2 font-size-2 font-family-2 foreground-2
                    left)
-  (let* ((char-width-1  (* font-size-1 0.68))
+  (let* ((char-width-1  (* font-size-1 1.0))
          (char-height-1 (+ font-size-1 0.0))
          (width-1       (* char-width-1 (window-width)))
-         (height-1      (+ (* char-height-1 2) 4))
+         (height-1      (+ (* char-height-1 2) 8))
          
-         (char-width-2  (* font-size-2 0.68))
+         (char-width-2  (* font-size-2 1.0))
          (char-height-2 (+ font-size-2 0.0))
          (width-2       (* char-width-2 (window-width)))
-         (height-2      (+ (* char-height-2 2) 4))
+         (height-2      (+ (* char-height-2 2) 8))
 
          (width         (max width-1 width-2))
          (height        (max height-1 height-2))
@@ -66,8 +66,8 @@
            (z-get-line-format default-line-align-left-devel-1 "" "")
            ;;(window-parameter nil 'lsp-headerline--string)
            )
-          15 "PT Mono" "gray"
-          (format-mode-line default-line-align-left-devel-2) 15 "PT Mono" "blue"
+          15 "Cozette" "gray"
+          (format-mode-line default-line-align-left-devel-2) 15 "Cozette" "blue"
           t)
          :ascent 100)))))))
  )
@@ -75,5 +75,3 @@
 (z-set-dual-header)
 
 (add-hook 'magit-status-mode-hook 'z-set-dual-header)
-
-
