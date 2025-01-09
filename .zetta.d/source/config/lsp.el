@@ -4,6 +4,12 @@
 (setq lsp-use-plists t)
 (setq read-process-output-max (* 1024 1024))
 
+(add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.nx\\'")
+(add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.ruff_cache\\'")
+(add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.cache\\'")
+
+;; can let you see what's being watched... useful for debugging purposes
+;; (lsp--all-watchable-directories "~/source_code/workflow-activity-registry" lsp-file-watch-ignored-directories)
 
 (use-package lsp-mode
   :init
@@ -386,6 +392,10 @@ point."
   :straight nil
   :custom
   (lsp-pylsp-plugins-flake8-enabled nil))
+
+;; NOTE don't use as not all lsps provide compatibility
+;; (lsp-capability-not-supported "foldingRangeProvider") (use-package
+;; lsp-focus)
 
 
 ;; (with-eval-after-load 'lsp-mode

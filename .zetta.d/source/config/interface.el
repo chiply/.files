@@ -1,5 +1,7 @@
-;;(set-frame-font "Vulf Mono Code")
-(set-frame-font "PT Mono")
+;; https://github.com/slavfox/Cozette?tab=readme-ov-file#mac download
+;; .dfont file from the release page and drag it into the `Font Book`
+;; app
+(set-frame-font "Cozette")
 
 (winner-mode)
 
@@ -68,7 +70,9 @@
   (interactive)
   (setq pom (not pom)))
 
+;; some comment
 (defun pom-ind ()
+  ;; comment
   (when pom "🍅 "))
 
 (defun repeat-indicator-icon ()

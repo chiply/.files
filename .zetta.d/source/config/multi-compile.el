@@ -111,7 +111,19 @@ async-shell-command"
                      "async-shell-command+" "vterm" "compile"
                      "detached-compile")))
       (error "zmc-execute: program %s not supported" program))
-  (let ((bufnm (zmc-compute-bufnm))
+  (let (;; NOTE remove a trailing " &" from the cmd not sure why this
+        ;; happens, but sometimes when I edit code in this file, there
+        ;; appears to be a trailing " &" in the cmd.  This can be
+        ;; fixed by making seemingly unrelated code changes... not
+        ;; sure what's going on. This does seem to solve the issue but
+        ;; not all the time... leaving this code and these notes here
+        ;; nevertheless
+        (cmd (progn
+               ;; if cmd contains " &" message about it
+               (when (string-match " &" cmd)
+                 (message "cmd contains &"))
+               (string-replace " &" "" cmd)))
+        (bufnm (zmc-compute-bufnm))
         (buffer-replace-policy (or buffer-replace-policy
                                    default-buffer-replace-policy)))
     ;; TODO - factor out the buffer-replace-policy logic
@@ -418,8 +430,10 @@ async-shell-command"
          (_ (message cmd))
          (paths (shell-command-to-string cmd))
          (_ (message paths))
-         (paths (nth 0 (split-string paths "\n\n")))
+         ;;(paths (nth 0 (split-string paths "\n\n")))
          (paths (split-string paths "\n"))
+         ;; filter paths for strings containing "::"
+         (paths (--filter (string-match "::" it) paths))
          (paths (--map (substring it 0 (string-match "\\[" it)) paths))
          (paths (append
                  ;; function level

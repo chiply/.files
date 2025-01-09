@@ -237,16 +237,16 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
   (add-to-list
    'brushup-styles
    '(progn
-      (set-face-attribute 'tab-line-tab-current nil :box nil :weight 'normal :inherit nil :height 1.0 :foreground nil :font "Pt Mono"
+      (set-face-attribute 'tab-line-tab-current nil :box nil :weight 'normal :inherit nil :height 1.0 :foreground nil :font "Cozette"
                           ;;:background nil
                           )
-      (set-face-attribute 'tab-line-tab nil :weight 'normal :box nil :height 1.0 :inherit nil :foreground nil :font "Pt Mono"
+      (set-face-attribute 'tab-line-tab nil :weight 'normal :box nil :height 1.0 :inherit nil :foreground nil :font "Cozette"
                           ;;:background nil
                           )
-      (set-face-attribute 'tab-line-tab-inactive nil :box nil :height 1.0 :inherit nil :foreground nil :font "Pt Mono"
+      (set-face-attribute 'tab-line-tab-inactive nil :box nil :height 1.0 :inherit nil :foreground nil :font "Cozette"
                           ;;:background nil
                           )
-      (set-face-attribute 'tab-line nil :height 1.0 :underline `(:color ,brushup-bg) :overline t :box nil :foreground nil :font "Pt Mono"
+      (set-face-attribute 'tab-line nil :height 1.0 :underline `(:color ,brushup-bg) :overline t :box nil :foreground nil :font "Cozette"
                           ;;:background brushup-bg
                           )
       ))
