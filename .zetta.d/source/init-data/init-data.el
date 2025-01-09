@@ -60,6 +60,7 @@
    "dual-header.el"
    "breadcrumb.el"
    "parrot.el"
+   "hl-block.el"
    "cleanup.el"
    ;; "spot4e.el"
    ))

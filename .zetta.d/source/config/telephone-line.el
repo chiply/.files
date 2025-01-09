@@ -102,7 +102,11 @@
     (when (eq major-mode 'magit-status-mode) (nyan-create)))
 
   (telephone-line-defsegment zt-parrot ()
-    (if (string= (symbol-name major-mode) "magit-status-mode") (parrot-create)))
+    (when (or
+           (string= (symbol-name major-mode) "org-mode")
+           (string= (symbol-name major-mode) "magit-status-mode")
+           )
+        (parrot-create)))
 
   (telephone-line-defsegment zt-popper-popup ()
     (if (and (boundp 'popper-popup-status) popper-popup-status)

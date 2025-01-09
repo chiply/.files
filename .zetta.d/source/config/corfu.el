@@ -44,7 +44,7 @@
       (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
 
-  (corfu-echo-mode 1)
+  (corfu-echo-mode -1)
   (corfu-indexed-mode 1)
   (corfu-popupinfo-mode 1)
 
