@@ -17,7 +17,7 @@
                           :foreground
                           (if brushup-dark-p
                               (color-lighten-name brushup-bg 20)
-                            (color-lighten-name brushup-bg -25)))
+                            (color-lighten-name brushup-bg -35)))
       ;;(set-face-attribute 'focus-focused nil :height 1.0)
       ))
 
@@ -30,8 +30,8 @@
    "C-f" 'focus-mode)
 
 
-  ;;:hook (((prog-mode org-mode) . (lambda () (focus-mode)))
-         ;;(emacs-lisp-mode . (lambda () (z-focus-mode 'defun)))
-         ;;((python-ts-mode sql-mode yaml-mode sh-mode) . (lambda () (z-focus-mode 'brick)))
-         ;;(use-package--focus--post-config . (lambda () (z-brushup))))
+  :hook (((prog-mode org-mode) . (lambda () (focus-mode)))
+         (emacs-lisp-mode . (lambda () (z-focus-mode 'defun)))
+         ((python-ts-mode sql-mode yaml-mode sh-mode) . (lambda () (z-focus-mode 'brick)))
+         (use-package--focus--post-config . (lambda () (z-brushup))))
   )

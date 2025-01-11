@@ -1,7 +1,6 @@
-;; https://github.com/slavfox/Cozette?tab=readme-ov-file#mac download
-;; .dfont file from the release page and drag it into the `Font Book`
-;; app
-(set-frame-font "Cozette")
+;; download from https://files.ax86.net/terminus-ttf/ drag it into the
+;; `Font Book` app
+(set-frame-font "Terminus (TTF) 18")
 
 (winner-mode)
 
