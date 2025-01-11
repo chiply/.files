@@ -4,7 +4,8 @@
  user-files
  '("emacs.el" "display.el" "interface.el" "desktop.el" "csv-mode.el"
    "super-save.el" "hud.el" "highlight-indent-guides.el"
-   "scroll-bar.el" "display-fill-column-indicator.el"
+   "ultra-scroll.el" "color-identifiers-mode.el"
+   "volatile-highlights.el" "display-fill-column-indicator.el"
    "display-line-numbers.el" "undo-tree.el" "face.el"
    "vi-tilde-fringe.el" "treesit.el" "dimmer.el" "focus.el"
    "face-remap.el" "default-text-scale.el" "hl-line.el" "lin.el"
@@ -53,16 +54,11 @@
    "restart-emacs" "magit-todos.el" "browse-at-remote.el"
    "mono-complete.el" "rainbow-delimiters.el" "magit-file-icons.el"
    "devdocs.el" "telephone-line.el" "corfu.el" "typescript-ts-mode.el"
-   "apheleia.el"  "symbol-overlay.el" "hi-lock.el"
-   "beacon.el" "project.el" "eaf.el" "gnus.el" "gha.el"
-   "outline-indent.el" "persist.el" "smerge-mode.el" "repeat-mode.el"
-   "hl-todo.el"
-   "dual-header.el"
-   "breadcrumb.el"
-   "parrot.el"
-   "hl-block.el"
-   "cleanup.el"
-   ;; "spot4e.el"
-   ))
+   "apheleia.el" "symbol-overlay.el" "hi-lock.el" "beacon.el"
+   "project.el" "eaf.el" "gnus.el" "gha.el" "outline-indent.el"
+   "persist.el" "smerge-mode.el" "repeat-mode.el" "hl-todo.el"
+   "dual-header.el" "breadcrumb.el" "parrot.el" "hl-block.el"
+   "indent-guide.el" "move-text.el" "awesome-tray.el" "spot4e.el"
+   "cleanup.el" ))
 
 (provide 'init-data)

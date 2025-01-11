@@ -203,53 +203,26 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
            (icon (cond (fname (all-the-icons-icon-for-file fname))
                        (t (all-the-icons-icon-for-mode (with-current-buffer buffer major-mode))))))
       (concat
-       ;; make the value below bold
        (alist-get (+ 1 (cl-position buffer (funcall tab-line-tabs-function))) ct/circle-numbers-alist)
-       ;;bufnm
-       (if fname (file-name-base fname) bufnm)
-       icon
-       )))
-
-  
+       (propertize (if fname (file-name-base fname) bufnm)
+                   'face '(:height 1.0))
+       icon)))
 
   (setq tab-line-tab-name-function 'z-tab-line-tab-name-buffer)
   ;;(setq tab-line-tabs-function 'z-project-mode-buffers)
 
-
-  (defun foobar (buffer &optional _buffers)
-    (let ((fname (buffer-file-name buffer)))
-      (cond (fname (concat (all-the-icons-icon-for-file fname) (buffer-name buffer)))
-            (t (concat (all-the-icons-icon-for-mode (with-current-buffer buffer major-mode)) (buffer-name buffer))))))
-
   (setq tab-line-tabs-function 'tab-line-tabs-window-buffers)
-  ;;(setq tab-line-tab-name-function 'foobar)
-
-
-  ;; NOTE results in annoying message
-  ;;(setq-default tab-line-format '(
-                                  ;;(:eval "-->|")
-                                  ;;(:eval (tab-line-format))))
 
   (global-tab-line-mode 1)
-
 
   :brushup
   (add-to-list
    'brushup-styles
    '(progn
-      (set-face-attribute 'tab-line-tab-current nil :box nil :weight 'normal :inherit nil :height 1.0 :foreground nil :font "Cozette"
-                          ;;:background nil
-                          )
-      (set-face-attribute 'tab-line-tab nil :weight 'normal :box nil :height 1.0 :inherit nil :foreground nil :font "Cozette"
-                          ;;:background nil
-                          )
-      (set-face-attribute 'tab-line-tab-inactive nil :box nil :height 1.0 :inherit nil :foreground nil :font "Cozette"
-                          ;;:background nil
-                          )
-      (set-face-attribute 'tab-line nil :height 1.0 :underline `(:color ,brushup-bg) :overline t :box nil :foreground nil :font "Cozette"
-                          ;;:background brushup-bg
-                          )
-      ))
+      (set-face-attribute 'tab-line-tab-current nil :font "Terminus (TTF)" :box nil)
+      (set-face-attribute 'tab-line-tab nil :font "Terminus (TTF)" :box nil)
+      (set-face-attribute 'tab-line-tab-inactive nil :font "Terminus (TTF)" :box nil)
+      (set-face-attribute 'tab-line nil :font "Terminus (TTF)" :box nil)))
 
 
   :general
@@ -258,18 +231,20 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
    "C-<tab>" 'tab-line-switch-to-next-tab
    "C-S-<tab>" 'tab-line-switch-to-prev-tab
    )
+  
+  ;; NOTE needs to be same as tab-line-tabs-function
   (
    :states '(normal visual)
    :keymaps 'override
-   "g1" '(lambda () (interactive) (switch-to-buffer (nth 0 (z-project-mode-buffers))))
-   "g2" '(lambda () (interactive) (switch-to-buffer (nth 1 (z-project-mode-buffers))))
-   "g3" '(lambda () (interactive) (switch-to-buffer (nth 2 (z-project-mode-buffers))))
-   "g4" '(lambda () (interactive) (switch-to-buffer (nth 3 (z-project-mode-buffers))))
-   "g5" '(lambda () (interactive) (switch-to-buffer (nth 4 (z-project-mode-buffers))))
-   "g6" '(lambda () (interactive) (switch-to-buffer (nth 5 (z-project-mode-buffers))))
-   "g7" '(lambda () (interactive) (switch-to-buffer (nth 6 (z-project-mode-buffers))))
-   "g8" '(lambda () (interactive) (switch-to-buffer (nth 7 (z-project-mode-buffers))))
-   "g9" '(lambda () (interactive) (switch-to-buffer (nth 8 (z-project-mode-buffers))))
+   "g1" '(lambda () (interactive) (switch-to-buffer (nth 0 (tab-line-tabs-window-buffers))))
+   "g2" '(lambda () (interactive) (switch-to-buffer (nth 1 (tab-line-tabs-window-buffers))))
+   "g3" '(lambda () (interactive) (switch-to-buffer (nth 2 (tab-line-tabs-window-buffers))))
+   "g4" '(lambda () (interactive) (switch-to-buffer (nth 3 (tab-line-tabs-window-buffers))))
+   "g5" '(lambda () (interactive) (switch-to-buffer (nth 4 (tab-line-tabs-window-buffers))))
+   "g6" '(lambda () (interactive) (switch-to-buffer (nth 5 (tab-line-tabs-window-buffers))))
+   "g7" '(lambda () (interactive) (switch-to-buffer (nth 6 (tab-line-tabs-window-buffers))))
+   "g8" '(lambda () (interactive) (switch-to-buffer (nth 7 (tab-line-tabs-window-buffers))))
+   "g9" '(lambda () (interactive) (switch-to-buffer (nth 8 (tab-line-tabs-window-buffers))))
    )
 
   (

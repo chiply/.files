@@ -31,13 +31,7 @@
            (if (> (length path) 30) (z-minify-path default-directory) path)))
         " "
         "%c|%l(%p)"
-        " "
-        (:eval (cond
-                ((or (equal major-mode 'docker-compose-mode)
-                     (equal major-mode 'yaml-mode))
-                 (concat "{" (jpt-yaml-path-to-point) "}"))
-                ((or (equal major-mode 'jsonian-mode))
-                 (concat "{" (jsons-get-path-python) "}"))))))
+        ))
 
 (setq default-line-align-left-devel-2
       '(
@@ -52,8 +46,14 @@
                        ;; to avoid growing headerline when
                        ;; using native headerline
                        'face '(:height 0.8)))
+          ((or (equal major-mode 'jsonian-mode))
+           (concat (jsonian--display-path (jsonian-path))))
+          ((or (equal major-mode 'docker-compose-mode)
+               (equal major-mode 'yaml-mode))
+           (concat (jpt-yaml-path-to-point)))
           ;; fallback to imenu breadcrumbs
-          (t (breadcrumb-imenu-crumbs))))))
+          (t (breadcrumb-imenu-crumbs))
+          ))))
 
 
 ;; explain the syntax, why is (:eval) being used

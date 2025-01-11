@@ -131,7 +131,7 @@ seem to require loading after the client starts up"
            ;;:weight 'normal
            :background brushup-bg
            :underline t
-           :font "Cozette 15"
+           :font "Terminus (TTF) 18"
            )
 
           (set-face-attribute
@@ -197,13 +197,13 @@ seem to require loading after the client starts up"
 (defun my-buffer-face-mode-pt-mono ()
   "Sets a fixed width (monospace) font in current buffer"
   (interactive)
-  (setq buffer-face-mode-face '(:family "Cozette"))
+  (setq buffer-face-mode-face '(:family "Terminus (TTF)"))
   (buffer-face-mode))
 
 ;; (defun my-buffer-face-mode-pt-mono-p85 ()
 ;;   "Sets a fixed width (monospace) font in current buffer"
 ;;   (interactive)
-;;   (setq buffer-face-mode-face '(:family "Cozette" :height 0.87))
+;;   (setq buffer-face-mode-face '(:family "Terminus (TTF)" :height 0.87))
 ;;   (buffer-face-mode))
 
 (defalias 'use-package-handler/:brushup 'use-package-handle-forms)
