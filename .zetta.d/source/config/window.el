@@ -9,7 +9,7 @@
 (add-to-list 'brushup-styles
              '(progn
                 (set-face-attribute 'window-divider nil
-                                    :foreground brushup-bg-2)))
+                                    :foreground brushup-bg-3)))
 (general-define-key
  :keymaps 'menu-window-keymap
  "o" '(lambda () (interactive) (call-interactively 'window-divider-mode))

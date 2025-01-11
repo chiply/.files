@@ -13,15 +13,15 @@
 (defun tag (line-1 font-size-1 font-family-1 foreground-1
                    line-2 font-size-2 font-family-2 foreground-2
                    left)
-  (let* ((char-width-1  (* font-size-1 1.0))
+  (let* ((char-width-1  (* font-size-1 0.88))
          (char-height-1 (+ font-size-1 0.0))
          (width-1       (* char-width-1 (window-width)))
-         (height-1      (+ (* char-height-1 2) 8))
+         (height-1      (+ (* char-height-1 2) 7))
          
-         (char-width-2  (* font-size-2 1.0))
+         (char-width-2  (* font-size-2 0.88))
          (char-height-2 (+ font-size-2 0.0))
          (width-2       (* char-width-2 (window-width)))
-         (height-2      (+ (* char-height-2 2) 8))
+         (height-2      (+ (* char-height-2 2) 7))
 
          (width         (max width-1 width-2))
          (height        (max height-1 height-2))
@@ -33,6 +33,9 @@
          (y2 (+ (* char-height-2 2) 1))
 
          (svg (svg-create width height)))
+    ;; NOTE doesn't work well for bitmap font Cozetter, even using
+    ;; :line-spacing and :line-height
+    ;; Does work well with Terminus, haven't tried other bitmap fonts though
     (svg-text svg line-1
               :font-family font-family-1
               :font-size font-size-1 :fill foreground-1
@@ -47,7 +50,7 @@
             (lookup-key mode-line-major-mode-keymap [mode-line]))
 
 (defun mode-line-render (left)
-  (format "%s" left))
+  left)
 
 (defun z-set-dual-header ()
  (setq-default
@@ -61,13 +64,12 @@
         'display
         (svg-image
          (tag
-          ;; TODO replace line 1 and 2 with what I have already defined for headerline
           (format-mode-line
            (z-get-line-format default-line-align-left-devel-1 "" "")
-           ;;(window-parameter nil 'lsp-headerline--string)
            )
-          15 "Cozette" "gray"
-          (format-mode-line default-line-align-left-devel-2) 15 "Cozette" "blue"
+          15 "Terminus (TTF)" "gray"
+          (format-mode-line default-line-align-left-devel-2)
+          15 "Terminus (TTF)" "blue"
           t)
          :ascent 100)))))))
  )
