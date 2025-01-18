@@ -1,5 +1,4 @@
 (use-package consult-gh
-  ;;:straight (consult-gh :type git :host github :repo "armindarvish/consult-gh" :branch "main" :files ("*.el"))
   :ensure (:wait t)
   :demand t
   :after consult
@@ -14,5 +13,7 @@
   ;; set the default folder for cloning repositories, By default Consult-GH will confirm this before cloning
   (setq consult-gh-default-clone-directory "~/source_code/")
   (require 'consult-gh-embark)
+  (require 'consult-gh-forge)
+  (require 'consult-gh-transient)
 )
 

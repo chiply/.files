@@ -152,7 +152,7 @@
   (setq telephone-line-rhs '((nil . (zt-parrot))))
   (setq telephone-line-evil-use-short-tag t)
   (setq telephone-line-separator-extra-padding 0)
-  (setq telephone-line-height 20)
+  (setq telephone-line-height 30)
 
   (telephone-line-mode -1) ;; helps when making edits (resets the mode-line)
   (telephone-line-mode 1)

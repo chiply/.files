@@ -64,6 +64,8 @@
 
   :hook (
          (flycheck-error-list . (lambda () (text-scale-set -2)))
-         (org-mode . flycheck-mode)
+         ;; NOTE slows down org mode, so leave off my default
+         ;; also adds a lot of visual cluttter
+         ;;(org-mode . flycheck-mode)
          )
   )

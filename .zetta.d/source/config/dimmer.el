@@ -18,6 +18,17 @@
     (add-to-list
      'dimmer-prevent-dimming-predicates
      #'corfu-frame-p))
+
+  (defun minimap-frame-p ()
+    "Check if the buffer is a minimap frame buffer."
+    (string-match-p "\\` \\*MINIMAP" (buffer-name)))
+
+  (defun dimmer-configure-minimap ()
+    "Convenience settings for minimap users."
+    (add-to-list
+     'dimmer-prevent-dimming-predicates
+     #'minimap-frame-p))
+
   :config
   (dimmer-configure-posframe)
   (dimmer-configure-which-key)
@@ -27,6 +38,7 @@
    'dimmer-config-change-handler
    :override 'advise-dimmer-config-change-handler)
   (dimmer-configure-corfu)
+  (dimmer-configure-minimap)
   (setq dimmer-fraction 0.4)
   (setq dimmer-watch-frame-focus-events nil)
   (dimmer-mode t))

@@ -1,6 +1,6 @@
 ;; download from https://files.ax86.net/terminus-ttf/ drag it into the
 ;; `Font Book` app
-(set-frame-font "Terminus (TTF) 18")
+(set-frame-font "Terminus (TTF)")
 
 (winner-mode)
 

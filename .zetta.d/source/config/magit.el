@@ -1,7 +1,12 @@
 (use-package compat :ensure nil :demand t)
 
+(use-package ghub
+  :ensure (ghub :type git :host github :repo "magit/ghub" :tag "v4.1.1")
+  )
+
 (use-package magit
   ;; demand, otherwise the GHA stuff doesn't load
+  :ensure (magit :type git :host github :repo "magit/magit" :tag "v4.1.1")
   :demand t
   :init
   (setq magit-branch-read-upstream-first 'fallback)

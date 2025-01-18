@@ -2,8 +2,8 @@
 
 (window-divider-mode -1)
 (setq window-divider-default-places t)
-(setq window-divider-default-bottom-width 5
-      window-divider-default-right-width 5)
+(setq window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
 (window-divider-mode 1)
 
 (add-to-list 'brushup-styles
@@ -31,6 +31,7 @@
  "x" 'execute-extended-command
  "r" 'hydra-resize/body
  "M" 'hydra-tile/body
+ "u" 'winner-undo
  )
 
 ;;(defhydra+ hydra-window ()

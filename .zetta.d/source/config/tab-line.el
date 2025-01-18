@@ -204,9 +204,15 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
                        (t (all-the-icons-icon-for-mode (with-current-buffer buffer major-mode))))))
       (concat
        (alist-get (+ 1 (cl-position buffer (funcall tab-line-tabs-function))) ct/circle-numbers-alist)
-       (propertize (if fname (file-name-base fname) bufnm)
-                   'face '(:height 1.0))
-       icon)))
+       icon
+       (propertize (if fname
+                       ;; the file name including the suffix
+                          (concat (file-name-nondirectory fname))
+                       ;;(file-name-base fname)
+                     bufnm)
+                   'face '(:height 1.0)))))
+
+  
 
   (setq tab-line-tab-name-function 'z-tab-line-tab-name-buffer)
   ;;(setq tab-line-tabs-function 'z-project-mode-buffers)
