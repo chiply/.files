@@ -42,10 +42,11 @@
            (window-parameter nil 'lsp-headerline--string))
           ;; use org breadcrumbs if in org-mode
           ((string= major-mode "org-mode")
-           (propertize (org-display-outline-path nil t "/" t)
-                       ;; to avoid growing headerline when
-                       ;; using native headerline
-                       'face '(:height 0.8)))
+           (propertize
+            (or (ignore-errors (org-display-outline-path nil t "/" t)) "/")
+            ;; to avoid growing headerline when
+            ;; using native headerline
+            'face '(:height 0.8)))
           ((or (equal major-mode 'jsonian-mode))
            (concat (jsonian--display-path (jsonian-path))))
           ((or (equal major-mode 'docker-compose-mode)

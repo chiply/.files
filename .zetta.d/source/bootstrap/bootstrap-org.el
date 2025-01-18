@@ -3,12 +3,14 @@
   :mode ("\\.org" . org-mode)
 
   :config
+  ;; although aesthetically less pleasing, the indent mode can cause
+  ;; issues, sometimes text snaps out of indent mode
   (setq-default org-indent-mode nil) ;; NOTE doesn't work?
   (setq org-confirm-babel-evaluate nil
-        ;; although aesthetically less pleasing, the indent mode can
-        ;; cause issues, sometimes text snaps out of indent mode
-        
+        org-use-fast-todo-selection 'expert
+        org-attach-store-link-p 'file
         org-hide-leading-stars nil
+        org-archive-location "archive.org::* From %s"
         org-agenda-files '(
                            ;; order matters
                            "~/logseq/graphs/main/pages/emacs.org"
@@ -118,15 +120,18 @@
   ;; display
   (add-to-list 'org-emphasis-alist '("*" (:foreground "black" :background "yellow")))
 
-  ;; make all headings the default font size
-  (set-face-attribute 'org-level-1 nil :height 1.0)
-  (set-face-attribute 'org-level-2 nil :height 1.0)
-  (set-face-attribute 'org-level-3 nil :height 1.0)
-  (set-face-attribute 'org-level-4 nil :height 1.0)
-  (set-face-attribute 'org-level-5 nil :height 1.0)
-  (set-face-attribute 'org-level-6 nil :height 1.0)
-  (set-face-attribute 'org-level-7 nil :height 1.0)
-  (set-face-attribute 'org-level-8 nil :height 1.0)
+  ;; makes visible in focus mode
+  ;; defer styling to hl-todo which allows finer grained control inside and outside of headings
+  (set-face-attribute 'org-todo nil :foreground nil :background "#FFFFB6B6C1C1")
+  (set-face-attribute 'org-done nil :foreground nil :background "pale green")
+  (set-face-attribute 'org-level-1 nil :height 1.33 :foreground nil :background nil)
+  (set-face-attribute 'org-level-2 nil :height 1.2 :foreground nil :background nil)
+  (set-face-attribute 'org-level-3 nil :height 1.15 :foreground nil :background nil)
+  (set-face-attribute 'org-level-4 nil :height 1.15 :foreground nil :background nil)
+  (set-face-attribute 'org-level-5 nil :height 1.15 :foreground nil :background nil)
+  (set-face-attribute 'org-level-6 nil :height 1.15 :foreground nil :background nil)
+  (set-face-attribute 'org-level-7 nil :height 1.15 :foreground nil :background nil)
+  (set-face-attribute 'org-level-8 nil :height 1.15 :foreground nil :background nil)
   
 
   :evil
@@ -195,15 +200,14 @@
    "<S-return>" 'org-edit-special
    "C-+" 'org-table-expand
    "C-_" 'org-table-shrink
+   "s-j" 'org-next-visible-heading
+   "s-k" 'org-previous-visible-heading
    )
   (
    :keymaps '(org-mode-map org-agenda-mode-map)
    "C-c C-S-o" 'z-org-open-at-point
    "C-c C-o" 'org-open-at-point
    )
-
-  
-
 
   :hook (
          (org-ctrl-c-ctrl-c-final . org-table-shrink)
@@ -212,10 +216,7 @@
                                   (org-indent-mode -1)
                                   (visual-line-mode -1)
                                   (toggle-truncate-lines -1) 
-                                  )))
-         ;;(org-mode . (lambda () (setq-local fill-column 60)))
-         ;;(org-mode . (lambda () (text-scale-set -2)))
-         ))
+                                  )))))
 
 (provide 'bootstrap-org)
 

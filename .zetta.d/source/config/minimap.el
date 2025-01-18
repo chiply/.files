@@ -128,10 +128,11 @@
 
 
 
+  ;; to get git information in the fringes
   (setq minimap-hide-fringes nil)
   (setq minimap-minimum-width 25)
   (setq minimap-width-fraction 0.10)
-  (setq minimap-update-delay 0.1)
+  (setq minimap-update-delay 0.10)
   (setq minimap-hide-scroll-bar nil)
   ;; causes issues with window size when on left... 
   (setq minimap-window-location 'right)
@@ -140,7 +141,6 @@
   (setq minimap-automatically-delete-window t)
   (setq minimap-display-semantic-overlays nil) ;; did this fix the org issue?
   (setq minimap-dedicated-window t)
-
 
   (remove-hook 'minimap-mode-hook 'hide-mode-line-mode)
 

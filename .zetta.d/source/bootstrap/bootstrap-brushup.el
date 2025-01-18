@@ -1,6 +1,6 @@
 (use-package color :ensure nil)
 
-(set-face-attribute 'default nil :height 160)
+(set-face-attribute 'default nil :height 200)
 
 (defun brushup-init ()
   (setq brushup-dark-p (equal
@@ -129,10 +129,11 @@ seem to require loading after the client starts up"
           (set-face-attribute
            'header-line nil
            ;;:weight 'normal
-           :background brushup-bg
-           :underline t
-           :font "Terminus (TTF) 18"
-           )
+           :background brushup-bg-1_0
+           :underline nil
+           :font "Terminus (TTF)"
+           :box t
+           :inherit nil)
 
           (set-face-attribute
            'sh-heredoc nil

@@ -1,12 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LSP MODE
 ;; for performance
 (setq gc-cons-threshold 100000000)
-(setq lsp-use-plists t)
 (setq read-process-output-max (* 1024 1024))
 
-(add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.nx\\'")
-(add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.ruff_cache\\'")
-(add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.cache\\'")
+
+
 
 ;; can let you see what's being watched... useful for debugging purposes
 ;; (lsp--all-watchable-directories "~/source_code/workflow-activity-registry" lsp-file-watch-ignored-directories)
@@ -14,6 +12,7 @@
 (use-package lsp-mode
   :init
   (setq
+   lsp-progress-via-spinner nil
    lsp-enable-completion-at-point t
    lsp-completion-provider :none
    lsp-idle-delay 0.500
@@ -32,10 +31,16 @@
    lsp-signature-auto-activate nil
    lsp-enable-symbol-highlighting nil
    lsp-modeline-code-actions-enable nil
-   lsp-session-file (expand-file-name ".data/lsp/.lsp-session-v1"
-                                      user-emacs-directory)
+   lsp-session-file (expand-file-name
+                     ".data/lsp/.lsp-session-v1" user-emacs-directory)
    lsp-log-io nil
+   ;; performance
+   lsp-use-plists t
    )
+
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.nx\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.ruff_cache\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.cache\\'")
 
   ;; see issue: https://github.com/tigersoldier/company-lsp/issues/145
   (defun lsp--sort-completions (completions)
@@ -250,17 +255,12 @@ point."
       (helpful-at-point)
     (error (lsp-describe-thing-at-point-1))))
 
-
-
-
 (defun z-side-window-p (win)
-  (window-parameter win 'window-slot)
-  )
+  (window-parameter win 'window-slot))
 
 (defun z-aw-window-list-nonside ()
   "Counts non side windows"
-  (-filter (lambda (x) (not (z-side-window-p x))) (aw-window-list))
-  )
+  (-filter (lambda (x) (not (z-side-window-p x))) (aw-window-list)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Jumping to definition from point
@@ -396,9 +396,3 @@ point."
 ;; NOTE don't use as not all lsps provide compatibility
 ;; (lsp-capability-not-supported "foldingRangeProvider") (use-package
 ;; lsp-focus)
-
-
-;; (with-eval-after-load 'lsp-mode
-;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.my-folder\\'")
-;;   ;; or
-;;   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.my-files\\'"))
