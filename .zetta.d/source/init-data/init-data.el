@@ -58,7 +58,7 @@
    "project.el" "eaf.el" "gnus.el" "gha.el" "outline-indent.el"
    "persist.el" "smerge-mode.el" "repeat-mode.el" "hl-todo.el"
    "dual-header.el" "breadcrumb.el" "parrot.el" "hl-block.el"
-   "move-text.el" "awesome-tray.el" "spot4e.el"
+   "move-text.el" "awesome-tray.el" "spot4e.el" "annotate.el"
    "cleanup.el" ))
 
 (provide 'init-data)

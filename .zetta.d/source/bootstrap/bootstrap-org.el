@@ -118,6 +118,7 @@
     )
 
   ;; display
+  ;; TODO these don't load immediately: fix
   (add-to-list 'org-emphasis-alist '("*" (:foreground "black" :background "yellow")))
 
   ;; makes visible in focus mode
