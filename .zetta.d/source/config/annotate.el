@@ -1,5 +1,8 @@
 (use-package annotate
   :config
+
+  ;; test annotation
+
   ;; NOTE when adding text, need to re-save annotations using
   ;; `annotate-save-annotations`, otherwise adding text corrupts the
   ;; data
