@@ -1,0 +1,85 @@
+
+;; NOTE -- actually got to an MVP here, I really like it... still need
+;; to fingure out a few kinks
+
+;; NOTE falling back to the C-x global prefix is not possible
+;; (key-translation-map (make-sparse-keymap)) (function-key-map
+;; (make-sparse-keymap)), even when setting these.  Workaround is
+;; defining a special keybinding (C-S-x) that will be used to fall
+;; back to the global prefix for C-x
+;; https://emacs.stackexchange.com/questions/73390/no-commands-with-a-binding-that-start-with-c-c-c-x
+;; TODO add to docs
+
+;; NOTE can't really replace which-key-reload-key-sequence since it
+;; has deeper integration with the rest of which key.  But should look
+;; into removing which key as a dependency in the code at least (even
+;; if we still want to be able to work with which-key out of the box)
+
+;; TODO what happens when there is a nested prefix in the repeatable level
+
+;; TODO embark help doesn't reactivate the prefix -- may need to tweak
+;; versatile C-h...  May need to create some state in the repeatable
+;; -- which will actually work because I'm using a read-sequence catch
+;; the user's next input character before the function exits, and I
+;; can control what happens depending on how the function is continued
+;; or exited (eg with C-h, C-u, hitting a binding outside of the map)
+
+;; TODO prefix-help-command doesn't reset if you hit the 'key sequence
+;; undefined' path.... this could be an outside issue, maybe something
+;; to do with versatile-C-h.... need to investigate that.  possible
+;; solutions are adding to post-command hook, or maybe ensuring that
+;; versatile C-h is resetting the prefix command as it should
+
+;; TODO can only 'repeat' or reload prefix exactly 1 level above the
+;; key-chord / leaf.  Does that represent an issue?  Is there a
+;; mechanism to allow for reloading a prefix multiple levels up?
+;; would need to think of a use case for that... like maybe the
+;; repeatable thing could itself me calling a keymap (I forget how
+;; menu does this, something like 'prefix command',
+;; define-prefix-command?)
+
+;; DONE what's the situation with nested repeatables -- wouldn't this
+;; prevent use from going 1 level down?  At the same time, doesn't
+;; this obviate nested repeaters?  Need to consider this more, what is
+;; a nested repeatable in the context of this functionality -- is
+;; there even a notion of nested repeatables?... Answer: there are no
+;; 'nested' repeatables, the idea here is that any 'leaf' (eg a key
+;; chord, not a prefix) is repeatable at the level of exactly 1 level up from the leaf.
+
+;; TODO make sure it works with universal arg NOTE -- not really,
+;; needs some work... the universal arg gets restored, might want to
+;; change that... also need to catch C-u like I catch C-h, but needs
+;; to be handled differently... Got this mostly implemented, just need
+;; to be able to handle more than 1 universal arg, deprioritizing that
+;; as it will take some effort, but still necessary
+
+;; DONE can't execute functions with embark-help command (i get an
+;; error let*: Wrong type argument: keymapp, nil)... fixed
+
+;; DONE make sure it works with complex functions (like completing
+;; read stuff)
+
+;; DONE make the macro define and return a function instead of a
+;; lambda as so it shows up in which-key
+
+
+;; --------------- (below are nice ot haves, above are must haves) -
+
+;; TODO how to get the functionality of on-the-fly repeatable maps --
+;; still use the menu functionality for this?  might need to keep that
+;; incompatible with which-key.  possible solution is to make a
+;; sub-map in the keymap that you want to be repeatable, under a
+;; reserved prefix (something crazy like an unpressable key) that is
+;; essentially the original keymap, but with everything repeatble
+
+;; TODO how to get the which key popup to be temporarily persistant
+;; for repeatable keys, probably using last-command or something
+
+;; TODO how to get things like entry and exit hooks, mode lighters (is
+;; the mode lighter necessary since we can display the prefix?).  is
+;; it worth adding this feature if this represents a departure from
+;; the pure-keybinding approach?
+
+;; TODO some function to display the keymap name (separate from
+;; repeater) if current prefix does in fact point to a keymap that is
+;; named
