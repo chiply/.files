@@ -2,6 +2,7 @@
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :demand t
   :config
+  (setq copilot-server-executable (expand-file-name "/opt/homebrew/bin/copilot-language-server"))
   ;; modes
   (add-hook 'prog-mode-hook 'copilot-mode)
   (add-hook 'markdown-mode-hook 'copilot-mode)
@@ -11,6 +12,7 @@
   (add-hook 'emacs-lisp-mode 'copilot-mode)
   (add-hook 'lisp-interaction-mode 'copilot-mode)
   (add-hook 'yaml-mode-hook 'copilot-mode)
+
 
   ;; face
   (set-face-attribute 'copilot-overlay-face nil :foreground "purple" :inherit 'default)
@@ -24,9 +26,10 @@
                      "C-n" 'copilot-next-completion
                      "C-p" 'copilot-previous-completion))
 
-;; (use-package copilot-chat
-;;   :elpaca (copilot-chat :host github :repo "chep/copilot-chat.el" :files ("*.el"))
-;;   :after (request org markdown-mode))
+;; TODO authenticate
+(use-package copilot-chat
+  :config
+  (setq copilot-chat-model "claude-3.5-sonnet"))
 
 (use-package gptel
   :demand t

@@ -205,3 +205,6 @@ esac
 source ~/.sh_utility_functions.sh
 
 . "$HOME/.local/share/../bin/env"
+
+# snowsql
+alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql

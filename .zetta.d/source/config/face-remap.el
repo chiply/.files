@@ -1,7 +1,7 @@
 (use-package face-remap
   :ensure nil
   :config
-  (setq text-scale-mode-step 1.1)
+  (setq text-scale-mode-step 1.2)
 
   (defun z-big-zoom-in ()
     (interactive)

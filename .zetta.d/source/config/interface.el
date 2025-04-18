@@ -75,7 +75,7 @@
   (when pom "🍅 "))
 
 (defun repeat-indicator-icon ()
-  (if (and (boundp 'menu-indicator) menu-indicator) "** " "__ "))
+  (if (and (boundp 'menu--indicator) menu--indicator) "** " "__ "))
 
 (defun z-pyvenv-activate-poetry-modeline ()
   (and (boundp 'z-pyvenv-virtual-env)
@@ -92,7 +92,16 @@
 (defun z-nyan ()
   (nyan-create))
 
+(defun z-current-prefix ()
+  (key-description (or (and (boundp 'my-this-command-keys-vector) my-this-command-keys-vector)
+                       (this-command-keys-vector))))
 
+;; otherwise prefix keys won't show up
+(add-hook 'prefix-command-echo-keystrokes-functions 'force-mode-line-update)
+
+(defun z-insert-space () " ")
+
+;; in *scratch*:
 
 
 (setq tab-bar-format '(;; everything here on will be aligned on the right
@@ -104,17 +113,19 @@
                        ;; using the entry and exist hooks it doesn't
                        ;; work
                        ;;key-state
-                       ;;                       new-line
                        ;;z-nyan
                        new-line
-
-
                        tab-bar-format-align-right
                        recursion-indicator--string
                        ;;"  "
                        pom-ind
                        tab-bar-format-global
                        repeat-indicator-icon
+                       ;; these go together
+                       ;; TODO add current map
+                       internal-echo-keystrokes-prefix ;; universal arg
+                       z-insert-space
+                       z-current-prefix
                        ))
 
 ;; Emacs 28 and newer: Hide commands in M-x which do not work in the current
@@ -131,6 +142,6 @@
 
 ;; activate makefile-mode whenver a file is opened matching the regex "Makefile.*"
 (add-to-list 'auto-mode-alist '("Makefile.*" . makefile-mode))
-
+(add-hook 'window-selection-change-functions (lambda (_) (force-mode-line-update)))
 
 

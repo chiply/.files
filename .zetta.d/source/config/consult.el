@@ -1,5 +1,5 @@
 (use-package consult
-  :ensure (consult :type git :host github :repo "minad/consult" :tag "1.9")
+  ;;:ensure (consult :type git :host github :repo "minad/consult" :tag "1.9")
   :config
 
   (recentf-mode)
