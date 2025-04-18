@@ -24,6 +24,13 @@
     (when (z-side-window-p (selected-window)) " {S} "))
 
 
+  (telephone-line-defsegment zt-flappy-fish ()
+    ;; if the window is the active window
+    (if (equal (current-buffer) (get-buffer-window))
+        fish-mode-line-string
+      ""))
+
+
   (telephone-line-defsegment zt-vc-segment-repo-icon ()
     (let ((result (shell-command-to-string
                    "git rev-parse --is-inside-work-tree")))
@@ -101,12 +108,17 @@
   (telephone-line-defsegment zt-nyan ()
     (when (eq major-mode 'magit-status-mode) (nyan-create)))
 
+
   (telephone-line-defsegment zt-parrot ()
-    (when (or
-           (string= (symbol-name major-mode) "org-mode")
-           (string= (symbol-name major-mode) "magit-status-mode")
+    (when (and
+           ;;(or
+           ;;(string= (symbol-name major-mode) "org-mode")
+           ;;(string= (symbol-name major-mode) "magit-status-mode")
+           ;;)
+           (equal z-parrot-window (selected-window))
+           (equal z-parrot-buffer (current-buffer))
            )
-        (parrot-create)))
+      (parrot-create)))
 
   (telephone-line-defsegment zt-popper-popup ()
     (if (and (boundp 'popper-popup-status) popper-popup-status)
@@ -129,7 +141,8 @@
           (foo . (modus-themes-subtle-blue . modus-themes-nuanced-blue))
           (bar . (modus-themes-subtle-magenta . modus-themes-nuanced-magenta))
           (barr . (modus-themes-intense-magenta . modus-themes-nuanced-magenta))
-          (iedit . (iedit-occurrence . iedit-occurrence))))
+          (iedit . (iedit-occurrence . iedit-occurrence))
+          ))
 
   (setq telephone-line-subseparator-faces '())
 
@@ -144,15 +157,19 @@
           (foo . (zt-indicators-segment))
           (bar . (zt-iedit-segment))
           (accent . (zt-anzu-segment))
+
           (nil . (zt-flycheck-segment))
           (nil . (zt-nyan))))
 
 
   (setq telephone-line-target 'mode-line)
-  (setq telephone-line-rhs '((nil . (zt-parrot))))
+  (setq telephone-line-rhs '(
+                             (nil . (zt-parrot))
+                             (nil . (zt-flappy-fish))
+                             ))
   (setq telephone-line-evil-use-short-tag t)
   (setq telephone-line-separator-extra-padding 0)
-  (setq telephone-line-height 30)
+  (setq telephone-line-height 40)
 
   (telephone-line-mode -1) ;; helps when making edits (resets the mode-line)
   (telephone-line-mode 1)

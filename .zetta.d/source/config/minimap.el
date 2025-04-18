@@ -126,6 +126,8 @@
   ;;)
   ;;)
 
+  
+
 
 
   ;; to get git information in the fringes
@@ -164,12 +166,23 @@
     (minimap-mode 'toggle)
     )
 
+  (setq minimap-major-modes
+        '(
+          prog-mode
+          text-mode
+          org-mode
+          ;; all modes
+          ;;special-mode
+          ;;shell-command-mode
+          ;;compilation-mode
+          ))
+
   :brushup
   (add-to-list 'brushup-styles
                '(progn
                   ;;(set-face-attribute 'minimap-current-line-face nil
-                                      ;;:background brushup-bg-2
-                                      ;;)
+                  ;;:background brushup-bg-2
+                  ;;)
                   (set-face-attribute 'minimap-active-region-background nil
                                       :background brushup-bg-1_0
                                       )

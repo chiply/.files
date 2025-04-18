@@ -45,10 +45,14 @@
    "org-noter.el" "org-noter-pdftools.el" "pdf-tools.el"
    "org-pdftools.el" "biblio.el" "lsp.el" "lark.el" "yascroll.el"
    "nyan-mode.el" "popper.el" "highlight.el" "macrostep.el"
-   "obsidian.el" "magneto.el" "know-your-http-well.el" "spacetree.el"
+   ;;"obsidian.el"
+   "magneto.el" "know-your-http-well.el" "spacetree.el"
    "vertico.el" "vterm.el" "tab-line.el" "window.el" "line.el"
    "snippets.el" "detached.el" "ace-mc.el" "json-mode.el" "jsonian.el"
-   "consult-gh.el" "consult-web.el" "speed-type.el" "spray.el"
+   "consult-gh.el"
+   ;; "consult-web.el"
+   "consult-omni.el"
+   "speed-type.el" "spray.el"
    "key-quiz.el" "alert.el" "svg-lib.el" "explain-pause-mode.el"
    "markdown-toc.el" "color-rg.el" "osx-lib.el" "spotlight.el"
    "restart-emacs" "magit-todos.el" "browse-at-remote.el"
@@ -59,6 +63,11 @@
    "persist.el" "smerge-mode.el" "repeat-mode.el" "hl-todo.el"
    "dual-header.el" "breadcrumb.el" "parrot.el" "hl-block.el"
    "move-text.el" "awesome-tray.el" "spot4e.el" "annotate.el"
+   "yeetube.el" 
+   ;;"repeatable.el"
+   "ddp.el"
+   "pr-review.el" "embark-vc.el"
+   "activities.el" "jira.el" "flappy-fish.el"
    "cleanup.el" ))
 
 (provide 'init-data)

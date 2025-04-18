@@ -13,25 +13,25 @@
   (set-frame-parameter (selected-frame) 'alpha value))
 (transparency 93)
 
-;;(defhydra+ hydra-window ()
-  ;;("T" transparency :exit t)
-  ;;)
-;;
-;;(defhydra+ hydra-window ()
-  ;;("t" hydra-theme/body :exit t)
-  ;;)
+
+(general-define-key
+ :keymaps 'menu-theme-keymap
+ "T" (lambda ()
+         (interactive)
+         (setq prefix-help-command 'versatile-C-h)
+         (when debug-on-error
+           (toggle-debug-on-error)
+           (message "Debug-on-error is off"))
+         (z-brushup)
+         )
+ )
 
 (general-define-key
  :keymaps 'menu-window-keymap
- "t" 'hydra-theme/body
+ ;;"t" 'hydra-theme/body
+ "t" 'menu-theme
  "T" 'transparency
  )
-
-(defhydra+ hydra-theme ()
-  ("w" hydra-window/body :exit t)
-  ("T" z-brushup "Brushup" :column "Brushup") 
-  )
-
 
 ;;;;;;;;; OLIVETTI
 ;;(use-package olivetti
@@ -81,41 +81,41 @@
 
 
 ;;(use-package solaire-mode
-  ;;:config
-  ;;(defun z-solaire-fn ()
-    ;;(if (window-parameter (get-buffer-window (buffer-base-buffer)) 'window-slot)
-        ;;t
-      ;;nil))
-  ;;(setq solaire-mode-real-buffer-fn 'z-solaire-fn)
-  ;;(solaire-global-mode +1)
+;;:config
+;;(defun z-solaire-fn ()
+;;(if (window-parameter (get-buffer-window (buffer-base-buffer)) 'window-slot)
+;;t
+;;nil))
+;;(setq solaire-mode-real-buffer-fn 'z-solaire-fn)
+;;(solaire-global-mode +1)
 ;;
-  ;;:brushup
-  ;;(add-to-list 'brushup-styles
-               ;;'(progn
-                  ;;(set-face-attribute 'solaire-default-face nil
-                                      ;;:background brushup-bg-1_0)
-                  ;;(set-face-attribute 'solaire-fringe-face nil
-                                      ;;:background brushup-bg-1_0)
-                  ;;(set-face-attribute 'solaire-line-number-face nil
-                                      ;;:background brushup-bg-1_0)
-                  ;;(set-face-attribute 'solaire-org-hide-face nil
-                                      ;;:background brushup-bg-1_0)
-                  ;;(set-face-attribute 'solaire-mode-line-inactive-face nil
-                                      ;;:background brushup-bg-1_0)
-                  ;;(set-face-attribute 'solaire-mode-line-face nil
-                                      ;;:height 140
-                                      ;;:underline nil
-                                      ;;:overline nil
-                                      ;;:box nil
-                                      ;;:background brushup-bg
-                                      ;;:foreground brushup-fg-3
-                                      ;;:underline `(:color ,brushup-fg))))
+;;:brushup
+;;(add-to-list 'brushup-styles
+;;'(progn
+;;(set-face-attribute 'solaire-default-face nil
+;;:background brushup-bg-1_0)
+;;(set-face-attribute 'solaire-fringe-face nil
+;;:background brushup-bg-1_0)
+;;(set-face-attribute 'solaire-line-number-face nil
+;;:background brushup-bg-1_0)
+;;(set-face-attribute 'solaire-org-hide-face nil
+;;:background brushup-bg-1_0)
+;;(set-face-attribute 'solaire-mode-line-inactive-face nil
+;;:background brushup-bg-1_0)
+;;(set-face-attribute 'solaire-mode-line-face nil
+;;:height 140
+;;:underline nil
+;;:overline nil
+;;:box nil
+;;:background brushup-bg
+;;:foreground brushup-fg-3
+;;:underline `(:color ,brushup-fg))))
 ;;
-  ;;:hook (
-         ;;(treemacs-mode . solaire-mode)
-         ;;(use-package--solaire--post-config . z-brushup)
-         ;;)  
-  ;;)
+;;:hook (
+;;(treemacs-mode . solaire-mode)
+;;(use-package--solaire--post-config . z-brushup)
+;;)  
+;;)
 
 
 (add-hook 'help-mode-hook (lambda () (text-scale-set -2)))

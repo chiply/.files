@@ -38,6 +38,8 @@
 
   :config
   (setq python-shell-interpreter "python3")
+  (setq python-indent-guess-indent-offset t)
+  (setq python-indent-guess-indent-offset-verbose 4)
 
   ;; Debugging
   (require 'dap-python)

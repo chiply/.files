@@ -307,7 +307,11 @@
        (let* ((key-str (single-key-description key))
               (new-prefix (if prefix (concat prefix " " key-str) key-str)))
          (if (keymapp command)
-             (setq result (append result (parse-keymap command (replace-regexp-in-string " " "-" new-prefix))))
+             (setq result
+                   (append result
+                           (parse-keymap
+                            command
+                            (replace-regexp-in-string " " "-" new-prefix))))
            (push (list command new-prefix) result))))
      keymap)
     (nreverse result)))

@@ -100,7 +100,22 @@
     )
 
   :config
+
   (setq vterm-shell "zsh")
+
+  ;; NOTE written by GPT-4
+  (defun send-to-vterm (start end)
+    "Send the selected region to a vterm buffer for execution.
+Prompt for a vterm buffer and store it as a buffer-local variable."
+    (interactive "r")
+    (let ((text (buffer-substring-no-properties start end))
+          (vterm-buffer (read-buffer "Vterm buffer: " "*vterm*")))
+      (with-current-buffer vterm-buffer
+        (unless (get 'current-vterm-buffer 'local-variable)
+          (make-variable-buffer-local 'current-vterm-buffer)
+          (setq current-vterm-buffer vterm-buffer))
+        (vterm-send-string text)
+        (vterm-send-final))))
 
   ;; project.el
   ;; todo replace with vterm in project
@@ -164,17 +179,18 @@
 
   ;;:hydra
   ;;(defhydra+ hydra-run ()
-    ;;("s" (lambda ()
-           ;;(interactive)
-           ;;(z-soda-drink (quote z-soda-create-and-display-term) (z-soda-prompt-term-buffer))
-           ;;) "shell" :exit t)
-    ;;("S" (lambda () (interactive) (z-soda-cap "\\term-mode*" 1)) "Terminal" )
-;;
-    ;;)
+  ;;("s" (lambda ()
+  ;;(interactive)
+  ;;(z-soda-drink (quote z-soda-create-and-display-term) (z-soda-prompt-term-buffer))
+  ;;) "shell" :exit t)
+  ;;("S" (lambda () (interactive) (z-soda-cap "\\term-mode*" 1)) "Terminal" )
+  ;;
+  ;;)
   
 
   :hook ((vterm-mode . (lambda ()
                          (setq global-hl-line-mode nil)
                          (toggle-truncate-lines 1) (display-line-numbers-mode 1)))
          ((vterm-mode shell-command-mode) . tab-line-mode))
+
   )

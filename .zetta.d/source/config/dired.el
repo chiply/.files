@@ -320,7 +320,7 @@ Version 2019-11-04"
 
   :hook (
          (dired-mode . (lambda () (dired-hide-details-mode 1)))
-         (dired-mode . (lambda () (text-scale-set -2)))
+         ;;(dired-mode . (lambda () (text-scale-set -2)))
          )
   )
 

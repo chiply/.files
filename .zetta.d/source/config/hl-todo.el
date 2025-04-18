@@ -10,5 +10,6 @@
           ("LEFTOFF"   . "#0000FA")
           ("DONE"   . "#0000FA0F0000")
           ("NOTE"   . "#0000FA")
+          ("PROMPT"   . "#9B9B3030FFFF")
           ))
   :hook ((prog-mode markdown-mode org-mode) . hl-todo-mode))

@@ -23,6 +23,7 @@
         '("last-command" "belong" "hostname" "file-path" "mode-name"
           "battery" "date" "celestial" "pdf-view-page" "input-method"
           "buffer-read-only"))
-  (awesome-tray-mode 1)
+  ;; TODO may interfere with which key help
+  ;;(awesome-tray-mode 1)
   )
 

@@ -16,37 +16,37 @@
 
   ;; transient ui
   (transient-define-prefix symbol-overlay-transient ()
-  "Symbol Overlay transient"
-  ["Symbol Overlay"
-   ["Overlays"
-    ("." "Add/Remove at point" symbol-overlay-put)
-    ("k" "Remove All" symbol-overlay-remove-all)
-    ]
-   ["Navigation"
-    ("<" "Jump to first" symbol-overlay-jump-first)
-    (">" "Jump to last" symbol-overlay-jump-last)
-    ("n" "Next" symbol-overlay-switch-forward)
-    ("p" "Previous" symbol-overlay-switch-backward)
-    ("d" "Jump to definition" symbol-overlay-jump-to-definition)
-    ("s" "Isearch" symbol-overlay-isearch-literally)
-    ]
-   ["Operations"
-    ("e" "Echo mark" symbol-overlay-echo-mark)
-    ("q" "Query replace" symbol-overlay-query-replace)
-    ("r" "Rename" symbol-overlay-rename)
-    ("w" "Copy to kill ring" symbol-overlay-save-symbol)
-    ("t" "Toggle in scope" symbol-overlay-toggle-in-scope)
-    ]
-   ["Other"
-    ("m" "Highlight symbol-at-point" symbol-overlay-mode)
-    ]
-   ]
-  )
+    "Symbol Overlay transient"
+    ["Symbol Overlay"
+     ["Overlays"
+      ("." "Add/Remove at point" symbol-overlay-put)
+      ("k" "Remove All" symbol-overlay-remove-all)
+      ]
+     ["Navigation"
+      ("<" "Jump to first" symbol-overlay-jump-first)
+      (">" "Jump to last" symbol-overlay-jump-last)
+      ("n" "Next" symbol-overlay-switch-forward)
+      ("p" "Previous" symbol-overlay-switch-backward)
+      ("d" "Jump to definition" symbol-overlay-jump-to-definition)
+      ("s" "Isearch" symbol-overlay-isearch-literally)
+      ]
+     ["Operations"
+      ("e" "Echo mark" symbol-overlay-echo-mark)
+      ("q" "Query replace" symbol-overlay-query-replace)
+      ("r" "Rename" symbol-overlay-rename)
+      ("w" "Copy to kill ring" symbol-overlay-save-symbol)
+      ("t" "Toggle in scope" symbol-overlay-toggle-in-scope)
+      ]
+     ["Other"
+      ("m" "Highlight symbol-at-point" symbol-overlay-mode)
+      ]
+     ]
+    )
   
   (global-set-key (kbd "s-.") 'symbol-overlay-transient)
 
   ;; modes
   :hook ((sql-mode python-ts-mode emacs-lisp-mode yaml-mode
                    jsonian-mode json-mode web-mode shell-command-mode sh-mode grep-mode
-                   lark-mode makefile-mode) .
+                   lark-mode makefile-mode helpful-mode org-mode) .
                    symbol-overlay-mode))

@@ -4,7 +4,17 @@
 (setenv "BROWSER" "chrome")
 
 ;; ob-restclient and ob-http alternatives
-(use-package verb)
+(use-package verb
+  :after org
+  :config
+  (define-key org-mode-map (kbd "C-c C-r") verb-command-map)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t) (emacs-lisp . t) (sql . t) (C . t) (sqlite . t)
+     (js . t) (ditaa . t) (dot . t) (shell . t ) (latex . t )
+     (verb . t)))
+  )
+
 
 ;; by default, make inline images look like thumbnails.  If using
 ;; actual width of the image, then it takes up too much space in the
