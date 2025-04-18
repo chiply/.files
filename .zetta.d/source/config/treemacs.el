@@ -9,14 +9,13 @@
   
   :config
   (use-package nerd-icons)
-  (use-package treemacs-nerd-icons
-    :functions treemacs-load-theme
-    :after (treemacs nerd-icons)
-    :config
+  ;;(use-package treemacs-nerd-icons
+    ;;:functions treemacs-load-theme
+    ;;:after (treemacs nerd-icons)
+    ;;:config
     ;;(treemacs-load-theme "nerd-icons")
-    )
+    ;;)
 
-  ;;(treemacs-load-theme "all-the-icons")
 
   ;; set to the initial default font size (note this is set 1 time, so
   ;; altering the text scale wont cause the icons to change size)

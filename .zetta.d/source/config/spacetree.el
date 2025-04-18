@@ -101,6 +101,21 @@ addresses of the spaces and the values are the names.")
   "A variable to store copied window configurations.")
 
 
+;; add all to savehist
+;;(add-to-list 'savehist-additional-variables 'st-tree)
+;;(add-to-list 'savehist-additional-variables 'st-current-address)
+;;(add-to-list 'savehist-additional-variables 'st-address-wconf-tbl)
+;;(add-to-list 'savehist-additional-variables 'st-recent-space-list)
+;;(add-to-list 'savehist-additional-variables 'st-space-name-tbl)
+;;(add-to-list 'savehist-additional-variables 'st-copied-space)
+
+;;(persist-save 'st-tree)
+;;(persist-save 'st-current-address)
+;;(persist-save 'st-address-wconf-tbl)
+;;(persist-save 'st-recent-space-list)
+;;(persist-save 'st-space-name-tbl)
+;;(persist-save 'st-copied-space)
+
 
 
 
@@ -631,15 +646,10 @@ the st-tree."
 
 
 
-
-
-
-
-
-
-
 ;; init -- move to config
-(st-init)
+;; unless `st-tree` has elements, initialize space-tree
+(unless (ht-keys st-tree) (st-init))
+
 
 ;; END Config
 

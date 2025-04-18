@@ -67,10 +67,5 @@
   (interactive)
   (z-gh-run-view-log default-directory))
 
-(general-define-key
- :states '(normal visual)
- :keymaps 'magit-mode-map
- "g a w" 'z-gh-run-watch-interact
- "g a l" 'z-gh-run-view-log-interact)
 
 (provide 'gha)

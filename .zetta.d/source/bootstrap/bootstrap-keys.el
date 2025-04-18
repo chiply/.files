@@ -18,18 +18,18 @@
      (eq 0 (window-parameter (selected-window) 'window-slot))
      (eq 'top (window-parameter (selected-window) 'window-side))
      ))
-
+  
   (setq which-key-popup-type 'custom)
   (defun which-key-custom-popup-max-dimensions-function (ignore)
     (cons
      (which-key--height-or-percentage-to-height
       which-key-side-window-max-height)
      (frame-width)))
-
+  
   (defun fit-horizonatally ()
     (let ((fit-window-to-buffer-horizontally t))
       (fit-window-to-buffer)))
-
+  
   (defun which-key-custom-show-popup-function (act-popup-dim)
     (let* ((alist `((window-width . fit-horizontally)
                     (window-height . fit-window-to-buffer)
@@ -39,69 +39,93 @@
                                ))
                     (slot . 0)
                     )))
-      (display-buffer-no-window which-key--buffer alist)))
+      
+      (display-buffer-in-side-window which-key--buffer alist)
+      (setq z-which-key-showing t)
+      ;;(setq which-key-idle-delay 1000)
+      (setq prefix-help-command 'which-key-C-h-dispatch)
+      ))
+
 
   (defun which-key-custom-hide-popup-function ()
     (when (buffer-live-p which-key--buffer)
-      (quit-windows-on which-key--buffer)))
+      (setq z-which-key-showing nil)
+      (quit-windows-on which-key--buffer)
+      ))
+
+  
+
+  (general-define-key
+   :keymaps 'which-key-C-h-map
+   "C-h" 'which-key-show-standard-help
+   )
 
   (setq
-   ;; more useful hinting as it remains open (at least the way i use
-   ;; it)
-   which-key-persistent-popup t
-   ;; include more in the which key buffer
-   which-key-compute-remaps t
    ;; Allow C-h to trigger which-key before it is done automatically
    which-key-show-early-on-C-h t
-   ;; make sure which-key doesn't show normally but refreshes quickly
-   ;; after it is triggered.
-   which-key-idle-delay 10000 which-key-idle-secondary-delay 0.05
-   ;; docs
-   which-key-show-docstrings t which-key-max-description-length 100
-   ;; evil
-   which-key-allow-evil-operators t
-   ;; misc
-   suggest-key-bindings 0
-   which-key-show-major-mode t
-   ;; need to set this to 0 if youre using the minibuffer
-   echo-keystrokes 1
-   which-key-max-display-columns 2
-   ;; custom functions
+   ;;;; make sure which-key doesn't show normally but refreshes quickly
+   ;;;; after it is triggered.
+   which-key-idle-delay 1000 which-key-idle-secondary-delay 0.01
+   which-key-show-transient-maps t ;; doesn't seem to have an effect
+   which-key-popup-type 'custom
    which-key-custom-popup-max-dimensions-function 'which-key-custom-popup-max-dimensions-function
    which-key-custom-show-popup-function 'which-key-custom-show-popup-function
    which-key-custom-hide-popup-function 'which-key-custom-hide-popup-function
    )
 
+  ;;(setq
+  ;;which-key-persistent-popup t
+   ;;;; include more in the which key buffer
+  ;;which-key-compute-remaps t
+   ;;;; Allow C-h to trigger which-key before it is done automatically
+  ;;which-key-show-early-on-C-h t
+   ;;;;;; make sure which-key doesn't show normally but refreshes quickly
+   ;;;;;; after it is triggered.
+  ;;which-key-idle-delay 1000 which-key-idle-secondary-delay 0.01
+   ;;;; docs
+  ;;which-key-show-docstrings t which-key-max-description-length 100
+   ;;;; evil
+  ;;which-key-allow-evil-operators t
+   ;;;; misc
+  ;;suggest-key-bindings 0
+  ;;which-key-show-major-mode t
+   ;;;; need to set this to 0 if youre using the minibuffer
+  ;;echo-keystrokes 1
+  ;;which-key-max-display-columns 4
+   ;;;; custom functions
+  ;;which-key-custom-popup-max-dimensions-function 'which-key-custom-popup-max-dimensions-function
+  ;;which-key-custom-show-popup-function 'which-key-custom-show-popup-function
+  ;;which-key-custom-hide-popup-function 'which-key-custom-hide-popup-function
+   ;;;;
+  ;;which-key-show-transient-maps t
+  ;;)
+
   (which-key-mode 1)
-  ;; because which-ley-mode sets prefix-help-command to which-key-C-h-dispatch
-  ;;(setq prefix-help-command #'embark-prefix-help-command)
 
-  (defun which-key--create-buffer-and-show
-      (&optional prefix-keys from-keymap filter prefix-title)
-    "Fill `which-key--buffer' with key descriptions and reformat.
-Finally, show the buffer."
-    (let ((start-time (current-time))
-          (formatted-keys (which-key--get-bindings
-                           ;; updated -- added t to show the full keymap
-                           prefix-keys from-keymap filter t))
-          (prefix-desc (key-description prefix-keys)))
-      (cond ((null formatted-keys)
-             (message "%s-  which-key: There are no keys to show" prefix-desc))
-            ((listp which-key-side-window-location)
-             (setq which-key--last-try-2-loc
-                   (apply #'which-key--try-2-side-windows
-                          formatted-keys prefix-keys prefix-title
-                          which-key-side-window-location)))
-            (t (setq which-key--pages-obj
-                     (which-key--create-pages
-                      formatted-keys prefix-keys prefix-title))
-               (which-key--show-page)))
-      (which-key--debug-message
-       "On prefix \"%s\" which-key took %.0f ms." prefix-desc
-       (* 1000 (float-time (time-since start-time))))))
-
+  ;;(defun which-key--create-buffer-and-show
+  ;;(&optional prefix-keys from-keymap filter prefix-title)
+  ;;"Fill `which-key--buffer' with key descriptions and reformat.
+  ;;Finally, show the buffer."
+  ;;(let ((start-time (current-time))
+  ;;(formatted-keys (which-key--get-bindings
+                           ;;;; updated -- added t to show the full keymap
+  ;;prefix-keys from-keymap filter t))
+  ;;(prefix-desc (key-description prefix-keys)))
+  ;;(cond ((null formatted-keys)
+  ;;(message "%s-  which-key: There are no keys to show" prefix-desc))
+  ;;((listp which-key-side-window-location)
+  ;;(setq which-key--last-try-2-loc
+  ;;(apply #'which-key--try-2-side-windows
+  ;;formatted-keys prefix-keys prefix-title
+  ;;which-key-side-window-location)))
+  ;;(t (setq which-key--pages-obj
+  ;;(which-key--create-pages
+  ;;formatted-keys prefix-keys prefix-title))
+  ;;(which-key--show-page)))
+  ;;(which-key--debug-message
+  ;;"On prefix \"%s\" which-key took %.0f ms." prefix-desc
+  ;;(* 1000 (float-time (time-since start-time))))))
   )
-
 
 
 (use-package meow

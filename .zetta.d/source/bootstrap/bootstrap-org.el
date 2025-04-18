@@ -72,10 +72,6 @@
            ))
         )
 
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((python . t) (emacs-lisp . t) (sql . t) (C . t) (sqlite . t)
-     (js . t) (ditaa . t) (dot . t) (shell . t ) (latex . t )))
 
   (defun orgtree-forward-orgtree (&optional arg)
     "Move ARG times to start of a set of the same orgtree characters."

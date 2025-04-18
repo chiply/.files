@@ -17,17 +17,14 @@
   (vertico-flat-mode 1)
   (vertico-multiform-mode 1)
 
-  ;; TODO no using posframe yet as I couldn't get it to play nicely with vertico
-  ;; (even if I can get the conditional styling to work, toggling still
-  ;; brings completion into the minibuffer which isn't good)
-
-  ;;(setq vertico-multiform-commands
-  ;;'((consult-line
-  ;;posframe
-           ;;;; NEED to do both here
-  ;;(vertico-flat-mode . -1)
-  ;;(vertico-vertical-mode . 1))
-  ;;(t posframe)))
+  ;; NOTE experimenting with this for now.
+  (setq vertico-multiform-commands
+        '((z-magit-project
+           posframe
+           ;; NEED to do both here
+           (vertico-flat-mode . -1)
+           (vertico-vertical-mode . 1))
+          (t flat)))
 
   (setq
    vertico-buffer-hide-prompt nil

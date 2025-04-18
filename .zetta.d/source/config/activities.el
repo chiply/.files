@@ -1,4 +1,6 @@
-(use-package persist)
 (use-package activities
-  :config
+  :init
+  (use-package persist
+    :demand t)
+  (activities-mode)
   (activities-tabs-mode))
