@@ -14,29 +14,7 @@
 (use-package shell
   :straight nil
   :demand t
-
-  :config
-
-  :hydra
-  (defhydra+ hydra-scroll ()
-    ("," :exit t "Exit")
-    ("l" (lambda () (interactive)
-           (scroll-left 5 nil)) :column "Horizontal")
-    ("h" (lambda () (interactive)
-           (scroll-right 5 nil)))
-    ("k" (lambda () (interactive)
-           (scroll-down 5 )) :column "Vertical")
-    ("j" (lambda () (interactive)
-           (scroll-up 5)))
-    ("gg" evil-goto-first-line :column "Evil")
-    ("G" evil-goto-line)
-    )
-
   :general
-  (
-   :keymaps 'override
-   "s-S" 'hydra-scroll/body
-   )
   (
    :keymaps '(shell-command-mode-map)
    "C" 'z-highlight-phrases
@@ -44,12 +22,12 @@
    )
 
   :hook (shell-command-mode . (lambda () (progn
-                                   (text-scale-set -2)
-                                   (z-highlight-phrases)
-                                   (when (and
-                                          (boundp 'zmc-async-shell-command-spinners-enable)
-                                          zmc-async-shell-command-spinners-enable)
-                                     (z-spinner-compile-spin)))))
+                                           (text-scale-set -2)
+                                           (z-highlight-phrases)
+                                           (when (and
+                                                  (boundp 'zmc-async-shell-command-spinners-enable)
+                                                  zmc-async-shell-command-spinners-enable)
+                                             (z-spinner-compile-spin)))))
   )
 
 

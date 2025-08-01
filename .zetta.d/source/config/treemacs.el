@@ -1,50 +1,68 @@
+;; NOTE this package in general is very buggy, try not to rely on it
+;; treemacs-add-project has a bug -- this is like the most basic thing, if not an entry point!
 (use-package treemacs
+  :ensure (treemacs
+           :files ("src/elisp/*.el"
+                   "src/extra/*.el"))
   :demand t 
 
-  :init
-  (setq treemacs-persist-file
-        (expand-file-name ".data/treemacs/.cache/treemacs-persist"
-                          user-emacs-directory))
+  ;;(setq treemacs-persist-file
+  ;;(expand-file-name ".data/treemacs/.cache/treemacs-persist"
+  ;;user-emacs-directory))
 
   
   :config
-  (use-package nerd-icons)
-  ;;(use-package treemacs-nerd-icons
-    ;;:functions treemacs-load-theme
-    ;;:after (treemacs nerd-icons)
-    ;;:config
-    ;;(treemacs-load-theme "nerd-icons")
-    ;;)
+  ;; TODO factor out
+  ;; NOTE tried with all the icons -- issue is that I use the svg
+  ;; branch of all-the-icons and this is not compatible with treemacs
+  ;; implementation of the all-the-icons theme.  better to simply
+  ;; avoid having icons for now... if I revert to the master branch of
+  ;; all the icons, I get an issue which is that the icons are not
+  ;; rendered properly in many of the places I use them in emacs,
+  ;; specifically the mode line, tab-line.  I don't really need the
+  ;; icons in treemacs, so I'm leaving them out for now
+
+  ;; NOTE also observed that many themes are broken.  For example,
+  ;; Iconless doesn't work, default has numerous issues and also looks
+  ;; terrible.
+
+  ;; NOTE Idea probably comes with icons but they aren't rendering.
+  ;; This is a hacky config because I'm targeting the goal of having
+  ;; no icons, but I'm using a theme that has icons...
+  (treemacs-load-theme "Idea")
 
 
-  ;; set to the initial default font size (note this is set 1 time, so
-  ;; altering the text scale wont cause the icons to change size)
-  (treemacs-resize-icons (font-get (face-attribute 'default :font) :size))
+
+  (treemacs-resize-icons
+   ;; NOTE setting to nil allows to be arbitrarly small, otherwise
+   ;; they can ;; only shrink to the minimum size of the icon
+   nil
+  ;; NOTE set to the initial default font size (note this is set 1
+   ;;time, so altering the text scale wont cause the icons to change
+   ;;size) (font-get (face-attribute 'default :font) :size)
+   )
 
   (setq aw-ignored-buffers '("*Calc Trail*" " *LV*"))
 
-
   (setq-default
-   ;;treemacs--project-follow-delay 0.25
    treemacs-file-follow-delay 0.25
    treemacs-file-event-delay 1000
    treemacs-tag-follow-delay 0.25
-   ;; makes it take up more screen realestate
-   ;; and based on treemacs defauults of 1 buffer per frame
-   ;; this bahaves a lot like frame-level contruct
+   ;; makes it take up more screen realestate and based on treemacs
+   ;; defauults of 1 buffer per frame this bahaves a lot like
+   ;; frame-level contruct
    treemacs-display-in-side-window t
    treemacs-width 35
-   treemacs-width-is-initially-locked nil
-   )
-  ;; very odd.. order matters here..., esp when it comes to files that lack tags
-  ;; in the other order, there is an issue with the followign of files without tags
-  (treemacs-follow-mode nil)
-  (treemacs-project-follow-mode nil)
-  (treemacs-tag-follow-mode nil)
+   treemacs-width-is-initially-locked nil)
+
+  ;; very odd.. order matters here..., esp when it comes to files that
+  ;; lack tags in the other order, there is an issue with the
+  ;; followign of files without tags
+  (treemacs-follow-mode t)
+  (treemacs-project-follow-mode t)
+  (treemacs-tag-follow-mode t)
 
   (treemacs-filewatch-mode t)
-
-
 
   (defun z-refresh-treemacs ()
     (interactive)
@@ -56,96 +74,51 @@
           (treemacs)
           (select-window win)))))
 
+  ;; TODO update as this also jumps to other buffers displaying
+  ;; treemacs like lsp symbols or lsp error list
+  (defun z-soda-drink-treemacs ()
+    (interactive)
+    (let* ((bufnm (current-buffer))
+           (win (get-buffer-window bufnm))
+           (treemacs-buf (nth 0 (z-soda-mode-displayed-p "treemacs-mode")))
+           )
+      (if treemacs-buf
+          (select-window (get-buffer-window treemacs-buf))
+        (progn
+          (treemacs)
+          (select-window win)
+          )
+        )))
+
+  (defun z-soda-toggle-treemacs-follow-mode ()
+    (interactive)
+    (if treemacs-tag-follow-mode
+        (progn
+          (treemacs-tag-follow-mode -1)
+          ;; need this as treemacs tag follow mode -1 affects
+          ;; follow mode SO STRANGE.. but this seems to sovle
+          ;; the issie of not having proper tracking to to
+          ;; lack of tags in a file.  I can get file based
+          ;; following in the files where I run this
+          ;; function.  Not expectetd, but works!
+          (treemacs-follow-mode 1))
+      (treemacs-tag-follow-mode 1)))
+
   (general-define-key
-   :keymaps 'menu-run-keymap
-   "t" (lambda () (interactive)
-         (let* ((bufnm (current-buffer))
-                (win (get-buffer-window bufnm))
-                (treemacs-buf (nth 0 (z-soda-mode-displayed-p "treemacs-mode")))
-                )
-           (if treemacs-buf
-               (select-window (get-buffer-window treemacs-buf))
-             (progn
-               (treemacs)
-               (select-window win)
-               )
-             )))
-   "T" 'treemacs
-   "C-t" 'z-refresh-treemacs
+   :keymaps 'menu-run-map
+   "t" (** z-soda-drink-treemacs)
+   "T" (** treemacs)
+   "C-t" (** z-refresh-treemacs)
+   "M-t" (** z-soda-toggle-treemacs-follow-mode))
 
-   "M-t" (lambda () (interactive)
-           (if treemacs-tag-follow-mode
-               (progn
-                 (treemacs-tag-follow-mode -1)
-                 ;; need this as treemacs tag follow mode -1 affects
-                 ;; follow mode SO STRANGE.. but this seems to sovle
-                 ;; the issie of not having proper tracking to to
-                 ;; lack of tags in a file.  I can get file based
-                 ;; following in the files where I run this
-                 ;; function.  Not expectetd, but works!
-                 (treemacs-follow-mode 1))
-             (treemacs-tag-follow-mode 1)))
-
-   )
-
-  :brushup
-  (add-to-list 'brushup-styles
-               '(progn
-                  ;;(set-face-attribute 'treemacs-all-the-icons-file-face nil
-                  ;;:foreground brushup-fg-1)
-                  ;;(set-face-attribute 'treemacs-git-ignored-face nil
-                  ;;:foreground brushup-bg-5)
-                  ;;(set-face-attribute 'treemacs-git-untracked-face nil
-                  ;;:underline t
-                  ;;:foreground brushup-bg-5)
-                  ;;(set-face-attribute 'treemacs-git-modified-face nil
-                  ;;:underline nil
-                  ;;:foreground brushup-fg :box nil :weight 'bold)
-                  (set-face-attribute 'treemacs-root-face nil
-                                      :height 1.2
-                                      :foreground brushup-fg-2
-                                      )
-                  (setq treemacs-width (floor (* 0.10 (frame-total-cols))))
-
-                  ))
-
-  ;; toggle single project view
-
-  ;; toggle treemacs with ,t;;; so it's  ,d for dired, ,b for buffer ,t for treemacs
-
-                                        ;:hydra
-                                        ;(defhydra+ hydra-run () 
-                                        ;("t" (lambda () (interactive)
-                                        ;(let* ((bufnm (current-buffer))
-                                        ;(win (get-buffer-window bufnm))
-                                        ;(treemacs-buf (nth 0 (z-soda-mode-displayed-p "treemacs-mode")))
-                                        ;)
-                                        ;(if treemacs-buf
-                                        ;(select-window (get-buffer-window treemacs-buf))
-                                        ;(progn
-                                        ;(treemacs)
-                                        ;(select-window win)
-                                        ;)
-                                        ;) 
-                                        ;)))
-                                        ;("T" treemacs) 
-                                        ;("C-t" z-refresh-treemacs)
-                                        ;("M-t" (lambda () (interactive)
-                                        ;(if treemacs-tag-follow-mode
-                                        ;(progn
-                                        ;(treemacs-tag-follow-mode -1)
-                   ;;; need this as treemacs tag follow mode -1 affects
-                   ;;; follow mode SO STRANGE.. but this seems to sovle
-                   ;;; the issie of not having proper tracking to to
-                   ;;; lack of tags in a file.  I can get file based
-                   ;;; following in the files where I run this
-                   ;;; function.  Not expectetd, but works!
-                                        ;(treemacs-follow-mode 1))
-                                        ;(treemacs-tag-follow-mode 1)))))
-
-  
-
-
+  ;;:brushup
+  ;;(add-to-list 'brushup-styles
+  ;;'(progn
+  ;;(set-face-attribute 'treemacs-root-face nil
+  ;;:height 1.2
+  ;;:foreground brushup-fg-2
+  ;;)
+  ;;(setq treemacs-width (floor (* 0.10 (frame-total-cols))))))
 
   :general
   (

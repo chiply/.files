@@ -36,7 +36,10 @@
   ;; prevent the spinner characters from being to big and causing the
   ;; height of the *-line to change.  this may not abstract when text
   ;; size increases or decreases...
-  (set-fontset-font t 'unicode "Apple Color Emoji 8" nil 'prepend)
+  ;; NOTE not setting as when you set the size, they don't scale with font size.
+  ;; drawback is that these are larger then the termius text, not a
+  ;; big usse as I rarely if ever use these in buffers
+  (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
   (set-fontset-font t 'unicode "Arial Unicode MS 10" nil 'prepend)
 
   ;; Starting commenting out spinners that cause issues with the mode

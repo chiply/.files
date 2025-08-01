@@ -14,14 +14,14 @@
 ;;(defun bar () (interactive) (message "bar"))
 ;;(setq which-key-persistent-popup t)
 ;;(defmacro repeatable (function)
-  ;;`(lambda ()
-     ;;(interactive)
-     ;;(let* ((keys (this-command-keys-vector))
-            ;;(prefix (seq-take keys (1- (length keys))))
-            ;;(orig-km (key-binding prefix 'accept-default))
-            ;;(km (copy-keymap orig-km)))
-       ;;(,function)
-       ;;(which-key-reload-key-sequence prefix))))
+;;`(lambda ()
+;;(interactive)
+;;(let* ((keys (this-command-keys-vector))
+;;(prefix (seq-take keys (1- (length keys))))
+;;(orig-km (key-binding prefix 'accept-default))
+;;(km (copy-keymap orig-km)))
+;;(,function)
+;;(which-key-reload-key-sequence prefix))))
 ;;(general-define-key :keymaps 'override "C-c o m" (repeatable foo) "C-c o M" (repeatable bar))
 
 
@@ -249,9 +249,9 @@ function weirdly leaves the map message in the echo area, not sure why")
               ;; LEFTOFF TODO C-h doesn't trigger, but I think it's because it
               ;; isn't bound when displaying which-key this way
               (progn
-               (which-key--create-buffer-and-show nil menu--active-km)
-               ;;(setq z-which-key-showing t)
-               )
+                (which-key--create-buffer-and-show nil menu--active-km)
+                ;;(setq z-which-key-showing t)
+                )
               )
             (setq menu--which-key-toggle t))
           )
@@ -379,37 +379,24 @@ overriding bindings are set"
   "NOTE (setq prefix-help-command 'versatile-C-h for a more flexible help
 interface and access to on-the-fly menus)"
   (interactive)
-  (unwind-protect
-      (let* ((keys (this-command-keys-vector))
-             (prefix (seq-take keys (1- (length keys))))
-             (orig-km (key-binding prefix 'accept-default))
-             (km (copy-keymap orig-km))
-             (key (read-key
-                   (concat "h (embark), "
-                           "H (which-key),"
-                           "M-h (menu), "
-                           "or M-S-h (describe-prefix-bindings):"))))
-        ;;(setq which-key-persistent-popup nil)
-        (cond ((eq key ?\C-h) (menu-prefix-help-command-embark km))
-              ((eq key ?\C-\S-h) (menu-prefix-help-command-which-key km prefix))
-              ;; TODO is this an on the fly menu?
-              ((eq key ?\M-h) (menu km))
-              ;;((eq key ?\M-\S-h) (describe-prefix-bindings)) ;; TODO invalid seq
-              (t (message "Invalid key"))))
-    (progn
-      (message "foo")
-      )
-    ))
-
-;; TODO this should be some function like restore which-key settings
-;;(add-hook 'post-command-hook
-          ;;(lambda ()
-            ;;;; only run if which key is displaying
-            ;;(unless z-which-key-showing
-              ;;(progn
-                ;;;;(setq which-key-idle-delay 1000)
-                ;;(setq prefix-help-command 'versatile-C-h)))))
-
+  (let* ((keys (this-command-keys-vector))
+         (prefix (seq-take keys (1- (length keys))))
+         (orig-km (key-binding prefix 'accept-default))
+         (km (copy-keymap orig-km))
+         (key (read-key
+               (concat "h (embark), "
+                       "H (which-key),"
+                       "M-h (menu), "
+                       "or M-S-h (describe-prefix-bindings):"))))
+    ;;(setq which-key-persistent-popup nil)
+    (cond ((eq key ?\C-h) (menu-prefix-help-command-embark km))
+          ((eq key ?\C-\S-h) (menu-prefix-help-command-which-key km prefix))
+          ;; TODO is this an on the fly menu?
+          ((eq key ?\M-h) (menu km))
+          ;;((eq key ?\M-\S-h) (describe-prefix-bindings)) ;; TODO invalid seq
+          (t (message "Invalid key"))))
+  
+  )
 
 ;; TODO delete, this is here to test versatile-C-h
 (general-define-key

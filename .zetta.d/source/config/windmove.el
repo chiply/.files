@@ -23,22 +23,10 @@
    "C-S-w" 'windmove-up
    )
   (
-   :keymaps 'menu-window-keymap
-   "v" 'z-split-window-v
-   "V" 'z-split-window-V
-   "h" 'z-split-window-h
-   "H" 'z-split-window-H
+   :keymaps 'menu-window-map
+   "v" (** z-split-window-v)
+   "V" (** z-split-window-V)
+   "h" (** z-split-window-h)
+   "H" (** z-split-window-H)
    )
-
-  ;;:hydra
-  ;;(defhydra+ hydra-window ()
-    ;;;;("a" windmove-left)
-    ;;;;("s" windmove-down)
-    ;;;;("w" windmove-up)
-    ;;;;("d" windmove-right)
-  ;;("v" (z-split-window "v"))
-  ;;("V" (z-split-window "V"))
-  ;;("h" (z-split-window "h"))
-  ;;("H" (z-split-window "H"))
-  ;;)
   )

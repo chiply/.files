@@ -7,8 +7,8 @@
           find-file
           consult-buffer 
           switch-buffer
-          z-projectile-find-file
           project-find-file
+          consult-project-extra-find
           ;;ace-window
           ;;tab-line-switch-to-next-tab
           ;;tab-line-switch-to-prev-tab

@@ -10,34 +10,49 @@
              '(progn
                 (set-face-attribute 'window-divider nil
                                     :foreground brushup-bg-3)))
-(general-define-key
- :keymaps 'menu-window-keymap
- "o" '(lambda () (interactive) (call-interactively 'window-divider-mode))
- "D" 'delete-window
- "C-S-d" 'delete-other-windows
- "C-S-S" 'window-toggle-side-windows
- "C-S-b b" '(lambda () (interactive) (if (get-scroll-bar-mode) (set-scroll-bar-mode nil) (set-scroll-bar-mode 'left)))
- "C-S-b h" 'horizontal-scroll-bar-mode
- "mm" 'balance-windows
- "mk" 'minimize-window
- "mj" 'maximize-window
- "C-v" 'visual-line-mode
- "C-t" 'toggle-truncate-lines
- "C-t" 'toggle-truncate-lines
- "C-w" 'toggle-word-wrap
- "s" 'z-state-hydra/body
- "f" 'project-find-file
- "F" 'find-file
- "x" 'execute-extended-command
- "r" 'hydra-resize/body
- "M" 'hydra-tile/body
- "u" 'winner-undo
- )
 
-;;(defhydra+ hydra-window ()
-  ;;;; mneuumonic is that the o is a circle, so gets rid of or relaxes
-  ;;;; tthat visual wireframe
-;;("o" (lambda () (interactive) (call-interactively 'window-divider-mode))))
+(defun z-window-divider-mode ()
+  (interactive)
+  (call-interactively 'window-divider-mode))
+
+(defun z-scroll-bar-mode ()
+  (interactive)
+  (if (get-scroll-bar-mode) (set-scroll-bar-mode nil) (set-scroll-bar-mode 'left)))
+
+
+(general-define-key
+ :keymaps 'menu-window-map
+ "D" (** delete-window)
+ "C-S-d" (** delete-other-windows)
+ "C-S-S" (** window-toggle-side-windows)
+ "C-S-b h" (** horizontal-scroll-bar-mode)
+ "mm" (** balance-windows)
+ "mk" (** minimize-window)
+ "mj" (** maximize-window)
+ "C-v" (** visual-line-mode)
+ "C-t" (** toggle-truncate-lines)
+ "C-t" (** toggle-truncate-lines)
+ "C-w" (** toggle-word-wrap)
+ "s" (** z-state-hydra/body)
+ "f" (** consult-project-extra-find)
+ "F" (** find-file)
+ "x" (** execute-extended-command)
+ "u" (** winner-undo)
+ "o" (** z-window-divider-mode)
+ "C-S-b b" (** z-scroll-bar-mode)
+ "r h" (** (lambda () (interactive) (shrink-window-horizontally 1)))
+ "r C-h" (** (lambda () (interactive) (shrink-window-horizontally 2)))
+ "r C-S-h" (** (lambda () (interactive) (shrink-window-horizontally 4)))
+ "r l" (** (lambda () (interactive) (enlarge-window-horizontally 1)))
+ "r C-l" (** (lambda () (interactive) (enlarge-window-horizontally 2)))
+ "r C-S-l" (** (lambda () (interactive) (enlarge-window-horizontally 4)))
+ "r j" (** (lambda () (interactive) (shrink-window 1)))
+ "r C-j" (** (lambda () (interactive) (shrink-window 2)))
+ "r C-S-j" (** (lambda () (interactive) (shrink-window 4)))
+ "r k" (** (lambda () (interactive) (enlarge-window 1)))
+ "r C-k" (** (lambda () (interactive) (enlarge-window 2)))
+ "r C-S-k" (** (lambda () (interactive) (enlarge-window 4)))
+ )
 
 (add-to-list 'window-persistent-parameters '(window-side . writable))
 (add-to-list 'window-persistent-parameters '(window-slot . writable))
@@ -48,69 +63,10 @@
 (add-to-list 'window-persistent-parameters '(quit-restore . writable))
 
 
-;; create a hydra for z-state-*
-(defhydra+ z-state-hydra ()
-  "state"
-  ("m" z-state-meow "meow")
-  ("e" z-state-evil "evil")
-  ("E" z-state-emacs "emacs"))
-
-;;(defhydra+ hydra-window ()
-;;("D" delete-window)
-;;("C-S-d" delete-other-windows)
-;;("C-S-S" window-toggle-side-windows)
-;;("C-S-b b" (lambda ()
-;;(interactive)
-;;(if (get-scroll-bar-mode)
-;;(set-scroll-bar-mode nil)
-;;(set-scroll-bar-mode 'left))
-;;)
-;;)
-;;("C-S-b h" horizontal-scroll-bar-mode)
-;;("mm" balance-windows)
-;;("mk" minimize-window)
-;;("mj" maximize-window)
-;;("C-v" visual-line-mode)
-;;("C-t" toggle-truncate-lines)
-;;("C-t" toggle-truncate-lines)
-;;("C-w" toggle-word-wrap)
-;;("s" z-state-hydra/body)
-;;)
-
-;; (defhydra+ hydra-window ()
-;;   ("f" project-find-file)
-;;   ("F" find-file)
-;;   ("x" execute-extended-command)
-;;   )
-
-;; (defhydra+ hydra-window ()
-;;   ("r" hydra-resize/body :exit t)
-;;   )
-
-(defhydra+ hydra-resize ()
-  ("w" hydra-window/body :exit t)
-  ("h" (lambda () (interactive) (shrink-window-horizontally 1)) "1" :column "Shrink |")
-  ("C-h" (lambda () (interactive) (shrink-window-horizontally 2)) "2")
-  ("C-S-h" (lambda () (interactive) (shrink-window-horizontally 4)) "4")
-  ("l" (lambda () (interactive) (enlarge-window-horizontally 1)) "1" :column "Enlarge |")
-  ("C-l" (lambda () (interactive) (enlarge-window-horizontally 2)) "2")
-  ("C-S-l" (lambda () (interactive) (enlarge-window-horizontally 4)) "4")
-  ("j" (lambda () (interactive) (shrink-window 1)) "1" :column "Shrink --")
-  ("C-j" (lambda () (interactive) (shrink-window 2)) "2")
-  ("C-S-j" (lambda () (interactive) (shrink-window 4)) "4")
-  ("k" (lambda () (interactive) (enlarge-window 1)) "1" :column "Enlarge --")
-  ("C-k" (lambda () (interactive) (enlarge-window 2)) "2")
-  ("C-S-k" (lambda () (interactive) (enlarge-window 4)) "4")
-  )
-
 (general-define-key
- :keymaps 'menu-run-keymap
- "r" 'window-toggle-side-windows
+ :keymaps 'menu-run-map
+ "r" (** window-toggle-side-windows)
  )
-
-;;(defhydra+ hydra-run ()
-  ;;("r" window-toggle-side-windows "Toggle Side Windows")
-  ;;)
 
 
 (defun z-async-blowup ()
@@ -202,63 +158,3 @@
           ;; and reset to (global) default size
           (text-scale-adjust 0))
  )
-
-
-
-
-
-
-(setq z-tile-dimensions
-      '((origin_x . 1)
-        (origin_y . 1)
-        (center_x . 960)
-        (center_y . 600)
-        (width . 239)
-        (height . 84)
-        (width_half . 119)
-        (height_half . 36)))
-
-
-(defun z-tile-split (arg)
-  (interactive)
-  (cond
-   ((equal arg "left") (z-tile 'width_half 'height 'origin_x 'origin_y))
-   ((equal arg "right") (z-tile 'width_half 'height 'center_x 'origin_y))
-   ((equal arg "full") (z-tile 'width 'height 'origin_x 'origin_y))
-   ((equal arg "top") (z-tile 'width 'height_half 'origin_x 'origin_y))
-   ((equal arg "bot") (z-tile 'width 'height_half 'origin_x 'center_y))
-   ((equal arg "topleft") (z-tile 'width_half 'height_half 'origin_x 'origin_y))
-   ((equal arg "topright") (z-tile 'width_half 'height_half 'center_x 'origin_y))
-   ((equal arg "botleft") (z-tile 'width_half 'height_half 'origin_x 'center_y))
-   ((equal arg "botright") (z-tile 'width_half 'height_half 'center_x 'center_y))
-   )
-  )
-
-(defun z-tile (sh sv ph pv)
-  "This function tiles the frame on the screen"
-  (when window-system (progn
-                        (set-frame-size (selected-frame)
-                                        (alist-get sh z-tile-dimensions)
-                                        (alist-get sv z-tile-dimensions))
-                        (set-frame-position (selected-frame)
-                                            (alist-get ph z-tile-dimensions)
-                                            (alist-get pv z-tile-dimensions))))
-  )
-
-
-;;(defhydra+ hydra-window ()
-  ;;("M" hydra-tile/body :exit t)
-  ;;)
-
-(defhydra+ hydra-tile ()
-  ("w" hydra-window/body :exit t)
-  ("m" toggle-frame-maximized "Maximize" :column "Full")
-  ("i" (z-tile-split "top") "Top" :column "Half") 
-  ("k" (z-tile-split "bot") "Bottom")
-  ("h" (z-tile-split "left") "Left")
-  (";" (z-tile-split "right") "Right")
-  ("u" (z-tile-split "topleft") "Top Left" :column "Quarter")
-  ("o" (z-tile-split "topright") "Top Right")
-  ("j" (z-tile-split "botleft") "Bottom Left")
-  ("l" (z-tile-split "botright") "Bottom Right")
-  )

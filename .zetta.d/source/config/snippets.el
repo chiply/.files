@@ -116,12 +116,6 @@
   :display
   ;;(z-side "snippet-mode" 'right 1) 
 
-  :hydra
-  (defhydra+ hydra-yas ()
-    ("n" z-snip-new-snippet "New" :exit t)
-    ("f" z-snip-search-snippets "Go to Snippets" :exit t)
-    )
-
   :general
   (
    :keymaps 'yas-keymap

@@ -25,10 +25,12 @@
 
 
   (telephone-line-defsegment zt-flappy-fish ()
-    ;; if the window is the active window
-    (if (equal (current-buffer) (get-buffer-window))
+    (if (equal
+         (current-buffer)
+         (window-buffer (selected-window)))
         fish-mode-line-string
-      ""))
+      ;; NOTE doesn't work, leaves behind an un-rendered animation frame
+      "foo"))
 
 
   (telephone-line-defsegment zt-vc-segment-repo-icon ()
@@ -110,22 +112,21 @@
 
 
   (telephone-line-defsegment zt-parrot ()
-    (when (and
-           ;;(or
-           ;;(string= (symbol-name major-mode) "org-mode")
-           ;;(string= (symbol-name major-mode) "magit-status-mode")
-           ;;)
-           (equal z-parrot-window (selected-window))
-           (equal z-parrot-buffer (current-buffer))
-           )
+    (when (or
+           (and
+            (equal z-parrot-window (selected-window))
+            (equal z-parrot-buffer (current-buffer))
+            (string= (symbol-name major-mode) "org-mode"))
+           (and
+            (string= (symbol-name major-mode) "magit-status-mode")
+            (equal z-parrot-window (selected-window))
+            (equal z-parrot-buffer (current-buffer))))
       (parrot-create)))
 
   (telephone-line-defsegment zt-popper-popup ()
     (if (and (boundp 'popper-popup-status) popper-popup-status)
-        (all-the-icons-vscode-codicons "layout-sidebar-left")
-      ""
-      )
-    )
+        (all-the-icons-vscode-codicons "layout-sidebar-left") ;; NOTE requires svg branch
+      ""))
 
   (setq telephone-line-primary-left-separator 'telephone-line-halfcos-left
         telephone-line-primary-right-separator 'telephone-line-halfcos-right
@@ -164,10 +165,10 @@
 
   (setq telephone-line-target 'mode-line)
   (setq telephone-line-rhs '(
+                             ;;(nil . (zt-flappy-fish))
                              (nil . (zt-parrot))
-                             (nil . (zt-flappy-fish))
                              ))
-  (setq telephone-line-evil-use-short-tag t)
+  (setq telephone-line-evil-use-short-tag nil)
   (setq telephone-line-separator-extra-padding 0)
   (setq telephone-line-height 40)
 

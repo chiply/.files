@@ -14,24 +14,22 @@
 (transparency 93)
 
 
-(general-define-key
- :keymaps 'menu-theme-keymap
- "T" (lambda ()
-         (interactive)
-         (setq prefix-help-command 'versatile-C-h)
-         (when debug-on-error
-           (toggle-debug-on-error)
-           (message "Debug-on-error is off"))
-         (z-brushup)
-         )
- )
+(defun z-theme-brushup ()
+  (interactive)
+  (setq prefix-help-command 'versatile-C-h)
+  (when debug-on-error
+    (toggle-debug-on-error)
+    (message "Debug-on-error is off"))
+  (z-brushup))
 
 (general-define-key
- :keymaps 'menu-window-keymap
- ;;"t" 'hydra-theme/body
- "t" 'menu-theme
- "T" 'transparency
- )
+ :keymaps 'menu-theme-map
+ "T" (** z-theme-brushup))
+
+(general-define-key
+ :keymaps 'menu-window-map
+ "t" 'menu-theme-map
+ "T" (** transparency))
 
 ;;;;;;;;; OLIVETTI
 ;;(use-package olivetti

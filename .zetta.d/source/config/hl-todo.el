@@ -11,5 +11,6 @@
           ("DONE"   . "#0000FA0F0000")
           ("NOTE"   . "#0000FA")
           ("PROMPT"   . "#9B9B3030FFFF")
+          ("EXPLANATION"   . "PaleGreen4")
           ))
-  :hook ((prog-mode markdown-mode org-mode) . hl-todo-mode))
+  :hook ((prog-mode markdown-mode org-mode yaml-mode) . hl-todo-mode))

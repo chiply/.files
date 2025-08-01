@@ -5,7 +5,6 @@ source ~/.jfrog_credentials
 # this script assumes thigns have already been bootstrapped
 export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew:$PATH
 
-source ~/zsh-snap/znap.zsh
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -62,8 +61,8 @@ export GEM_HOME="$HOME/.gem"
 
 
 # completion
-autoload bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
+autoload bashcompinit && bashcompinit -C
+autoload -Uz compinit && compinit -C
 
 # expand alias this is such a critical binding as it allows you to
 # acheive the convenience of aliases.  When the completion is
@@ -80,10 +79,9 @@ complete -C '/usr/local/bin/aws_completer' aws
 complete -C '/usr/local/bin/aws_completer' awslocal
 
 
-
-
-
 # autosuggestion
+source ~/zsh-snap/znap.zsh
+
 znap source marlonrichert/zsh-autocomplete
 bindkey "^ " autosuggest-fetch
 bindkey "^f" forward-char
@@ -97,13 +95,6 @@ zstyle ':autocomplete:*' list-lines 6
 zstyle ':autocomplete:history-search:*' list-lines 6
 zstyle ':autocomplete:history-incremental-search-*:*' list-lines 6
 zstyle ':autocomplete:*' insert-unambiguous yes
-
-
-# syntax highlighting
-#source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-
-
 
 
 # aliases
@@ -180,8 +171,11 @@ function precmd() {
   fi
 }
 
-export PROMPT=$'\n''%n@%m'$'\n''$(git rev-parse --show-toplevel 2> /dev/null | xargs basename || pwd ):$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\n'
+export PROMPT=$'\n''%n@%m'$'\n''$(git rev-parse --show-toplevel 2> /dev/null | xargs basename || pwd ):$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\n''$(pwd)'$'\n'
 #'x---}-> '
+
+# how can I add current directory to the prompt
+
 
 
 # for vterm directory tracking

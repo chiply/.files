@@ -1,10 +1,31 @@
 (use-package parrot
   :demand t
   :ensure (parrot :type git :host github :repo "positron-solutions/parrot")
+  :config
+  (setq parrot-party-on-magit-push t)
+
+  (defun parrot--magit-push-filter (fun &rest args)
+    "If the git command is a push, add a process ending listener.
+FUN is usually `magit-run-git-async'
+ARGS is args for `magit-run-git-async'"
+    (if-let* ((process (apply fun args))
+              (command (car args)))
+        (progn (when (and (stringp command) (string= "push" command))
+                 ;; NOTE updating this to wait for the push to
+                 ;; complete -- otherwise there is lagging magit is
+                 ;; locking emacs for some reason
+                 (run-with-timer
+                  1.5 nil
+                  (lambda ()
+                    (parrot-party-while-process process))))
+               process)))
+
   :custom
   (parrot-animate 'hide-static)
   (parrot-rotate-animate-after-rotation nil)
-  (parrot-num-rotations 4)
+  ;; trying to prevent jittering due to pushing freezing emacs
+  (parrot-num-rotations 5)
+  ;; doesn't work
   (parrot-party-on-org-todo-states '("DONE"))
   ;; NOTE I get issues with the othertypes
   (parrot-type 'default)

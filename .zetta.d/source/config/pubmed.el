@@ -1,6 +1,5 @@
 (use-package pubmed
-  :straight
-  (:host gitlab :repo "fvdbeek/emacs-pubmed")
+  :ensure (:host gitlab :repo "fvdbeek/emacs-pubmed")
 
   :commands (pubmed-search pubmed-advanced-search)
 
@@ -18,5 +17,9 @@
   (
    :keymaps 'pubmed-mode-map
    "C-<return>" 'pubmed-bibtex-write
+   )
+  (
+   :keymaps 'menu-lookup-map
+   "p" 'pubmed-search
    )
   )

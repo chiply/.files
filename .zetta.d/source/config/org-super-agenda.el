@@ -110,7 +110,9 @@ where is was when z-refresh-agenda was called"
     (highlight-regexp "-->" 'modus-themes-refine-red)
     )
 
-  (general-define-key :keymaps 'menu-run-keymap "a" 'z-org-agenda-main)
+  (general-define-key
+   :keymaps 'menu-run-map
+   "a" (** z-org-agenda-main))
 
 
   (org-super-agenda-mode)

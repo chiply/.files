@@ -362,58 +362,35 @@ async-shell-command"
          (targets (json-parse-string config-raw)))
     (ht-keys (ht-get targets "targets"))))
 
+
 ;; history
-(defun zmc-parse-zsh-history ()
-  "Parse the Zsh history file located at ~/.zsh_history and return a list of unique commands sorted by timestamp."
-  (let ((history-file (expand-file-name "~/.zsh_history"))
-        (commands '())
-        (unique-commands (make-hash-table :test #'equal)))
-    (with-temp-buffer
-      (insert-file-contents history-file)
-      (goto-char (point-min))
-      (while (re-search-forward "^: \\([0-9]+\\):[0-9]+;\\(.*\\)$" nil t)
-        (let ((command (match-string 2)))
-          (unless (gethash command unique-commands)
-            (push (cons (string-to-number (match-string 1)) command) commands)
-            (puthash command t unique-commands)))))
-    (setq commands (sort commands (lambda (a b) (< (car a) (car b)))))
-    (setq commands (mapcar #'cdr commands))
-    ;; remove any command starting with ls
-    (-filter
-     (lambda (cmd)
-       ;; TODO move list to config
-       (or
-        ;; string contains
-        (string-match-p "python" cmd)
-        (string-match-p "python3" cmd)
-        (string-match-p "poetry" cmd)
-        (string-match-p "/bin/sh" cmd)
-        (string-match-p "bash" cmd)
-        (string-match-p "pip" cmd)
-        (string-match-p "brew" cmd)
-        (string-match-p "pytest" cmd)
-        (string-match-p "docker" cmd)
-        (string-match-p "docker-compose" cmd)
-        (string-match-p "npm" cmd)
-        (string-match-p "node" cmd)
-        (string-match-p "pyreverse" cmd)
-        (string-match-p "code2flow" cmd)
-        (string-match-p "kubectl" cmd)
-        (string-match-p "tilt" cmd)
-        (string-match-p "dagster" cmd)
-        (string-match-p "wget" cmd)
-        (string-match-p "makefile2dot" cmd)
-        (string-match-p "pyan" cmd)
-        (string-match-p "alembic" cmd)
-        (string-match-p "litecli" cmd)
-        (string-match-p "temporal" cmd)
-        (string-match-p "sqlite" cmd)
-        (string-match-p "ipython" cmd)
-        (string-match-p "dbcli" cmd)
-        (string-match-p "nx" cmd)
-        ))
-     commands)
-    )) ; Return only the commands, sorted by timestamp
+;; (string-match-p "python" cmd)
+;; (string-match-p "python3" cmd)
+;; (string-match-p "poetry" cmd)
+;; (string-match-p "/bin/sh" cmd)
+;; (string-match-p "bash" cmd)
+;; (string-match-p "pip" cmd)
+;; (string-match-p "brew" cmd)
+;; (string-match-p "pytest" cmd)
+;; (string-match-p "docker" cmd)
+;; (string-match-p "docker-compose" cmd)
+;; (string-match-p "npm" cmd)
+;; (string-match-p "node" cmd)
+;; (string-match-p "pyreverse" cmd)
+;; (string-match-p "code2flow" cmd)
+;; (string-match-p "kubectl" cmd)
+;; (string-match-p "tilt" cmd)
+;; (string-match-p "dagster" cmd)
+;; (string-match-p "wget" cmd)
+;; (string-match-p "makefile2dot" cmd)
+;; (string-match-p "pyan" cmd)
+;; (string-match-p "alembic" cmd)
+;; (string-match-p "litecli" cmd)
+;; (string-match-p "temporal" cmd)
+;; (string-match-p "sqlite" cmd)
+;; (string-match-p "ipython" cmd)
+;; (string-match-p "dbcli" cmd)
+;; (string-match-p "nx" cmd)
 
 (defun zmc-get-parent-dirs (path)
   (let* ((path (string-join (butlast (split-string path "/")) "/"))
@@ -467,6 +444,37 @@ async-shell-command"
           repos))))
 
 
+
+
+;;(seq-filter
+;;(lambda (cmd) (not (string-prefix-p "dtach" cmd)))
+;;(parse-zsh-history "~/.zsh_history")
+;;)
+
+
+(defun parse-zsh-history (file)
+  "Parse zsh history FILE into a list of successful commands (exit code 0)."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (let (commands)
+      ;; NOTE filter out when success status isn't 1
+      (while (re-search-forward "^: [0-9]+:0;\\(.+\\)$" nil t) ; Note the ":0;" pattern
+        (let ((cmd (match-string 1)))
+          ;; Handle multi-line commands (ending with \)
+          (while (string-match "\\\\$" cmd)
+            (forward-line)
+            (let ((next-line (string-trim
+                              (buffer-substring-no-properties 
+                               (line-beginning-position)
+                               (line-end-position)))))
+              (setq cmd (concat (substring cmd 0 -1) " " next-line))))
+          (push cmd commands)))
+      
+      (seq-filter
+       (lambda (cmd) (not (string-prefix-p "dtach" cmd)))
+       (nreverse commands)))))
+
+
 (defun zmc-make-alist (project-path build-file-name build-file-type)
   (let* ((fname (concat project-path build-file-name))
          (project-path (expand-file-name project-path))
@@ -479,6 +487,8 @@ async-shell-command"
          (project-current-path (expand-file-name (cadr (cdr (project-current nil)))))
          ;; TODO factor out the subtarget logic
          (subtargets (cond
+                      ((string= build-file-type "history")
+                       (parse-zsh-history fname))
                       ((string= build-file-type "make")
                        (projection-multi-make--targets-from-file2 fname))
                       ((string= build-file-type "nx")
@@ -534,7 +544,8 @@ async-shell-command"
 
 
 (defun zmc-detect-targets (build-file-type build-file-regexp)
-  (let* ((projects (--filter (not (string= it "~/"))
+  (let* ((projects (--filter (and (string-suffix-p "/" it)
+                                  (not (string= it "~/")))
                              (append
                               (project-known-project-roots)
                               zmc-extra-project-paths)))
@@ -602,6 +613,7 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                                                     it (zmc-get-targets
                                                         "~/.config/tmuxinator/"
                                                         "tmuxinator" "")))))
+                       (history-targets (zmc-get-targets "~/" "history" ".zsh_history"))
                        ;;(detected-targets (ht-merge make-targets
                        ;;python-lsp-targets
                        ;;python-lsp-targets-1
@@ -622,7 +634,8 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                                                    (zmc-detect-targets
                                                     (ht-get v "build-file-type")
                                                     (ht-get v "build-file-regexp")))
-                                                 zmc-config)))
+                                                 zmc-config)
+                                                history-targets))
                                          )
                        (config-raw (with-temp-buffer
                                      (insert-file-contents "~/.cmds.yaml")
@@ -632,8 +645,13 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
                        ;; write the targets to cache
                        (_ (progn
                             (setq zmc-cache targets)
-                            (with-temp-buffer (insert (yaml-encode targets))
-                                              (write-file "~/.zmc-cache.yaml")))))
+                            (with-temp-buffer
+                              ;; NOTE avoids prompt for coding
+                              (insert "-*- coding: raw-text;-*-\n")
+                              (insert (yaml-encode targets))
+                              (write-file "~/.zmc-cache.yaml"))
+                            )
+                          ))
                   targets)))
              (target-keys (ht-keys (ht-select
                                     (lambda (k v) (if t t (eval (ht-get v "if"))))
@@ -751,5 +769,6 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
     ("build-file-regexp" "\\.sh")
     ("template" "./${build-file-name}")
     ("program" "vterm")))
-  ;; TODO add tmuxinator-targets-extra
+  ;; TODO add tmuxinator-targets-extra and history targets -- need an extra config that says if this is a getter
   ))
+

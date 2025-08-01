@@ -1,90 +1,3 @@
-
-
-
-
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Lookup
-
-
-
-
-
-
-
-
-
-
-
-
-
-(defun z-howdoi ()
-  (interactive)
-  (let ((query (completing-read "query: " '())))
-    (async-shell-command
-     ;; command
-     (format "howdoi %s" query)
-     ;; buffer name
-     (format "*howdoi-%s*" query)
-     )
-    )
-  )
-
-;;(z-side "^\\*howdoi-*" 'right 1)
-
-
-
-
-
-
-
-(defhydra+ hydra-lookup ()
-  ;; reddit
-  ;; twitter
-  ("d" define-word-at-point "Dictionary-at-point" :exit t :column "Words")
-  ("D" define-word "Dictionary" :exit t)
-  ("s" mw-thesaurus-lookup-at-point "Thesaurus" :exit t)
-  ("S" mw-thesaurus-lookup "Thesaurus" :exit t)
-  ("w" helm-wikipedia-suggest "Wikipedia" :exit t :column "Knowledge")
-  ("p" pubmed-search "PubMed" :exit t)
-  ("b" ivy-bibtex "(ivy) BibTeX" :exit t)
-  ("r" org-roam-ref-find "BibTeX" :exit t)
-  ("h" z-howdoi "howdoi" :exit t :column "Code")
-  ;; todo add sx and stack overflow
-  ;; need to authenticate
-  ;; eww search (analgous to a google search)
-  ("e" eww "eww" :exit t :column "Web")
-  ;; eww bookmarks
-  ;; specific eww urls
-
-  ;; pocket
-  ("p" pocket-reader "pocket" :exit t)
-
-  )
-
-(general-define-key
- :keymaps 'launch-map
- "l" 'hydra-lookup/body)
-
-
-;;(general-define-key
-;;:keymaps 'evil-insert-state-map
-;;(general-chord ",l") 'hydra-lookup/body
-;;
-;;)
-;;
-;;(general-define-key
-;;:states '(normal visual)
-;;:keymaps 'override
-;;:prefix ","
-;;"l" 'hydra-lookup/body
-;;)
-
-
-
-
-
 (defun z-wget ()
   (interactive)
   (let ((dir "~/Downloads/")
@@ -93,18 +6,11 @@
     (async-shell-command
      (concat "cd " dir " && " "wget " url))
     ;; add bibtex entry
-    (org-ref-url-html-to-bibtex "~/.files/.lit/bibliography.bib" url)
-
-    )
-  )
-
-
+    (org-ref-url-html-to-bibtex "~/.files/.lit/bibliography.bib" url)))
 
 ;; note!  embark act on links browses to them...
 
-
 ;; presumably get these from some interactive function
-
 
 ;; works reasonably well
 (defun z-download-pdf ()
@@ -134,6 +40,9 @@
   ;; download pdf
   )
 
-
-
-
+(defun append-to-zsh-history (command)
+  (let ((timestamp (format-time-string "%s"))
+        (hist-file (expand-file-name "~/.zsh_history")))
+    (write-region
+     (format ": %s:0;%s\n" timestamp command)
+     nil hist-file t)))

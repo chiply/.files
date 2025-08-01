@@ -171,6 +171,9 @@
           prog-mode
           text-mode
           org-mode
+          embark-collect-mode
+          eww-mode
+          Info-mode
           ;; all modes
           ;;special-mode
           ;;shell-command-mode
