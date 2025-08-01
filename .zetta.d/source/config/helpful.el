@@ -12,32 +12,27 @@
 
   (setq helpful-switch-buffer-function 'display-buffer)
 
+  (defun z-soda-cap-help ()
+    (interactive)
+    (z-soda-cap "[H|h]elp*" 1))
+
   (general-define-key
-   :keymaps 'menu-run-keymap
-   "H" (lambda () (interactive) (z-soda-cap "[H|h]elp*" 1)))
+   :keymaps 'menu-run-map
+   "H" (** z-soda-cap-help))
 
-  :hydra
-
-  (defhydra+ hydra-helpful ()
-    ("c" helpful-command "Command" :column "Helpful")
-    ("f" helpful-function "Function" :exit t)
-    ("v" helpful-variable "Variable" :exit t)
-    ("h" z-jump-to-doc "At point" :exit t)
-    ("k" helpful-key "Key sequence" :exit t)
-    ("a" helm-apropos "Apropos" :column "Helm apropos" :exit t)
-    ("A" apropos "Apropos" :exit t)
-    ("m" z-describe-mode "Mode" :column "Mode" :exit t)
-    ("i" info "Info" :column "Manual" :exit t)
-    )
-
-  ;;(defhydra+ hydra-run ()
-    ;;("H" (lambda () (interactive) (z-soda-cap "[H|h]elp*" 1)) "Help")
-    ;;)
 
   :general
   (
-   :keymaps 'launch-map
-   "h" 'hydra-helpful/body
+   :keymaps 'menu-help-map
+   "c" 'helpful-command
+   "f" 'helpful-function
+   "v" 'helpful-variable
+   "h" 'z-jump-to-doc
+   "k" 'helpful-key
+   "a" 'helm-apropos
+   "A" 'apropos
+   "m" 'z-describe-mode
+   "i" 'info
    )
 
   :hook (helpful-mode . (lambda () (text-scale-set -2)))

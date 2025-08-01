@@ -5,6 +5,9 @@
   (setq eww-auto-rename-buffer 'title)
   (setq eww-bookmarks-directory (expand-file-name "data/eww" user-emacs-directory))
 
+  ;; execute eww-readable after eww finishes loading the page
+  (add-hook 'eww-after-render-hook (lambda () (eww-readable)))
+
   (defun z-eww-switch-to-eaf ()
     (interactive)
     (eaf-open-browser (eww-current-url))
@@ -22,7 +25,10 @@
    "<return>" 'z-eww-follow-link
    "x" '(lambda () (interactive) (kill-buffer (current-buffer)))
    )
-
+  (
+   :keymaps 'menu-lookup-map
+   "e" 'eww
+   )
   )
 
 

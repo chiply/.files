@@ -262,30 +262,24 @@ Version 2019-11-04"
            (lambda ($fpath) (let ((process-connection-type nil))
                               (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
+
+  (defun z-soda-drink-dired ()
+    (interactive)
+    (z-soda-drink
+     (quote z-soda-create-and-display-dired)
+     "dired-mode"))
+
+
+  (defun z-soda-cap-dired ()
+    (interactive)
+    (z-soda-cap "\\dired-mode*" 1))
+  
+
   (general-define-key
-   :keymaps 'menu-run-keymap
-   "d" (lambda ()
-         (interactive)
-         (z-soda-drink
-          (quote z-soda-create-and-display-dired)
-          "dired-mode")
-         )
-   "D" (lambda () (interactive) (z-soda-cap "\\dired-mode*" 1)))
+   :keymaps 'menu-run-map
+   "d" (** z-soda-drink-dired)
+   "D" (** z-soda-cap-dired))
 
-
-  ;;:display
-  ;;(z-side "\\dired-mode" 'left 1 0.10)
-
-  ;;:hydra
-  ;;(defhydra+ hydra-run ()
-  ;;("d" (lambda ()
-  ;;(interactive)
-  ;;(z-soda-drink
-  ;;(quote z-soda-create-and-display-dired)
-  ;;"dired-mode"))
-  ;;"Dired")
-  ;;("D" (lambda () (interactive) (z-soda-cap "\\dired-mode*" 1)) "Dired" )
-  ;;)
 
   :general
   (

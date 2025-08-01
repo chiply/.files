@@ -100,6 +100,7 @@
     )
 
   :config
+  (setq vterm-always-compile-module t)
 
   (setq vterm-shell "zsh")
 
@@ -141,15 +142,18 @@ Prompt for a vterm buffer and store it as a buffer-local variable."
 
   (add-hook 'vterm-mode-hook 'my-buffer-face-mode-pt-mono)
 
-  (general-define-key
-   :keymaps 'menu-run-keymap
-   "s" (lambda ()
-         (interactive)
-         (z-soda-drink (quote z-soda-create-and-display-term) (z-soda-prompt-term-buffer))
-         )
-   "S" (lambda () (interactive) (z-soda-cap "\\term-mode*" 1))
-   )
+  (defun z-soda-drink-term ()
+    (interactive)
+    (z-soda-drink (quote z-soda-create-and-display-term) (z-soda-prompt-term-buffer)))
 
+  (defun z-soda-cap-term ()
+    (interactive)
+    (z-soda-cap "\\term-mode*" 1))
+
+  (general-define-key
+   :keymaps 'menu-run-map
+   "s" (** z-soda-drink-term)
+   "S" (** z-soda-cap-term))
 
   :display
   ;;(z-side "^\\*zsh*" 'bottom)
@@ -176,17 +180,6 @@ Prompt for a vterm buffer and store it as a buffer-local variable."
    "C-k" 'vterm-send-up
    "C-j" 'vterm-send-down
    )
-
-  ;;:hydra
-  ;;(defhydra+ hydra-run ()
-  ;;("s" (lambda ()
-  ;;(interactive)
-  ;;(z-soda-drink (quote z-soda-create-and-display-term) (z-soda-prompt-term-buffer))
-  ;;) "shell" :exit t)
-  ;;("S" (lambda () (interactive) (z-soda-cap "\\term-mode*" 1)) "Terminal" )
-  ;;
-  ;;)
-  
 
   :hook ((vterm-mode . (lambda ()
                          (setq global-hl-line-mode nil)

@@ -1,14 +1,9 @@
 (use-package default-text-scale
-  ;;:after face-remap
-  ;;:hydra
-  ;;(defhydra+ hydra-window ()
-    ;;("C-+" default-text-scale-increase)
-    ;;("C-_" default-text-scale-decrease)
-    ;;)
+  :after face-remap
   :general
   (
-   :keymaps 'menu-window-keymap
-   "C-+" 'default-text-scale-increase
-   "C-_" 'default-text-scale-decrease
+   :keymaps 'menu-window-map
+   "C-+" (** default-text-scale-increase)
+   "C-_" (** default-text-scale-decrease)
    )
   )

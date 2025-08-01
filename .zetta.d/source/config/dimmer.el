@@ -41,7 +41,8 @@
   (dimmer-configure-minimap)
   (setq dimmer-fraction 0.4)
   (setq dimmer-watch-frame-focus-events nil)
-  (dimmer-mode t))
+  (dimmer-mode t)
+  )
 
 
 

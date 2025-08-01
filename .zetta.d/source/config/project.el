@@ -1,34 +1,37 @@
 (use-package project
   :ensure nil ;; builtin 
+  :after consult
   :demand t
   :config
-  (general-define-key
-   :keymaps 'menu-project-keymap
-   "w" 'menu-window
-   "a" 'consult-ripgrep
-   "p" 'project-switch-project
-   "d" 'project-find-dir
-   "f" 'project-find-file)
-  (general-define-key
-   :keymaps 'menu-window-keymap
-   "p" 'menu-project)
+  (use-package consult-project-extra
+    :config
+    ;; TODO no sorting by recency in files?
+    ;; suddenly started working though...
+    (consult-customize
+     consult-project-extra-find
+     :preview-key "C-="))
 
-  ;;:hydra
-  ;;(defhydra+ hydra-window ()
-  ;;("p" hydra-project/body :exit t)
-  ;;)
+  (defun consult-project-switch-project ()
+    (interactive)
+    (let ((default-directory (consult--read
+                              (project-known-project-roots)
+                              :prompt "Project: "
+                              :category 'project)))
+      (call-interactively 'magit)))
+  
+  (general-define-key
+   :keymaps 'menu-project-map
+   ;; TODO see if this works
+   "w" 'menu-window-map
+   "a" (** consult-ripgrep)
+   "p" (** consult-project-switch-project)
+   "d" (** project-find-dir)
+   "f" (** consult-project-extra-find)
+   )
 
-  ;;(defhydra+ hydra-project ()
-  ;;("w" hydra-window/body :exit t)
-  ;;("A"   (lambda () (interactive)
-  ;;(let ((current-prefix-arg '(4)))
-  ;;(call-interactively 'consult-ripgrep)))
-  ;;"rg - dir" :exit t :column "grep") 
-  ;;("a"   consult-ripgrep "rg" :exit t :column "grep") 
-  ;;("p"   project-switch-project "switch project" :exit t :column "Goto")
-  ;;("d"   project-find-dir "dir")
-  ;;("f"   project-find-file "file")
-  ;;)
+  (general-define-key
+   :keymaps 'menu-window-map
+   "p" (** menu-project))
   )
 
 ;; TODO seems like this is under active development, just enabling,

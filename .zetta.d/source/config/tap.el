@@ -111,27 +111,13 @@ used to override thing at point for whatever reason"
  "s-/" 'z-comment
  )
 
-
-
-
-;; Wow this is concise....
-(defhydra hydra-tap-viz (:hint nil :color red)
-  "Foobar"
-  ("w" (lambda () (interactive)
-         (z-pulse 'word)))
-  ("l" (lambda () (interactive)
-         (z-pulse 'line)))
-  ("d" (lambda () (interactive)
-         (z-pulse 'defun)))
-  ("p" (lambda () (interactive)
-         (z-pulse 'paragraph)))
-  )
-
 (use-package expand-region
   :general
   (
    :states '(normal visual)
    :keymaps '(
+              ;; TODO delete unnecessary modes since including prog
+              ;; mode
               org-mode-map org-agenda-mode-map sql-mode-map
               python-ts-mode-map lisp-interaction-mode-map
               emacs-lisp-mode-map lisp-mode-map dired-mode-map
@@ -141,33 +127,23 @@ used to override thing at point for whatever reason"
               pubmed-show-mode-map json-mode-map eww-mode-map
               jmespath-mode-map jsonian-mode-map js2-mode-map
               compilation-mode-map lark-mode-map css-mode-map
-              fundamental-mode-map lisp-data-mode-map
+              fundamental-mode-map lisp-data-mode-map prog-mode-map
               )
-   "C-e" 'er/expand-region
-   ))
+   "C-e" 'er/expand-region))
 
 
 (defun z-thing-at-bobp ()
   (interactive)
   (eq 1 (save-excursion
           (beginning-of-thing focus-current-thing)
-          (point)))
-  )
+          (point))))
+
 
 (defun z-thing-at-eobp ()
   (interactive)
   (save-excursion
     (end-of-thing focus-current-thing)
     (eobp)))
-
-
-
-
-
-
-
-
-
 
 
 

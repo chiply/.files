@@ -1,17 +1,20 @@
 #!python3
-
 import argparse
 import snowflake.connector
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning)
 
 # usage: python3 my_snowsql.py -a xxx -u xxx@xxx.COM --query "select 1"
-
 # need to run `pip install # "snowflake-connector-python[secure-local-storage,pandas]"`
 
-def run_query(account, username, query):
+def run_query(account, username, query, database, role):
     # Connect to Snowflake
     conn = snowflake.connector.connect(
         user=username,
         account=account,
+        database=database or 'EXAMPLE_DB',
+        role=role or 'EXAMPLE_ROLE',
         authenticator='externalbrowser',  # or 'sso' if you're using SSO directly
     )
 
@@ -19,7 +22,9 @@ def run_query(account, username, query):
         # use pandas to query the data and print it to the console in a nice format
         import pandas as pd
         df = pd.read_sql(query, conn)
-        print(df)
+        # print the df as a table
+        print(df.to_string(index=False))
+
         
     finally:
         conn.close()
@@ -29,11 +34,13 @@ def main():
     parser = argparse.ArgumentParser(description='Run a Snowflake SQL query via CLI.')
     parser.add_argument('-a', '--account', required=True, help='Snowflake account identifier')
     parser.add_argument('-u', '--username', required=True, help='Snowflake username')
+    parser.add_argument('-d', '--database', required=False, help='Snowflake db')
+    parser.add_argument('-r', '--role', required=False, help='Snowflake role')
     parser.add_argument('--query', required=True, help='SQL query to execute')
     
     args = parser.parse_args()
 
-    run_query(args.account, args.username, args.query)
+    run_query(args.account, args.username, args.query, args.database, args.role)
 
 if __name__ == '__main__':
     main()

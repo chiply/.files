@@ -57,22 +57,22 @@
                   ("repl" "ipython")
                   ("repl-p" "no")
                   ("pos" "t0")
-                          ("suppress-output" "yes")
+                  ("suppress-output" "yes")
                   ))
       ("python-ts-mode" (ht
-                      ("exec" "python")
-                      ("venv" "~/envs/main")
-                      ("suff" "py")
-                      ("wraps" ())
-                      ("wrap" "# ${sourcefile} \n${code}")
-                      ("wrapnm" "none")
-                      ("dir" dir)
-                      ("procname" nil)
-                      ("repl" "ipython")
-                      ("repl-p" "no")
-                      ("pos" "t0")
-                          ("suppress-output" "yes")
-                      ))
+                         ("exec" "python")
+                         ("venv" "~/envs/main")
+                         ("suff" "py")
+                         ("wraps" ())
+                         ("wrap" "# ${sourcefile} \n${code}")
+                         ("wrapnm" "none")
+                         ("dir" dir)
+                         ("procname" nil)
+                         ("repl" "ipython")
+                         ("repl-p" "no")
+                         ("pos" "t0")
+                         ("suppress-output" "yes")
+                         ))
       ("dockerfile-mode" (ht
                           ("exec" "python")
                           ("venv" "~/envs/main")
@@ -102,7 +102,7 @@
                         ("repl-p" "no")
                         ("pos" "t0")
                         ("json_file" "json.json")
-                          ("suppress-output" "yes")
+                        ("suppress-output" "yes")
                         ))
       ("yaml-mode" (ht
                     ("exec" "python")
@@ -121,7 +121,7 @@
                     ("workflow_file" (buffer-name))
                     ("secret_file_path" "~/.secrets")
                     ("event_path" "")
-                          ("suppress-output" "yes")
+                    ("suppress-output" "yes")
                     ))
       ("sql-mode" (ht
                    ("exec" "python")
@@ -138,7 +138,7 @@
                    ("repl" "ipython")
                    ("repl-p" "no")
                    ("pos" "t0")
-                          ("suppress-output" "yes")
+                   ("suppress-output" "yes")
                    ))
       ("emacs-lisp-mode" (ht
                           ("exec" "foobar")
@@ -341,43 +341,6 @@
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  Keys
-(defhydra+ hydra-4mn ()
-  "
----Inner Command---
-%s(4mn-get-inner-cmd)
-
----Command Components---
-Executable: %s(g 'exec); Venv: %s(g 'venv); Directory: %s(g 'dir); sqlite3dbpath: %s(g 'sqlite3dbpath); workgroup: %s(g 'workgroup)
-Context: %s(if (boundp '4mn--local--outer-cmd) 4mn--local--outer-cmd \"None\"); Machine: %s(if (string= (4mn-get-tramp-context) \"\") \" Local Metal\" (4mn-get-tramp-context))
-Position: %s(g 'pos)
-
----WrapperName: %s(g 'wrapnm)---
-%s(format (g 'wrap) \"CODEHERE\")
- "
-  ("e" 4mn-set-executable)
-  ("n" 4mn-set-procname)
-  ("v" 4mn-set-venv)
-  ("d" 4mn-set-dir)
-  ("W" 4mn-set-wraps)
-  ("D" 4mn-set-sqlite3dbpath)
-  ("g" 4mn-set-workgroup)
-  ("r" 4mn-set-repl)
-  ("p" 4mn-set-pos)
-  ("a" 4mn-set-action)
-  ("f" 4mn-set-workflow-file)
-  ("t" 4mn-set-type)
-  ("s" 4mn-set-suppress-output)
-  ("S" 4mn-set-secret-file-path)
-  ("E" 4mn-set-event-path)
-  ("C-d" 4mn-set-dockerfile)
-  ("i" 4mn-set-image-name)
-  ("R" 4mn-init-conf)
-  ("j" 4mn-set-json-file)
-  ("<return>" detached-list-sessions :exit t)
-  )
-
-
 (let ((modes '(
                python-ts-mode-map sh-mode-map js2-mode-map ruby-mode-map
                go-mode-map scala-mode-map ess-r-mode-map ess-r-help-mode-map
@@ -393,12 +356,7 @@ Position: %s(g 'pos)
 
 
    )
-  (general-define-key
-   :states '(normal visual)
-   :keymaps modes
-   :prefix ","
-   "<return>" 'hydra-4mn/body
-   )
+  
   )
 
 

@@ -2,21 +2,13 @@
  :keymaps 'override
  "C-s" 'save-buffer)
 
-(defun z-projectile-find-file ()
-  (interactive)
-  (if (cdr (project-current nil))
-      (project-find-file)
-    (call-interactively 'find-file)
-    )
-  )
-
 (general-define-key
  :keymaps 'launch-map
  ;;"o" 'hydra-org/body
  "b" 'consult-buffer
  "B" 'consult-buffer
  "x" 'execute-extended-command
- "f" 'project-find-file
+ "f" 'consult-project-extra-find
  "F" 'find-file
  "k" 'kill-current-buffer)
 
