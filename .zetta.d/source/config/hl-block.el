@@ -76,8 +76,12 @@
   "Highlight given NODE using overlays."
 
   (let* ((type (treesit-node-type node))
-         (symbol (format " %s"
-                         (or (cdr (assoc type hl-block-types)) "-")))
+         ;; NOTE disabling the symbol as it causes alignment issues at
+         ;; certain font sizes. and with certain other features like
+         ;; side-line mode
+         ;;(symbol (format " %s"
+                         ;;(or (cdr (assoc type hl-block-types)) "-")))
+         (symbol "")
          (header-start (save-excursion
                          (goto-char (treesit-node-start node))
                          (line-beginning-position)))

@@ -18,6 +18,7 @@
 
 ;;; Code:
 
+
 ;;; API Reference: https://developer.spotify.com/web-api/
 (require 'json)
 ;;(require 'helm)
@@ -87,10 +88,11 @@
 
 (defun spot4e-retrieve-url-to-alist-synchronously (url)
   "Return alist representation of json response from URL."
-  (with-current-buffer (url-retrieve-synchronously url)
-    (json-read-from-string
-     (decode-coding-region (+ 1 url-http-end-of-headers)
-                           (point-max) 'utf-8 t))))
+  (with-current-buffer (url-retrieve-synchronously url nil nil 10)
+    (let ((json (decode-coding-region (+ 1 url-http-end-of-headers)
+                                      (point-max) 'utf-8 t)))
+      (when (not (string= json ""))
+       (json-read-from-string json)))))
 
 
 (defun spot4e-request (method url &optional q-params parse-json extra-headers data)
@@ -106,7 +108,7 @@ alist of headers, and DATA is request body data as JSON."
         (spot4e-retrieve-url-to-alist-synchronously
          (concat url q-params))
       (url-retrieve-synchronously
-       (concat url q-params)))))
+       (concat url q-params) nil nil 10))))
 
 
 (defun spot4e-authorize ()
@@ -279,10 +281,10 @@ an alist representing the actions on a candidate."
   (setq spot4e-context-address context-address)
   (helm
    :sources (helm-build-sync-source helm-source-name
-                                    :candidates 'spot4e-helm-candidates
-                                    :action helm-actions
-                                    :volatile t
-                                    :multiline t)))
+              :candidates 'spot4e-helm-candidates
+              :action helm-actions
+              :volatile t
+              :multiline t)))
 
 
 (defun spot4e-format-track-for-mini-buffer-display (item)
@@ -492,6 +494,7 @@ extract data via ALIST-ADDRESS."
   (interactive)
   (fset 'spot4e-goback-from-albums-fn 'spot4e-helm-search-artists)
   (spot4e-helm-artists "search" (concat "&type=" "artist")))
+
 
 
 ;;
@@ -720,21 +723,21 @@ SELECTION.  Type of track object given by TYPE"
   "Allows user to specify playlist (for use in the spot4e-save-to-playlisit function)"
   (helm
    :sources (helm-build-sync-source "genres"
-                                    :candidates
-                                    (append
-                                     (alist-get 'genres
-                                                (spot4e-request "GET"
-                                                                (concat spot4e-recommendations-url "/" "available-genre-seeds")
-                                                                (concat "?access_token=" spot4e-access-token)
-                                                                t
-                                                                `(("Content-Length" . "0"))
-                                                                )
-                                                )
-                                     nil)
-                                    :action '(("Select Genre" . (lambda (candidate)
-                                                                  (setq spot4e-selected-genre candidate))))
-                                    :volatile t
-                                    :multiline t)
+              :candidates
+              (append
+               (alist-get 'genres
+                          (spot4e-request "GET"
+                                          (concat spot4e-recommendations-url "/" "available-genre-seeds")
+                                          (concat "?access_token=" spot4e-access-token)
+                                          t
+                                          `(("Content-Length" . "0"))
+                                          )
+                          )
+               nil)
+              :action '(("Select Genre" . (lambda (candidate)
+                                            (setq spot4e-selected-genre candidate))))
+              :volatile t
+              :multiline t)
    ))
 
 (defun spot4e-helm-search-recommendation-genres (&optional goback-alist)

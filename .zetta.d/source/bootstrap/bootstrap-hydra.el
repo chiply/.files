@@ -1,5 +1,7 @@
 ;;; -*- lexical-binding: t -*-
 
+(setq shouldnt-load nil)
+
 (setq hydra-registry '())
 ;; My approach to hydra is broken by elpaca -- something is going on
 ;; with the code here related to many threads operating on the same

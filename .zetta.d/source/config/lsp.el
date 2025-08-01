@@ -13,6 +13,7 @@
   :init
   (setq
    lsp-progress-via-spinner nil
+   lsp-progress-spinner-type nil
    lsp-enable-completion-at-point t
    lsp-completion-provider :none
    lsp-idle-delay 0.500
@@ -127,17 +128,17 @@ point."
       ;; make sure header-line-format, if non-nil, is a list.  as
       ;; mode-line-format says: "The value may be nil, a string, a
       ;; symbol or a list."
-      (add-hook 'xref-after-jump-hook #'lsp-headerline--check-breadcrumb nil t)
+      (add-hook 'xref-after-jump-hook #'lsp-headerline-check-breadcrumb nil t)
 
-      (add-hook 'lsp-on-idle-hook #'lsp-headerline--check-breadcrumb nil t)
+      (add-hook 'lsp-on-idle-hook #'lsp-headerline-check-breadcrumb nil t)
       (add-hook 'lsp-configure-hook #'lsp-headerline--enable-breadcrumb-1 nil t)
       (add-hook 'lsp-unconfigure-hook #'lsp-headerline--disable-breadcrumb-1 nil t))
      (t
-      (remove-hook 'lsp-on-idle-hook #'lsp-headerline--check-breadcrumb t)
+      (remove-hook 'lsp-on-idle-hook #'lsp-headerline-check-breadcrumb t)
       (remove-hook 'lsp-configure-hook #'lsp-headerline--enable-breadcrumb-1 t)
       (remove-hook 'lsp-unconfigure-hook #'lsp-headerline--disable-breadcrumb-1 t)
 
-      (remove-hook 'xref-after-jump-hook #'lsp-headerline--check-breadcrumb t)
+      (remove-hook 'xref-after-jump-hook #'lsp-headerline-check-breadcrumb t)
 
       (setq lsp-headerline--path-up-to-project-segments nil)
       )))
@@ -244,7 +245,8 @@ point."
 
 
 
-  :hook ((python-ts-mode . lsp-deferred))
+  :hook ((python-ts-mode . (lambda ()
+                             (lsp-deferred))))
   )
 
 
@@ -377,22 +379,44 @@ point."
 
 (use-package lsp-ui
   :config
-  (setq lsp-ui-sideline-enable nil))
-
-(use-package lsp-treemacs-nerd-icons
-  :ensure (lsp-treemacs-nerd-icons :host github :repo "Velnbur/lsp-treemacs-nerd-icons" :files ("*.el"))
-  :after treemacs)
+  ;; sideline
+  (setq lsp-ui-sideline-show-hover t)
+  (setq lsp-ui-sideline-show-symbol t)
+  (setq lsp-ui-sideline-show-diagnostics t)
+  (setq lsp-ui-sideline-show-code-actions t)
+  
+  :hook
+  (((python-ts-mode) . lsp-ui-sideline-mode)
+   ;; NOTE imenu mode doesn't work in python, not sure why, but you
+   ;;can run lsp-ui-imenu to get a sideline... bizarre, maybe the
+   ;;command is falling back to builtin imenu ((python-ts-mode)
+   ;;. lsp-ui-imenu-mode)
+   ((python-ts-mode) . lsp-ui-doc-mode)
+   ((python-ts-mode) . lsp-ui-peek-mode)
+   ((after-save-hook) . (lambda ()
+                          ;; if buffer *lsp-ui-imenu* is displaying, then run lsp-imenu
+                          (when (buffer-live-p (get-buffer "*lsp-ui-imenu*"))
+                            (lsp-ui-imenu--refresh)
+                            )
+                          ))
+   ))
 
 (use-package lsp-treemacs
   :after (treemacs)
   :config
-  (setq lsp-treemacs-theme "Default"))
+  (setq lsp-treemacs-theme "Default")
+  (setq lsp-treemacs-error-list-expand-depth 10)
+  )
 
 (use-package lsp-pylsp
   :straight nil
   :custom
   (lsp-pylsp-plugins-flake8-enabled nil))
 
+(use-package lsp-pyright
+  :custom (lsp-pyright-langserver-command "basedpyright"))
+
 ;; NOTE don't use as not all lsps provide compatibility
 ;; (lsp-capability-not-supported "foldingRangeProvider") (use-package
 ;; lsp-focus)
+

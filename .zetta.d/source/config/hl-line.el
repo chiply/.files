@@ -11,7 +11,7 @@
   (add-to-list 'brushup-styles
                '(progn
                   (set-face-attribute 'hl-line nil
-                                      :background nil
+                                      :background 'unspecified
                                       :underline `(:color ,brushup-bg-2)
                                       )
                   ))

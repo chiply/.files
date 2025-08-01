@@ -12,10 +12,14 @@
   (add-hook 'emacs-lisp-mode 'copilot-mode)
   (add-hook 'lisp-interaction-mode 'copilot-mode)
   (add-hook 'yaml-mode-hook 'copilot-mode)
+  (add-hook 'dockerfile-mode 'copilot-mode)
+
+
+  
 
 
   ;; face
-  (set-face-attribute 'copilot-overlay-face nil :foreground "purple" :inherit 'default)
+  (set-face-attribute 'copilot-overlay-face nil :foreground "purple" :inherit nil)
   (setq copilot-indent-offset-warning-disable t)
   
   :general (:keymaps '(copilot-completion-map)
@@ -33,6 +37,8 @@
 
 (use-package gptel
   :demand t
+  :config
+  (gptel-make-anthropic "Claude" :stream t :key gptel-api-key)
   :general
   (
    :keymaps 'override

@@ -89,7 +89,7 @@
 (define-key global-map (kbd "C-=") 'zmenu-1-fun)
 
 ;; macro to bind a key to a keymap -- it creates the herc-def if it doesn't exist already
-;; TODO commit then start migrating -- 1 create the macro -- 2 replace all defhydras with general-define-key -- 3 replace all general jjjjjjjjjjjjjjjjjjjjjjjj
+;; TODO commit then start migrating -- 1 create the macro -- 2 replace all defhydras with general-define-key -- 3 replace all general
 
 
 ;;;;;;;;;;; UI

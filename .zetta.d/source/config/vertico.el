@@ -2,10 +2,10 @@
   :config
   ;;(vertico-posframe-mode 1)
   (setq vertico-posframe-parameters
-        '((left-fringe . 8)
-          (right-fringe . 8)))
+        '((left-fringe . 0)
+          (right-fringe . 0)))
   ;; TODO compute this dynamically
-  (setq vertico-posframe-width 180)
+  (setq vertico-posframe-width nil)
   (setq vertico-posframe-height nil))
 
 (use-package vertico
@@ -24,7 +24,14 @@
            ;; NEED to do both here
            (vertico-flat-mode . -1)
            (vertico-vertical-mode . 1))
-          (t flat)))
+          ;;(t flat)
+          ))
+
+  ;; TODO add embark prompt for keybinding to present candidates in
+  ;; GRID -- bc of how I bring these up (with veratile C-h), I'm
+  ;; having trouble
+  (add-to-list 'vertico-multiform-categories '(variable grid))
+
 
   (setq
    vertico-buffer-hide-prompt nil

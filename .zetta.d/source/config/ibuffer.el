@@ -7,27 +7,18 @@
     (interactive)
     (ibuffer nil buf-or-mode-name nil []))
 
+  (defun z-soda-drink-ibuffer ()
+    (interactive)
+    (z-soda-drink (quote z-soda-create-and-display-ibuffer) "*Ibuffer*"))
+
+  (defun z-soda-cap-ibuffer ()
+    (interactive)
+    (z-soda-cap "*Ibuffer*"))
+
   (general-define-key
-   :keymaps 'menu-run-keymap
-   "b" (lambda ()
-         (interactive)
-         (z-soda-drink (quote z-soda-create-and-display-ibuffer) "*Ibuffer*")
-         )
-   "B" (lambda () (interactive) (z-soda-cap "*Ibuffer*"))
-   )
-
-  :display
-  ;;(z-side "^\\*Ibuffer*" 'left 2 0.10)
-  
-
-  ;;:hydra
-  ;;(defhydra+ hydra-run ()
-  ;;("b" (lambda ()
-  ;;(interactive)
-  ;;(z-soda-drink (quote z-soda-create-and-display-ibuffer) "*Ibuffer*")
-  ;;) "Ibuffer" :column "Drink")
-  ;;("B" (lambda () (interactive) (z-soda-cap "*Ibuffer*")) "Ibuffer" :column "Cap")
-  ;;)
+   :keymaps 'menu-run-map
+   "b" (** z-soda-drink-ibuffer)
+   "B" (** z-soda-cap-ibuffer))
 
   :hook (
          (ibuffer-mode . (lambda () (visual-line-mode -1)))

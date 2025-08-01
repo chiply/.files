@@ -56,7 +56,7 @@
 
 (defun zmc-modeline-indicator ()
   (concat
-   "🏃‍♀️‍➡️"
+   ;;"🏃‍♀️‍➡️"
    (when (boundp 'local-transient) local-transient)
    " "
    ;;" || " "🌎 "
@@ -103,6 +103,14 @@
 
 ;; in *scratch*:
 
+(defun z-fish ()
+  (concat fish-mode-line-string " "))
+
+(defun z-tab-bar-spot-mode-line-string ()
+  (if (fboundp 'spot-mode-line-string)
+      (spot-mode-line-string)
+    "*"))
+
 
 (setq tab-bar-format '(;; everything here on will be aligned on the right
                        ;;z-tab-bar-hydra
@@ -115,7 +123,10 @@
                        ;;key-state
                        ;;z-nyan
                        new-line
+                       z-tab-bar-spot-mode-line-string
+                       new-line
                        tab-bar-format-align-right
+                       z-fish
                        recursion-indicator--string
                        ;;"  "
                        pom-ind
@@ -143,5 +154,3 @@
 ;; activate makefile-mode whenver a file is opened matching the regex "Makefile.*"
 (add-to-list 'auto-mode-alist '("Makefile.*" . makefile-mode))
 (add-hook 'window-selection-change-functions (lambda (_) (force-mode-line-update)))
-
-

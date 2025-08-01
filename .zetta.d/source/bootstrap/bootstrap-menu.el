@@ -21,9 +21,11 @@ key that is available in many contexts"
        ;; TODO add meow
        (general-define-key :keymaps 'launch-map
                            ,key ',name)
+
        ;; TODO why is this commented out?
        ;;(general-define-key :keymaps '(evil-insert-state-map)
                            ;;(general-chord ,(concat "," key)) ',name)
+
        (general-define-key :keymaps 'override :states '(normal visual)
                            :prefix ","
                            ,key ',name)))
@@ -44,14 +46,14 @@ key that is available in many contexts"
   ;; defmenu in their code to ensure the menu exists?  And that macro
   ;; would conditionally create the menu if it doesn't already exist,
   ;; and do nothing else.
-  (defmenu+ menu-window menu-window-keymap "w")
-  (defmenu+ menu-project menu-project-keymap "p")
-  (defmenu+ menu-run menu-run-keymap "r")
-  (defmenu+ menu-org menu-org-keymap "o")
-  (defmenu+ menu-theme menu-theme-keymap "t")
+  ;;(defmenu+ menu-window menu-window-keymap "W")
+  ;;(defmenu+ menu-project menu-project-keymap "p")
+  ;;(defmenu+ menu-run menu-run-keymap "r")
+  ;;(defmenu+ menu-org menu-org-keymap "O")
+  ;;(defmenu+ menu-theme menu-theme-keymap "t")
 
   ;; TODO move to magit -- not used here
-  (defmenu+ menu-vc menu-vc-keymap "g")
+  ;;(defmenu+ menu-vc menu-vc-keymap "g")
 
   ;; TODO this somehow gets overwritten elsewhere whatever overwrites
   ;; this actually doesn't work at all (doesn't show any kind of help)

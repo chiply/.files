@@ -14,6 +14,11 @@
 
   :config
   (setq evil-default-state 'normal)
+  ;; note basic functionality only is implemented... search backwards
+  ;; not supported, allows for convenient kill line without
+  ;; interfering with other keybindings
+  (setq evil-want-minibuffer t)
+
 
   ;; get emacs kbds in insert-mode
   (setcdr evil-insert-state-map nil)
@@ -30,12 +35,11 @@
 
   (evil-mode 1)
 
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-define evil-visual-state-map "kj" 'evil-normal-state)
 
   :general
-  (
-   :keymaps 'evil-insert-state-map
-   (general-chord ",/") 'evil-ex-nohighlight
-   )
+  
   (
    :states '(normal visual)
    :keymaps 'override
@@ -49,17 +53,8 @@
    "C-j" (lambda () (interactive) (evil-scroll-line-down 1))
    "C-k" (lambda () (interactive) (evil-scroll-line-up 1))
    )
-  (
-   :keymaps '(evil-insert-state-map evil-visual-state-map)
-   ;;"C-;" 'evil-normal-state
-   (general-chord "kj") 'evil-normal-state
-   (general-chord "jk") 'evil-normal-state
-   ;; I dislike how sometimes the chording can turn off or even when
-   ;; it is on seems to be inconsistent, this is an alternative that
-   ;; will always work.  The key is free and the semantics feel right
-   "s-i" 'evil-normal-state
-   )
   )
+
 
 
 (defalias 'use-package-handler/:evil 'use-package-handle-forms)

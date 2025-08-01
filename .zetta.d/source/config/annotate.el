@@ -28,30 +28,30 @@
   (setq annotate-annotation-column 0)
   ;; NOTE doesn't seem to use all colors
   ;;(setq
-   ;;annotate-highlight-faces
-   ;;'((:background "#EEF192")
-     ;;(:background "#92EEF1")
-     ;;(:background "#F192EE")
-     ;;(:background "#F19292")
-     ;;(:background "#92F192")
-     ;;(:background "#9292F1")
-     ;;(:background "#F1F192")
-     ;;(:background "#F192F1")
-     ;;(:background "#92F1F1")
-     ;;(:background "#F1F1F1")
-     ;;))
+  ;;annotate-highlight-faces
+  ;;'((:background "#EEF192")
+  ;;(:background "#92EEF1")
+  ;;(:background "#F192EE")
+  ;;(:background "#F19292")
+  ;;(:background "#92F192")
+  ;;(:background "#9292F1")
+  ;;(:background "#F1F192")
+  ;;(:background "#F192F1")
+  ;;(:background "#92F1F1")
+  ;;(:background "#F1F1F1")
+  ;;))
   ;;(setq
-   ;;annotate-annotation-text-faces
-   ;;`((:background "#EEF192" :underline t) 
-     ;;(:background "#92EEF1" :underline t) 
-     ;;(:background "#F192EE" :underline t)
-     ;;(:background "#F19292" :underline t)
-     ;;(:background "#92F192" :underline t)
-     ;;(:background "#9292F1" :underline t)
-     ;;(:background "#F1F192" :underline t)
-     ;;(:background "#F192F1" :underline t)
-     ;;(:background "#92F1F1" :underline t)
-     ;;(:background "#F1F1F1" :underline t)))
+  ;;annotate-annotation-text-faces
+  ;;`((:background "#EEF192" :underline t) 
+  ;;(:background "#92EEF1" :underline t) 
+  ;;(:background "#F192EE" :underline t)
+  ;;(:background "#F19292" :underline t)
+  ;;(:background "#92F192" :underline t)
+  ;;(:background "#9292F1" :underline t)
+  ;;(:background "#F1F192" :underline t)
+  ;;(:background "#F192F1" :underline t)
+  ;;(:background "#92F1F1" :underline t)
+  ;;(:background "#F1F1F1" :underline t)))
 
   ;; NOTE may be missing bindings for meow
 
@@ -68,8 +68,8 @@
            (save-buffer))
    )
   (
-   :keymaps 'menu-window-keymap
-   "a" 'annotate-mode
+   :keymaps 'menu-window-map
+   "a" (** annotate-mode)
    )
   (
    :keymaps 'override

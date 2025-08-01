@@ -5,7 +5,7 @@
 ;; becuase they involve sequential presses of keys
 (use-package key-chord
   :config
-  (setq key-chord-two-keys-delay .05 key-chord-one-key-delay .05)
+  (setq key-chord-two-keys-delay .05 key-chord-one-key-delay .05 key-chord-one-key-min-delay 0.5)
   (key-chord-mode 1))
 
 ;; provides hints
@@ -53,82 +53,62 @@
       (quit-windows-on which-key--buffer)
       ))
 
-  
+
+  (defun which-key--create-buffer-and-show
+      (&optional prefix-keys from-keymap filter prefix-title)
+    "Fill `which-key--buffer' with key descriptions and reformat.
+Finally, show the buffer."
+    (let ((start-time (current-time))
+          (formatted-keys (which-key--get-bindings
+                           prefix-keys from-keymap filter))
+          (prefix-desc (key-description prefix-keys)))
+      (cond ((null formatted-keys)
+             ;; NOTE changes this, do nothing, don't message NOTE I
+             ;; can't explain why this was getting triggered, based on
+             ;; my experiment, it seems like this is getting run twice,
+             ;; once where it fails and displays the message that used
+             ;; to be here, and then again where it hits the `t`
+             ;; condition below
+             t
+             )
+            ((listp which-key-side-window-location)
+             (setq which-key--last-try-2-loc
+                   (apply #'which-key--try-2-side-windows
+                          formatted-keys prefix-keys prefix-title
+                          which-key-side-window-location)))
+            (t (setq which-key--pages-obj
+                     (which-key--create-pages
+                      formatted-keys prefix-keys prefix-title))
+               (which-key--show-page)))
+      (which-key--debug-message
+       "On prefix \"%s\" which-key took %.0f ms." prefix-desc
+       (* 1000 (float-time (time-since start-time))))))
+
+
 
   (general-define-key
    :keymaps 'which-key-C-h-map
-   "C-h" 'which-key-show-standard-help
-   )
+   "C-h" 'which-key-show-standard-help)
 
   (setq
    ;; Allow C-h to trigger which-key before it is done automatically
    which-key-show-early-on-C-h t
-   ;;;; make sure which-key doesn't show normally but refreshes quickly
-   ;;;; after it is triggered.
-   which-key-idle-delay 1000 which-key-idle-secondary-delay 0.01
-   which-key-show-transient-maps t ;; doesn't seem to have an effect
+   ;;;; make sure which-key doesn't show normally but refreshes
+   ;;;; quickly after it is triggered.
+   which-key-idle-delay 1000
+   which-key-idle-secondary-delay 0.01
+   ;; doesn't seem to have an effect
+   which-key-show-transient-maps t
    which-key-popup-type 'custom
    which-key-custom-popup-max-dimensions-function 'which-key-custom-popup-max-dimensions-function
    which-key-custom-show-popup-function 'which-key-custom-show-popup-function
-   which-key-custom-hide-popup-function 'which-key-custom-hide-popup-function
-   )
+   which-key-custom-hide-popup-function 'which-key-custom-hide-popup-function)
 
-  ;;(setq
-  ;;which-key-persistent-popup t
-   ;;;; include more in the which key buffer
-  ;;which-key-compute-remaps t
-   ;;;; Allow C-h to trigger which-key before it is done automatically
-  ;;which-key-show-early-on-C-h t
-   ;;;;;; make sure which-key doesn't show normally but refreshes quickly
-   ;;;;;; after it is triggered.
-  ;;which-key-idle-delay 1000 which-key-idle-secondary-delay 0.01
-   ;;;; docs
-  ;;which-key-show-docstrings t which-key-max-description-length 100
-   ;;;; evil
-  ;;which-key-allow-evil-operators t
-   ;;;; misc
-  ;;suggest-key-bindings 0
-  ;;which-key-show-major-mode t
-   ;;;; need to set this to 0 if youre using the minibuffer
-  ;;echo-keystrokes 1
-  ;;which-key-max-display-columns 4
-   ;;;; custom functions
-  ;;which-key-custom-popup-max-dimensions-function 'which-key-custom-popup-max-dimensions-function
-  ;;which-key-custom-show-popup-function 'which-key-custom-show-popup-function
-  ;;which-key-custom-hide-popup-function 'which-key-custom-hide-popup-function
-   ;;;;
-  ;;which-key-show-transient-maps t
-  ;;)
-
-  (which-key-mode 1)
-
-  ;;(defun which-key--create-buffer-and-show
-  ;;(&optional prefix-keys from-keymap filter prefix-title)
-  ;;"Fill `which-key--buffer' with key descriptions and reformat.
-  ;;Finally, show the buffer."
-  ;;(let ((start-time (current-time))
-  ;;(formatted-keys (which-key--get-bindings
-                           ;;;; updated -- added t to show the full keymap
-  ;;prefix-keys from-keymap filter t))
-  ;;(prefix-desc (key-description prefix-keys)))
-  ;;(cond ((null formatted-keys)
-  ;;(message "%s-  which-key: There are no keys to show" prefix-desc))
-  ;;((listp which-key-side-window-location)
-  ;;(setq which-key--last-try-2-loc
-  ;;(apply #'which-key--try-2-side-windows
-  ;;formatted-keys prefix-keys prefix-title
-  ;;which-key-side-window-location)))
-  ;;(t (setq which-key--pages-obj
-  ;;(which-key--create-pages
-  ;;formatted-keys prefix-keys prefix-title))
-  ;;(which-key--show-page)))
-  ;;(which-key--debug-message
-  ;;"On prefix \"%s\" which-key took %.0f ms." prefix-desc
-  ;;(* 1000 (float-time (time-since start-time))))))
-  )
+  (which-key-mode 1))
 
 
 (use-package meow
+  :after key-chord
   :init
   ;; copied from docs
   (defun meow-setup ()
@@ -219,6 +199,7 @@
      '("<escape>" . ignore)))
 
   :config
+  (key-chord-define meow-insert-state-keymap "kj" 'meow-insert-exit)
   (setq meow-keypad-start-keys
         '((?c . ?c)
           (?h . ?h)
@@ -230,12 +211,10 @@
   ;; launcher?  maybe but keep this around for now
   (setq meow-keypad-leader-dispatch "C-c")
   
-  (general-define-key
-   :keymaps '(meow-insert-state-keymap)
-   ;;"C-;" 'evil-normal-state
-   (general-chord "kj") 'meow-insert-exit
-   (general-chord "jk") 'meow-insert-exit)
+  
   )
+
+
 
 
 (defun z-state-meow ()
@@ -262,6 +241,23 @@
  "s-z m" 'z-state-meow
  "s-z e" 'z-state-evil
  "s-z E" 'z-state-emacs)
+
+(defmacro defprefix (prefix name key)
+  `(progn
+     (define-prefix-command ',name)
+     (general-define-key :keymaps ',prefix ,key ',name)))
+
+(defprefix launch-map menu-window-map "w")
+(defprefix launch-map menu-project-map "p")
+(defprefix launch-map menu-lookup-map "l")
+(defprefix launch-map menu-org-map "o")
+(defprefix launch-map menu-run-map "r")
+(defprefix launch-map menu-theme-map "t")
+(defprefix launch-map menu-smerge-map "d")
+(defprefix launch-map menu-iedit-map "i")
+(defprefix launch-map menu-help-map "h")
+(defprefix launch-map menu-vc-map "g")
+
 
 ;; There are different key systems that can be used.  emacs, evil,
 ;; meow.  the issue is that evil and meow are modal editing systems
@@ -290,10 +286,27 @@
 ;; 'modal state'.  And the idea would be to live in meow MOST of the
 ;; time, while only swithcing to evil or emacs when necessary.
 
+;; EXPLANATION: a prefix command needs to be defined (here it is the
+;; symbol 'launch-map).  A key is also defined that will be used to
+;; run this command (",").  We define a list of modal insert states
+;; and modal non-insert states in which to bind the launch-key to the
+;; launch-map - this is done for convenience as many modal editing
+;; systems may be available, each containing potentially many of each
+;; insert and non-insert states (NOTE that for insert states,
+;; something like general-chord would need to be used).  With this
+;; setup, we can conveniently use either general or the built-in
+;; keybinding API elsewhere in the configuration to bind keys to the
+;; 'launch-map ONE TIME, making the keybindings contained within those
+;; declarations available in the arbitrary number of modal states
+;; defined in insert and non-insert.  NOTE this code also takes care
+;; of defining launch-key (",") as a prefix in these states, allowing
+;; for easy keybindings elsewhere in the configuration
+
 ;; define the launch-map
 (define-prefix-command 'launch-map)
 (defvar launch-key ",")
 
+;; NOTE unused currently
 (defvar z-modal-states-insert '(evil-insert-state-map
                                 meow-insert-state-keymap))
 
@@ -309,10 +322,10 @@
 ;; Bind launch map to C-, in insert states.  Compatible with meow and embark-become
 (general-define-key (concat "C-" launch-key) 'launch-map)
 
-
 ;; then actually edit code to use direct general bindings instead of my custom function
 ;; define code for easily switching between modes -- use whatever is bound to c-z but make it cylce through
 
+;; NOTE general-chord doesn't work anymore
 ;; not used, but may be used in the future if general chord will be used
 ;; (defun define-launch-key (pairs)
 ;;   "Creates opinionated set of general-define-key forms for defining

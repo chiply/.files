@@ -1,11 +1,3 @@
-(defhydra+ hydra-org ()
-  ("n" z-narrow-or-widen "Narrow" :exit t)
-  )
-
-
-
-
-
 (defun z-narrow-to-fold-dwim ()
   "If fold exists within tap, then toggle, otherwise create fold
 around tap.  If region active, then fold in this region.  If active

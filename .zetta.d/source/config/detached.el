@@ -12,6 +12,11 @@
                  )))
   ;;(detached-init)
   (defun z-detached-alert-notification (session) (ignore))
+
+  (advice-add 'detached-shell-command :after
+            (lambda (&rest args)
+              (append-to-zsh-history (car args))))
+
   :custom ((detached-show-output-on-attach t)
            (detached-terminal-data-command system-type)
            (detached-notification-function #'z-detached-alert-notification))

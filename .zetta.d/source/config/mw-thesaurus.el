@@ -1,4 +1,8 @@
 (use-package mw-thesaurus
-  :display
-  ;;(z-side "^\\* Merriam-Webster*" 'right 1) 
+  :general
+  (
+   :keymaps 'menu-lookup-map
+   "s" 'mw-thesaurus-lookup-at-point
+   "S" 'mw-thesaurus-lookup
+   )
   )

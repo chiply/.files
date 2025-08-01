@@ -9,7 +9,8 @@ function install_lsp_server() {
     poetry env use "$(which python)"
     poetry install
     poetry run pip uninstall -y ruff-lsp
-    poetry run pip install --upgrade python-lsp-server debugpy ipython ruff
+    poetry run pip uninstall -y python-lsp-server debugpy ipython ruff basedpyright
+    poetry run pip install --upgrade python-lsp-server debugpy ipython ruff basedpyright
 }
 
 function install_all_lsp_servers() {

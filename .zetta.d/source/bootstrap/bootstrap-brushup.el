@@ -148,14 +148,6 @@ seem to require loading after the client starts up"
            :underline t)
 
           (set-face-attribute
-           'emoji nil
-           :font "Apple Color Emoji 11"
-           :height 0.1
-           :inherit nil
-           )
-
-
-          (set-face-attribute
            'font-lock-comment-face nil
            :foreground
            (if brushup-dark-p
@@ -184,7 +176,7 @@ seem to require loading after the client starts up"
 
           (set-face-attribute
            'default nil
-           :background nil)
+           :background 'unspecified)
 
 
           )

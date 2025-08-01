@@ -1,4 +1,5 @@
 (use-package all-the-icons
+  :ensure t
   :straight (all-the-icons
              :type git
              :host github
@@ -7,6 +8,7 @@
              :files (:defaults "svg"))
   :if (display-graphic-p)
   :config
+  ;;(use-package octicons)
   (setq all-the-icons-color-icons t)
 
   ;; fixing themes
