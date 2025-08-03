@@ -90,7 +90,7 @@ brew "yt-dlp"
 brew "zoxide"
 brew "zsh"
 brew "zsh-syntax-highlighting"
-brew "d12frosted/emacs-plus/emacs-plus@30", args: ["with-imagemagick", "with-native-comp", "with-xwidgets", "with-dbus", "with-ctags"]
+brew "d12frosted/emacs-plus/emacs-plus@31", args: ["with-imagemagick", "with-native-comp", "with-xwidgets", "with-dbus", "with-ctags"]
 brew "isacikgoz/taps/tldr"
 brew "sebglazebrook/aliases/aliases"
 #brew "xo/xo/usql"
