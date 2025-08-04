@@ -64,6 +64,7 @@
    "flappy-fish.el" "biome.el" "spot.el" "doric-themes.el"
    "graphviz-dot-mode.el" "magit-delta.el" "blamer.el" "git-modes.el"
    "vdiff-magit.el" "git-timemachine.el" "orgit.el" "dired-git.el"
-   "magit-commit-mark.el" "consult-lsp.el" "marqueeo.el" "cleanup.el"))
+   "magit-commit-mark.el" "consult-lsp.el" "marqueeo.el" "vundo.el"
+   "cleanup.el"))
 
 (provide 'init-data)
