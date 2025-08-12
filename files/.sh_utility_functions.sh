@@ -6,11 +6,15 @@ function install_lsp_server() {
     pwd
     rm -rf .venv
     rm -rf poetry.lock
+    export POETRY_VIRTUALENVS_IN_PROJECT=true
+    poetry config virtualenvs.in-project true
+    echo "python executable:"
+    echo "$(which python)"
     poetry env use "$(which python)"
     poetry install
     poetry run pip uninstall -y ruff-lsp
-    poetry run pip uninstall -y python-lsp-server debugpy ipython ruff basedpyright
-    poetry run pip install --upgrade python-lsp-server debugpy ipython ruff basedpyright
+    poetry run pip uninstall -y python-lsp-server debugpy ipython ruff basedpyright pyright
+    poetry run pip install --upgrade python-lsp-server debugpy ipython ruff basedpyright pyright
 }
 
 function install_all_lsp_servers() {

@@ -98,4 +98,5 @@
   ;; TODO disable in magit diff mode, or fix the filename that's
   ;; created, maybe create the file in the local directory, but not
   ;; named after the file?
-  :hook ((markdown-mode org-mode prog-mode) . annotate-mode))
+  :hook ((markdown-mode org-mode prog-mode) . annotate-mode)
+  )
