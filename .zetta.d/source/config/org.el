@@ -98,7 +98,7 @@
                                      nil
                                      '(("^-\\{5,\\}"  0 '(:foreground "red" :weight bold))))))
 
-(add-hook 'org-mode-hook (lambda () (undo-tree-mode 1)))
+;;(remove-hook 'org-mode-hook (lambda () (undo-tree-mode 1)))
 
 (setq org-id-link-to-org-use-id t)
 

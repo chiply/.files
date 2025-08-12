@@ -9,6 +9,16 @@
         (when (fboundp 'dimmer-process-all)
           (dimmer-process-all t)))))
 
+  (defun lsp-doc-frame-p ()
+    "Check if the buffer is a lsp-doc frame buffer."
+    (string-match-p "\\` \\*lsp-ui-doc" (buffer-name)))
+
+  (defun dimmer-configure-lsp-doc ()
+    "Convenience settings for lsp-doc users."
+    (add-to-list
+     'dimmer-prevent-dimming-predicates
+     #'lsp-doc-frame-p))
+
   (defun corfu-frame-p ()
     "Check if the buffer is a corfu frame buffer."
     (string-match-p "\\` \\*corfu" (buffer-name)))
@@ -38,6 +48,7 @@
    'dimmer-config-change-handler
    :override 'advise-dimmer-config-change-handler)
   (dimmer-configure-corfu)
+  (dimmer-configure-lsp-doc)
   (dimmer-configure-minimap)
   (setq dimmer-fraction 0.4)
   (setq dimmer-watch-frame-focus-events nil)
