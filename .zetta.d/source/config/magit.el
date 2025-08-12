@@ -21,7 +21,8 @@
   (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
 
   :config
-  (setq magit-git-executable "/opt/homebrew/bin/git")
+  (setq magit-git-executable (string-trim (shell-command-to-string "which git")))
+  
   ;; project.el
   (keymap-substitute project-prefix-map #'project-vc-dir #'magit)
   (cl-nsubstitute-if

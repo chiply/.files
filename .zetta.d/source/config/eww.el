@@ -6,7 +6,7 @@
   (setq eww-bookmarks-directory (expand-file-name "data/eww" user-emacs-directory))
 
   ;; execute eww-readable after eww finishes loading the page
-  (add-hook 'eww-after-render-hook (lambda () (eww-readable)))
+  ;;(add-hook 'eww-after-render-hook (lambda () (eww-readable)))
 
   (defun z-eww-switch-to-eaf ()
     (interactive)
