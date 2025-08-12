@@ -2,16 +2,17 @@
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
 
 
-(defun my/set-transparency (frame)
-  (set-frame-parameter frame 'alpha 100))
+;;(defun my/set-transparency (frame)
+  ;;(set-frame-parameter frame 'alpha 85))
 
 ;; so new frames will not be transparent -- helps distinguish
-(add-hook 'after-make-frame-functions 'my/set-transparency)
+;;(add-hook 'after-make-frame-functions 'my/set-transparency)
 
 (defun transparency (value)
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
 (transparency 93)
+
 
 
 (defun z-theme-brushup ()

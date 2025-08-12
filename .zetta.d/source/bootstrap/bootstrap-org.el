@@ -228,6 +228,9 @@
                                   (auto-fill-mode -1)
                                   (org-indent-mode -1)
                                   (visual-line-mode -1)
+                                  ;; NOTE prevents indefinte
+                                  ;; indentation of code blocks
+                                  (electric-indent-mode -1)
                                   (toggle-truncate-lines -1) 
                                   )))))
 

@@ -380,10 +380,61 @@ point."
 (use-package lsp-ui
   :config
   ;; sideline
+
   (setq lsp-ui-sideline-show-hover t)
   (setq lsp-ui-sideline-show-symbol t)
   (setq lsp-ui-sideline-show-diagnostics t)
   (setq lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-sideline-diagnostic-max-lines 1000)
+  (setq lsp-ui-doc-position 'bottom)
+  (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-ui-doc-text-scale-level -4)
+  (setq lsp-ui-doc-include-signature t)
+  (setq lsp-ui-doc-max-height 10)
+  (setq lsp-ui-doc-border "black") ;; NOTE doesn't work
+  (setq lsp-ui-doc-header t)
+  (setq lsp-ui-doc-frame-parameters
+        '((left                     . -1)
+          (no-focus-on-map          . t)
+          (min-width                . 0)
+          (width                    . 0)
+          (min-height               . 0)
+          (height                   . 0)
+          (internal-border-width    . 1)
+          (vertical-scroll-bars     . nil)
+          (horizontal-scroll-bars   . nil)
+          (right-fringe             . 0)
+          (menu-bar-lines           . 0)
+          (tool-bar-lines           . 0)
+          (tab-bar-lines            . 0)
+          (tab-bar-lines-keep-state . 0)
+          (line-spacing             . 0)
+          (unsplittable             . t)
+          (undecorated              . t)
+          (top                      . -1)
+          (visibility               . nil)
+          (mouse-wheel-frame        . nil)
+          (no-other-frame           . t)
+          (inhibit-double-buffering . t)
+          (drag-internal-border     . t)
+          (no-special-glyphs        . t)
+          (desktop-dont-save        . t)
+          (alpha . 75)
+          (internal-border-width . 2)
+          )
+        )
+  ;; NOTE not rescaling sideline size because it messes with alignment
+  ;;(defun lsp-ui-sideline--compute-height ()
+  ;;"Return a fixed size for text in sideline."
+  ;;'(height 0.5))
+  (setq lsp-ui-sideline-actions-icon lsp-ui-sideline-actions-icon-default)
+  ;;(set-face-attribute 'lsp-ui-sideline-global nil )
+  (set-face-attribute 'lsp-ui-sideline-global nil :background brushup-bg :foreground brushup-bg-4)
+  (set-face-attribute 'lsp-ui-sideline-symbol nil :background brushup-bg :foreground brushup-bg-4)
+  (set-face-attribute 'lsp-ui-sideline-symbol-info nil :background brushup-bg :foreground brushup-bg-4)
+  (set-face-attribute 'lsp-ui-sideline-code-action nil :background brushup-bg :foreground brushup-bg-4)
+  (set-face-attribute 'lsp-ui-sideline-current-symbol nil :background brushup-bg :foreground brushup-bg-4)
+
   
   :hook
   (((python-ts-mode) . lsp-ui-sideline-mode)
@@ -414,7 +465,7 @@ point."
   (lsp-pylsp-plugins-flake8-enabled nil))
 
 (use-package lsp-pyright
-  :custom (lsp-pyright-langserver-command "basedpyright"))
+  :custom (lsp-pyright-langserver-command "pyright"))
 
 ;; NOTE don't use as not all lsps provide compatibility
 ;; (lsp-capability-not-supported "foldingRangeProvider") (use-package
