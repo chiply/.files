@@ -234,7 +234,7 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
                      bufnm)
                    'face '(:height 1.0)))))
 
-  
+
 
   (setq tab-line-tab-name-function 'z-tab-line-tab-name-buffer)
   ;;(setq tab-line-tabs-function 'z-project-mode-buffers)
