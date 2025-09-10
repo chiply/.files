@@ -1,5 +1,13 @@
 (use-package windmove
   :ensure nil
+  :commands (z-split-window-v
+             z-split-window-V
+             z-split-window-h
+             z-split-window-H
+             windmove-left
+             windmove-right
+             windmove-down
+             windmove-up)
   :config
   (defun z-split-window (how)
     (interactive)

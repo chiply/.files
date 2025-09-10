@@ -14,7 +14,10 @@ function install_lsp_server() {
     poetry install
     poetry run pip uninstall -y ruff-lsp
     poetry run pip uninstall -y python-lsp-server debugpy ipython ruff basedpyright pyright
-    poetry run pip install --upgrade python-lsp-server debugpy ipython ruff basedpyright pyright
+    # NOTE using python-lsp-server as I've had issues with the pyright
+    # and basedpyright server getting interrupted (Cancelling
+    # textDocument/diagnostic(3112) in hook after-change-functions)
+    poetry run pip install --upgrade debugpy ipython ruff python-lsp-server
 }
 
 function install_all_lsp_servers() {

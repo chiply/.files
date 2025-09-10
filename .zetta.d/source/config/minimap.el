@@ -169,8 +169,9 @@
   (setq minimap-major-modes
         '(
           prog-mode
-          text-mode
-          org-mode
+          ;;text-mode ;; NOTE this includes org-mode
+          ;; NOTE no org mode as minimap doesn't work with narrowed org buffers
+          ;;org-mode
           embark-collect-mode
           eww-mode
           Info-mode

@@ -4,31 +4,69 @@
   :config
   (setq eww-auto-rename-buffer 'title)
   (setq eww-bookmarks-directory (expand-file-name "data/eww" user-emacs-directory))
+  (setq shr-max-image-proportion 1.0) ; Shrink images to 50% of their original size
 
-  ;; execute eww-readable after eww finishes loading the page
-  ;;(add-hook 'eww-after-render-hook (lambda () (eww-readable)))
+  (setq shr-inhibit-images nil)
+  (setq shr-folding-mode t)
+
+  (eval-after-load 'shr
+    '(progn
+       (setq shr-width -1) ; Disable width-based wrapping
+       (defun shr-fill-text (text) text) ; Prevent text filling
+       (defun shr-fill-lines (start end) nil) ; Prevent line filling
+       (defun shr-fill-line () nil))) ; Prevent individual line filling
+
+  ;; This is how to control readble depending on the url
+  (defun z-eww-after-render-functions ()
+    (unless (or
+             (string-match "reddit" (eww-current-url))
+             (string-match "xkcd" (eww-current-url))
+             )
+      (eww-readable)))
+
+  (defun z-eww-mode-functions ()
+    (setq shr-use-fonts nil)
+    (toggle-truncate-lines -1)
+    (olivetti-mode -1))
+
+  (add-hook 'eww-after-render-hook 'z-eww-after-render-functions)
+  (add-hook 'eww-mode-hook 'z-eww-mode-functions)
+
+  ;; This is how to set image settings conditionally per url
+  (defun my-eww-inhibit-images-advice (orig-fun url &rest args)
+    "Set shr-inhibit-images based on URL before calling eww."
+    (setq shr-inhibit-images 
+          (cond
+           ((string-match-p "reddit\\.com\\|twitter\\.com|xkcd\\.com" url) nil)
+           (t t)))
+    (apply orig-fun url args))
+
+  (advice-add 'eww :around #'my-eww-inhibit-images-advice)
 
   (defun z-eww-switch-to-eaf ()
     (interactive)
-    (eaf-open-browser (eww-current-url))
-    )
+    (eaf-open-browser (eww-current-url)))
 
   (defun z-eww-follow-link ()
     (interactive)
-    (browse-url (thing-at-point 'url))
-    )
+    (browse-url (thing-at-point 'url)))
+
+  (setq eww-default-download-directory "~/logseq/graphs/main/assets/")
 
   :general
   (
    :keymaps '(eww-mode-map)
+   :states '(normal)
    "C-&" 'z-eww-switch-to-eaf
    "<return>" 'z-eww-follow-link
    "x" '(lambda () (interactive) (kill-buffer (current-buffer)))
+   "s-i" 'eww-toggle-images
    )
   (
    :keymaps 'menu-lookup-map
    "e" 'eww
    )
+
   )
 
 

@@ -7,8 +7,8 @@
   ;; sensitive information, is not stored in the emacs directory
 
   ;; NOTE testing for now as it creates files in unwanted places
-  ;;(setq undo-tree-auto-save-history t)
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs-undo/undo")))
+  (setq undo-tree-auto-save-history nil)
+  ;;(setq undo-tree-history-directory-alist '(("." . "~/.emacs-undo/undo")))
 
   ;; https://stackoverflow.com/questions/8370778/remove-glyph-at-end-of-truncated-lines
   (set-display-table-slot standard-display-table 0 ?\ )
