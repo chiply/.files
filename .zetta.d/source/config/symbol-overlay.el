@@ -48,5 +48,5 @@
   ;; modes
   :hook ((sql-mode python-ts-mode emacs-lisp-mode yaml-mode
                    jsonian-mode json-mode web-mode shell-command-mode sh-mode grep-mode
-                   lark-mode makefile-mode helpful-mode org-mode) .
+                   lark-mode makefile-mode helpful-mode org-mode terraform-mode) .
                    symbol-overlay-mode))

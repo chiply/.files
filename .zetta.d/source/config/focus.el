@@ -31,8 +31,8 @@
    )
 
 
-  ;;:hook (((prog-mode org-mode) . (lambda () (focus-mode)))
-  ;;(emacs-lisp-mode . (lambda () (z-focus-mode 'defun)))
-  ;;((python-ts-mode sql-mode yaml-mode sh-mode) . (lambda () (z-focus-mode 'brick)))
+  :hook (((prog-mode) . (lambda () (focus-mode)))
+         (emacs-lisp-mode . (lambda () (z-focus-mode 'defun)))
+         ((python-ts-mode sql-mode yaml-mode sh-mode) . (lambda () (z-focus-mode 'defun))))
   ;;(use-package--focus--post-config . (lambda () (z-brushup))))
   )

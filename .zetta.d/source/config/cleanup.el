@@ -64,6 +64,9 @@
 (add-to-list 'savehist-additional-variables 'consult-xref--history)
 (add-to-list 'savehist-additional-variables 'consult--yank-pop-history)
 (add-to-list 'savehist-additional-variables 'kill-ring)
+(add-to-list 'savehist-additional-variables 'biblio--search-history)
+(add-to-list 'savehist-additional-variables 'elfeed-search-filter-history)
+(add-to-list 'savehist-additional-variables 'transient-history)
 
 
 

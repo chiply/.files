@@ -23,7 +23,6 @@
   (telephone-line-defsegment zt-icon-side-window ()
     (when (z-side-window-p (selected-window)) " {S} "))
 
-
   (telephone-line-defsegment zt-flappy-fish ()
     (if (equal
          (current-buffer)
@@ -128,46 +127,56 @@
         (all-the-icons-vscode-codicons "layout-sidebar-left") ;; NOTE requires svg branch
       ""))
 
-  (setq telephone-line-primary-left-separator 'telephone-line-halfcos-left
-        telephone-line-primary-right-separator 'telephone-line-halfcos-right
+  (setq telephone-line-primary-left-separator 'telephone-line-nil
+        telephone-line-primary-right-separator 'telephone-line-nil
         telephone-line-secondary-left-separator 'telephone-line-nil
         telephone-line-secondary-right-separator 'telephone-line-nil)
 
+  ;; NOTE My current implementation is overly simplistic relative to
+  ;; what telephone line actually provides. I wanted to prioritize
+  ;; getting color icons in the mode line, but I found that difficult
+  ;; as when you're using something other than nil to define a
+  ;; segment, basically the face gets overridden and it always comes
+  ;; out with a dark foreground, which I don't like. But using nil for
+  ;; everything means that you don't get visual separation between the
+  ;; different segments, and because everything is defined with the
+  ;; same face, the separator doesn't actually show up. I do want to
+  ;; see if there's a way to fix that, but right now, basically, it's
+  ;; just icons dumped out with no visual separation, but I think
+  ;; that's okay for now. It's also space-saving.
+  ;; NOTE The current solution I've landed on, which is not ideal, is
+  ;; to use null anytime you have anything that needs to display
+  ;; color, and then to use some other symbol, like foo, anytime it
+  ;; doesn't matter, and then that allows you to have the
+  ;; separation. It has to have something to do with applying the
+  ;; separators.
+  (defface telephone-line-face-active '((t (:background "white" :foreground unspecified))) "foo")
+  (defface telephone-line-face-inactive `((t (:background ,brushup-bg-1_0 :foreground unspecified))) "bar")
+
   (setq telephone-line-faces
-        '((evil . telephone-line-modal-face)
-          (modal . telephone-line-modal-face)
-          (ryo . telephone-line-ryo-modal-face)
-          (accent . (telephone-line-accent-active . telephone-line-accent-inactive))
-          (nil . (mode-line . mode-line-inactive))
-          (foo . (modus-themes-subtle-blue . modus-themes-nuanced-blue))
-          (bar . (modus-themes-subtle-magenta . modus-themes-nuanced-magenta))
-          (barr . (modus-themes-intense-magenta . modus-themes-nuanced-magenta))
-          (iedit . (iedit-occurrence . iedit-occurrence))
+        '(
+          (foo . (telephone-line-face-inactive . telephone-line-face-inactive))
+          (nil . (telephone-line-face-active . telephone-line-face-inactive))
           ))
 
   (setq telephone-line-subseparator-faces '())
 
   (setq telephone-line-lhs
-        '((evil . (telephone-line-evil-tag-segment telephone-line-meow-tag-segment))
-          (accent . (zt-ace-1))
-          (foo . (zt-icon-file-or-buffer zt-icon-copilot zt-icon-lsp zt-popper-popup))
-          (barr . (zt-vc-segment-repo-icon
-                   ;; TODO: move this info to the title bar or tab-bar?  lots of space there...
-                   ;;zt-vc-segment-repo zt-vc-segment-branch
-                   ))
+        '(
+          (nil . (telephone-line-evil-tag-segment telephone-line-meow-tag-segment))
+          (foo . (zt-ace-1))
+          (nil . (zt-icon-file-or-buffer zt-icon-copilot zt-icon-lsp zt-popper-popup zt-vc-segment-repo-icon))
           (foo . (zt-indicators-segment))
-          (bar . (zt-iedit-segment))
-          (accent . (zt-anzu-segment))
-
+          (nil . (zt-iedit-segment))
+          (foo . (zt-anzu-segment))
           (nil . (zt-flycheck-segment))
-          (nil . (zt-nyan))))
+          (foo . (zt-nyan))
+          (nil . (zt-parrot))
+          ))
 
 
   (setq telephone-line-target 'mode-line)
-  (setq telephone-line-rhs '(
-                             ;;(nil . (zt-flappy-fish))
-                             (nil . (zt-parrot))
-                             ))
+  (setq telephone-line-rhs '())
   (setq telephone-line-evil-use-short-tag nil)
   (setq telephone-line-separator-extra-padding 0)
   (setq telephone-line-height 40)

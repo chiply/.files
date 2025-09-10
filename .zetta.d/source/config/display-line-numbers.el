@@ -54,5 +54,7 @@
                   ;;)
                ;;)
 
-  :hook ((vterm-mode) . (lambda () (display-line-numbers-mode -1)))
+  :hook (((vterm-mode) . (lambda () (display-line-numbers-mode -1)))
+         ((pdf-view-mode) . (lambda () (display-line-numbers-mode -1)))
+         )
   )

@@ -381,11 +381,11 @@ point."
   :config
   ;; sideline
 
-  (setq lsp-ui-sideline-show-hover t)
-  (setq lsp-ui-sideline-show-symbol t)
-  (setq lsp-ui-sideline-show-diagnostics t)
-  (setq lsp-ui-sideline-show-code-actions t)
-  (setq lsp-ui-sideline-diagnostic-max-lines 1000)
+  ;;(setq lsp-ui-sideline-show-hover t)
+  ;;(setq lsp-ui-sideline-show-symbol t)
+  ;;(setq lsp-ui-sideline-show-diagnostics t)
+  ;;(setq lsp-ui-sideline-show-code-actions t)
+  ;;(setq lsp-ui-sideline-diagnostic-max-lines 1000)
   (setq lsp-ui-doc-position 'bottom)
   (setq lsp-ui-doc-show-with-cursor t)
   (setq lsp-ui-doc-text-scale-level -4)
@@ -437,13 +437,13 @@ point."
 
   
   :hook
-  (((python-ts-mode) . lsp-ui-sideline-mode)
+  (
    ;; NOTE imenu mode doesn't work in python, not sure why, but you
    ;;can run lsp-ui-imenu to get a sideline... bizarre, maybe the
    ;;command is falling back to builtin imenu ((python-ts-mode)
    ;;. lsp-ui-imenu-mode)
-   ((python-ts-mode) . lsp-ui-doc-mode)
    ((python-ts-mode) . lsp-ui-peek-mode)
+   ((python-ts-mode) . lsp-ui-doc-mode)
    ((after-save-hook) . (lambda ()
                           ;; if buffer *lsp-ui-imenu* is displaying, then run lsp-imenu
                           (when (buffer-live-p (get-buffer "*lsp-ui-imenu*"))
@@ -465,7 +465,7 @@ point."
   (lsp-pylsp-plugins-flake8-enabled nil))
 
 (use-package lsp-pyright
-  :custom (lsp-pyright-langserver-command "pyright"))
+  :custom (lsp-pyright-langserver-command "basedpyright"))
 
 ;; NOTE don't use as not all lsps provide compatibility
 ;; (lsp-capability-not-supported "foldingRangeProvider") (use-package

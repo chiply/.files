@@ -243,14 +243,15 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
 
   (global-tab-line-mode 1)
 
-  :brushup
+  ;;:brushup
   (add-to-list
    'brushup-styles
    '(progn
-      (set-face-attribute 'tab-line-tab-current nil :font "Terminus (TTF)" :box nil)
-      (set-face-attribute 'tab-line-tab nil :font "Terminus (TTF)" :box nil)
-      (set-face-attribute 'tab-line-tab-inactive nil :font "Terminus (TTF)" :box nil)
-      (set-face-attribute 'tab-line nil :font "Terminus (TTF)" :box nil)))
+      (set-face-attribute 'tab-line-tab-current nil :box nil :inherit nil)
+      (set-face-attribute 'tab-line-tab nil :box nil :inherit nil)
+      (set-face-attribute 'tab-line-tab-inactive nil :box nil :inherit nil)
+      (set-face-attribute 'tab-line nil :box nil :inherit nil)
+      ))
 
 
   :general

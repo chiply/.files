@@ -136,15 +136,15 @@ first space will be numbered 1.")
   ;;;; LEFT OFF -- trying recording the windows, then deleting the windows AFTER the switch happens
   ;;;; this will have the affect of not restoring the windows pointing to killed buffers
   ;;(-map (lambda (x)
-          ;;(pp x)
-          ;;(message (concat "restore" (buffer-name (cadr x))))
-          ;;(if (buffer-file-name (cadr x))
-              ;;(find-file-noselect (buffer-file-name (cadr x)))
-            ;;(get-buffer-create (buffer-name (cadr x)))))
-        ;;(-filter (lambda (x)
-                   ;;(and (bufferp (cadr x)) (not (buffer-live-p (cadr x)))))
-                 ;;(-map 'win-buf-from-leaf
-                       ;;(extract-leaf space))))
+  ;;(pp x)
+  ;;(message (concat "restore" (buffer-name (cadr x))))
+  ;;(if (buffer-file-name (cadr x))
+  ;;(find-file-noselect (buffer-file-name (cadr x)))
+  ;;(get-buffer-create (buffer-name (cadr x)))))
+  ;;(-filter (lambda (x)
+  ;;(and (bufferp (cadr x)) (not (buffer-live-p (cadr x)))))
+  ;;(-map 'win-buf-from-leaf
+  ;;(extract-leaf space))))
 
   (let ((result (condition-case _ (window-state-put space) (error _))))
     (when (string= "Selecting deleted buffer" (cadr result))
@@ -559,6 +559,11 @@ the st-tree."
  "s-3" (lambda () (interactive) (st-switch-or-create '(3)))
  "s-4" (lambda () (interactive) (st-switch-or-create '(4)))
  "s-5" (lambda () (interactive) (st-switch-or-create '(5)))
+ "s-6" (lambda () (interactive) (st-switch-or-create '(6)))
+ "s-7" (lambda () (interactive) (st-switch-or-create '(7)))
+ "s-8" (lambda () (interactive) (st-switch-or-create '(8)))
+ "s-9" (lambda () (interactive) (st-switch-or-create '(9)))
+ 
 
  ;; second from top level
  "s-a" (lambda () (interactive) (st-switch-or-create `(,(nth 0 st-current-address) 1)))

@@ -32,6 +32,8 @@
   (evil-set-initial-state 'eww-mode 'emacs)
   (evil-set-initial-state 'minimap-sb-mode 'emacs)
   (evil-set-initial-state 'minimap-mode 'emacs)
+  (evil-set-initial-state 'minimap-mode 'emacs)
+  (evil-set-initial-state 'biblio-selection-mode 'normal)
 
   (evil-mode 1)
 

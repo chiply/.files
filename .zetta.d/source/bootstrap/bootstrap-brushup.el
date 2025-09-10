@@ -116,13 +116,15 @@ seem to require loading after the client starts up"
                                              term-color-cyan term-color-white])
 
           (set-face-attribute
-           'mode-line nil
+          'mode-line nil
            :background brushup-bg
+           :foreground 'unspecified
            :box nil
            )
 
           (set-face-attribute
            'mode-line-inactive nil
+           :foreground 'unspecified
            :box nil
            )
 

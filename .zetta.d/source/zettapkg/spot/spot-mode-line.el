@@ -97,7 +97,10 @@
     (propertize
      (if lighters (mapconcat 'identity lighters " * ") "*")
      ;; the official spotify green
-     'face '(:foreground "#1db954"))))
+     'face `(
+             ;;:foreground "#1db954"
+             :foreground ,brushup-fg-4
+                         ))))
 
 
 (provide 'spot-mode-line)

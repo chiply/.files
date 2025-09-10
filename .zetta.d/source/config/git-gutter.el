@@ -12,23 +12,23 @@
 
   ;; add indicator to margin showing the current line number
 
-  ;;:brushup
-  ;;(add-to-list 'brushup-styles
-  ;;'(progn
-  ;;(setq brushup-git-gutter-foreground brushup-bg-5
-  ;;brushup-git-gutter-background brushup-bg)
-  ;;(set-face-attribute 'git-gutter:added nil
-  ;;:foreground brushup-git-gutter-foreground
-  ;;:background (modus-themes-get-color-value 'bg-green-nuanced))
-  ;;(set-face-attribute 'git-gutter:deleted nil
-  ;;:foreground brushup-git-gutter-foreground
-  ;;:background (modus-themes-get-color-value 'bg-red-nuanced))
-  ;;(set-face-attribute 'git-gutter:modified nil
-  ;;:foreground brushup-git-gutter-foreground
-  ;;:background (modus-themes-get-color-value 'bg-yellow-nuanced))
-  ;;(set-face-attribute 'git-gutter:separator nil
-  ;;:foreground brushup-git-gutter-foreground
-  ;;:background brushup-git-gutter-background)))
+  :brushup
+  (add-to-list 'brushup-styles
+               '(progn
+                  (setq brushup-git-gutter-foreground brushup-bg-5
+                        brushup-git-gutter-background brushup-bg)
+                  (set-face-attribute 'git-gutter:added nil
+                                      :foreground brushup-git-gutter-foreground
+                                      :background 'unspecified)
+                  (set-face-attribute 'git-gutter:deleted nil
+                                      :foreground brushup-git-gutter-foreground
+                                      :background 'unspecified)
+                  (set-face-attribute 'git-gutter:modified nil
+                                      :foreground brushup-git-gutter-foreground
+                                      :background 'unspecified)
+                  (set-face-attribute 'git-gutter:separator nil
+                                      :foreground brushup-git-gutter-foreground
+                                      :background 'unspecified)))
 
   (general-define-key
    :keymaps 'menu-project-map

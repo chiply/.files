@@ -1,21 +1,27 @@
-;; should be pushing text to a say file... can be a single location on the filesystem
-(defun z-get-selected-text (start end)
-    (if (use-region-p)
-        (let ((regionp (buffer-substring start end)))
-            (message regionp))))
+(defun my/async-shell-command (cmd)
+  (let ((bufnm "*tts*")
+        (process-connection-type nil)
+        (zmc-async-shell-command-spinners-enable t))
+    ;; if the buffer exists, kill it
+    (when (get-buffer bufnm)
+      (kill-buffer bufnm))
+    (async-shell-command cmd bufnm)))
 
-(defun z-say (start end)
+;; write function that writes the text in region to a file
+;; ~/.dictation-data
+(defun my/async-shell-command-say (start end)
+  "Write the region from START to END to a file in ~/.dictation-data."
   (interactive "r")
-  (async-shell-command
-   (concat
-    "say "
-    "-i -r 200 -v Fiona "
-    ;; todo: text processing
-    (format
-     " \"%s\" "
-     (string-replace "\n" " " (z-get-selected-text start end)))
-    )
-   )
-  )
+  (let* ((text (buffer-substring-no-properties start end))
+         (file-path (expand-file-name "~/.say-file")))
+    (with-temp-file file-path
+      (insert text)
+      (my/async-shell-command
+       (concat "say"
+               " --interactive"
+               " --quality=127"
+               " --rate 190"
+               " --voice \"Jamie (Premium)\""
+               " --input-file " file-path)))))
 
-
+(general-define-key :keymaps 'override "s-:" 'my/async-shell-command-say)

@@ -9,6 +9,7 @@
   (setq bibtex-completion-bibliography '("~/.files/.lit/bibliography.bib")
         bibtex-completion-library-path '("~/.files/.lit/pdf/")
         bibtex-completion-notes-path "~/.files/org-roam/"
+        org-ref-bibtex-pdf-download-dir "~/pdfs/"
         bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
 
         bibtex-completion-additional-search-fields '(keywords)
