@@ -7,11 +7,12 @@
   ;; issues, sometimes text snaps out of indent mode
   (setq-default org-indent-mode nil) ;; NOTE doesn't work?
   (setq org-confirm-babel-evaluate nil
+        org-tags-column 0
         org-table-convert-region-max-lines 10000
         org-use-fast-todo-selection 'expert
         org-attach-store-link-p 'file
         org-hide-leading-stars nil
-        org-archive-location "archive.org::* From %s"
+        org-archive-location "(todo) archive.org::* From %s"
         org-agenda-files '(
                            ;; order matters
                            "~/logseq/graphs/main/pages/emacs.org"
@@ -232,6 +233,7 @@
                                   ;; indentation of code blocks
                                   (electric-indent-mode -1)
                                   (toggle-truncate-lines -1) 
+                                  (undo-tree-mode +1)
                                   )))))
 
 (provide 'bootstrap-org)

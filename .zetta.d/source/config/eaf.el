@@ -1,30 +1,30 @@
 ;; this is incidentally a great example of using a striaght recipe
 (use-package eaf
   :ensure (eaf
-             :type git
-             :host github
-             :repo "emacs-eaf/emacs-application-framework"           
-             :files ("*.el" "*.py" "core" "app" "*.json")
-             ;; Straight won't try to search for these packages when we
-             ;; make further use-package invocations for them
-             :includes (eaf-pdf-viewer
-                        eaf-browser
-                        eaf-image-viewer
-                        eaf-terminal
-                        eaf-org-previewer
-                        eaf-markdown-previewer
-                        )
-             :pre-build ("python3"
-                         "install-eaf.py"
-                         "--install"
-                         "pdf-viewer"
-                         "browser"
-                         "image-viewer"
-                         "terminal"
-                         "org-previewer"
-                         "markdown-previewer"
-                         "--ignore-sys-deps")
-             )
+           :type git
+           :host github
+           :repo "emacs-eaf/emacs-application-framework"           
+           :files ("*.el" "*.py" "core" "app" "*.json")
+           ;; Straight won't try to search for these packages when we
+           ;; make further use-package invocations for them
+           :includes (eaf-pdf-viewer
+                      eaf-browser
+                      eaf-image-viewer
+                      eaf-terminal
+                      eaf-org-previewer
+                      eaf-markdown-previewer
+                      )
+           :pre-build ("python3"
+                       "install-eaf.py"
+                       "--install"
+                       "pdf-viewer"
+                       "browser"
+                       "image-viewer"
+                       "terminal"
+                       "org-previewer"
+                       "markdown-previewer"
+                       "--ignore-sys-deps")
+           )
 
   :demand t
 
@@ -42,6 +42,8 @@
     (z-org-agenda "1" org-super-agenda-groups-main)
     (org-agenda-redo) 
     )
+  (require 'eaf-browser)
+  (require 'eaf-pdf-viewer)
   ) 
 
 

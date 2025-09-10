@@ -2,6 +2,9 @@
 ;; `Font Book` app
 (set-frame-font "Terminus (TTF)")
 
+;; prevent the *Warnings* buffer from popping up
+(setq warning-minimum-level :emergency)
+
 (winner-mode)
 
 (global-auto-revert-mode 1) ;; you might not want this
