@@ -69,7 +69,7 @@
            )
           15 "Terminus (TTF)" "gray"
           (format-mode-line default-line-align-left-devel-2)
-          15 "Terminus (TTF)" "blue"
+          15 "Terminus (TTF)" "gray"
           t)
          :ascent 100)))))))
  )

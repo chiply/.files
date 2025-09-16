@@ -120,6 +120,7 @@ seem to require loading after the client starts up"
            :background brushup-bg
            :foreground 'unspecified
            :box nil
+           :underline nil
            )
 
           (set-face-attribute
@@ -134,7 +135,7 @@ seem to require loading after the client starts up"
            :background brushup-bg-1_0
            :underline nil
            :font "Terminus (TTF)"
-           :box t
+           :box nil
            :inherit nil)
 
           (set-face-attribute

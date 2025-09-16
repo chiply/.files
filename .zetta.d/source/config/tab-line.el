@@ -244,14 +244,16 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
   (global-tab-line-mode 1)
 
   ;;:brushup
+  ;; NOTE can't get the backgorund inactive color like I have in the
+  ;; modeline, that's why I'm choosing white as the indicatro for the
+  ;; active tab
   (add-to-list
    'brushup-styles
    '(progn
-      (set-face-attribute 'tab-line-tab-current nil :box nil :inherit nil)
-      (set-face-attribute 'tab-line-tab nil :box nil :inherit nil)
-      (set-face-attribute 'tab-line-tab-inactive nil :box nil :inherit nil)
-      (set-face-attribute 'tab-line nil :box nil :inherit nil)
-      ))
+      (set-face-attribute 'tab-line-tab-current nil :box nil :inherit nil :background brushup-bg :overline brushup-bg-6)
+      (set-face-attribute 'tab-line-tab nil :box nil :inherit nil :background brushup-bg-1_0)
+      (set-face-attribute 'tab-line-tab-inactive nil :box nil :inherit nil :background brushup-bg-1_0)
+      (set-face-attribute 'tab-line nil :box nil :inherit nil :background brushup-bg-1_0 :overline brushup-bg-1_0 )))
 
 
   :general

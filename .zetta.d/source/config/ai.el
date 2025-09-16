@@ -1,9 +1,10 @@
 (use-package copilot
-  :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
   :demand t
   :config
-  (setq copilot-server-executable (expand-file-name "/opt/homebrew/bin/copilot-language-server"))
+  ;;(setq copilot-server-executable (concat "node " (expand-file-name "~/node_modules/@github/copilot-language-server/dist/language-server.js ") "--stdio "))
   ;; modes
+
   (add-hook 'prog-mode-hook 'copilot-mode)
   (add-hook 'markdown-mode-hook 'copilot-mode)
   (add-hook 'org-mode-hook 'copilot-mode)
@@ -208,4 +209,9 @@
   (setq gptel-autocomplete-debug t)
   ;;(setq gptel-autocomplete-use-context t)
   ;;(setq gptel-autocomplete-use-context nil)
+  )
+
+;; necessary to use chatgpt chat like claude or cursor using copilot
+(use-package vscode-cp-proxy
+  :ensure (vscode-cp-proxy :type git :host github :repo "utsahi/vscode-cp-proxy")
   )

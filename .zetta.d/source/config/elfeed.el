@@ -419,6 +419,7 @@ minibuffer with something like `exit-minibuffer'."
     (let ((browse-url-browser-function #'eww-browse-url))
       (elfeed-show-visit use-generic-p)))
 
+;; TODO replace and condittionally transform if reddit to reddit.old
   (defun elfeed-search-eww-open (&optional use-generic-p)
     "open with eww"
     (interactive "P")

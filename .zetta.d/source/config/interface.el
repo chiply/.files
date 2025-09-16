@@ -77,8 +77,8 @@
   ;; comment
   (when pom "🍅 "))
 
-(defun repeat-indicator-icon ()
-  (if (and (boundp 'menu--indicator) menu--indicator) "** " "__ "))
+;;(defun repeat-indicator-icon ()
+;;(if (and (boundp 'menu--indicator) menu--indicator) "** " "__ "))
 
 (defun z-pyvenv-activate-poetry-modeline ()
   (and (boundp 'z-pyvenv-virtual-env)
@@ -96,8 +96,17 @@
   (nyan-create))
 
 (defun z-current-prefix ()
-  (key-description (or (and (boundp 'my-this-command-keys-vector) my-this-command-keys-vector)
-                       (this-command-keys-vector))))
+  (let ((descr (key-description
+                (or
+                 (and
+                  (boundp 'my-this-command-keys-vector)
+                  my-this-command-keys-vector)
+                 (this-command-keys-vector)))))
+    (if (string-match-p "mouse" descr)
+        ""
+      descr
+      )
+    ))
 
 ;; otherwise prefix keys won't show up
 (add-hook 'prefix-command-echo-keystrokes-functions 'force-mode-line-update)
@@ -141,6 +150,9 @@
                        z-insert-space
                        z-current-prefix
                        ))
+
+(set-face-attribute 'tab-bar nil :box nil :inherit nil :background brushup-bg-1_0)
+
 
 ;; Emacs 28 and newer: Hide commands in M-x which do not work in the current
 ;; mode.  Vertico commands are hidden in normal buffers. This setting is
