@@ -106,7 +106,7 @@ chmod +x ~/.files/install_emacs_distros.sh && ~/.files/install_emacs_distros.sh
 ## language servers (not all should be installed into global scope, eg python)
 npm install -g vscode-json-languageserver
 npm install -g eslint
-npm install -g @github/copilot-language-server
+;;npm install -g @github/copilot-language-server
 
 
 # nvm node

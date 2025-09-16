@@ -8,6 +8,7 @@
 
   (setq shr-inhibit-images nil)
   (setq shr-folding-mode t)
+  (setq shr-use-fonts nil)
 
   (eval-after-load 'shr
     '(progn
@@ -25,6 +26,7 @@
       (eww-readable)))
 
   (defun z-eww-mode-functions ()
+    ;; NOTE got the weird bug with shr-descend when disabling fonts
     (setq shr-use-fonts nil)
     (toggle-truncate-lines -1)
     (olivetti-mode -1))
