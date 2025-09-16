@@ -124,7 +124,6 @@
    "yaml-path.el"
    "yaml.el"
    "yaml-pro.el"
-   "helm-themes.el"
    "text-mode.el"
    "jmespath.el"
    "terraform.el"
