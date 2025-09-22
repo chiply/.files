@@ -111,26 +111,28 @@
   (defun z-org-open-at-point ()
     (interactive)
     (let ((browse-url-browser-function 'browse-url-default-browser))
-      (call-interactively 'org-open-at-point)
-      )
-    )
+      (call-interactively 'org-open-at-point)))
 
   ;; display
   ;; TODO these don't load immediately: fix
-  (add-to-list 'org-emphasis-alist '("*" (:foreground "black" :background "yellow")))
+  ;;(add-to-list 'org-emphasis-alist '("*" (:foreground "black" :background "yellow")))
 
   ;; makes visible in focus mode
   ;; defer styling to hl-todo which allows finer grained control inside and outside of headings
-  (set-face-attribute 'org-todo nil :foreground nil :background "#FFFFB6B6C1C1")
-  (set-face-attribute 'org-done nil :foreground nil :background "pale green")
-  (set-face-attribute 'org-level-1 nil :height 1.33 :foreground nil :background 'unspecified)
-  (set-face-attribute 'org-level-2 nil :height 1.2 :foreground nil :background 'unspecified)
-  (set-face-attribute 'org-level-3 nil :height 1.15 :foreground nil :background 'unspecified)
-  (set-face-attribute 'org-level-4 nil :height 1.15 :foreground nil :background 'unspecified)
-  (set-face-attribute 'org-level-5 nil :height 1.15 :foreground nil :background 'unspecified)
-  (set-face-attribute 'org-level-6 nil :height 1.15 :foreground nil :background 'unspecified)
-  (set-face-attribute 'org-level-7 nil :height 1.15 :foreground nil :background 'unspecified)
-  (set-face-attribute 'org-level-8 nil :height 1.15 :foreground nil :background 'unspecified)
+  (add-to-list
+   'brushup-styles
+   '(progn
+      ;;(set-face-attribute 'org-todo nil :foreground 'unspecified :background "#FFFFB6B6C1C1")
+      ;;(set-face-attribute 'org-done nil :foreground 'unspecified :background "pale green")
+      (set-face-attribute 'org-level-1 nil :height 1.00)
+      (set-face-attribute 'org-level-2 nil :height 1.00)
+      (set-face-attribute 'org-level-3 nil :height 1.00)
+      (set-face-attribute 'org-level-4 nil :height 1.00)
+      (set-face-attribute 'org-level-5 nil :height 1.00)
+      (set-face-attribute 'org-level-6 nil :height 1.00)
+      (set-face-attribute 'org-level-7 nil :height 1.00)
+      (set-face-attribute 'org-level-8 nil :height 1.00)
+      ))
 
   (defun z-org-go ()
     (interactive)

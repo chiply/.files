@@ -1,13 +1,27 @@
 (use-package color :ensure nil)
-
 (set-face-attribute 'default nil :height 200)
 
+(frame-parameter nil 'background-color)
+
+
+(defun color-lighter-p (color1 color2)
+  "Return t if COLOR1 is lighter than COLOR2."
+  (> (nth 2 (apply 'color-rgb-to-hsl (color-name-to-rgb color1)))
+     (nth 2 (apply 'color-rgb-to-hsl (color-name-to-rgb color2)))))
+
+(defun theme-light-p ()
+  "Return t if the current theme is light, nil if dark.
+This checks the background color of the default face."
+  (let ((bg (face-background 'default)))
+    (when bg  ; ensure we have a background color
+      (color-lighter-p bg "gray50"))))
+
+(defun theme-dark-p ()
+  "Return t if the current theme is dark, nil if light."
+  (not (theme-light-p)))
+
 (defun brushup-init ()
-  (setq brushup-dark-p (equal
-                        "dark"
-                        (symbol-name
-                         (alist-get 'background-mode
-                                    (frame-parameters))))
+  (setq brushup-dark-p (theme-dark-p)
         brushup-fg (let ((foreground (face-attribute 'default :foreground)))
                      (if (equal foreground "black")
                          (message "#000000")
@@ -73,8 +87,6 @@
 
 (brushup-init)
 
-
-
 (setq brushup-styles '())
 (add-to-list 'brushup-styles '(brushup-init))
 
@@ -105,10 +117,10 @@ seem to require loading after the client starts up"
         (progn
           (set-face-attribute
            'region nil
-           :background
-           (if brushup-dark-p (color-lighten-name brushup-fg (- 60)) brushup-bg-3)
+           :background (if brushup-dark-p
+                           (color-lighten-name brushup-fg (- 60))
+                         brushup-bg-3)
            :foreground 'unspecified)
-
 
           (setq ansi-term-color-vector [term term-color-black term-color-red
                                              term-color-green term-color-yellow
@@ -116,7 +128,7 @@ seem to require loading after the client starts up"
                                              term-color-cyan term-color-white])
 
           (set-face-attribute
-          'mode-line nil
+           'mode-line nil
            :background brushup-bg
            :foreground 'unspecified
            :box nil
@@ -132,7 +144,7 @@ seem to require loading after the client starts up"
           (set-face-attribute
            'header-line nil
            ;;:weight 'normal
-           :background brushup-bg-1_0
+           :background brushup-bg
            :underline nil
            :font "Terminus (TTF)"
            :box nil
@@ -154,8 +166,15 @@ seem to require loading after the client starts up"
            'font-lock-comment-face nil
            :foreground
            (if brushup-dark-p
-               (color-lighten-name brushup-bg 25)
-             (color-lighten-name brushup-bg -25))
+               (color-lighten-name brushup-bg 200)
+             (color-lighten-name brushup-bg -50))
+           :slant 'normal)
+          (set-face-attribute
+           'font-lock-doc-face nil
+           :foreground
+           (if brushup-dark-p
+               (color-lighten-name brushup-bg 200)
+             (color-lighten-name brushup-bg -50))
            :slant 'normal)
 
           (set-face-attribute
@@ -188,6 +207,20 @@ seem to require loading after the client starts up"
     )
   )
 
+(defun z-patch-face-fonts ()
+  "I really don’t like bold text at ALL. Just disable them. This function is
+        run after:
+            a) startup is done i.e. as late as possible, and
+            b) after a theme change.
+        Hopefully by that time all faces are loaded."
+  (interactive)
+  (mapc (lambda (face)
+          (set-face-attribute face nil
+                              :slant 'normal
+                              ))
+        (face-list)))
+
+(add-to-list 'brushup-styles '(z-patch-face-fonts))
 
 
 (defun my-buffer-face-mode-pt-mono ()
@@ -195,12 +228,6 @@ seem to require loading after the client starts up"
   (interactive)
   (setq buffer-face-mode-face '(:family "Terminus (TTF)"))
   (buffer-face-mode))
-
-;; (defun my-buffer-face-mode-pt-mono-p85 ()
-;;   "Sets a fixed width (monospace) font in current buffer"
-;;   (interactive)
-;;   (setq buffer-face-mode-face '(:family "Terminus (TTF)" :height 0.87))
-;;   (buffer-face-mode))
 
 (defalias 'use-package-handler/:brushup 'use-package-handle-forms)
 (defalias 'use-package-normalize/:brushup 'use-package-normalize-forms)

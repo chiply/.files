@@ -34,7 +34,6 @@
   (keymap-set corfu-map "M-m" #'corfu-move-to-minibuffer)
   (add-to-list 'corfu-continue-commands #'corfu-move-to-minibuffer)
 
-
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer."
     (when (local-variable-p 'completion-at-point-functions)
@@ -51,8 +50,21 @@
   (setq corfu-popupinfo-delay 0.25)
 
   ;; add frame alpha to corfu--frame-parameters
-  (add-to-list 'corfu--frame-parameters '(alpha . (85 . 85)))
+  (add-to-list 'corfu--frame-parameters '(alpha . (75 . 75)))
 
+  :brushup
+  
+  (add-to-list 'brushup-styles
+               '(set-face-attribute 'corfu-default nil
+                                    :foreground brushup-fg
+                                    :background brushup-bg))
+
+  (add-to-list 'brushup-styles
+               '(set-face-attribute 'corfu-current nil
+                                    :foreground brushup-fg
+                                    :background brushup-bg
+                                    ;; NOTE makes this work will across themes
+                                    :underline t))
 
   :general
   (
@@ -64,30 +76,9 @@
    ;; seems counterintuitive, based on the function names, but I like
    ;; this behavior
    "C-S-j" 'corfu-popupinfo-scroll-up
-   "C-S-k" 'corfu-popupinfo-scroll-down
-   )
-  )
+   "C-S-k" 'corfu-popupinfo-scroll-down))
 
 (use-package nerd-icons-corfu
   :after corfu
   :config
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
-
-;; ;; disabling automatic overlays for now and just sticking with copilot + corfu.
-;; ;; this gives very little extra info at the expense of crowding things
-;; (use-package corfu-candidate-overlay
-;;   :config
-;;   (corfu-candidate-overlay-mode 1)
-;;   (global-set-key (kbd "C-f") 'corfu-candidate-overlay-complete-at-point)
-;;   )
-
-
-
-
-
-
-
-
-
-
