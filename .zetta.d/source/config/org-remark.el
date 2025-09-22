@@ -197,6 +197,13 @@
                                   :v-adjust 0.0
                                   :height 1.0))
 
+  (add-to-list 'brushup-styles
+               '(set-face-attribute
+                 'org-remark-highlighter nil
+                 :background brushup-bg-2
+                 :underline brushup-bg-4
+                 ))
+
   ;; custom pens
   (defun my/org-remark-get-date ()
     (let* ((day (string-to-number (format-time-string "%e")))
@@ -234,7 +241,3 @@
          ("C-c n [" . org-remark-view-prev)
          ("C-c n r" . org-remark-remove)
          ("C-c n d" . org-remark-delete)))
-
-
-
-
