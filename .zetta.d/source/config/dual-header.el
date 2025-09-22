@@ -67,13 +67,15 @@
           (format-mode-line
            (z-get-line-format default-line-align-left-devel-1 "" "")
            )
-          15 "Terminus (TTF)" "gray"
+          15 "Terminus (TTF)" brushup-fg-3
           (format-mode-line default-line-align-left-devel-2)
-          15 "Terminus (TTF)" "gray"
+          15 "Terminus (TTF)" brushup-fg-3
           t)
          :ascent 100)))))))
  )
 
 (z-set-dual-header)
+
+(add-to-list 'brushup-styles '(z-set-dual-header))
 
 (add-hook 'magit-status-mode-hook 'z-set-dual-header)

@@ -80,7 +80,7 @@
          ;; certain font sizes. and with certain other features like
          ;; side-line mode
          ;;(symbol (format " %s"
-                         ;;(or (cdr (assoc type hl-block-types)) "-")))
+         ;;(or (cdr (assoc type hl-block-types)) "-")))
          (symbol "")
          (header-start (save-excursion
                          (goto-char (treesit-node-start node))
@@ -216,6 +216,25 @@ point). Available types are registered in hl-block-types."
     (hl-block--disable)))
 
 (add-hook 'python-ts-mode-hook #'hl-block-mode)
+
+(add-to-list
+ 'brushup-styles
+ '(progn
+    (set-face-attribute 'hl-block-header-face nil
+                        :background brushup-bg-1
+                        :overline nil
+                        :extend t)
+    (set-face-attribute 'hl-block-body-face nil
+                        :background brushup-bg-1_0
+                        :extend t)
+    (set-face-attribute 'hl-block-symbol-face nil
+                        :background brushup-bg-1_0
+                        :extend t)
+    (set-face-attribute 'hl-block-footer-face nil
+                        :background brushup-bg-1_0
+                        :underline nil
+                        :extend t)))
+
 
 (provide 'hl-block)
 ;;; hl-block.el ends here

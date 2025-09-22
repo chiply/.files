@@ -16,7 +16,7 @@
   (add-hook 'dockerfile-mode 'copilot-mode)
 
   ;; face
-  (set-face-attribute 'copilot-overlay-face nil :foreground "purple" :inherit nil)
+  (set-face-attribute 'copilot-overlay-face nil :foreground brushup-bg-5 :inherit nil)
   (setq copilot-indent-offset-warning-disable t)
   
   :general (:keymaps '(copilot-completion-map)

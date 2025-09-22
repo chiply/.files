@@ -58,12 +58,6 @@
          (z-tab-line-test-buffer buffer conditions)))
       buffers)))
 
-
-
-
-
-
-
   ;; BUFER SCOPES
   ;; local variable for scope; enables toggling between different scopes
   ;; create a buffer local variable
@@ -250,10 +244,12 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
   (add-to-list
    'brushup-styles
    '(progn
-      (set-face-attribute 'tab-line-tab-current nil :box nil :inherit nil :background brushup-bg :overline brushup-bg-6)
-      (set-face-attribute 'tab-line-tab nil :box nil :inherit nil :background brushup-bg-1_0)
-      (set-face-attribute 'tab-line-tab-inactive nil :box nil :inherit nil :background brushup-bg-1_0)
-      (set-face-attribute 'tab-line nil :box nil :inherit nil :background brushup-bg-1_0 :overline brushup-bg-1_0 )))
+      (set-face-attribute 'tab-line-tab-current nil :box nil :inherit nil :background brushup-bg :foreground brushup-fg :overline nil :weight 'bold)
+      (set-face-attribute 'tab-line-tab-modified nil :box nil :inherit nil :background brushup-fg-4 :foreground brushup-bg :overline nil)
+      (set-face-attribute 'tab-line-tab nil :box nil :inherit nil :background brushup-bg-2 :foreground brushup-fg-3)
+      (set-face-attribute 'tab-line-tab-inactive nil :box nil :inherit nil :background brushup-bg-2 :foreground brushup-fg-3)
+      (set-face-attribute 'tab-line nil :box nil :inherit nil :background brushup-bg-2 :foreground brushup-fg-3 :overline nil )
+      ))
 
 
   :general

@@ -43,6 +43,7 @@
    consult-buffer
    consult-bookmark
    consult-project-buffer
+   consult-theme
    :preview-key "C-=")
 
   (setq consult-async-split-style 'comma)

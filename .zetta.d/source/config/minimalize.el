@@ -18,9 +18,9 @@
   (add-to-list 'frameset-filter-alist x))
 
 (menu-bar-mode 1)
-(tool-bar-mode 1)
-(horizontal-scroll-bar-mode 1)
-(scroll-bar-mode 1)
+(tool-bar-mode -1)
+(horizontal-scroll-bar-mode -1)
+(scroll-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (setq blink-cursor-mode nil)

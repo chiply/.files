@@ -419,7 +419,7 @@ minibuffer with something like `exit-minibuffer'."
     (let ((browse-url-browser-function #'eww-browse-url))
       (elfeed-show-visit use-generic-p)))
 
-;; TODO replace and condittionally transform if reddit to reddit.old
+  ;; TODO replace and condittionally transform if reddit to reddit.old
   (defun elfeed-search-eww-open (&optional use-generic-p)
     "open with eww"
     (interactive "P")
@@ -460,10 +460,34 @@ minibuffer with something like `exit-minibuffer'."
   ;; Register the keymap
   (add-to-list 'embark-keymap-alist '(elfeed-entry . embark-elfeed-entry-map))
 
-
-
   (general-unbind :states 'normal :keymaps 'elfeed-search-mode-map "f")
   (general-unbind :states 'normal :keymaps 'elfeed-search-mode-map "R")
+
+  :brushup
+  (add-to-list 'brushup-styles
+               '(progn
+                  ;; NOTE this will still work with dark because dark
+                  ;; themse also modify the FG, but we don't change
+                  ;; that here
+                  (set-face-attribute 'elfeed-search-title-face nil
+                                      :weight 'unspecified
+                                      :background brushup-bg-1
+                                      :inherit nil)
+                  (set-face-attribute 'elfeed-search-unread-title-face nil
+                                      :weight 'unspecified
+                                      :background brushup-bg
+                                      :inherit nil)
+                  (set-face-attribute 'elfeed-search-feed-face nil
+                                      :weight 'unspecified
+                                      :foreground brushup-fg-2
+                                      :inherit nil)
+                  (set-face-attribute 'elfeed-search-tag-face nil
+                                      :weight 'unspecified
+                                      :foreground brushup-fg-4
+                                      :inherit nil)
+                  ))
+
+
 
 
   ;; TODO these bindings don't get applied for some reason

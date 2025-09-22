@@ -1,6 +1,9 @@
 (use-package hl-todo
   :config
   ;; NOTE this should take precendence over org-mode highlighting
+  ;; how do these colors change when changing themes?  is it somehow
+  ;; doing math on the orginal colors?  does the theme contain todo
+  ;; words?
   (setq hl-todo-keyword-faces
         '(("TODO"   . "#FF0000")
           ("FIXME"  . "#FF0000")

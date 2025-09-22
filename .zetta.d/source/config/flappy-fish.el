@@ -119,9 +119,9 @@
               'mouse-face 'highlight
               'local-map (let ((map (make-sparse-keymap)))
                            (define-key map [mode-line down-mouse-1]
-                             (lambda ()
-                               (interactive)
-                               (fish--go-to-position fraction buffer)))
+                                       (lambda ()
+                                         (interactive)
+                                         (fish--go-to-position fraction buffer)))
                            map)))
 
 (defun fish--swimming-display ()
@@ -199,6 +199,12 @@
       (setq fish-mode-line-string "")))
   
   (force-mode-line-update t))
+
+(add-to-list 'brushup-styles nil
+             '(set-face-attribute 'fish-face nil
+                                 :foreground brushup-fg-4
+                                 :background brushup-bg))
+
 
 (fish-start-timer)
 

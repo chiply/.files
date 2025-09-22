@@ -6,9 +6,16 @@
   (setq eww-bookmarks-directory (expand-file-name "data/eww" user-emacs-directory))
   (setq shr-max-image-proportion 1.0) ; Shrink images to 50% of their original size
 
+
   (setq shr-inhibit-images nil)
   (setq shr-folding-mode t)
-  (setq shr-use-fonts nil)
+
+  ;; NOTE there is a bug in shr which causes rendering errors when
+  ;; shr-us-fonts is nil, even though that's the way to get the
+  ;; default emacs font used for everything else.  alternatively, we
+  ;; can customize shr-text face to use our emacs font
+  (setq shr-use-fonts t)
+  (set-face-attribute 'shr-text nil :family "Terminus (TTF)")
 
   (eval-after-load 'shr
     '(progn
@@ -27,7 +34,7 @@
 
   (defun z-eww-mode-functions ()
     ;; NOTE got the weird bug with shr-descend when disabling fonts
-    (setq shr-use-fonts nil)
+    (setq shr-use-fonts t)
     (toggle-truncate-lines -1)
     (olivetti-mode -1))
 
@@ -67,8 +74,4 @@
   (
    :keymaps 'menu-lookup-map
    "e" 'eww
-   )
-
-  )
-
-
+   ))

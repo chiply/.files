@@ -61,10 +61,12 @@
   :config
   (global-undo-tree-mode)
 
-
-  :display
-  ;;(z-side "^ \\*undo-tree*" 'right 1)
-  
+  :brushup
+  (add-to-list 'brushup-styles
+               '(set-face-attribute 'undo-tree-visualizer-active-branch-face nil
+                                   :foreground brushup-fg
+                                   :background brushup-bg
+                                   ))
 
   :general
 

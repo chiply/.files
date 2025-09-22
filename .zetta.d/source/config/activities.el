@@ -3,4 +3,4 @@
   (use-package persist
     :demand t)
   (activities-mode)
-  (activities-tabs-mode))
+  )

@@ -8,4 +8,9 @@
   (setq-default olivetti-margin-width 3)
   (setq-default olivetti-body-width 0.80)
   (setq-default olivetti-minimum-body-width 80)
+  :general
+  (
+   :keymaps 'override
+    "s-e" 'olivetti-mode
+   )
   )
