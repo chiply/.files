@@ -258,6 +258,8 @@
    "eca-emacs.el"
    "efrit.el"
    "treesit-fold.el"
+   "saveplace.el"
+   "buffer-terminator.el"
    "cleanup.el"))
 
 

@@ -44,6 +44,16 @@
    mcp-hub-servers
    `(("fetch" . (:command "uvx" :args ("mcp-server-fetch")))
      ("git" . (:command "uvx" :args ("mcp-server-git")))
+     ;; NOTE this doesn't capture starting the server, but I could
+     ;; probably get it to do that with the stdio option, it's just a
+     ;; matter of gettting the corrrect directoyr... but instead
+     ;; should lean towards a pattern that defines the servers in
+     ;; .files, installs them automatically in bootstrap (not sure if
+     ;; pipx would be the thing to use)... or could dockerize? not
+     ;; sure, but could probably have a better pattern... maybe each
+     ;; server defines a command that becomes available when the
+     ;; package is installed with pipx, can prompt an ai for this
+     ("fastmcp_demo" . (:url "http://127.0.0.1:8000/mcp"))
      ("memory" . (
                   :command "npx"
                   :args ("-y"
