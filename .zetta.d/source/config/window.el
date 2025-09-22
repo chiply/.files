@@ -1,15 +1,21 @@
 (require 'window)
 
+;; NOTE this makes them look almost invisible, better than disabling
+;; the mode because when disabled there's still a black liine right
+;; divider for some reason
 (window-divider-mode -1)
 (setq window-divider-default-places t)
 (setq window-divider-default-bottom-width 1
-      window-divider-default-right-width 1)
-(window-divider-mode 1)
+      window-divider-default-right-width 1
+      )
+(window-divider-mode +1)
 
 (add-to-list 'brushup-styles
              '(progn
                 (set-face-attribute 'window-divider nil
-                                    :foreground brushup-bg-3)))
+                                    :background brushup-bg-1
+                                    :foreground brushup-bg-1
+                                    )))
 
 (defun z-window-divider-mode ()
   (interactive)

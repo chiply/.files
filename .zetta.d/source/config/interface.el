@@ -151,7 +151,9 @@
                        z-current-prefix
                        ))
 
-(set-face-attribute 'tab-bar nil :box nil :inherit nil :background brushup-bg-1_0)
+(add-to-list 'brushup-styles
+ '(set-face-attribute 'tab-bar nil :box nil :inherit nil :background brushup-bg-1_0)
+ )
 
 
 ;; Emacs 28 and newer: Hide commands in M-x which do not work in the current
@@ -169,3 +171,4 @@
 ;; activate makefile-mode whenver a file is opened matching the regex "Makefile.*"
 (add-to-list 'auto-mode-alist '("Makefile.*" . makefile-mode))
 (add-hook 'window-selection-change-functions (lambda (_) (force-mode-line-update)))
+

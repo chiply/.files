@@ -94,9 +94,9 @@
     (eww-browse-url ref-url)))
 
 
-(add-hook 'org-mode-hook (lambda () (font-lock-add-keywords
-                                     nil
-                                     '(("^-\\{5,\\}"  0 '(:foreground "red" :weight bold))))))
+;;(add-hook 'org-mode-hook (lambda () (font-lock-add-keywords
+                                     ;;nil
+                                     ;;'(("^-\\{5,\\}"  0 '(:foreground "red" :weight bold))))))
 
 ;;(remove-hook 'org-mode-hook (lambda () (undo-tree-mode 1)))
 

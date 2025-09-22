@@ -53,34 +53,26 @@ URL should be a Reddit permalink or comments URL."
   (general-define-key :keymaps 'elfeed-show-mode-map :states 'normal "R" 'md4rd-elfeed-show-reddit-comments)
 
   ;; needed to use this to set things up https://not-an-aardvark.github.io/reddit-oauth-helper/
-  (setq md4rd-subs-active
-        '(lisp+Common_Lisp
-          emacs
-          prolog
-          dataisbeautiful
-          archlinux
-          aws
-          datascience
-          Guitar
-          healthIT
-          jazzguitar
-          jazztheory
-          KnowledgeGraph
-          javascript
-          MachineLearning
-          planetemacs
-          Python
-          stats
-          SQL
-          programming
-          vim
-          Watches
-          webdev
-          eink
-          ))
+  (setq
+   md4rd-subs-active
+   '(lisp+Common_Lisp emacs prolog dataisbeautiful archlinux aws
+     datascience Guitar healthIT jazzguitar jazztheory KnowledgeGraph
+     javascript MachineLearning planetemacs Python stats SQL
+     programming vim Watches webdev eink))
 
   (general-unbind :keymaps 'md4rd-mode :states 'normal "q")
   (general-define-key :keymaps 'md4rd-mode :states 'normal "q" 'kill-current-buffer)
+
+  ;; fixing face
+  (defface md4rd--greentext-face
+    '((((type graphic) (background dark))
+       :background unspecified :foreground "#90a959")
+      (((type graphic) (background light))
+       :background unspecified :foreground "#90a959")
+      (t :background unspecified :foreground "#90a959"))
+    "Face for rendering greentexts."
+    :group 'md4rd)
+
 
   ;; NOTE buggy
   ;;(add-hook 'md4rd-mode-hook 'md4rd-indent-all-the-lines)

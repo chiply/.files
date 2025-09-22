@@ -26,7 +26,7 @@
    "face-remap.el"
    "default-text-scale.el"
    "hl-line.el"
-   "lin.el"
+   ;;"lin.el"
    "hide-mode-line.el"
    "all-the-icons.el"
    "remote.el"
@@ -260,6 +260,7 @@
    "treesit-fold.el"
    "saveplace.el"
    "buffer-terminator.el"
+   "org-tree-slide.el"
    "cleanup.el"))
 
 
