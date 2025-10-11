@@ -1,6 +1,6 @@
 (use-package elfeed-protocol
   :ensure (elfeed-protocol :type git :host github :repo "fasheng/elfeed-protocol")
-  :demand t
+  :after elfeed
   :config
   (setq elfeed-use-curl t)
   (elfeed-set-timeout 36000)

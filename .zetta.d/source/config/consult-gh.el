@@ -1,5 +1,7 @@
 (use-package consult-gh
-  :ensure (:wait t)
+  :ensure (:wait t
+                 :files ("*.el")
+                 )
   :demand t
   :after consult
 
@@ -7,8 +9,15 @@
   ;;add your main GitHub account (replace "armindarvish" with your user or org)
 
   ;;use "gh org list" to get a list of all your organizations and adds them to default list
-  (setq consult-gh--known-orgs-list (delete-dups (append consult-gh-favorite-orgs-list (remove "" (split-string (or (consult-gh--command-to-string "org" "list") "") "\n")))))
-  (setq consult-gh-favorite-orgs-list (delete-dups (append consult-gh-favorite-orgs-list (remove "" (split-string (or (consult-gh--command-to-string "org" "list") "") "\n")))))
+  (defun z-consult-gh-orgs ()
+    (delete-dups (append consult-gh-favorite-orgs-list (remove "" (split-string (or (consult-gh--command-to-string "org" "list") "") "\n")))))
+
+  (setq consult-gh--known-orgs-list (z-consult-gh-orgs))
+  (setq consult-gh-favorite-orgs-list (z-consult-gh-orgs))
+
+  (require 'consult-gh-nerd-icons)
+  (consult-gh-nerd-icons-mode +1)
+
 
   ;; set the default folder for cloning repositories, By default Consult-GH will confirm this before cloning
   (setq consult-gh-default-clone-directory "~/source_code/")

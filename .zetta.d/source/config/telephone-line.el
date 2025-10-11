@@ -150,13 +150,14 @@
   ;; doesn't matter, and then that allows you to have the
   ;; separation. It has to have something to do with applying the
   ;; separators.
+  ;; NOTE currently styling is effectively disabled
   (defface telephone-line-face-active `((t (:background ,brushup-bg :foreground unspecified))) "foo")
-  (defface telephone-line-face-inactive `((t (:background ,brushup-bg-1_0 :foreground unspecified))) "bar")
+  (defface telephone-line-face-inactive `((t (:background ,brushup-bg :foreground unspecified))) "bar")
 
   (setq telephone-line-faces
         '(
           (foo . (telephone-line-face-inactive . telephone-line-face-inactive))
-          (nil . (telephone-line-face-active . telephone-line-face-inactive))
+          (nil . (telephone-line-face-inactive . telephone-line-face-inactive))
           ))
 
   (setq telephone-line-subseparator-faces '())
@@ -194,4 +195,4 @@
                   (set-face-attribute 'telephone-line-face-inactive nil
                                       :inherit nil
                                       :foreground 'unspecified
-                                      :background brushup-bg-1_0))))
+                                      :background brushup-bg))))

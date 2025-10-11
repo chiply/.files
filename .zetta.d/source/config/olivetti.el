@@ -8,6 +8,10 @@
   (setq-default olivetti-margin-width 3)
   (setq-default olivetti-body-width 0.80)
   (setq-default olivetti-minimum-body-width 80)
+  (add-to-list 'brushup-styles
+               '(progn
+                  (set-face-attribute 'olivetti-fringe nil :background brushup-bg)
+                  ))
   :general
   (
    :keymaps 'override

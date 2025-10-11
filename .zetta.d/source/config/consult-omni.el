@@ -71,13 +71,7 @@
   (require 'consult-omni-man)
   (require 'consult-omni-stackoverflow)
   (require 'consult-omni-youtube)
-  
   (require 'consult-omni-browser-history)
-  ;;(use-package consult-omni-browser-history
-  ;;:ensure nil
-  ;;:after browser-hist
-  ;;:demand t
-  ;;)
   (require 'consult-omni-apps)
   (require 'consult-omni-doi)
   (require 'consult-omni-grep)
@@ -85,15 +79,15 @@
   (require 'consult-omni-fd)
   (require 'consult-omni-git-grep)
   (require 'consult-omni-ripgrep)
-  ;; NOTE ripgrep all allows for search through PDF and archive files,
-  ;; extremely powerful
+  ;; NOTE ripgrep all allows for search through PDF/archive
   (require 'consult-omni-ripgrep-all)
   (use-package dictionary
     :ensure nil
     :config
     (setq consult-omni-dict-server "dict.org"))
 
-  (require 'consult-omni-dict) ;; TODO not working
+   ;; TODO not working
+  (require 'consult-omni-dict)
 
   ;; TODO custom source for arxiv (anything else from lookup)
   (consult-omni-sources-load-modules)

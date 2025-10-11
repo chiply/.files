@@ -17,21 +17,25 @@
   (add-to-list 'brushup-styles
                '(progn
                   (set-face-attribute 'line-number nil
-                                      :foreground brushup-fg
+                                      :foreground brushup-bg-4
                                       :background brushup-bg)
                   (set-face-attribute 'line-number-current-line nil
                                       :inherit 'line-number
-                                      :foreground brushup-fg
+                                      :foreground brushup-bg-6
                                       :background brushup-bg
-                                      :weight 'bold)
+                                      :weight 'bold
+                                      )
                   (set-face-attribute 'line-number-major-tick nil
                                       :inherit 'line-number
-                                      :foreground brushup-fg
-                                      :background brushup-bg-1)
+                                      :weight 'normal
+                                      :foreground brushup-bg-6
+                                      :background brushup-bg)
                   (set-face-attribute 'line-number-minor-tick nil
                                       :inherit 'line-number
-                                      :foreground brushup-fg
-                                      :background brushup-bg-1_0)))
+                                      :weight 'normal
+                                      :foreground brushup-bg-6
+                                      :background brushup-bg)
+                  ))
 
   :hook (((vterm-mode) . (lambda () (display-line-numbers-mode -1)))
          ((pdf-view-mode) . (lambda () (display-line-numbers-mode -1)))))
