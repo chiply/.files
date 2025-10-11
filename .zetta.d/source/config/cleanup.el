@@ -27,7 +27,6 @@
 ;; TODO doesn't work when calling from vertico
 (general-define-key :keymaps 'minibuffer-local-map "C-S-r" 'consult-selection-history-prompt)
 
-
 (add-to-list 'savehist-additional-variables 'consult--buffer-history)
 (add-to-list 'savehist-additional-variables 'consult--find-history)
 (add-to-list 'savehist-additional-variables 'consult--grep-history)
@@ -67,6 +66,7 @@
 (add-to-list 'savehist-additional-variables 'biblio--search-history)
 (add-to-list 'savehist-additional-variables 'elfeed-search-filter-history)
 (add-to-list 'savehist-additional-variables 'transient-history)
+(add-to-list 'savehist-additional-variables 'bookmark-view-history)
 
 
 

@@ -54,6 +54,10 @@
      ;; server defines a command that becomes available when the
      ;; package is installed with pipx, can prompt an ai for this
      ("fastmcp_demo" . (:url "http://127.0.0.1:8000/mcp"))
+     ("fastmcp_docs" . (:url "https://gofastmcp.com/mcp"))
+     ("Demo" . (:command "poetry" :args ("run" "fastmcp"
+                                                   "run" "/Users/redacted/.files/mcp_servers/servers/src/servers/server1.py:mcp"
+                                                   )))
      ("memory" . (
                   :command "npx"
                   :args ("-y"

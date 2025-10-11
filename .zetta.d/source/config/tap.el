@@ -118,6 +118,7 @@ used to override thing at point for whatever reason"
    :keymaps '(
               ;; TODO delete unnecessary modes since including prog
               ;; mode
+              ;; TODO doesn't work in funamental modek
               org-mode-map org-agenda-mode-map sql-mode-map
               python-ts-mode-map lisp-interaction-mode-map
               emacs-lisp-mode-map lisp-mode-map dired-mode-map

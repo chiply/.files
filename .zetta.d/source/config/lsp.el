@@ -429,11 +429,19 @@ point."
   ;;'(height 0.5))
   (setq lsp-ui-sideline-actions-icon lsp-ui-sideline-actions-icon-default)
   ;;(set-face-attribute 'lsp-ui-sideline-global nil )
-  (set-face-attribute 'lsp-ui-sideline-global nil :background brushup-bg :foreground brushup-bg-4)
-  (set-face-attribute 'lsp-ui-sideline-symbol nil :background brushup-bg :foreground brushup-bg-4)
-  (set-face-attribute 'lsp-ui-sideline-symbol-info nil :background brushup-bg :foreground brushup-bg-4)
-  (set-face-attribute 'lsp-ui-sideline-code-action nil :background brushup-bg :foreground brushup-bg-4)
-  (set-face-attribute 'lsp-ui-sideline-current-symbol nil :background brushup-bg :foreground brushup-bg-4)
+
+  (add-to-list 'brushup-styles
+               '(progn
+                  (set-face-attribute 'lsp-ui-sideline-global nil :background brushup-bg :foreground brushup-bg-4)
+                  (set-face-attribute 'lsp-ui-sideline-symbol nil :background brushup-bg :foreground brushup-bg-4)
+                  (set-face-attribute 'lsp-ui-sideline-symbol-info nil :background brushup-bg :foreground brushup-bg-4)
+                  (set-face-attribute 'lsp-ui-sideline-code-action nil :background brushup-bg :foreground brushup-bg-4)
+                  (set-face-attribute 'lsp-ui-sideline-current-symbol nil :background brushup-bg :foreground brushup-bg-4)
+                  (set-face-attribute 'lsp-ui-doc-header nil :background brushup-bg-2 :foreground brushup-fg)
+                  (set-face-attribute 'lsp-ui-doc-background nil :background brushup-bg-1 :foreground brushup-fg)
+                  (set-face-attribute 'lsp-signature-posframe nil :background brushup-bg-5 :foreground brushup-fg)
+                  )
+               )
 
   
   :hook

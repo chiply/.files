@@ -129,7 +129,7 @@ seem to require loading after the client starts up"
 
           (set-face-attribute
            'mode-line nil
-           :background brushup-bg
+           :background brushup-bg-1_0
            :foreground 'unspecified
            :box nil
            :underline nil
@@ -137,7 +137,9 @@ seem to require loading after the client starts up"
 
           (set-face-attribute
            'mode-line-inactive nil
-           :foreground 'unspecified
+           :foreground brushup-bg-6
+           :background brushup-bg
+           :underline nil
            :box nil
            )
 
@@ -189,12 +191,12 @@ seem to require loading after the client starts up"
              (color-lighten-name brushup-bg -30)
              ))
 
-          ;;(set-face-attribute 'minibuffer-prompt nil
-          ;;:foreground brushup-fg
-          ;;:background brushup-bg)
+          ;; creates nice separator overlay between candidates
+          (set-face-attribute 'minibuffer-prompt nil
+          :foreground brushup-fg
+          :background brushup-bg-1_0)
 
-          ;; set the background of the fringe to black
-          (set-face-background 'fringe brushup-bg-1_0)
+          (set-face-background 'fringe brushup-bg)
 
           (set-face-attribute
            'default nil
@@ -217,6 +219,10 @@ seem to require loading after the client starts up"
   (mapc (lambda (face)
           (set-face-attribute face nil
                               :slant 'normal
+                              ;; NOTE need to do more work on the
+                              ;; pipeline to remove this as weight is
+                              ;; used in completion uis
+                              ;;:weight 'normal
                               ))
         (face-list)))
 

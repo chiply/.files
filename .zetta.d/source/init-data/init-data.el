@@ -19,7 +19,7 @@
    "display-fill-column-indicator.el"
    "display-line-numbers.el"
    "face.el"
-   "vi-tilde-fringe.el"
+   ;;"vi-tilde-fringe.el"
    "treesit.el"
    "dimmer.el"
    "focus.el"
@@ -229,7 +229,7 @@
    "jira.el"
    "flappy-fish.el"
    "biome.el"
-   "spot.el"
+   ;;"spot.el"
    "doric-themes.el"
    "graphviz-dot-mode.el"
    "magit-delta.el"
@@ -247,7 +247,7 @@
    "elfeed.el"
    "elfeed-protocol.el"
    "elfeed-score.el"
-   "elfeed-autotag.el"
+   "elfeed-org.el"
    "wombag.el"
    "whisper.el"
    "say.el"
@@ -261,6 +261,7 @@
    "saveplace.el"
    "buffer-terminator.el"
    "org-tree-slide.el"
+   ;;"persist-text-scale.el"
    "cleanup.el"))
 
 

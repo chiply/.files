@@ -54,7 +54,16 @@
   (setq spinner-types
         '(
           ;; TODO remove 2 comemnts to get old list, going simple for now
-          (Foo . ("-" "\\" "|" "/"))
+          ;;(Foo . ("-" "\\" "|" "/"))
+          (Bar .
+               ;;("o" "O" "@" "*")
+               (
+                  "o---o"
+                  "O\\+/O"
+                  "@|x|@"
+                  "*/*\\*"
+                  )
+               )
           ;;;;(Line . ("-" "\\" "|" "/"))
           ;;;;(Pipe . ("┤" "┘" "┴" "└" "├" "┌" "┬" "┐"))
           ;;(SimpleDots . (".  " ".. " "..." "   "))

@@ -342,7 +342,6 @@
 ;; elfeed-score?
 
 (use-package elfeed
-  :demand t
   :after embark
   :config
   (defun elfeed-tag-selection-as (mytag)
@@ -463,6 +462,9 @@ minibuffer with something like `exit-minibuffer'."
   (general-unbind :states 'normal :keymaps 'elfeed-search-mode-map "f")
   (general-unbind :states 'normal :keymaps 'elfeed-search-mode-map "R")
 
+  (setq elfeed-protocol-fever-update-unread-only t)
+  (setq elfeed-protocol-fever-fetch-category-as-tag nil)
+
   :brushup
   (add-to-list 'brushup-styles
                '(progn
@@ -514,6 +516,7 @@ minibuffer with something like `exit-minibuffer'."
    "fe" (my-elfeed-filter "@6-months-ago +unread +emacs")
    "fh" (my-elfeed-filter "@6-months-ago +unread +hackernews")
    "fn" (my-elfeed-filter "@6-months-ago +unread +npr")
+   "fw" (my-elfeed-filter "@6-months-ago +unread +watches")
    ;; quick tags
    "l" (elfeed-tag-selection-as 'readlater)
    "d" (elfeed-tag-selection-as 'junk)

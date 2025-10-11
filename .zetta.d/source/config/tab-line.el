@@ -238,17 +238,26 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
   (global-tab-line-mode 1)
 
   ;;:brushup
-  ;; NOTE can't get the backgorund inactive color like I have in the
-  ;; modeline, that's why I'm choosing white as the indicatro for the
-  ;; active tab
+  ;; NOTE This achieves the desired effect of having all tabs be
+  ;; rendered simply in white, and then to have the active tab only
+  ;; rendered with highlighting and also an underline and bold weight
+  ;; for ease of reading, basically. This fits into the higher level
+  ;; styling scheme of having minimum viable visual components on the
+  ;; screen, but the tabline still provides some indication of
+  ;; separation between inactive windows that are stacked vertically
+  ;; or horizontally. active tabs in other windows are underlined to
+  ;; preserve that visual of which is the actual buffer being
+  ;; displayed and this also enhances separation between vertically
+  ;; stacked windows
   (add-to-list
    'brushup-styles
    '(progn
-      (set-face-attribute 'tab-line-tab-current nil :box nil :inherit nil :background brushup-bg :foreground brushup-fg :overline nil :weight 'bold)
+      (set-face-attribute 'tab-line-tab-current nil :box nil :inherit nil :background brushup-bg-1_0 :foreground brushup-fg :overline nil :weight 'bold :underline brushup-bg-6 :box nil)
       (set-face-attribute 'tab-line-tab-modified nil :box nil :inherit nil :background brushup-fg-4 :foreground brushup-bg :overline nil)
-      (set-face-attribute 'tab-line-tab nil :box nil :inherit nil :background brushup-bg-2 :foreground brushup-fg-3)
-      (set-face-attribute 'tab-line-tab-inactive nil :box nil :inherit nil :background brushup-bg-2 :foreground brushup-fg-3)
-      (set-face-attribute 'tab-line nil :box nil :inherit nil :background brushup-bg-2 :foreground brushup-fg-3 :overline nil )
+      ;; NOTE this applies to active tabs in other windows, counter intuitive
+      (set-face-attribute 'tab-line-tab nil :box nil :inherit nil :background brushup-bg :foreground brushup-bg-5 :underline brushup-bg-6)
+      (set-face-attribute 'tab-line-tab-inactive nil :box nil :inherit nil :background brushup-bg :foreground brushup-bg-5)
+      (set-face-attribute 'tab-line nil :box nil :inherit nil :background brushup-bg :foreground brushup-bg-3 :overline nil)
       ))
 
 
