@@ -1,0 +1,71 @@
+# Open Source Watch Configuration
+watch_config:
+  metadata:
+    name: "Classic Diver"
+    designer: "Open Source Watch Project"
+    version: "1.0"
+    
+  case:
+    diameter: 40.0        # mm - case diameter
+    thickness: 12.0       # mm - case thickness
+    lug_width: 20.0      # mm - strap lug width
+    lug_to_lug: 48.0     # mm - lug to lug distance
+    case_back_thickness: 2.5  # mm
+    bezel_style: "flat"   # flat, raised, rotating, countdown
+    crown_position: 3     # o'clock position (3, 4)
+    crown_diameter: 6.0   # mm
+    water_resistance: 50  # meters (affects gasket design)
+    
+  movement:
+    type: "quartz"        # quartz, mechanical, automatic
+    brand: "miyota"       # miyota, eta, seiko
+    model: "2035"         # specific movement model
+    diameter: 28.5        # mm - movement diameter
+    thickness: 5.5        # mm - movement thickness
+    stem_height: 1.2      # mm - crown stem height
+    stem_thread: "0.9"    # mm - threading
+    
+  dial:
+    diameter: 32.0        # mm - dial diameter
+    thickness: 0.8        # mm - dial thickness
+    color: "black"        # black, white, blue, green
+    finish: "matte"       # matte, glossy, brushed
+    markers: "indices"    # indices, numerals, dots, batons
+    marker_style: "applied"  # applied, printed, cut-out
+    logo_text: "OPEN SOURCE"
+    brand_text: "WATCH PROJECT"
+    
+  hands:
+    style: "sword"        # sword, baton, arrow, mercedes
+    hour_length: 12.0     # mm from center
+    minute_length: 14.0   # mm from center
+    second_hand: true     # include second hand
+    second_length: 15.0   # mm from center
+    lume: false          # luminous coating areas
+    
+  crystal:
+    diameter: 34.0        # mm - crystal diameter
+    thickness: 2.0        # mm - crystal thickness
+    type: "mineral"       # mineral, sapphire, acrylic
+    ar_coating: false     # anti-reflective coating
+    
+  strap:
+    type: "traditional"   # traditional, integrated, mesh
+    lug_width: 20.0      # mm - must match case lug_width
+    spring_bar_width: 1.5  # mm
+    
+  materials:
+    case: "PLA"          # PLA, PETG, ABS, Resin
+    dial: "PLA"          # PLA, PETG, Resin
+    hands: "Resin"       # Resin recommended for fine details
+    
+  tolerances:
+    movement_fit: 0.1     # mm - clearance for movement
+    press_fit: -0.05      # mm - interference for press fits
+    threaded_fit: 0.05    # mm - clearance for threads
+    
+  print_settings:
+    layer_height: 0.2     # mm
+    infill: 20           # percentage
+    supports: true       # generate support structures
+    orientation: "face_up"  # face_up, face_down, side

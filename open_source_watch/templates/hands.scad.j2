@@ -1,0 +1,115 @@
+// Open Source Watch Hands Template
+
+// Configuration
+hand_style = "{{ config.hands.style }}";
+hour_length = {{ config.hands.hour_length }};
+minute_length = {{ config.hands.minute_length }};
+second_length = {{ config.hands.second_length }};
+include_second = {{ config.hands.second_hand|lower }};
+
+module watch_hands() {
+    // Hour hand
+    translate([30, 0, 0]) hour_hand();
+    
+    // Minute hand  
+    translate([0, 0, 0]) minute_hand();
+    
+    // Second hand
+    {% if config.hands.second_hand %}
+    translate([-30, 0, 0]) second_hand();
+    {% endif %}
+}
+
+module hour_hand() {
+    hand_thickness = 0.8;
+    hand_width = 2.5;
+    
+    {% if config.hands.style == "sword" %}
+    linear_extrude(height=hand_thickness) {
+        polygon(points=[
+            [0, -hand_width/2],
+            [hour_length * 0.7, -hand_width/3],
+            [hour_length, 0],
+            [hour_length * 0.7, hand_width/3],
+            [0, hand_width/2],
+            [-2, 0]
+        ]);
+    }
+    {% elif config.hands.style == "baton" %}
+    linear_extrude(height=hand_thickness) {
+        polygon(points=[
+            [0, -hand_width/2],
+            [hour_length, -hand_width/4],
+            [hour_length, hand_width/4],
+            [0, hand_width/2],
+            [-2, 0]
+        ]);
+    }
+    {% endif %}
+    
+    // Center hole
+    translate([0, 0, -0.1])
+        cylinder(h=hand_thickness + 0.2, d=1.5, $fn=20);
+}
+
+module minute_hand() {
+    hand_thickness = 0.6;
+    hand_width = 2.0;
+    
+    {% if config.hands.style == "sword" %}
+    linear_extrude(height=hand_thickness) {
+        polygon(points=[
+            [0, -hand_width/2],
+            [minute_length * 0.8, -hand_width/3],
+            [minute_length, 0],
+            [minute_length * 0.8, hand_width/3],
+            [0, hand_width/2],
+            [-3, 0]
+        ]);
+    }
+    {% elif config.hands.style == "baton" %}
+    linear_extrude(height=hand_thickness) {
+        polygon(points=[
+            [0, -hand_width/2],
+            [minute_length, -hand_width/4],
+            [minute_length, hand_width/4],
+            [0, hand_width/2],
+            [-3, 0]
+        ]);
+    }
+    {% endif %}
+    
+    // Center hole
+    translate([0, 0, -0.1])
+        cylinder(h=hand_thickness + 0.2, d=1.2, $fn=20);
+}
+
+{% if config.hands.second_hand %}
+module second_hand() {
+    hand_thickness = 0.4;
+    hand_width = 0.8;
+    
+    // Main hand body
+    linear_extrude(height=hand_thickness) {
+        polygon(points=[
+            [0, -hand_width/2],
+            [second_length * 0.9, -hand_width/2],
+            [second_length, 0],
+            [second_length * 0.9, hand_width/2],
+            [0, hand_width/2],
+            [-4, 0]
+        ]);
+    }
+    
+    // Center hole
+    translate([0, 0, -0.1])
+        cylinder(h=hand_thickness + 0.2, d=0.8, $fn=15);
+        
+    // Balance weight
+    translate([-6, 0, 0])
+        cylinder(h=hand_thickness, d=3, $fn=20);
+}
+{% endif %}
+
+// Generate all hands
+watch_hands();

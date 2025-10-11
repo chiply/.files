@@ -1,6 +1,6 @@
 (use-package elfeed-score
   :ensure (elfeed-score :type git :host github :repo "sp1ff/elfeed-score")
-  :demand t
+  :after elfeed-org
   :config
   (progn
     (elfeed-score-enable)

@@ -3,7 +3,7 @@
 (set-frame-font "Terminus (TTF)")
 
 ;; prevent the *Warnings* buffer from popping up
-(setq warning-minimum-level :emergency)
+;;(setq warning-minimum-level :emergency)
 
 (winner-mode)
 
@@ -123,9 +123,30 @@
       (spot-mode-line-string)
     "*"))
 
+(defun z-tab-bar-modal ()
+  (or
+   (when (and (boundp 'evil-mode) evil-mode) "evil")
+   (when (and (boundp 'meow-mode) meow-mode) "meow")
+   (when (not (or (and (boundp 'evil-mode) evil-mode)
+                  (and (boundp 'meow-mode) meow-mode)))
+     "emacs"))
+  )
+
+(defun z-tab-bar-recursion-level ()
+  (let ((recursion-level (minibuffer-depth)))
+    (if (zerop recursion-level)
+        "[R:0] "
+      (format " [R:%d] " recursion-level)))
+  )
+
+(defun z-buffer-name ()
+  (if (buffer-file-name) (abbreviate-file-name (buffer-file-name)) "%b")
+  )
+
 
 (setq tab-bar-format '(;; everything here on will be aligned on the right
                        ;;z-tab-bar-hydra
+                       z-buffer-name
                        zmc-modeline-indicator
                        z-pyvenv-activate-poetry-modeline
                        ;; doesn't work in tab bar as it doesn't get
@@ -137,23 +158,28 @@
                        new-line
                        z-tab-bar-spot-mode-line-string
                        new-line
-                       tab-bar-format-align-right
+                       z-tab-bar-modal
                        z-fish
+                       tab-bar-format-align-right
+                       z-tab-bar-recursion-level
                        recursion-indicator--string
                        ;;"  "
                        pom-ind
                        tab-bar-format-global
-                       repeat-indicator-icon
+
+                       repeat-indicator-icon ;; (?)
+
                        ;; these go together
                        ;; TODO add current map
                        internal-echo-keystrokes-prefix ;; universal arg
                        z-insert-space
                        z-current-prefix
+                       st-modeline-lighter
                        ))
 
 (add-to-list 'brushup-styles
- '(set-face-attribute 'tab-bar nil :box nil :inherit nil :background brushup-bg-1_0)
- )
+             '(set-face-attribute 'tab-bar nil :box nil :inherit nil :background brushup-bg)
+             )
 
 
 ;; Emacs 28 and newer: Hide commands in M-x which do not work in the current

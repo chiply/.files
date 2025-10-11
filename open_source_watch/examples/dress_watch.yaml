@@ -1,0 +1,70 @@
+# Dress Watch Configuration Example
+watch_config:
+  metadata:
+    name: "Classic Dress"
+    designer: "OSW Project"
+    version: "1.0"
+    style: "dress_watch"
+    
+  case:
+    diameter: 38.0        # Elegant sizing
+    thickness: 9.0        # Thin profile
+    lug_width: 18.0       # Narrow lugs
+    lug_to_lug: 45.0
+    case_back_thickness: 1.5
+    bezel_style: "flat"   # Clean, simple
+    crown_position: 3
+    crown_diameter: 5.0   # Small, discrete crown
+    water_resistance: 30  # Basic splash resistance
+    
+  movement:
+    type: "quartz"
+    brand: "miyota"
+    model: "2035"         # Thin, reliable quartz
+    diameter: 28.5
+    thickness: 5.5
+    stem_height: 1.2
+    
+  dial:
+    diameter: 32.0
+    thickness: 0.6        # Thin dial
+    color: "white"
+    finish: "glossy"
+    markers: "numerals"   # Roman numerals
+    marker_style: "printed"
+    logo_text: "CLASSIC"
+    brand_text: "AUTOMATIC"
+    
+  hands:
+    style: "baton"        # Clean, simple hands
+    hour_length: 12.0
+    minute_length: 14.0
+    second_hand: true
+    second_length: 15.0
+    lume: false          # No lume for dress watch
+    
+  crystal:
+    diameter: 34.0
+    thickness: 1.5       # Thin profile
+    type: "mineral"
+    ar_coating: false
+    
+  strap:
+    type: "traditional"
+    lug_width: 18.0
+    
+  materials:
+    case: "PLA"          # Fine for dress watch
+    dial: "PLA"
+    hands: "Resin"
+    
+  tolerances:
+    movement_fit: 0.1
+    press_fit: -0.05
+    threaded_fit: 0.05
+    
+  print_settings:
+    layer_height: 0.1    # Very fine resolution
+    infill: 15           # Light construction
+    supports: true
+    orientation: "face_up"

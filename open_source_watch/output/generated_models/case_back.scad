@@ -1,0 +1,40 @@
+// Open Source Watch Case Back Template
+
+// Configuration
+case_diameter = 40.0;
+case_back_thickness = 2.5;
+thread_pitch = 0.7; // mm
+
+module case_back() {
+    difference() {
+        union() {
+            // Main case back body
+            cylinder(h=case_back_thickness, d=case_diameter - 1, $fn=100);
+            
+            // Threading (simplified external threads)
+            for(i = [0:5]) {
+                translate([0, 0, case_back_thickness - 2 + i * thread_pitch])
+                    cylinder(h=0.3, d=case_diameter - 0.5, $fn=100);
+            }
+        }
+        
+        // Tool slots for opening
+        for(angle = [0, 60, 120, 180, 240, 300]) {
+            rotate([0, 0, angle])
+                translate([case_diameter/2 - 2, 0, case_back_thickness - 1])
+                    cube([3, 1, 2], center=true);
+        }
+        
+        // Center relief
+        translate([0, 0, -0.1])
+            cylinder(h=case_back_thickness - 1, d=case_diameter - 6, $fn=80);
+    }
+    
+    // Engraving area (text will be added here)
+    translate([0, 0, case_back_thickness])
+        linear_extrude(height=0.2) {
+            text("Classic Diver", size=2, halign="center", valign="center");
+        }
+}
+
+case_back();

@@ -1,0 +1,17 @@
+# basic pyproject.toml
+[tool.poetry]
+name = "open_source_watch"
+version = "0.1.0"
+description = "A tool for creating custom, 3D-printable watches with parametric design."
+
+
+# specify python 11
+[tool.poetry.dependencies]
+python = "^3.11"
+pyyaml = "^6.0.3"
+jinja2 = "^3.1.6"
+numpy = "^2.3.3"
+matplotlib = "^3.10.7"
+click = "^8.3.0"
+jsonschema = "^4.25.1"
+pathlib2 = "^2.3.7.post1"

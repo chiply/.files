@@ -6,15 +6,14 @@
 (window-divider-mode -1)
 (setq window-divider-default-places t)
 (setq window-divider-default-bottom-width 1
-      window-divider-default-right-width 1
-      )
+      window-divider-default-right-width 1)
 (window-divider-mode +1)
 
 (add-to-list 'brushup-styles
              '(progn
                 (set-face-attribute 'window-divider nil
-                                    :background brushup-bg-1
-                                    :foreground brushup-bg-1
+                                    :background brushup-bg
+                                    :foreground brushup-bg
                                     )))
 
 (defun z-window-divider-mode ()

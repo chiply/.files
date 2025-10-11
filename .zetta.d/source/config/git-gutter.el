@@ -15,7 +15,7 @@
   :brushup
   (add-to-list 'brushup-styles
                '(progn
-                  (setq brushup-git-gutter-foreground brushup-fg-3
+                  (setq brushup-git-gutter-foreground brushup-bg-6
                         brushup-git-gutter-background brushup-bg)
                   (set-face-attribute 'git-gutter:added nil
                                       :foreground brushup-git-gutter-foreground
@@ -28,7 +28,8 @@
                                       :background 'unspecified)
                   (set-face-attribute 'git-gutter:separator nil
                                       :foreground brushup-git-gutter-foreground
-                                      :background 'unspecified)))
+                                      :background 'unspecified)
+                  ))
 
   (general-define-key
    :keymaps 'menu-project-map

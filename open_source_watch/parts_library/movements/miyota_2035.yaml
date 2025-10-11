@@ -1,0 +1,49 @@
+# Miyota 2035 Quartz Movement Specifications
+movement:
+  brand: "Miyota"
+  model: "2035"
+  type: "quartz"
+  
+  dimensions:
+    diameter: 28.5      # mm
+    thickness: 5.5      # mm
+    
+  stem:
+    height: 1.2         # mm above movement
+    thread: 0.9         # mm threading
+    position_angle: 90  # degrees from 12 o'clock
+    
+  dial_feet:
+    positions:          # angles from 12 o'clock
+      - 0
+      - 120  
+      - 240
+    diameter: 0.8       # mm hole diameter
+    distance_from_center: 12.5  # mm
+    
+  hands:
+    hour_post_diameter: 3.0     # mm
+    minute_post_diameter: 2.0   # mm  
+    second_post_diameter: 1.0   # mm
+    
+  electrical:
+    battery: "SR626SW"
+    voltage: 1.55       # volts
+    current: 1.5        # microamps
+    
+  specifications:
+    accuracy: "±20 seconds/month"
+    temperature_range: "-10°C to +60°C"
+    shock_resistance: "5G"
+    
+  mounting:
+    case_clamps: true
+    movement_ring: false
+    case_diameter_min: 29.0  # mm minimum case opening
+    case_diameter_max: 29.2  # mm maximum case opening
+    
+  notes:
+    - "Popular budget quartz movement"
+    - "No date complication" 
+    - "Standard crown at 3 o'clock"
+    - "Requires movement holder/clamps"

@@ -1,0 +1,70 @@
+# Dive Watch Configuration Example
+watch_config:
+  metadata:
+    name: "Open Source Diver"
+    designer: "OSW Project"
+    version: "1.0"
+    style: "dive_watch"
+    
+  case:
+    diameter: 42.0        # Larger for dive watch
+    thickness: 14.0       # Thicker for water resistance
+    lug_width: 22.0       # Wider lugs for robustness
+    lug_to_lug: 50.0
+    case_back_thickness: 3.0  # Thicker back
+    bezel_style: "rotating"   # Unidirectional bezel
+    crown_position: 3
+    crown_diameter: 7.0   # Larger crown for gloved operation
+    water_resistance: 200 # meters
+    
+  movement:
+    type: "automatic"
+    brand: "miyota"
+    model: "8215"         # Robust automatic movement
+    diameter: 28.5
+    thickness: 5.3
+    stem_height: 1.2
+    
+  dial:
+    diameter: 35.0
+    thickness: 1.0
+    color: "black"
+    finish: "matte"
+    markers: "indices"
+    marker_style: "applied"
+    logo_text: "DIVER"
+    brand_text: "200M WR"
+    
+  hands:
+    style: "sword"        # Classic dive watch hands
+    hour_length: 14.0
+    minute_length: 16.0
+    second_hand: true
+    second_length: 17.0
+    lume: true           # Essential for dive watch
+    
+  crystal:
+    diameter: 38.0
+    thickness: 3.0       # Thicker for pressure resistance
+    type: "sapphire"     # Scratch resistant
+    ar_coating: true
+    
+  strap:
+    type: "traditional"
+    lug_width: 22.0
+    
+  materials:
+    case: "PETG"         # More durable than PLA
+    dial: "PETG"
+    hands: "Resin"       # Fine details
+    
+  tolerances:
+    movement_fit: 0.1
+    press_fit: -0.05
+    threaded_fit: 0.05
+    
+  print_settings:
+    layer_height: 0.15   # Higher resolution
+    infill: 30           # More solid construction
+    supports: true
+    orientation: "face_up"

@@ -3,10 +3,10 @@
   :mode ("\\.org" . org-mode)
 
   :config
-  ;; although aesthetically less pleasing, the indent mode can cause
-  ;; issues, sometimes text snaps out of indent mode
-  (setq-default org-indent-mode nil) ;; NOTE doesn't work?
+  (setq-default org-indent-mode nil)
   (setq org-confirm-babel-evaluate nil
+        ;; NOTE docs isn't clear on this, but this prevents org blocks from having leading tab for formatting purposes
+        org-src-preserve-indentation t
         org-tags-column 0
         org-table-convert-region-max-lines 10000
         org-use-fast-todo-selection 'expert
@@ -122,16 +122,23 @@
   (add-to-list
    'brushup-styles
    '(progn
-      ;;(set-face-attribute 'org-todo nil :foreground 'unspecified :background "#FFFFB6B6C1C1")
-      ;;(set-face-attribute 'org-done nil :foreground 'unspecified :background "pale green")
-      (set-face-attribute 'org-level-1 nil :height 1.00)
-      (set-face-attribute 'org-level-2 nil :height 1.00)
-      (set-face-attribute 'org-level-3 nil :height 1.00)
-      (set-face-attribute 'org-level-4 nil :height 1.00)
-      (set-face-attribute 'org-level-5 nil :height 1.00)
-      (set-face-attribute 'org-level-6 nil :height 1.00)
-      (set-face-attribute 'org-level-7 nil :height 1.00)
-      (set-face-attribute 'org-level-8 nil :height 1.00)
+      (set-face-attribute 'org-level-1 nil :height 0.9 :weight 'normal :slant 'normal :background brushup-bg :overline brushup-fg :extend nil :underline nil)
+      (set-face-attribute 'org-level-2 nil :height 0.9 :weight 'normal :slant 'normal :background brushup-bg :overline brushup-fg :extend nil :underline nil)
+      (set-face-attribute 'org-level-3 nil :height 0.9 :weight 'normal :slant 'normal :background brushup-bg :overline brushup-fg :extend nil :underline nil)
+      (set-face-attribute 'org-level-4 nil :height 0.9 :weight 'normal :slant 'normal :background brushup-bg :overline brushup-fg :extend nil :underline nil)
+      (set-face-attribute 'org-level-5 nil :height 0.9 :weight 'normal :slant 'normal :background brushup-bg :overline brushup-fg :extend nil :underline nil)
+      (set-face-attribute 'org-level-6 nil :height 0.9 :weight 'normal :slant 'normal :background brushup-bg :overline brushup-fg :extend nil :underline nil)
+      (set-face-attribute 'org-level-7 nil :height 0.9 :weight 'normal :slant 'normal :background brushup-bg :overline brushup-fg :extend nil :underline nil)
+      (set-face-attribute 'org-level-8 nil :height 0.9 :weight 'normal :slant 'normal :background brushup-bg :overline brushup-fg :extend nil :underline nil)
+      (set-face-attribute 'org-tag nil :height 1.00 :weight 'normal :slant 'normal :background brushup-bg-1_0 :foreground brushup-fg :underline nil :extend nil :overline t)
+      ;; NOTE adjusting height prevents overline from adding height to line
+      (set-face-attribute 'org-block nil :background brushup-bg-1_0 :extend nil)
+      (set-face-attribute 'org-block-begin-line nil :background brushup-bg-1_0 :underline brushup-bg-1 :weight 'normal :extend nil :foreground brushup-bg-6 :overline brushup-bg-3 :height 0.9)
+      (set-face-attribute 'org-block-end-line nil :background brushup-bg-1_0 :weight 'normal :extend nil :foreground brushup-bg-3 :underline nil :overline nil :height 0.8)
+
+      (set-face-attribute 'org-special-keyword nil :background brushup-bg :foreground brushup-bg-6 :extend nil)
+      (set-face-attribute 'org-property-value nil :background brushup-bg :foreground brushup-bg-6 :extend nil)
+      (set-face-attribute 'org-document-info-keyword nil :background brushup-bg :foreground brushup-bg-6 :extend nil)
       ))
 
   (defun z-org-go ()
@@ -176,6 +183,8 @@
    "C-_" 'org-table-shrink
    "s-j" 'org-next-visible-heading
    "s-k" 'org-previous-visible-heading
+   "s-J" 'org-babel-next-src-block
+   "s-K" 'org-babel-previous-src-block
    )
   (
    :keymaps '(org-mode-map org-agenda-mode-map)

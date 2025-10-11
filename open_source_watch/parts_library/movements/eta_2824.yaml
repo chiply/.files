@@ -1,0 +1,48 @@
+# ETA 2824-2 Automatic Movement Specifications  
+movement:
+  brand: "ETA"
+  model: "2824-2"
+  type: "automatic"
+  
+  dimensions:
+    diameter: 25.6      # mm
+    thickness: 4.6      # mm
+    
+  stem:
+    height: 1.2         # mm above movement
+    thread: 0.9         # mm threading
+    position_angle: 90  # degrees from 12 o'clock
+    
+  dial_feet:
+    positions:          # angles from 12 o'clock
+      - 90
+      - 270
+    diameter: 1.2       # mm hole diameter  
+    distance_from_center: 9.5   # mm
+    
+  hands:
+    hour_post_diameter: 2.5     # mm
+    minute_post_diameter: 1.5   # mm
+    second_post_diameter: 0.9   # mm
+    
+  complications:
+    date: true
+    date_position: 3    # o'clock position
+    
+  specifications:
+    power_reserve: "38 hours"
+    frequency: "28,800 bph"
+    jewels: 25
+    accuracy: "-12/+30 seconds/day"
+    
+  mounting:
+    case_clamps: true
+    movement_ring: false
+    case_diameter_min: 26.0  # mm
+    case_diameter_max: 26.2  # mm
+    
+  notes:
+    - "Swiss automatic movement"
+    - "Hackable seconds"
+    - "Hand-wind capability"
+    - "Premium option for mechanical watches"

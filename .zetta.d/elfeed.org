@@ -1,6 +1,5 @@
 * Feeds                                                              :elfeed:
 
-
 ** [[https://rss.app/feeds/OYDPQ8NQR3NOVLJ1.xml][Arianna Huffington (@Gartner_inc) / Twitter]] :twitter:
 ** [[https://rss.app/feeds/zCyaqj9XE4J27bvN.xml][#dataengineering - Twitter Search / Twitter]] :twitter:dataengineering:data:
 ** [[https://rss.app/feeds/4jZWL4flfzgi1oyX.xml][Mickey Petersen (@mickeynp) / Twitter]] :twitter:
@@ -200,5 +199,3 @@
 ** [[https://serve.podhome.fm/rss/1c0357c0-6aba-5766-a2d5-2090d8dab6bc][Data Engineering Podcast]] :podcast:data:dataengineering:
 ** [[https://peterattiadrive.libsyn.com/rss][Peter Attia The Drive]] :podcast:
 ** [[https://www.reddit.com/r/eink/.rss?][r/eink]] :reddit:eink:
-
-
