@@ -1,0 +1,38 @@
+#content-clone {
+    /* 1% less than needed to prevent weird overflow of iframes */
+    max-width: 60vw;
+    margin-left: 22vw;
+}
+
+#outline-container-tldr {
+    position: fixed; /* Fixes the div to the viewport */
+    top: 1vh;      /* Distance from the top */
+    bottom: 2vh ;   /* Distance from the bottom */
+    right: 6vw;    /* Distance from the right */
+    width: 12vw;   /* Set a width for the TOC */
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrollbar if any */
+    color: rgb(190, 190, 190);
+    max-height: 100vh; /* Ensures it doesn't exceed viewport height */
+    /* margin: 1rem; */
+}
+#outline-container-tldr p {margin: 0;}
+#tldr {
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+}
+
+#outline-container-tldr::-webkit-scrollbar {display: none;}
+
+
+/* TLDR link higlights */
+#text-tldr a {
+    color: rgb(190, 190, 190);
+    font-weight: bold;
+}
+
+#text-tldr a.active {
+    color: purple;
+    font-weight: bold;
+}

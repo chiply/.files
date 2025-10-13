@@ -1,0 +1,40 @@
+/** sticky ToC **/
+#table-of-contents {
+    position: fixed; /* Fixes the div to the viewport */
+    top: 0vh;      /* Distance from the top */
+    bottom: 0vh ;   /* Distance from the bottom */
+    left: 0vw;    /* Distance from the right */
+    width: 20vw;   /* Set a width for the TOC */
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrollbar if any */
+    max-height: 49vh; /* Ensures it doesn't exceed viewport height */
+        /* margin: 1rem; */
+
+}
+
+#table-of-contents h2 {margin: 0;}
+
+#table-of-contents::-webkit-scrollbar {display: none;}
+
+#text-table-of-contents a {
+  text-decoration: none;
+  display: block;
+  //padding: .125rem 0;
+  color: #ccc;
+  /* smooth */
+  transition: all 50ms ease-in-out;
+}
+
+#text-table-of-contents a:hover,
+#text-table-of-contents a:focus {color: #666;}
+
+#table-of-contents ul, #table-of-contents ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#text-table-of-contents li.active > a {
+  color: #333;
+  font-weight: bold;
+}

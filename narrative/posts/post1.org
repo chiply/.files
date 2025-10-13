@@ -1,0 +1,16 @@
+#+TITLE: post1
+#+PROPERTY: header-args:python :eval never-export
+#+PROPERTY: header-args:bash :eval never-export
+#+PROPERTY: header-args:mermaid :eval never-export
+#+OPTIONS: html-postamble:nil
+
+#+begin_export html
+<link rel="stylesheet" href="global.css">
+<link rel="stylesheet" href="post0.css">
+<script src="global.js"></script>
+<script src="post0.js"></script>
+#+end_export
+
+* heading1
+** subheading 1
+** subheading 2

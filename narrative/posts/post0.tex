@@ -1,0 +1,804 @@
+% Created 2025-10-10 Fri 17:19
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Charles Baker}
+\date{\today}
+\title{post0}
+\hypersetup{
+ pdfauthor={Charles Baker},
+ pdftitle={post0},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.1 (Org mode 9.7.11)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+NOTE \#+OPTIONS: H:6 makes the exporter create outline-containers beyond the default 4 levels (this is needed for folding)
+\section{Progress bar}
+\label{sec:org54bfe29}
+\section{Features to make building easier}
+\label{sec:org3a05e6d}
+\begin{itemize}
+\item custom exporter for plotly? instead of having to manually insert the iframe?  maybe a python function could take care of this
+\end{itemize}
+\section{narrative}
+\label{sec:orge9eeec2}
+
+\subsection{link to CSS and JSS scripts}
+\label{sec:orgf24bd0c}
+\subsection{Long paragraph}
+\label{sec:orga2ac2ca}
+lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim\footnote{new footnote} id est laborum.  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?  
+\subsection{{\bfseries\sffamily TODO} prompt LLM (is there an org gptel or something similar?)}
+\label{sec:orgf147185}
+\subsection{layout}
+\label{sec:org250d94a}
+
+\subsubsection{css grid}
+\label{sec:org21bb650}
+TODO get syntax highlighting working
+\subsection{internal links}
+\label{sec:orgb49f8d2}
+\href{post1.html}{Post 1}
+\subsection{global header / site style}
+\label{sec:orgd5f68b8}
+\subsection{{\bfseries\sffamily DONE} styling}
+\label{sec:org17e41a6}
+\subsubsection{{\bfseries\sffamily DONE} inline css}
+\label{sec:org90276ef}
+\subsubsection{{\bfseries\sffamily DONE} org-html-themes}
+\label{sec:orgf619c51}
+\url{https://github.com/fniessen/org-html-themes}
+\url{https://github.com/fniessen/org-html-themes/blob/master/examples/org-mode-syntax-example.org}
+(using read the docs see above)
+\subsubsection{{\bfseries\sffamily DONE} css (see above)}
+\label{sec:orgbcc38d3}
+\paragraph{{\bfseries\sffamily DONE} global css}
+\label{sec:org4c2be41}
+\paragraph{{\bfseries\sffamily DONE} local css}
+\label{sec:org789a04f}
+\subsection{{\bfseries\sffamily TODO} basic org stuff}
+\label{sec:org15e0a99}
+\subsection{{\bfseries\sffamily TODO} text}
+\label{sec:org2190731}
+\subsubsection{long paragraph}
+\label{sec:org2ae3340}
+
+\subsubsection{long paragraph scrolling text}
+\label{sec:org446a773}
+
+\subsubsection{quote}
+\label{sec:orgdfc20b4}
+this is some regular text
+\begin{quote}
+This is some quote
+\end{quote}
+
+this is some more regular text
+\subsection{tags\hfill{}\textsc{tag0:tag1}}
+\label{sec:org37ce046}
+\subsubsection{{\bfseries\sffamily DONE} test todo item 2}
+\label{sec:orgdc78db7}
+\subsubsection{{\bfseries\sffamily DONE} table}
+\label{sec:org82d6613}
+\begin{table}[htbp]
+\label{tab:org114faaf}
+\centering
+\begin{tabular}{rrr}
+a & b & c\\
+\hline
+1 & 2 & 3\\
+4 & 5 & 6\\
+\end{tabular}
+\end{table}
+\subsubsection{{\bfseries\sffamily TODO} lists}
+\label{sec:org93ad3dd}
+\paragraph{{\bfseries\sffamily TODO} bullets}
+\label{sec:org84c1eb4}
+NOTE: these render as numbers
+\begin{itemize}
+\item one
+\item two
+\begin{itemize}
+\item two point one
+\item two point two
+\end{itemize}
+\item three
+\begin{itemize}
+\item three point one
+\item three point two
+\end{itemize}
+\end{itemize}
+\paragraph{{\bfseries\sffamily TODO} numbers}
+\label{sec:org92b8d85}
+\begin{enumerate}
+\item first
+\item second
+\begin{enumerate}
+\item second point one
+\item second point two
+\end{enumerate}
+\end{enumerate}
+\subsubsection{{\bfseries\sffamily TODO} formatting}
+\label{sec:org9d25407}
+\begin{itemize}
+\item some \textbf{bold} text
+\item some \emph{italic} text
+\item some \uline{underline} text
+\item some \sout{strike} text
+\item some \texttt{code} text
+\item some \texttt{verbatim} text
+\item some \texttt{*bold in code*} text
+\item some \texttt{/italic in verbatim/} text
+\item some \texttt{\_underline in verbatim\_} text
+\item some =\textasciitilde{}code in verbatim=\textasciitilde{} text
+\item some \texttt{+strike in verbatim+} text
+\item some \textbf{bold} \emph{italic} \uline{underline} \sout{strike} \texttt{code} \texttt{verbatim} text
+\end{itemize}
+\subsection{{\bfseries\sffamily TODO} code}
+\label{sec:org7567a1a}
+\subsubsection{{\bfseries\sffamily TODO} bash}
+\label{sec:org603edab}
+\begin{verbatim}
+echo "hello world"
+\end{verbatim}
+
+\phantomsection
+\label{org18aa17a}
+\begin{verbatim}
+hello world
+\end{verbatim}
+\subsubsection{{\bfseries\sffamily TODO} python}
+\label{sec:org3497437}
+\begin{itemize}
+\item NOTE: need to set up dir-locals\footnote{lorem impsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum}
+\end{itemize}
+\paragraph{{\bfseries\sffamily TODO} using venv}
+\label{sec:org77e10f5}
+This is how you write code with python\footnote{This is how to write code with python}
+\begin{verbatim}
+from dataclasses import dataclass
+
+from polyfactory.factories import DataclassFactory
+
+
+@dataclass
+class Person:
+    name: str
+    age: float
+    height: float
+    weight: float
+
+
+class PersonFactory(DataclassFactory[Person]):
+    ...
+
+
+person_instance = PersonFactory.build()
+print(person_instance)
+
+print('hello')
+
+\end{verbatim}
+
+\begin{verbatim}
+Person(name='pWXqLGtQKLbTIJjpCure', age=-92.811375428167, height=7.15080271143585, weight=-79779.8859738436)
+hello
+\end{verbatim}
+\paragraph{{\bfseries\sffamily TODO} using multiple venvs via session}
+\label{sec:org8ee4691}
+\paragraph{{\bfseries\sffamily TODO} using session to pass state between blocks}
+\label{sec:org79b4c1e}
+\subsection{{\bfseries\sffamily TODO} video (test with git lfs)}
+\label{sec:org5b3a027}
+\subsection{{\bfseries\sffamily TODO} image}
+\label{sec:orge89f838}
+\subsubsection{{\bfseries\sffamily DONE} local file}
+\label{sec:orgc013252}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./images/test-image.png}
+\end{center}
+\subsubsection{{\bfseries\sffamily TODO} remote file}
+\label{sec:orge367d97}
+\subsubsection{{\bfseries\sffamily TODO} svg}
+\label{sec:org18054bb}
+\subsection{{\bfseries\sffamily DONE} general iframe}
+\label{sec:org3e5badf}
+\subsection{{\bfseries\sffamily DONE} plotly chart}
+\label{sec:org7f63d43}
+\begin{verbatim}
+import plotly.express as px
+import pandas as pd
+
+df = pd.DataFrame({
+    "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
+    "Amount": [4, 1, 2, 2, 4, 5],
+    "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
+})
+
+fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+
+# write to html file
+fig.write_html("html/my_interactive_plot.html")
+\end{verbatim}
+
+insert iframe to chart
+\subsection{{\bfseries\sffamily DONE} mermaid diagrams}
+\label{sec:orged0df6e}
+\begin{center}
+\includesvg[width=.9\linewidth]{images/test-diagram}
+\label{orga62c09e}
+\end{center}
+\subsection{{\bfseries\sffamily TODO} verbs}
+\label{sec:org51f3ec8}
+\subsection{{\bfseries\sffamily TODO} footnotes NOTE issue}
+\label{sec:org49b67ef}
+This is a footnote\footnote{This is the footnote.  lorem impsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \textbf{Excepteur sint occaecat cupidatat} non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?}.  And this is some other text
+\subsubsection{Another footnote}
+\label{sec:org52083ed}
+More\footnote{even more} footnotes\footnote{More footnotes}.
+\subsection{{\bfseries\sffamily TODO} transclude? compose with other file?}
+\label{sec:org2c3f55e}
+\subsubsection{include from another file}
+\label{sec:orgfb2cca2}
+\subsection{{\bfseries\sffamily TODO} arrange two views next to eachother (eg figure and some figure text) using css grid (might be split between here and css). is ther a way to include the css here? can't we tangle to a file}
+\label{sec:orgafe14fc}
+
+\subsection{How this site is built}
+\label{sec:org1a9107f}
+
+\subsubsection{minimap}
+\label{sec:org8569aa4}
+\paragraph{CSS}
+\label{sec:org6e7abf1}
+\begin{verbatim}
+/* Minimap styles */
+#minimap-container {
+  position: fixed;
+  bottom: 0%;
+  right: 0%;
+  width: 6%;
+  height: auto;
+  max-height: 100%;
+  z-index: 10000;
+  pointer-events: none;
+  /* need auto otherwise we can't scroll the minimap independently */
+  overflow: auto;
+  filter: blur(0.1px) grayscale(90%);
+  margin: 1rem;
+}
+
+/* NOTE overflow hidden works, but it causes the main page to scroll for some reason */
+#minimap {
+  position: relative;
+  overflow: auto;
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+
+#minimap-content {
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+#minimap-viewport {
+  position: absolute;
+  box-sizing: border-box;
+  z-index: 10;
+  background: rgba(0,0,0, 0.1);
+  pointer-events: none;
+}
+\end{verbatim}
+\paragraph{Javascript}
+\label{sec:orgd5190e7}
+\begin{verbatim}
+// minimap
+function minimap_update(called) {
+    // Parameters
+    const minimapWidth = document.body.clientWidth * 0.1;
+    const scale = minimapWidth / document.querySelector("#content").scrollWidth;
+
+    // Setup the minimap
+    const minimap = document.getElementById("minimap");
+    let minimapContent = document.createElement("div");
+    minimapContent.id = "minimap-content";
+    minimap.appendChild(minimapContent);
+
+    // Clone body content (shallow, not perfect for all apps)
+    function cloneBodyContent() {
+        const clone = document.querySelector(`#content`).cloneNode(true);
+        // change id of the clone node to content-clone
+        clone.id = "content-clone";
+        // Remove the table of contents from the clone
+        const toc = clone.querySelector("#table-of-contents");
+        if (toc) toc.remove();
+        // Remove the footnotes from the clone
+        const fn = clone.querySelector("#footnotes");
+        if (fn) fn.remove();
+        // Remove the copilot summary from the clone
+        const tldr = clone.querySelector("#text-tldr");
+        if (tldr) tldr.remove();
+        // set the margins of the clone to 0
+        clone.style.margin = "0";
+        // Remove the minimap itself from the clone
+        const mmc = clone.querySelector("#minimap-container");
+        if (mmc) mmc.remove();
+        minimapContent.innerHTML = "";
+        minimapContent.appendChild(clone);
+        minimapContent.style.transform = `scale(${scale})`;
+        minimapContent.style.width = document.body.scrollWidth + "px";
+        minimapContent.style.height = document.body.scrollHeight + "px";
+    }
+
+    // Viewport rectangle
+    const viewport = document.getElementById("minimap-viewport");
+
+    function updateViewport() {
+        const bodyScale =
+            (document.body.clientWidth * 0.1) / document.body.scrollWidth;
+        const scrollTop = window.scrollY;
+        const scrollLeft = window.scrollX;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        viewport.style.top = scrollTop * bodyScale + "px";
+        viewport.style.left = scrollLeft * bodyScale + "px";
+        viewport.style.width = viewportWidth * bodyScale + "px";
+        viewport.style.height = viewportHeight * bodyScale + "px";
+    }
+    window.addEventListener("scroll", updateViewport);
+
+    // Style fired up on window resize (and periodically for dynamic content)
+    function updateContentScale() {
+        const realScale =
+            (document.body.clientWidth * 0.1) / document.body.scrollWidth;
+        minimapContent.style.transform = `scale(${realScale})`;
+        minimapContent.style.width = document.body.scrollWidth + "px";
+        minimapContent.style.height = document.body.scrollHeight + "px";
+        updateViewport();
+    }
+
+    addEventListener("resize", updateContentScale);
+
+    cloneBodyContent();
+    updateContentScale();
+
+    // Clicking on minimap scrolls page
+    minimap.addEventListener("click", function (e) {
+        const minimapWidth = document.body.clientWidth * 0.1; // 20% of body width
+        const scale = minimapWidth / document.body.clientWidth;
+
+        const minimap = document.getElementById("minimap");
+        const rect = minimap.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const scrollX = x / scale;
+        const scrollY = y / scale;
+
+        window.scrollTo({
+            top: scrollY - window.innerHeight / 2,
+            left: scrollX - window.innerWidth / 2,
+            behavior: "smooth",
+            block: "nearest",
+        });
+    });
+
+    //// Make unobtrusive
+    //minimapContainer = document.getElementById("minimap-container");
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Example: access and manipulate an HTML element
+    minimap_update(false);
+});
+
+// includes window resizing as well as text scale increase and
+// decrease
+window.addEventListener("resize", function () {
+    // Example: access and manipulate an HTML element
+    console.log("resize event detected");
+    minimap_update(true);
+});
+
+// autoscroll minimap TODO fix this as I think the get attribute by id
+// is ambigious and just happens to return the correct one
+window.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            // if entry is a child of #minimap ignore it
+            if (entry.target.closest("#outline-container-tldr")) {
+                return;
+            }
+            // if entry is a child of #minimap ignore it
+            if (entry.target.closest("#minimap-container")) {
+                return;
+            }
+            let id = "";
+            // Check if target is an outline-text div
+            id = entry.target.getAttribute("id");
+
+            id = CSS.escape(id);
+            const elementLink = document.querySelector(`#${id}`);
+            if (elementLink) {
+                if (entry.intersectionRatio > 0) {
+                    elementLink.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+                }
+            }
+        });
+    });
+
+    // Collect all headings and outline divs
+    const headings = [...document.querySelectorAll("#content *")];
+
+    headings.forEach((heading) => observer.observe(heading));
+});
+\end{verbatim}
+\subsubsection{progress-bar}
+\label{sec:org2449ce8}
+\paragraph{CSS}
+\label{sec:orgbe971f9}
+\begin{verbatim}
+/* progress bar */
+#progressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 5px; /* Adjust thickness as needed */
+    background-color: gray; /* Progress bar color */
+    width: 0%; /* Initial width is 0% */
+    z-index: 9999; /* Ensure it stays on top */
+}
+\end{verbatim}
+\paragraph{Javascript}
+\label{sec:org9f55e1c}
+\begin{verbatim}
+// progress bar
+// script.js
+document.addEventListener("DOMContentLoaded", () => {
+    const progressBar = document.getElementById("progressBar");
+
+    const updateProgressBar = () => {
+        const scrollTop =
+            document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+        const scrollPercentage = (scrollTop / scrollHeight) * 100;
+
+        progressBar.style.width = `${scrollPercentage}%`;
+    };
+
+    // Initial call to set progress bar on page load
+    updateProgressBar();
+
+    // Add scroll event listener to update the progress bar
+    window.addEventListener("scroll", updateProgressBar);
+});
+\end{verbatim}
+\subsubsection{footnotes}
+\label{sec:orgbbecc63}
+\paragraph{CSS}
+\label{sec:orgb1ff398}
+\begin{verbatim}
+/** sticky footnotes **/
+#footnotes {
+    position: fixed; /* Fixes the div to the viewport */
+    bottom: 2% ;   /* Distance from the bottom */
+    left: 0%;    /* Distance from the right */
+    width: 20%;   /* Set a width for the TOC */
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrollbar if any */
+    max-height: 42%; /* Ensures it doesn't exceed viewport height */
+    margin: 1rem;
+}
+#footnotes h2 {margin: 0;}
+
+#footnotes::-webkit-scrollbar {display: none;}
+
+#text-footnotes a, #text-footnotes p {
+  text-decoration: none;
+  padding: .125rem 0;
+  color: #ccc;
+  /* smooth */
+  transition: all 50ms ease-in-out;
+}
+
+#text-footnotes a:hover,
+#text-footnotes a:focus {color: #666;}
+#text-footnotes p:hover,
+#text-footnotes p:focus {color: #666;}
+
+#text-footnotes ul, #text-footnotes ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#text-footnotes p.footpara.active {color: #333; font-weight: bold;}
+#text-footnotes sup a.active {color: blue;}
+\end{verbatim}
+\paragraph{Javascript}
+\label{sec:org6a8b3da}
+\begin{verbatim}
+// Followable, scrollable footnotes
+window.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            // ignore if entry is child of #content-clone
+            if (entry.target.closest("#content-clone")) {
+                return;
+            }
+            // Check if target is an outline-text div
+            id = entry.target.getAttribute("id");
+
+            const fnLink = document
+                .querySelector(`#footnotes sup a[href="#${id}"]`)
+                .closest("sup")
+                .nextElementSibling.querySelector("p");
+            const fnLink1 = document.querySelector(
+                `#footnotes sup a[href="#${id}"]`,
+            );
+            if (fnLink) {
+                const action = entry.intersectionRatio > 0 ? "add" : "remove";
+                fnLink.classList[action]("active");
+                fnLink1.classList[action]("active");
+
+                // Scroll active link into view
+                if (entry.intersectionRatio > 0) {
+                    fnLink.scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                    });
+                }
+            }
+        });
+    });
+
+    // Collect all headings and outline divs
+    const headings = [...document.querySelectorAll("sup a.footref")];
+
+    headings.forEach((heading) => observer.observe(heading));
+});
+
+// Clickable Footnotes
+document.addEventListener("DOMContentLoaded", function () {
+    const tocLinks = document.querySelectorAll("#footnotes a[href^='#']");
+
+    tocLinks.forEach((link) => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            targetId = this.getAttribute("href").substring(1);
+            targetId = CSS.escape(targetId);
+            const elements = document.querySelectorAll(`#${targetId}`);
+            const targetElement = Array.from(elements).filter(
+                (el) => !el.closest("#content-clone"),
+            )[0];
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }
+        });
+    });
+});
+\end{verbatim}
+\subsubsection{foldable-headings}
+\label{sec:org1f24ac6}
+\paragraph{CSS}
+\label{sec:orgad5ce4f}
+\begin{verbatim}
+.outline-6 {cursor: pointer; }
+.outline-6.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+.outline-5 {cursor: pointer; }
+.outline-5.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+.outline-4 {cursor: pointer; }
+.outline-4.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+.outline-3 {cursor: pointer; }
+.outline-3.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+.outline-2 {cursor: pointer; }
+.outline-2.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+#outline-2::-webkit-scrollbar {display: none;}
+#outline-3::-webkit-scrollbar {display: none;}
+#outline-4::-webkit-scrollbar {display: none;}
+#outline-5::-webkit-scrollbar {display: none;}
+#outline-6::-webkit-scrollbar {display: none;}
+\end{verbatim}
+\paragraph{Javascript}
+\label{sec:org5270d03}
+\begin{verbatim}
+// Foldable divs
+document.addEventListener("DOMContentLoaded", function () {
+    const foldableDivs = document.querySelectorAll('[class^="outline-"]');
+
+    foldableDivs.forEach((div) => {
+        div.addEventListener("click", function () {
+            event.stopPropagation(); // Prevents the event from bubbling up to parent divs
+            this.classList.toggle("folded");
+        });
+    });
+});
+\end{verbatim}
+\subsubsection{toc}
+\label{sec:orgdfa5af3}
+\paragraph{CSS}
+\label{sec:org82f8061}
+\begin{verbatim}
+/** sticky ToC **/
+#table-of-contents {
+    position: fixed; /* Fixes the div to the viewport */
+    top: 1%;      /* Distance from the top */
+    bottom: 2% ;   /* Distance from the bottom */
+    left: 0%;    /* Distance from the right */
+    width: 20%;   /* Set a width for the TOC */
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrollbar if any */
+    max-height: 50%; /* Ensures it doesn't exceed viewport height */
+        margin: 1rem;
+
+}
+
+#table-of-contents h2 {margin: 0;}
+
+#table-of-contents::-webkit-scrollbar {display: none;}
+
+#text-table-of-contents a {
+  text-decoration: none;
+  display: block;
+  //padding: .125rem 0;
+  color: #ccc;
+  /* smooth */
+  transition: all 50ms ease-in-out;
+}
+
+#text-table-of-contents a:hover,
+#text-table-of-contents a:focus {color: #666;}
+
+#table-of-contents ul, #table-of-contents ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#text-table-of-contents li.active > a {
+  color: #333;
+  font-weight: bold;
+}
+\end{verbatim}
+\paragraph{Javascript}
+\label{sec:org94595c3}
+\begin{verbatim}
+// Followable, scrollable table of contents
+window.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.target.getAttribute("id") === "text-tldr") {
+                return;
+            }
+            // ignore if entry is child of #content-clone
+            if (entry.target.closest("#content-clone")) {
+                return;
+            }
+            let id = "";
+            // empty headings
+            if (entry.target.tagName.match(/^H[2-6]$/)) {
+                id = entry.target.getAttribute("id") || "";
+
+                const tocLink = document.querySelector(
+                    `#text-table-of-contents a[href="#${id}"]`,
+                );
+                const nextSibling = entry.target.nextElementSibling;
+                if (tocLink && !nextSibling) {
+                    const action =
+                        entry.intersectionRatio > 0 ? "add" : "remove";
+                    tocLink.parentElement.classList[action]("active");
+
+                    // Scroll active link into view
+                    if (entry.intersectionRatio > 0) {
+                        tocLink.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                        });
+                    }
+                }
+            }
+
+            // Check if target is an outline-text div
+            if (
+                entry.target.tagName === "DIV" &&
+                entry.target.className.match(/outline-text-[2-6]/)
+            ) {
+                id =
+                    entry.target.previousElementSibling?.getAttribute("id") ||
+                    "";
+
+                const tocLink = document.querySelector(
+                    `#text-table-of-contents a[href="#${id}"]`,
+                );
+                if (tocLink) {
+                    const action =
+                        entry.intersectionRatio > 0 ? "add" : "remove";
+                    tocLink.parentElement.classList[action]("active");
+
+                    // Scroll active link into view
+                    if (entry.intersectionRatio > 0) {
+                        tocLink.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                        });
+                    }
+                }
+            }
+        });
+    });
+
+    // Collect all headings and outline divs
+    const headings = [
+        ...document.querySelectorAll("h2[id], h3[id], h4[id], h5[id], h6[id]"),
+        ...document.querySelectorAll(
+            "div.outline-text-2, div.outline-text-3, div.outline-text-4, div.outline-text-5, div.outline-text-6",
+        ),
+    ];
+
+    headings.forEach((heading) => observer.observe(heading));
+});
+
+// Clickable ToC
+document.addEventListener("DOMContentLoaded", function () {
+    const tocLinks = document.querySelectorAll(
+        "#text-table-of-contents a[href^='#']",
+    );
+
+    tocLinks.forEach((link) => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            const targetId = this.getAttribute("href").substring(1);
+            const elements = document.querySelectorAll(`#${targetId}`);
+            const targetElement = Array.from(elements).filter(
+                (el) => !el.closest("#content-clone"),
+            )[0];
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }
+        });
+    });
+});
+\end{verbatim}
+\section{Generate a TLDR for this document that will be displayed at the top of the static-site version of this document.  Include internal org links to headings in this document where relevant. Org links look like this: \ref{sec:orgebe5961}. Do not use any bullets for the explanation, but you can use line breaks to help with readability.  Be verbose and describe as many sections as possible}
+\label{sec:org31a3af4}
+This document serves as a comprehensive demonstration of Org mode authoring for static sites, showing advanced features and customizations. At the top, a \hyperref[sec:org54bfe29]{progress bar and minimap} enhance navigation. The document explores embedding \hyperref[sec:org3a05e6d]{interactive charts with Plotly}, and suggests automations for easier iframing. It includes \hyperref[sec:orge9eeec2]{narrative text}, CSS and JS linking details, and example paragraphs, quotes, and layout concepts.
+
+There's an overview of using both \hyperref[sec:org21bb650]{modern layouts via CSS grid}, with practical HTML examples. Internal links (such as \href{post1.html}{Post 1}) and \hyperref[sec:orgd5f68b8]{site-wide style} are covered, including the use of org-html-themes, local and global CSS, and custom inline styles. 
+
+Basic Org constructs are featured under \ref{sec:org15e0a99}, including \hyperref[sec:org37ce046]{tagged sections}, \hyperref[sec:org93ad3dd]{lists and formatting}, and \hyperref[sec:org82d6613]{tables}. Source code examples are provided for \hyperref[sec:org603edab]{bash scripts} and \hyperref[sec:org3497437]{python}, including venv and session hints. Embedding media is demonstrated with \hyperref[sec:orge89f838]{images}, remote files, SVG diagrams, and eg \hyperref[sec:orged0df6e]{Mermaid charts}. 
+
+There's also coverage of internal \hyperref[sec:org51f3ec8]{verbatim and code syntax}, proper handling of \hyperref[sec:orgebe5961]{footnotes with references}, and ideas for future transclusion and file composition.
+
+Document concludes with a detailed \hyperref[sec:orgebe5961]{footnotes section} and plans for CSS-driven layout enhancements, including arranging multiple views or panels side by side (figures + captions) using CSS grid.
+\end{document}

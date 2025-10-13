@@ -1,0 +1,11 @@
+/* progress bar */
+#progressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 5px; /* Adjust thickness as needed */
+    background-color: gray; /* Progress bar color */
+    width: 0%; /* Initial width is 0% */
+    z-index: 9999; /* Ensure it stays on top */
+}
+

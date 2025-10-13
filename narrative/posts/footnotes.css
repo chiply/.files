@@ -1,0 +1,37 @@
+/** sticky footnotes **/
+#footnotes {
+    position: fixed; /* Fixes the div to the viewport */
+    bottom: 1vh ;   /* Distance from the bottom */
+    left: 0vw;    /* Distance from the right */
+    width: 20vw;   /* Set a width for the TOC */
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrollbar if any */
+    max-height: 50vh; /* Ensures it doesn't exceed viewport height */
+    /* margin: 1rem; */
+}
+#footnotes h2 {margin: 0;}
+
+#footnotes::-webkit-scrollbar {display: none;}
+
+#text-footnotes a, #text-footnotes p {
+  text-decoration: none;
+  padding: .125rem 0;
+  color: #ccc;
+  /* smooth */
+  transition: all 50ms ease-in-out;
+}
+
+#text-footnotes a:hover,
+#text-footnotes a:focus {color: #666;}
+#text-footnotes p:hover,
+#text-footnotes p:focus {color: #666;}
+
+#text-footnotes ul, #text-footnotes ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#text-footnotes p.footpara.active {color: #333; font-weight: bold;}
+#text-footnotes sup a.active {color: blue;}
+

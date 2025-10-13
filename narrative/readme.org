@@ -1,0 +1,79 @@
+* Design notes
+- Start from simple HTML rendering of an org document -- resist urge to use fancy frameworks.  Re-style at the CSS, JS levels
+- Keep site usage compatible with EWW
+- ToC should be followable, scrollable in every page to show context
+  - hiding content should be reflected in the ToC -- can serve as a 'viewed' indicator
+- Footnotes should be displayed with content to prevent user 'jumping' around the page
+  - can serve as a set of annotations or callouts
+  - separate feature for callouts?  things like links to excerpts to enable tldr
+- navigation
+  - should be easy as possible
+  - collapsing and narrowing ('presentation mode')
+- reproducibility / transparency
+  - anytime code is used to produce something, a link to the python build (toml, lock etc) should be included
+
+* TODO
+JS
+// TODO: click propogate for folding -- couple issues, first, make it clear what heading you're folding
+// TODO: animate folding -- why isn't it working?
+// TODO: add copy button to code blocks
+// TODO: high memory usage (1.5GB)
+// TODO: add percent page and percent words til end of page
+// TODO: add breadcrumb to the top of the page
+// TODO: import html where relevant (eg for the minimap and progress bars)
+// TODO: decouple components (low priority, get everything working first as this is simply a  static site, not a frameowrkkj,w)
+// TODO: hide-show all but one heading (narrow)
+// TODO: multiple summarization level box in TLDR
+// TODO: make it mobile first
+// TODO: hideshow hud
+// TODO: rebuild minimap on window resize, text scale change, hide-show headers
+// TODO: add 'annotations' feature -- eg what I'm currently abusing footnotes for -- this would go by the tldr
+// TODO: current implementation of link following doesn't allow for navigating by browser history
+// TODO: factor each into script
+// TODO: add function to collapse all leafs, probably any outline container without a child outline container
+// TODO: add keys for commands
+// TODO: footnotes in margin -- sticky footnotes as a simple implementation?
+// TODO: function to 'spotlight' or narrow current heading (this can be used as a basis for a presentation mode)
+// TODO: function to hide/show table of contents.  bind this to a key (add button?)
+// TODO: add subtle progress bar (toc provides progress, but only at the heading level)
+// TODO: echo keystrokes for user feedback
+
+CSS
+/* TODO: Add indentation for first 3 levels (subtle) */
+/* TODO refactor CSS to use variables for things like color and size */
+/* TODO add underlines to the headings?  Some kind of visual distinction between and header and a paragraph, extra points if the styling makes the headins look more clickable */
+
+HTML
+/* TODO (html level) add nav bar to all returning to the index). include as html? */
+/* TODO once the above is done, use an html include to add the global css/js */
+// TODO Highlighting certain phrases for the purposes of annotation
+// TODO add iconography (all the icons?) looking for smooth icons like the svg icons in all-the-icons
+
+General
+// add tldr div which inludes a claude summary of the code
+// prevent jitter on load, can we defer loading html until after the JS is run?
+// WF for quicly snapping and arranging screenshots
+// TODO multifolder structure for HTML?  hold off until I've got things figure out
+// TODO generate interactive graph representation of site (include in the index)
+// TODO Automatic semantic highlighting -- color identifiers?
+
+
+* TODO Preview link on hover https://jsfiddle.net/yboss/q29tP/
+* DONE enable python venvs https://emacs.stackexchange.com/questions/24267/using-org-babel-to-enable-virtualenv
+:LOGBOOK:
+- State "DONE"       from              [2025-10-08 Wed 19:10:53]
+:END:
+* DONE finish basic narrative features (enumerated in post0.org)
+:LOGBOOK:
+- State "DONE"       from              [2025-10-08 Wed 19:10:54]
+:END:
+* DONE follow along Table of Contents: https://www.bram.us/2020/01/10/smooth-scrolling-sticky-scrollspy-navigation/
+:LOGBOOK:
+- State "DONE"       from "STARTED"    [2025-10-09 Thu 09:20:43]
+- State "STARTED"    from "TODO"       [2025-10-08 Wed 19:11:39]
+- State "TODO"       from "DONE"       [2025-10-08 Wed 19:11:05]
+- State "DONE"       from              [2025-10-08 Wed 19:11:02]
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2025-10-09 Thu 09:20:50]
+:END:

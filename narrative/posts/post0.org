@@ -1,0 +1,441 @@
+#+TITLE: post0
+#+PROPERTY: header-args:python :eval never-export
+#+PROPERTY: header-args:bash :eval never-export
+#+PROPERTY: header-args:mermaid :eval never-export
+#+OPTIONS: html-postamble:nil
+#+OPTIONS: H:6
+#+HTML_HEAD: <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+
+
+NOTE #+OPTIONS: H:6 makes the exporter create outline-containers beyond the default 4 levels (this is needed for folding)
+
+
+
+* Progress bar
+#+begin_export html
+<div id="progressBar"></div>
+
+<div id="minimap-container">
+  <div id="minimap">
+    <div id="minimap-viewport"></div>
+    <!-- The content will be cloned here by JavaScript -->
+  </div>
+</div>
+
+#+end_export
+
+* Features to make building easier
+- custom exporter for plotly? instead of having to manually insert the iframe?  maybe a python function could take care of this
+
+* narrative
+
+** link to CSS and JSS scripts
+#+begin_export html
+<link rel="stylesheet" href="global.css">
+<link rel="stylesheet" href="toc.css">
+<link rel="stylesheet" href="foldable-headings.css">
+<link rel="stylesheet" href="footnotes.css">
+<link rel="stylesheet" href="progress-bar.css">
+<link rel="stylesheet" href="minimap.css">
+<link rel="stylesheet" href="tldr.css">
+<link rel="stylesheet" href="post0.css">
+
+<script src="global.js"></script>
+<script src="toc.js"></script>
+<script src="foldable-headings.js"></script>
+<script src="footnotes.js"></script>
+<script src="progress-bar.js"></script>
+<script src="minimap.js"></script>
+<script src="tldr.js"></script>
+
+<script src="post0.js"></script>
+#+end_export
+
+** Long paragraph
+lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim[fn:4] id est laborum.  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?  
+
+** TODO prompt LLM (is there an org gptel or something similar?)
+:LOGBOOK:
+- State "TODO"       from "DONE"       [2025-10-06 Mon 09:26:28]
+- State "DONE"       from              [2025-10-06 Mon 09:26:26]
+:END:
+
+** COMMENT draft sections not included in the output
+
+** layout
+
+*** css grid
+:PROPERTIES:
+:CUSTOM_ID: my-custom-section
+:END:
+
+TODO get syntax highlighting working
+#+begin_export html
+<div class="grid-plot">
+    <iframe src="html/my_interactive_plot.html" width="100%" height="600"></iframe>
+    <iframe src="html/my_interactive_plot.html" width="100%" height="600"></iframe>
+</div>
+
+<style>
+.grid-plot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+</style>
+
+#+end_export
+
+** internal links
+[[file:post1.html][Post 1]]
+
+** global header / site style
+** DONE styling
+:LOGBOOK:
+- State "DONE"       from              [2025-10-05 Sun 18:47:56]
+:END:
+*** DONE inline css
+:LOGBOOK:
+- State "DONE"       from              [2025-10-05 Sun 18:47:54]
+:END:
+
+#+begin_export html
+<style>
+  .todo { font-family: monospace; color: pink; }
+</style>
+
+#+end_export
+
+*** DONE org-html-themes
+:LOGBOOK:
+- State "DONE"       from              [2025-10-05 Sun 18:46:04]
+:END:
+https://github.com/fniessen/org-html-themes
+https://github.com/fniessen/org-html-themes/blob/master/examples/org-mode-syntax-example.org
+(using read the docs see above)
+*** DONE css (see above)
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2025-10-05 Sun 16:41:15]
+- State "TODO"       from              [2025-10-05 Sun 16:33:55]
+:END:
+**** DONE global css
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2025-10-05 Sun 16:41:11]
+- State "TODO"       from              [2025-10-05 Sun 16:41:08]
+:END:
+**** DONE local css
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2025-10-05 Sun 16:41:13]
+- State "TODO"       from              [2025-10-05 Sun 16:41:09]
+:END:
+
+** TODO basic org stuff
+:LOGBOOK:
+- State "TODO"       from "DONE"       [2025-10-04 Sat 10:30:25]
+- State "DONE"       from "TODO"       [2025-10-04 Sat 09:50:19]
+- State "TODO"       from              [2025-10-04 Sat 09:50:10]
+:END:
+
+** TODO text
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 10:33:43]
+:END:
+
+*** long paragraph
+
+*** long paragraph scrolling text
+
+*** quote
+this is some regular text
+#+begin_quote
+This is some quote
+#+end_quote
+
+this is some more regular text
+
+** tags :tag0:tag1:
+*** DONE test todo item 2
+*** DONE table
+:LOGBOOK:
+- State "DONE"       from              [2025-10-04 Sat 10:21:29]
+:END:
+#+NAME: test-table
+| a | b | c |
+|---+---+---|
+| 1 | 2 | 3 |
+| 4 | 5 | 6 |
+
+*** TODO lists
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:49:56]
+:END:
+
+**** TODO bullets
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:49:58]
+:END:
+NOTE: these render as numbers
+- one
+- two
+  - two point one
+  - two point two
+- three
+  - three point one
+  - three point two
+
+**** TODO numbers
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:49:59]
+:END:
+1. first
+2. second
+   1. second point one
+   2. second point two
+
+*** TODO formatting
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:50:03]
+:END:
+- some *bold* text
+- some /italic/ text
+- some _underline_ text
+- some +strike+ text
+- some ~code~ text
+- some =verbatim= text
+- some ~*bold in code*~ text
+- some =/italic in verbatim/= text
+- some =_underline in verbatim_= text
+- some =~code in verbatim=~ text
+- some =+strike in verbatim+= text
+- some *bold* /italic/ _underline_ +strike+ ~code~ =verbatim= text
+
+** TODO code
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:51:20]
+:END:
+
+*** TODO bash
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:51:21]
+:END:
+#+BEGIN_SRC bash :exports both
+echo "hello world"
+#+END_SRC
+
+#+RESULTS:
+: hello world
+
+*** TODO python
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:51:22]
+:END:
+- NOTE: need to set up dir-locals[fn:6]
+
+**** TODO using venv
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:51:24]
+:END:
+
+This is how you write code with python[fn:5]
+#+BEGIN_SRC python :exports both :results output code
+from dataclasses import dataclass
+
+from polyfactory.factories import DataclassFactory
+
+
+@dataclass
+class Person:
+    name: str
+    age: float
+    height: float
+    weight: float
+
+
+class PersonFactory(DataclassFactory[Person]):
+    ...
+
+
+person_instance = PersonFactory.build()
+print(person_instance)
+
+print('hello')
+
+#+END_SRC
+
+#+RESULTS:
+#+begin_src python
+Person(name='pWXqLGtQKLbTIJjpCure', age=-92.811375428167, height=7.15080271143585, weight=-79779.8859738436)
+hello
+#+end_src
+
+**** TODO using multiple venvs via session
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:51:25]
+:END:
+**** TODO using session to pass state between blocks
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:51:27]
+:END:
+** TODO video (test with git lfs)
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:51:38]
+:END:
+** TODO image
+:LOGBOOK:
+- State "TODO"       from "DONE"       [2025-10-04 Sat 09:51:43]
+- State "DONE"       from              [2025-10-04 Sat 09:51:40]
+:END:
+*** DONE local file
+:LOGBOOK:
+- State "DONE"       from              [2025-10-04 Sat 09:51:45]
+:END:
+[[./images/test-image.png]]
+*** TODO remote file
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:51:47]
+:END:
+*** TODO svg
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:51:49]
+:END:
+** DONE general iframe
+:LOGBOOK:
+- State "DONE"       from              [2025-10-04 Sat 09:51:52]
+:END:
+
+#+begin_export html
+<iframe src="https://example.com" width="100%" height="600"></iframe>
+#+end_export
+
+** DONE plotly chart
+:LOGBOOK:
+- State "DONE"       from              [2025-10-04 Sat 09:51:56]
+:END:
+#+BEGIN_SRC python :results output drawer
+import plotly.express as px
+import pandas as pd
+
+df = pd.DataFrame({
+    "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
+    "Amount": [4, 1, 2, 2, 4, 5],
+    "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
+})
+
+fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+
+# write to html file
+fig.write_html("html/my_interactive_plot.html")
+#+END_SRC
+
+#+RESULTS:
+:results:
+:end:
+
+insert iframe to chart
+#+begin_export html
+<iframe src="html/my_interactive_plot.html" width="100%" height="600"></iframe>
+#+end_export
+
+** DONE mermaid diagrams
+:LOGBOOK:
+- State "DONE"       from              [2025-10-04 Sat 09:52:31]
+:END:
+#+BEGIN_SRC mermaid :file images/test-diagram.svg
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+#+END_SRC
+
+#+RESULTS:
+[[file:images/test-diagram.svg]]
+
+** TODO verbs
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 10:21:18]
+:END:
+
+** TODO footnotes NOTE issue
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:52:52]
+:END:
+
+This is a footnote[fn:1].  And this is some other text
+
+*** Another footnote
+More[fn:3] footnotes[fn:2].
+
+
+
+** TODO transclude? compose with other file?
+:LOGBOOK:
+- State "TODO"       from              [2025-10-04 Sat 09:48:21]
+:END:
+
+*** include from another file
+
+** TODO arrange two views next to eachother (eg figure and some figure text) using css grid (might be split between here and css). is ther a way to include the css here? can't we tangle to a file
+
+** How this site is built
+
+*** minimap
+**** CSS
+#+INCLUDE: "./minimap.css" src css
+**** Javascript
+#+INCLUDE: "./minimap.js" src javascript
+
+*** progress-bar
+**** CSS
+#+INCLUDE: "./progress-bar.css" src css
+**** Javascript
+#+INCLUDE: "./progress-bar.js" src javascript
+
+*** footnotes
+**** CSS
+#+INCLUDE: "./footnotes.css" src css
+**** Javascript
+#+INCLUDE: "./footnotes.js" src javascript
+
+*** foldable-headings
+**** CSS
+#+INCLUDE: "./foldable-headings.css" src css
+**** Javascript
+#+INCLUDE: "./foldable-headings.js" src javascript
+
+*** toc
+**** CSS
+#+INCLUDE: "./toc.css" src css
+**** Javascript
+#+INCLUDE: "./toc.js" src javascript
+
+* Footnotes
+:PROPERTIES:
+:ID:       388000E7-79D6-4326-8412-116140B2CD1C
+:END:
+[fn:6] lorem impsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
+[fn:5] This is how to write code with python 
+[fn:4] new footnote 
+[fn:3] even more 
+[fn:2] More footnotes 
+[fn:1] This is the footnote.  lorem impsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. *Excepteur sint occaecat cupidatat* non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+
+* Generate a TLDR for this document that will be displayed at the top of the static-site version of this document.  Include internal org links to headings in this document where relevant. Org links look like this: [[*Footnotes]]. Do not use any bullets for the explanation, but you can use line breaks to help with readability.  Be verbose and describe as many sections as possible
+:PROPERTIES:
+:CUSTOM_ID: tldr
+:END:
+
+
+This document serves as a comprehensive demonstration of Org mode authoring for static sites, showing advanced features and customizations. At the top, a [[*Progress bar][progress bar and minimap]] enhance navigation. The document explores embedding [[*Features to make building easier][interactive charts with Plotly]], and suggests automations for easier iframing. It includes [[*narrative][narrative text]], CSS and JS linking details, and example paragraphs, quotes, and layout concepts.
+
+There's an overview of using both [[*css grid][modern layouts via CSS grid]], with practical HTML examples. Internal links (such as [[file:post1.html][Post 1]]) and [[*global header / site style][site-wide style]] are covered, including the use of org-html-themes, local and global CSS, and custom inline styles. 
+
+Basic Org constructs are featured under [[*basic org stuff]], including [[*tags][tagged sections]], [[*lists][lists and formatting]], and [[*table][tables]]. Source code examples are provided for [[*bash][bash scripts]] and [[*python][python]], including venv and session hints. Embedding media is demonstrated with [[*image][images]], remote files, SVG diagrams, and eg [[*mermaid diagrams][Mermaid charts]]. 
+
+There's also coverage of internal [[*verbs][verbatim and code syntax]], proper handling of [[*footnotes][footnotes with references]], and ideas for future transclusion and file composition.
+
+Document concludes with a detailed [[*Footnotes][footnotes section]] and plans for CSS-driven layout enhancements, including arranging multiple views or panels side by side (figures + captions) using CSS grid.
+
+
+

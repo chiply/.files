@@ -1,0 +1,22 @@
+.outline-6 {cursor: pointer; }
+.outline-6.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+.outline-5 {cursor: pointer; }
+.outline-5.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+.outline-4 {cursor: pointer; }
+.outline-4.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+.outline-3 {cursor: pointer; }
+.outline-3.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+.outline-2 {cursor: pointer; }
+.outline-2.folded {max-height: 2em; background: #f9f9f9; overflow: clip;}
+
+#outline-2::-webkit-scrollbar {display: none;}
+#outline-3::-webkit-scrollbar {display: none;}
+#outline-4::-webkit-scrollbar {display: none;}
+#outline-5::-webkit-scrollbar {display: none;}
+#outline-6::-webkit-scrollbar {display: none;}
+
+

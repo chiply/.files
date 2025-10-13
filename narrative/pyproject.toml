@@ -1,0 +1,24 @@
+[project]
+name = "narrative"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "sema4-CharlieBaker",email = "charlie.baker@sema4.com"}
+]
+readme = "readme.org"
+requires-python = ">=3.11,<4.0"
+dependencies = [
+    "plotly[express] (>=6.3.1,<7.0.0)",
+    "polyfactory (>=2.22.2,<3.0.0)",
+    "pydantic (>=2.11.10,<3.0.0)",
+    "hypothesis (>=6.140.2,<7.0.0)",
+    "pandas (>=2.3.3,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "narrative", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

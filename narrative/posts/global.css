@@ -1,0 +1,73 @@
+/* Fonts */
+@font-face {
+    font-family: 'Terminus';
+    src: url('fonts/TerminusTTF-4.49.3.ttf') format('truetype');
+    /* Add other formats like WOFF or WOFF2 for broader browser compatibility */
+    /* src: url('fonts/TerminusTTF-4.49.woff2') format('woff2'), */
+    /*      url('fonts/TerminusTTF-4.49.woff') format('woff'); */
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Terminus', monospace;
+    font-size: 1rem;
+}
+
+li, ul {list-style-position: inside;}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Scroll */
+html {scroll-behavior: smooth; width: 100%;}
+
+
+/* Basic layout */
+#content {
+    max-width: 60vw;
+    margin-left: 21vw;
+}
+body {margin: 0;}
+
+.title {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+li {margin-left: 0rem;}
+
+iframe {
+    max-height: 40vh !important;
+    max-width: 100vw;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    max-height: 40vh !important;
+}
+
+
+/** code blocks **/
+
+pre.src {font-family: 'Terminus', monospace;}
+
+/* on hover, change background of pre.src to white and add a small
+   gray border */
+pre.src {
+    background: rgba(245,245,245,0.8);
+    border: 1px solid rgba(245,245,245,0.8);
+}
+
+pre.src:hover {
+    background: white;
+    border: 1px solid rgba(230,230,230,0.8);
+}
+
+

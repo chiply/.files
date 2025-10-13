@@ -1,0 +1,36 @@
+/* Minimap styles */
+#minimap-container {
+  position: fixed;
+  bottom: 0vh;
+  right: 0vw;
+  width: 6vw;
+  height: auto;
+  max-height: 100vh;
+  z-index: 10000;
+  pointer-events: none;
+  /* need auto otherwise we can't scroll the minimap independently */
+  overflow: auto;
+  filter: blur(0.1px) grayscale(90%);
+  /* margin: 1rem; */
+}
+
+/* NOTE overflow hidden works, but it causes the main page to scroll for some reason */
+#minimap {
+  position: relative;
+  overflow: auto;
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+
+#minimap-content {
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+#minimap-viewport {
+  position: absolute;
+  box-sizing: border-box;
+  z-index: 10;
+  background: rgba(0,0,0, 0.1);
+  pointer-events: none;
+}

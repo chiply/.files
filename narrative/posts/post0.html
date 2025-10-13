@@ -1,0 +1,1429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-10-13 Mon 13:22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>post0</title>
+<meta name="author" content="Charles Baker" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">post0</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org52cd402">1. Progress bar</a></li>
+<li><a href="#orgbbd2561">2. Features to make building easier</a></li>
+<li><a href="#org798355e">3. narrative</a>
+<ul>
+<li><a href="#org82860be">3.1. link to CSS and JSS scripts</a></li>
+<li><a href="#orgdefe2ab">3.2. Long paragraph</a></li>
+<li><a href="#orgb7080fe">3.3. <span class="todo TODO">TODO</span> prompt LLM (is there an org gptel or something similar?)</a></li>
+<li><a href="#org2ef426b">3.4. layout</a>
+<ul>
+<li><a href="#my-custom-section">3.4.1. css grid</a></li>
+</ul>
+</li>
+<li><a href="#orge18de13">3.5. internal links</a></li>
+<li><a href="#org9537c62">3.6. global header / site style</a></li>
+<li><a href="#org333f037">3.7. <span class="done DONE">DONE</span> styling</a>
+<ul>
+<li><a href="#orgd411244">3.7.1. <span class="done DONE">DONE</span> inline css</a></li>
+<li><a href="#org0d901ad">3.7.2. <span class="done DONE">DONE</span> org-html-themes</a></li>
+<li><a href="#orgd93f354">3.7.3. <span class="done DONE">DONE</span> css (see above)</a>
+<ul>
+<li><a href="#orge7378bd">3.7.3.1. <span class="done DONE">DONE</span> global css</a></li>
+<li><a href="#org9c0e242">3.7.3.2. <span class="done DONE">DONE</span> local css</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org16a8a9b">3.8. <span class="todo TODO">TODO</span> basic org stuff</a></li>
+<li><a href="#orgd659146">3.9. <span class="todo TODO">TODO</span> text</a>
+<ul>
+<li><a href="#org0d1efdd">3.9.1. long paragraph</a></li>
+<li><a href="#org0526a04">3.9.2. long paragraph scrolling text</a></li>
+<li><a href="#org829b41b">3.9.3. quote</a></li>
+</ul>
+</li>
+<li><a href="#org27d13ad">3.10. tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag0">tag0</span>&#xa0;<span class="tag1">tag1</span></span></a>
+<ul>
+<li><a href="#orgb3b0402">3.10.1. <span class="done DONE">DONE</span> test todo item 2</a></li>
+<li><a href="#org84ccbe1">3.10.2. <span class="done DONE">DONE</span> table</a></li>
+<li><a href="#org60bc3cd">3.10.3. <span class="todo TODO">TODO</span> lists</a>
+<ul>
+<li><a href="#orge02c08f">3.10.3.1. <span class="todo TODO">TODO</span> bullets</a></li>
+<li><a href="#org3ae308b">3.10.3.2. <span class="todo TODO">TODO</span> numbers</a></li>
+</ul>
+</li>
+<li><a href="#orga6accd2">3.10.4. <span class="todo TODO">TODO</span> formatting</a></li>
+</ul>
+</li>
+<li><a href="#org73f588d">3.11. <span class="todo TODO">TODO</span> code</a>
+<ul>
+<li><a href="#orgeaad3ca">3.11.1. <span class="todo TODO">TODO</span> bash</a></li>
+<li><a href="#org7374f7b">3.11.2. <span class="todo TODO">TODO</span> python</a>
+<ul>
+<li><a href="#orgee8d690">3.11.2.1. <span class="todo TODO">TODO</span> using venv</a></li>
+<li><a href="#org6feb8ec">3.11.2.2. <span class="todo TODO">TODO</span> using multiple venvs via session</a></li>
+<li><a href="#org56c329a">3.11.2.3. <span class="todo TODO">TODO</span> using session to pass state between blocks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1869b03">3.12. <span class="todo TODO">TODO</span> video (test with git lfs)</a></li>
+<li><a href="#orgc9b0d87">3.13. <span class="todo TODO">TODO</span> image</a>
+<ul>
+<li><a href="#orgd743189">3.13.1. <span class="done DONE">DONE</span> local file</a></li>
+<li><a href="#org794cbb4">3.13.2. <span class="todo TODO">TODO</span> remote file</a></li>
+<li><a href="#org8b5df87">3.13.3. <span class="todo TODO">TODO</span> svg</a></li>
+</ul>
+</li>
+<li><a href="#org28c6c0f">3.14. <span class="done DONE">DONE</span> general iframe</a></li>
+<li><a href="#org406edf8">3.15. <span class="done DONE">DONE</span> plotly chart</a></li>
+<li><a href="#orgbe2284b">3.16. <span class="done DONE">DONE</span> mermaid diagrams</a></li>
+<li><a href="#orge371afe">3.17. <span class="todo TODO">TODO</span> verbs</a></li>
+<li><a href="#org21e75a0">3.18. <span class="todo TODO">TODO</span> footnotes NOTE issue</a>
+<ul>
+<li><a href="#org5648c78">3.18.1. Another footnote</a></li>
+</ul>
+</li>
+<li><a href="#org986274e">3.19. <span class="todo TODO">TODO</span> transclude? compose with other file?</a>
+<ul>
+<li><a href="#org2abbbc0">3.19.1. include from another file</a></li>
+</ul>
+</li>
+<li><a href="#orga9b1815">3.20. <span class="todo TODO">TODO</span> arrange two views next to eachother (eg figure and some figure text) using css grid (might be split between here and css). is ther a way to include the css here? can't we tangle to a file</a></li>
+<li><a href="#org40c8bb6">3.21. How this site is built</a>
+<ul>
+<li><a href="#org509c081">3.21.1. minimap</a>
+<ul>
+<li><a href="#orgefe60e7">3.21.1.1. CSS</a></li>
+<li><a href="#org5c7055d">3.21.1.2. Javascript</a></li>
+</ul>
+</li>
+<li><a href="#orgc47bf5a">3.21.2. progress-bar</a>
+<ul>
+<li><a href="#orgdf91e56">3.21.2.1. CSS</a></li>
+<li><a href="#org0ad7619">3.21.2.2. Javascript</a></li>
+</ul>
+</li>
+<li><a href="#org5ec1665">3.21.3. footnotes</a>
+<ul>
+<li><a href="#orgde57c2b">3.21.3.1. CSS</a></li>
+<li><a href="#orgf9ab31a">3.21.3.2. Javascript</a></li>
+</ul>
+</li>
+<li><a href="#orgaa26e87">3.21.4. foldable-headings</a>
+<ul>
+<li><a href="#orge8866b5">3.21.4.1. CSS</a></li>
+<li><a href="#org6fa6f87">3.21.4.2. Javascript</a></li>
+</ul>
+</li>
+<li><a href="#org3ebdca0">3.21.5. toc</a>
+<ul>
+<li><a href="#org787aa55">3.21.5.1. CSS</a></li>
+<li><a href="#org15f06bb">3.21.5.2. Javascript</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#tldr">4. Generate a TLDR for this document that will be displayed at the top of the static-site version of this document.  Include internal org links to headings in this document where relevant. Org links look like this: *Footnotes. Do not use any bullets for the explanation, but you can use line breaks to help with readability.  Be verbose and describe as many sections as possible</a></li>
+</ul>
+</div>
+</div>
+<p>
+NOTE #+OPTIONS: H:6 makes the exporter create outline-containers beyond the default 4 levels (this is needed for folding)
+</p>
+<div id="outline-container-org52cd402" class="outline-2">
+<h2 id="org52cd402"><span class="section-number-2">1.</span> Progress bar</h2>
+<div class="outline-text-2" id="text-1">
+<div id="progressBar"></div>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<div id="minimap-container">
+  <div id="minimap">
+    <div id="minimap-viewport"></div>
+    <!-- The content will be cloned here by JavaScript -->
+  </div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbbd2561" class="outline-2">
+<h2 id="orgbbd2561"><span class="section-number-2">2.</span> Features to make building easier</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>custom exporter for plotly? instead of having to manually insert the iframe?  maybe a python function could take care of this</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org798355e" class="outline-2">
+<h2 id="org798355e"><span class="section-number-2">3.</span> narrative</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org82860be" class="outline-3">
+<h3 id="org82860be"><span class="section-number-3">3.1.</span> link to CSS and JSS scripts</h3>
+<div class="outline-text-3" id="text-3-1">
+<link rel="stylesheet" href="global.css">
+<link rel="stylesheet" href="toc.css">
+<link rel="stylesheet" href="foldable-headings.css">
+<link rel="stylesheet" href="footnotes.css">
+<link rel="stylesheet" href="progress-bar.css">
+<link rel="stylesheet" href="minimap.css">
+<link rel="stylesheet" href="tldr.css">
+<link rel="stylesheet" href="post0.css">
+
+<script src="global.js"></script>
+<script src="toc.js"></script>
+<script src="foldable-headings.js"></script>
+<script src="footnotes.js"></script>
+<script src="progress-bar.js"></script>
+<script src="minimap.js"></script>
+<script src="tldr.js"></script>
+
+<script src="post0.js"></script>
+</div>
+</div>
+<div id="outline-container-orgdefe2ab" class="outline-3">
+<h3 id="orgdefe2ab"><span class="section-number-3">3.2.</span> Long paragraph</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> id est laborum.  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?  
+</p>
+</div>
+</div>
+<div id="outline-container-orgb7080fe" class="outline-3">
+<h3 id="orgb7080fe"><span class="section-number-3">3.3.</span> <span class="todo TODO">TODO</span> prompt LLM (is there an org gptel or something similar?)</h3>
+<div class="outline-text-3" id="text-3-3">
+</div>
+</div>
+<div id="outline-container-org2ef426b" class="outline-3">
+<h3 id="org2ef426b"><span class="section-number-3">3.4.</span> layout</h3>
+<div class="outline-text-3" id="text-3-4">
+</div>
+<div id="outline-container-my-custom-section" class="outline-4">
+<h4 id="my-custom-section"><span class="section-number-4">3.4.1.</span> css grid</h4>
+<div class="outline-text-4" id="text-my-custom-section">
+<p>
+TODO get syntax highlighting working
+</p>
+<div class="grid-plot">
+    <iframe src="html/my_interactive_plot.html" width="100%" height="600"></iframe>
+    <iframe src="html/my_interactive_plot.html" width="100%" height="600"></iframe>
+</div>
+
+<style>
+.grid-plot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+</style>
+</div>
+</div>
+</div>
+<div id="outline-container-orge18de13" class="outline-3">
+<h3 id="orge18de13"><span class="section-number-3">3.5.</span> internal links</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+<a href="post1.html">Post 1</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org9537c62" class="outline-3">
+<h3 id="org9537c62"><span class="section-number-3">3.6.</span> global header / site style</h3>
+</div>
+<div id="outline-container-org333f037" class="outline-3">
+<h3 id="org333f037"><span class="section-number-3">3.7.</span> <span class="done DONE">DONE</span> styling</h3>
+<div class="outline-text-3" id="text-3-7">
+</div>
+<div id="outline-container-orgd411244" class="outline-4">
+<h4 id="orgd411244"><span class="section-number-4">3.7.1.</span> <span class="done DONE">DONE</span> inline css</h4>
+<div class="outline-text-4" id="text-3-7-1">
+<style>
+  .todo { font-family: monospace; color: pink; }
+</style>
+</div>
+</div>
+<div id="outline-container-org0d901ad" class="outline-4">
+<h4 id="org0d901ad"><span class="section-number-4">3.7.2.</span> <span class="done DONE">DONE</span> org-html-themes</h4>
+<div class="outline-text-4" id="text-3-7-2">
+<p>
+<a href="https://github.com/fniessen/org-html-themes">https://github.com/fniessen/org-html-themes</a>
+<a href="https://github.com/fniessen/org-html-themes/blob/master/examples/org-mode-syntax-example.org">https://github.com/fniessen/org-html-themes/blob/master/examples/org-mode-syntax-example.org</a>
+(using read the docs see above)
+</p>
+</div>
+</div>
+<div id="outline-container-orgd93f354" class="outline-4">
+<h4 id="orgd93f354"><span class="section-number-4">3.7.3.</span> <span class="done DONE">DONE</span> css (see above)</h4>
+<div class="outline-text-4" id="text-3-7-3">
+</div>
+<div id="outline-container-orge7378bd" class="outline-5">
+<h5 id="orge7378bd"><span class="section-number-5">3.7.3.1.</span> <span class="done DONE">DONE</span> global css</h5>
+<div class="outline-text-5" id="text-3-7-3-1">
+</div>
+</div>
+<div id="outline-container-org9c0e242" class="outline-5">
+<h5 id="org9c0e242"><span class="section-number-5">3.7.3.2.</span> <span class="done DONE">DONE</span> local css</h5>
+<div class="outline-text-5" id="text-3-7-3-2">
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org16a8a9b" class="outline-3">
+<h3 id="org16a8a9b"><span class="section-number-3">3.8.</span> <span class="todo TODO">TODO</span> basic org stuff</h3>
+<div class="outline-text-3" id="text-3-8">
+</div>
+</div>
+<div id="outline-container-orgd659146" class="outline-3">
+<h3 id="orgd659146"><span class="section-number-3">3.9.</span> <span class="todo TODO">TODO</span> text</h3>
+<div class="outline-text-3" id="text-3-9">
+</div>
+<div id="outline-container-org0d1efdd" class="outline-4">
+<h4 id="org0d1efdd"><span class="section-number-4">3.9.1.</span> long paragraph</h4>
+</div>
+
+<div id="outline-container-org0526a04" class="outline-4">
+<h4 id="org0526a04"><span class="section-number-4">3.9.2.</span> long paragraph scrolling text</h4>
+</div>
+
+<div id="outline-container-org829b41b" class="outline-4">
+<h4 id="org829b41b"><span class="section-number-4">3.9.3.</span> quote</h4>
+<div class="outline-text-4" id="text-3-9-3">
+<p>
+this is some regular text
+</p>
+<blockquote>
+<p>
+This is some quote
+</p>
+</blockquote>
+
+<p>
+this is some more regular text
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org27d13ad" class="outline-3">
+<h3 id="org27d13ad"><span class="section-number-3">3.10.</span> tags&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tag0">tag0</span>&#xa0;<span class="tag1">tag1</span></span></h3>
+<div class="outline-text-3" id="text-3-10">
+</div>
+<div id="outline-container-orgb3b0402" class="outline-4">
+<h4 id="orgb3b0402"><span class="section-number-4">3.10.1.</span> <span class="done DONE">DONE</span> test todo item 2</h4>
+</div>
+<div id="outline-container-org84ccbe1" class="outline-4">
+<h4 id="org84ccbe1"><span class="section-number-4">3.10.2.</span> <span class="done DONE">DONE</span> table</h4>
+<div class="outline-text-4" id="text-3-10-2">
+<table id="orge70ccf9" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">a</th>
+<th scope="col" class="org-right">b</th>
+<th scope="col" class="org-right">c</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-right">5</td>
+<td class="org-right">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org60bc3cd" class="outline-4">
+<h4 id="org60bc3cd"><span class="section-number-4">3.10.3.</span> <span class="todo TODO">TODO</span> lists</h4>
+<div class="outline-text-4" id="text-3-10-3">
+</div>
+<div id="outline-container-orge02c08f" class="outline-5">
+<h5 id="orge02c08f"><span class="section-number-5">3.10.3.1.</span> <span class="todo TODO">TODO</span> bullets</h5>
+<div class="outline-text-5" id="text-3-10-3-1">
+<p>
+NOTE: these render as numbers
+</p>
+<ul class="org-ul">
+<li>one</li>
+<li>two
+<ul class="org-ul">
+<li>two point one</li>
+<li>two point two</li>
+</ul></li>
+<li>three
+<ul class="org-ul">
+<li>three point one</li>
+<li>three point two</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3ae308b" class="outline-5">
+<h5 id="org3ae308b"><span class="section-number-5">3.10.3.2.</span> <span class="todo TODO">TODO</span> numbers</h5>
+<div class="outline-text-5" id="text-3-10-3-2">
+<ol class="org-ol">
+<li>first</li>
+<li>second
+<ol class="org-ol">
+<li>second point one</li>
+<li>second point two</li>
+</ol></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orga6accd2" class="outline-4">
+<h4 id="orga6accd2"><span class="section-number-4">3.10.4.</span> <span class="todo TODO">TODO</span> formatting</h4>
+<div class="outline-text-4" id="text-3-10-4">
+<ul class="org-ul">
+<li>some <b>bold</b> text</li>
+<li>some <i>italic</i> text</li>
+<li>some <span class="underline">underline</span> text</li>
+<li>some <del>strike</del> text</li>
+<li>some <code>code</code> text</li>
+<li>some <code>verbatim</code> text</li>
+<li>some <code>*bold in code*</code> text</li>
+<li>some <code>/italic in verbatim/</code> text</li>
+<li>some <code>_underline in verbatim_</code> text</li>
+<li>some =~code in verbatim=~ text</li>
+<li>some <code>+strike in verbatim+</code> text</li>
+<li>some <b>bold</b> <i>italic</i> <span class="underline">underline</span> <del>strike</del> <code>code</code> <code>verbatim</code> text</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org73f588d" class="outline-3">
+<h3 id="org73f588d"><span class="section-number-3">3.11.</span> <span class="todo TODO">TODO</span> code</h3>
+<div class="outline-text-3" id="text-3-11">
+</div>
+<div id="outline-container-orgeaad3ca" class="outline-4">
+<h4 id="orgeaad3ca"><span class="section-number-4">3.11.1.</span> <span class="todo TODO">TODO</span> bash</h4>
+<div class="outline-text-4" id="text-3-11-1">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="color: #705ae3; font-weight: bold;">echo</span> <span style="color: #007f6f;">"hello world"</span>
+</pre>
+</div>
+
+<pre class="example">
+hello world
+</pre>
+</div>
+</div>
+<div id="outline-container-org7374f7b" class="outline-4">
+<h4 id="org7374f7b"><span class="section-number-4">3.11.2.</span> <span class="todo TODO">TODO</span> python</h4>
+<div class="outline-text-4" id="text-3-11-2">
+<ul class="org-ul">
+<li>NOTE: need to set up dir-locals<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup></li>
+</ul>
+</div>
+<div id="outline-container-orgee8d690" class="outline-5">
+<h5 id="orgee8d690"><span class="section-number-5">3.11.2.1.</span> <span class="todo TODO">TODO</span> using venv</h5>
+<div class="outline-text-5" id="text-3-11-2-1">
+<p>
+This is how you write code with python<sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #ad45ba; font-weight: bold;">from</span> dataclasses <span style="color: #ad45ba; font-weight: bold;">import</span> dataclass
+
+<span style="color: #ad45ba; font-weight: bold;">from</span> polyfactory.factories <span style="color: #ad45ba; font-weight: bold;">import</span> DataclassFactory
+
+
+<span style="color: #0f7a9d;">@dataclass</span>
+<span style="color: #ad45ba; font-weight: bold;">class</span> <span style="color: #0f7a9d;">Person</span>:
+    name: <span style="color: #705ae3; font-weight: bold;">str</span>
+    age: <span style="color: #705ae3; font-weight: bold;">float</span>
+    height: <span style="color: #705ae3; font-weight: bold;">float</span>
+    weight: <span style="color: #705ae3; font-weight: bold;">float</span>
+
+
+<span style="color: #ad45ba; font-weight: bold;">class</span> <span style="color: #0f7a9d;">PersonFactory</span><span style="color: #c035aa;">(</span>DataclassFactory<span style="color: #5165e4;">[</span>Person<span style="color: #5165e4;">]</span><span style="color: #c035aa;">)</span>:
+    ...
+
+
+<span style="color: #3f6faf;">person_instance</span> = PersonFactory.build<span style="color: #c035aa;">()</span>
+<span style="color: #705ae3; font-weight: bold;">print</span><span style="color: #c035aa;">(</span>person_instance<span style="color: #c035aa;">)</span>
+
+<span style="color: #705ae3; font-weight: bold;">print</span><span style="color: #c035aa;">(</span><span style="color: #007f6f;">'hello'</span><span style="color: #c035aa;">)</span>
+
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python">Person<span style="color: #c035aa;">(</span>name=<span style="color: #007f6f;">'pWXqLGtQKLbTIJjpCure'</span>, age=-92.811375428167, height=7.15080271143585, weight=-79779.8859738436<span style="color: #c035aa;">)</span>
+hello
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6feb8ec" class="outline-5">
+<h5 id="org6feb8ec"><span class="section-number-5">3.11.2.2.</span> <span class="todo TODO">TODO</span> using multiple venvs via session</h5>
+<div class="outline-text-5" id="text-3-11-2-2">
+</div>
+</div>
+<div id="outline-container-org56c329a" class="outline-5">
+<h5 id="org56c329a"><span class="section-number-5">3.11.2.3.</span> <span class="todo TODO">TODO</span> using session to pass state between blocks</h5>
+<div class="outline-text-5" id="text-3-11-2-3">
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org1869b03" class="outline-3">
+<h3 id="org1869b03"><span class="section-number-3">3.12.</span> <span class="todo TODO">TODO</span> video (test with git lfs)</h3>
+<div class="outline-text-3" id="text-3-12">
+</div>
+</div>
+<div id="outline-container-orgc9b0d87" class="outline-3">
+<h3 id="orgc9b0d87"><span class="section-number-3">3.13.</span> <span class="todo TODO">TODO</span> image</h3>
+<div class="outline-text-3" id="text-3-13">
+</div>
+<div id="outline-container-orgd743189" class="outline-4">
+<h4 id="orgd743189"><span class="section-number-4">3.13.1.</span> <span class="done DONE">DONE</span> local file</h4>
+<div class="outline-text-4" id="text-3-13-1">
+
+<div id="org2ec6416" class="figure">
+<p><img src="./images/test-image.png" alt="test-image.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org794cbb4" class="outline-4">
+<h4 id="org794cbb4"><span class="section-number-4">3.13.2.</span> <span class="todo TODO">TODO</span> remote file</h4>
+<div class="outline-text-4" id="text-3-13-2">
+</div>
+</div>
+<div id="outline-container-org8b5df87" class="outline-4">
+<h4 id="org8b5df87"><span class="section-number-4">3.13.3.</span> <span class="todo TODO">TODO</span> svg</h4>
+<div class="outline-text-4" id="text-3-13-3">
+</div>
+</div>
+</div>
+<div id="outline-container-org28c6c0f" class="outline-3">
+<h3 id="org28c6c0f"><span class="section-number-3">3.14.</span> <span class="done DONE">DONE</span> general iframe</h3>
+<div class="outline-text-3" id="text-3-14">
+<iframe src="https://example.com" width="100%" height="600"></iframe>
+</div>
+</div>
+<div id="outline-container-org406edf8" class="outline-3">
+<h3 id="org406edf8"><span class="section-number-3">3.15.</span> <span class="done DONE">DONE</span> plotly chart</h3>
+<div class="outline-text-3" id="text-3-15">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #ad45ba; font-weight: bold;">import</span> plotly.express <span style="color: #ad45ba; font-weight: bold;">as</span> px
+<span style="color: #ad45ba; font-weight: bold;">import</span> pandas <span style="color: #ad45ba; font-weight: bold;">as</span> pd
+
+<span style="color: #3f6faf;">df</span> = pd.DataFrame<span style="color: #c035aa;">(</span><span style="color: #5165e4;">{</span>
+    <span style="color: #007f6f;">"Fruit"</span>: <span style="color: #007f6f;">[</span><span style="color: #007f6f;">"Apples"</span>, <span style="color: #007f6f;">"Oranges"</span>, <span style="color: #007f6f;">"Bananas"</span>, <span style="color: #007f6f;">"Apples"</span>, <span style="color: #007f6f;">"Oranges"</span>, <span style="color: #007f6f;">"Bananas"</span><span style="color: #007f6f;">]</span>,
+    <span style="color: #007f6f;">"Amount"</span>: <span style="color: #007f6f;">[</span>4, 1, 2, 2, 4, 5<span style="color: #007f6f;">]</span>,
+    <span style="color: #007f6f;">"City"</span>: <span style="color: #007f6f;">[</span><span style="color: #007f6f;">"SF"</span>, <span style="color: #007f6f;">"SF"</span>, <span style="color: #007f6f;">"SF"</span>, <span style="color: #007f6f;">"Montreal"</span>, <span style="color: #007f6f;">"Montreal"</span>, <span style="color: #007f6f;">"Montreal"</span><span style="color: #007f6f;">]</span>
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>
+
+<span style="color: #3f6faf;">fig</span> = px.bar<span style="color: #c035aa;">(</span>df, x=<span style="color: #007f6f;">"Fruit"</span>, y=<span style="color: #007f6f;">"Amount"</span>, color=<span style="color: #007f6f;">"City"</span>, barmode=<span style="color: #007f6f;">"group"</span><span style="color: #c035aa;">)</span>
+
+<span style="color: #4b4a0000fafa;"># </span><span style="color: #4b4a0000fafa;">write to html file
+</span>fig.write_html<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"html/my_interactive_plot.html"</span><span style="color: #c035aa;">)</span>
+</pre>
+</div>
+
+<p>
+insert iframe to chart
+</p>
+<iframe src="html/my_interactive_plot.html" width="100%" height="600"></iframe>
+</div>
+</div>
+<div id="outline-container-orgbe2284b" class="outline-3">
+<h3 id="orgbe2284b"><span class="section-number-3">3.16.</span> <span class="done DONE">DONE</span> mermaid diagrams</h3>
+<div class="outline-text-3" id="text-3-16">
+
+<div id="org23a2689" class="figure">
+<p><img src="images/test-diagram.svg" alt="test-diagram.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orge371afe" class="outline-3">
+<h3 id="orge371afe"><span class="section-number-3">3.17.</span> <span class="todo TODO">TODO</span> verbs</h3>
+<div class="outline-text-3" id="text-3-17">
+</div>
+</div>
+<div id="outline-container-org21e75a0" class="outline-3">
+<h3 id="org21e75a0"><span class="section-number-3">3.18.</span> <span class="todo TODO">TODO</span> footnotes NOTE issue</h3>
+<div class="outline-text-3" id="text-3-18">
+<p>
+This is a footnote<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup>.  And this is some other text
+</p>
+</div>
+<div id="outline-container-org5648c78" class="outline-4">
+<h4 id="org5648c78"><span class="section-number-4">3.18.1.</span> Another footnote</h4>
+<div class="outline-text-4" id="text-3-18-1">
+<p>
+More<sup><a id="fnr.5" class="footref" href="#fn.5" role="doc-backlink">5</a></sup> footnotes<sup><a id="fnr.6" class="footref" href="#fn.6" role="doc-backlink">6</a></sup>.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org986274e" class="outline-3">
+<h3 id="org986274e"><span class="section-number-3">3.19.</span> <span class="todo TODO">TODO</span> transclude? compose with other file?</h3>
+<div class="outline-text-3" id="text-3-19">
+</div>
+<div id="outline-container-org2abbbc0" class="outline-4">
+<h4 id="org2abbbc0"><span class="section-number-4">3.19.1.</span> include from another file</h4>
+</div>
+</div>
+<div id="outline-container-orga9b1815" class="outline-3">
+<h3 id="orga9b1815"><span class="section-number-3">3.20.</span> <span class="todo TODO">TODO</span> arrange two views next to eachother (eg figure and some figure text) using css grid (might be split between here and css). is ther a way to include the css here? can't we tangle to a file</h3>
+</div>
+
+<div id="outline-container-org40c8bb6" class="outline-3">
+<h3 id="org40c8bb6"><span class="section-number-3">3.21.</span> How this site is built</h3>
+<div class="outline-text-3" id="text-3-21">
+</div>
+<div id="outline-container-org509c081" class="outline-4">
+<h4 id="org509c081"><span class="section-number-4">3.21.1.</span> minimap</h4>
+<div class="outline-text-4" id="text-3-21-1">
+</div>
+<div id="outline-container-orgefe60e7" class="outline-5">
+<h5 id="orgefe60e7"><span class="section-number-5">3.21.1.1.</span> CSS</h5>
+<div class="outline-text-5" id="text-3-21-1-1">
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Minimap styles</span><span style="color: #4b4a0000fafa;"> */</span>
+<span style="color: #5165e4;">#minimap-container</span> <span style="color: #c035aa;">{</span>
+  <span style="color: #ad45ba; font-weight: bold;">position</span>: fixed;
+  <span style="color: #ad45ba; font-weight: bold;">bottom</span>: 0vh;
+  <span style="color: #ad45ba; font-weight: bold;">right</span>: 0vw;
+  <span style="color: #ad45ba; font-weight: bold;">width</span>: 6vw;
+  <span style="color: #ad45ba; font-weight: bold;">height</span>: auto;
+  <span style="color: #ad45ba; font-weight: bold;">max-height</span>: 100vh;
+  <span style="color: #ad45ba; font-weight: bold;">z-index</span>: 10000;
+  <span style="color: #ad45ba; font-weight: bold;">pointer-events</span>: none;
+  <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">need auto otherwise we can't scroll the minimap independently</span><span style="color: #4b4a0000fafa;"> */</span>
+  <span style="color: #ad45ba; font-weight: bold;">overflow</span>: auto;
+  <span style="color: #ad45ba; font-weight: bold;">filter</span>: blur<span style="color: #5165e4;">(</span>0.1px<span style="color: #5165e4;">)</span> grayscale<span style="color: #5165e4;">(</span>90%<span style="color: #5165e4;">)</span>;
+  <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">margin: 1rem;</span><span style="color: #4b4a0000fafa;"> */</span>
+<span style="color: #c035aa;">}</span>
+
+<span style="color: #4b4a0000fafa;">/* </span><span style="color: #d0bf8f; font-weight: bold;">NOTE</span><span style="color: #4b4a0000fafa;"> overflow hidden works, but it causes the main page to scroll for some reason</span><span style="color: #4b4a0000fafa;"> */</span>
+<span style="color: #5165e4;">#minimap</span> <span style="color: #c035aa;">{</span>
+  <span style="color: #ad45ba; font-weight: bold;">position</span>: relative;
+  <span style="color: #ad45ba; font-weight: bold;">overflow</span>: auto;
+  <span style="color: #ad45ba; font-weight: bold;">pointer-events</span>: auto;
+  <span style="color: #ad45ba; font-weight: bold;">box-sizing</span>: border-box;
+<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#minimap-content</span> <span style="color: #c035aa;">{</span>
+  <span style="color: #ad45ba; font-weight: bold;">transform-origin</span>: top left;
+  <span style="color: #ad45ba; font-weight: bold;">pointer-events</span>: none;
+<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#minimap-viewport</span> <span style="color: #c035aa;">{</span>
+  <span style="color: #ad45ba; font-weight: bold;">position</span>: absolute;
+  <span style="color: #ad45ba; font-weight: bold;">box-sizing</span>: border-box;
+  <span style="color: #ad45ba; font-weight: bold;">z-index</span>: 10;
+  <span style="color: #ad45ba; font-weight: bold;">background</span>: <span style="color: #ffffff; background-color: #000000;">rgba(0,0,0, 0.1)</span>;
+  <span style="color: #ad45ba; font-weight: bold;">pointer-events</span>: none;
+<span style="color: #c035aa;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org5c7055d" class="outline-5">
+<h5 id="org5c7055d"><span class="section-number-5">3.21.1.2.</span> Javascript</h5>
+<div class="outline-text-5" id="text-3-21-1-2">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">minimap
+</span><span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #5165e4;">minimap_update</span><span style="color: #c035aa;">(</span><span style="color: #3f6faf;">called</span><span style="color: #c035aa;">)</span> <span style="color: #c035aa;">{</span>
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Parameters
+</span>    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">minimapWidth</span> = document.body.clientWidth * 0.1;
+    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">scale</span> = minimapWidth / document.querySelector<span style="color: #5165e4;">(</span><span style="color: #007f6f;">"#content"</span><span style="color: #5165e4;">)</span>.scrollWidth;
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Setup the minimap
+</span>    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">minimap</span> = document.getElementById<span style="color: #5165e4;">(</span><span style="color: #007f6f;">"minimap"</span><span style="color: #5165e4;">)</span>;
+    <span style="color: #ad45ba; font-weight: bold;">let</span> <span style="color: #3f6faf;">minimapContent</span> = document.createElement<span style="color: #5165e4;">(</span><span style="color: #007f6f;">"div"</span><span style="color: #5165e4;">)</span>;
+    minimapContent.id = <span style="color: #007f6f;">"minimap-content"</span>;
+    minimap.appendChild<span style="color: #5165e4;">(</span>minimapContent<span style="color: #5165e4;">)</span>;
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Clone body content (shallow, not perfect for all apps)
+</span>    <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #5165e4;">cloneBodyContent</span><span style="color: #5165e4;">()</span> <span style="color: #5165e4;">{</span>
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">clone</span> = document.querySelector<span style="color: #007f6f;">(</span><span style="color: #007f6f;">`#content`</span><span style="color: #007f6f;">)</span>.cloneNode<span style="color: #007f6f;">(</span><span style="color: #c035aa;">true</span><span style="color: #007f6f;">)</span>;
+        <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">change id of the clone node to content-clone
+</span>        clone.id = <span style="color: #007f6f;">"content-clone"</span>;
+        <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Remove the table of contents from the clone
+</span>        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">toc</span> = clone.querySelector<span style="color: #007f6f;">(</span><span style="color: #007f6f;">"#table-of-contents"</span><span style="color: #007f6f;">)</span>;
+        <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #007f6f;">(</span>toc<span style="color: #007f6f;">)</span> toc.remove<span style="color: #007f6f;">()</span>;
+        <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Remove the footnotes from the clone
+</span>        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">fn</span> = clone.querySelector<span style="color: #007f6f;">(</span><span style="color: #007f6f;">"#footnotes"</span><span style="color: #007f6f;">)</span>;
+        <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #007f6f;">(</span>fn<span style="color: #007f6f;">)</span> fn.remove<span style="color: #007f6f;">()</span>;
+        <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Remove the copilot summary from the clone
+</span>        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">tldr</span> = clone.querySelector<span style="color: #007f6f;">(</span><span style="color: #007f6f;">"#text-tldr"</span><span style="color: #007f6f;">)</span>;
+        <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #007f6f;">(</span>tldr<span style="color: #007f6f;">)</span> tldr.remove<span style="color: #007f6f;">()</span>;
+        <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">set the margins of the clone to 0
+</span>        clone.style.margin = <span style="color: #007f6f;">"0"</span>;
+        <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Remove the minimap itself from the clone
+</span>        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">mmc</span> = clone.querySelector<span style="color: #007f6f;">(</span><span style="color: #007f6f;">"#minimap-container"</span><span style="color: #007f6f;">)</span>;
+        <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #007f6f;">(</span>mmc<span style="color: #007f6f;">)</span> mmc.remove<span style="color: #007f6f;">()</span>;
+        minimapContent.innerHTML = <span style="color: #007f6f;">""</span>;
+        minimapContent.appendChild<span style="color: #007f6f;">(</span>clone<span style="color: #007f6f;">)</span>;
+        minimapContent.style.transform = <span style="color: #007f6f;">`scale(${scale})`</span>;
+        minimapContent.style.width = document.body.scrollWidth + <span style="color: #007f6f;">"px"</span>;
+        minimapContent.style.height = document.body.scrollHeight + <span style="color: #007f6f;">"px"</span>;
+    <span style="color: #5165e4;">}</span>
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Viewport rectangle
+</span>    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">viewport</span> = document.getElementById<span style="color: #5165e4;">(</span><span style="color: #007f6f;">"minimap-viewport"</span><span style="color: #5165e4;">)</span>;
+
+    <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #5165e4;">updateViewport</span><span style="color: #5165e4;">()</span> <span style="color: #5165e4;">{</span>
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">bodyScale</span> =
+            <span style="color: #007f6f;">(</span>document.body.clientWidth * 0.1<span style="color: #007f6f;">)</span> / document.body.scrollWidth;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">scrollTop</span> = window.scrollY;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">scrollLeft</span> = window.scrollX;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">viewportWidth</span> = window.innerWidth;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">viewportHeight</span> = window.innerHeight;
+
+        viewport.style.top = scrollTop * bodyScale + <span style="color: #007f6f;">"px"</span>;
+        viewport.style.left = scrollLeft * bodyScale + <span style="color: #007f6f;">"px"</span>;
+        viewport.style.width = viewportWidth * bodyScale + <span style="color: #007f6f;">"px"</span>;
+        viewport.style.height = viewportHeight * bodyScale + <span style="color: #007f6f;">"px"</span>;
+    <span style="color: #5165e4;">}</span>
+    window.addEventListener<span style="color: #5165e4;">(</span><span style="color: #007f6f;">"scroll"</span>, updateViewport<span style="color: #5165e4;">)</span>;
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Style fired up on window resize (and periodically for dynamic content)
+</span>    <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #5165e4;">updateContentScale</span><span style="color: #5165e4;">()</span> <span style="color: #5165e4;">{</span>
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">realScale</span> =
+            <span style="color: #007f6f;">(</span>document.body.clientWidth * 0.1<span style="color: #007f6f;">)</span> / document.body.scrollWidth;
+        minimapContent.style.transform = <span style="color: #007f6f;">`scale(${realScale})`</span>;
+        minimapContent.style.width = document.body.scrollWidth + <span style="color: #007f6f;">"px"</span>;
+        minimapContent.style.height = document.body.scrollHeight + <span style="color: #007f6f;">"px"</span>;
+        updateViewport<span style="color: #007f6f;">()</span>;
+    <span style="color: #5165e4;">}</span>
+
+    addEventListener<span style="color: #5165e4;">(</span><span style="color: #007f6f;">"resize"</span>, updateContentScale<span style="color: #5165e4;">)</span>;
+
+    cloneBodyContent<span style="color: #5165e4;">()</span>;
+    updateContentScale<span style="color: #5165e4;">()</span>;
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Clicking on minimap scrolls page
+</span>    minimap.addEventListener<span style="color: #5165e4;">(</span><span style="color: #007f6f;">"click"</span>, <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #007f6f;">(</span><span style="color: #3f6faf;">e</span><span style="color: #007f6f;">)</span> <span style="color: #007f6f;">{</span>
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">minimapWidth</span> = document.body.clientWidth * 0.1; <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">20% of body width
+</span>        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">scale</span> = minimapWidth / document.body.clientWidth;
+
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">minimap</span> = document.getElementById<span style="color: #ad45ba;">(</span><span style="color: #007f6f;">"minimap"</span><span style="color: #ad45ba;">)</span>;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">rect</span> = minimap.getBoundingClientRect<span style="color: #ad45ba;">()</span>;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">x</span> = e.clientX - rect.left;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">y</span> = e.clientY - rect.top;
+
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">scrollX</span> = x / scale;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">scrollY</span> = y / scale;
+
+        window.scrollTo<span style="color: #ad45ba;">(</span><span style="color: #1f6fbf;">{</span>
+            top: scrollY - window.innerHeight / 2,
+            left: scrollX - window.innerWidth / 2,
+            behavior: <span style="color: #007f6f;">"smooth"</span>,
+            block: <span style="color: #007f6f;">"nearest"</span>,
+        <span style="color: #1f6fbf;">}</span><span style="color: #ad45ba;">)</span>;
+    <span style="color: #007f6f;">}</span><span style="color: #5165e4;">)</span>;
+
+    <span style="color: #4b4a0000fafa;">//// </span><span style="color: #4b4a0000fafa;">Make unobtrusive
+</span>    <span style="color: #4b4a0000fafa;">//</span><span style="color: #4b4a0000fafa;">minimapContainer = document.getElementById("minimap-container");
+</span><span style="color: #c035aa;">}</span>
+
+document.addEventListener<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"DOMContentLoaded"</span>, <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #5165e4;">()</span> <span style="color: #5165e4;">{</span>
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Example: access and manipulate an HTML element
+</span>    minimap_update<span style="color: #007f6f;">(</span><span style="color: #c035aa;">false</span><span style="color: #007f6f;">)</span>;
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+
+<span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">includes window resizing as well as text scale increase and
+</span><span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">decrease
+</span>window.addEventListener<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"resize"</span>, <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #5165e4;">()</span> <span style="color: #5165e4;">{</span>
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Example: access and manipulate an HTML element
+</span>    console.log<span style="color: #007f6f;">(</span><span style="color: #007f6f;">"resize event detected"</span><span style="color: #007f6f;">)</span>;
+    minimap_update<span style="color: #007f6f;">(</span><span style="color: #c035aa;">true</span><span style="color: #007f6f;">)</span>;
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+
+<span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">autoscroll minimap </span><span style="color: #cc9393; font-weight: bold;">TODO</span><span style="color: #4b4a0000fafa;"> fix this as I think the get attribute by id
+</span><span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">is ambigious and just happens to return the correct one
+</span>window.addEventListener<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"DOMContentLoaded"</span>, <span style="color: #5165e4;">()</span> =&gt; <span style="color: #5165e4;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">observer</span> = <span style="color: #ad45ba; font-weight: bold;">new</span> <span style="color: #0f7a9d;">IntersectionObserver</span><span style="color: #007f6f;">(</span><span style="color: #ad45ba;">(</span>entries<span style="color: #ad45ba;">)</span> =&gt; <span style="color: #ad45ba;">{</span>
+        entries.forEach<span style="color: #1f6fbf;">(</span><span style="color: #4f7d0f;">(</span>entry<span style="color: #4f7d0f;">)</span> =&gt; <span style="color: #4f7d0f;">{</span>
+            <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">if entry is a child of #minimap ignore it
+</span>            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>entry.target.closest<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">"#outline-container-tldr"</span><span style="color: #3f6faf;">)</span><span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                <span style="color: #ad45ba; font-weight: bold;">return</span>;
+            <span style="color: #705ae3;">}</span>
+            <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">if entry is a child of #minimap ignore it
+</span>            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>entry.target.closest<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">"#minimap-container"</span><span style="color: #3f6faf;">)</span><span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                <span style="color: #ad45ba; font-weight: bold;">return</span>;
+            <span style="color: #705ae3;">}</span>
+            <span style="color: #ad45ba; font-weight: bold;">let</span> <span style="color: #3f6faf;">id</span> = <span style="color: #007f6f;">""</span>;
+            <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Check if target is an outline-text div
+</span>            id = entry.target.getAttribute<span style="color: #705ae3;">(</span><span style="color: #007f6f;">"id"</span><span style="color: #705ae3;">)</span>;
+
+            id = CSS.escape<span style="color: #705ae3;">(</span>id<span style="color: #705ae3;">)</span>;
+            <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">elementLink</span> = document.querySelector<span style="color: #705ae3;">(</span><span style="color: #007f6f;">`#${id}`</span><span style="color: #705ae3;">)</span>;
+            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>elementLink<span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #3f6faf;">(</span>entry.intersectionRatio &gt; 0<span style="color: #3f6faf;">)</span> <span style="color: #3f6faf;">{</span>
+                    elementLink.scrollIntoView<span style="color: #b65050;">(</span><span style="color: #c035aa;">{</span>
+                        behavior: <span style="color: #007f6f;">"smooth"</span>,
+                        block: <span style="color: #007f6f;">"center"</span>,
+                    <span style="color: #c035aa;">}</span><span style="color: #b65050;">)</span>;
+                <span style="color: #3f6faf;">}</span>
+            <span style="color: #705ae3;">}</span>
+        <span style="color: #4f7d0f;">}</span><span style="color: #1f6fbf;">)</span>;
+    <span style="color: #ad45ba;">}</span><span style="color: #007f6f;">)</span>;
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Collect all headings and outline divs
+</span>    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">headings</span> = <span style="color: #007f6f;">[</span>...document.querySelectorAll<span style="color: #ad45ba;">(</span><span style="color: #007f6f;">"#content *"</span><span style="color: #ad45ba;">)</span><span style="color: #007f6f;">]</span>;
+
+    headings.forEach<span style="color: #007f6f;">(</span><span style="color: #ad45ba;">(</span>heading<span style="color: #ad45ba;">)</span> =&gt; observer.observe<span style="color: #ad45ba;">(</span>heading<span style="color: #ad45ba;">)</span><span style="color: #007f6f;">)</span>;
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc47bf5a" class="outline-4">
+<h4 id="orgc47bf5a"><span class="section-number-4">3.21.2.</span> progress-bar</h4>
+<div class="outline-text-4" id="text-3-21-2">
+</div>
+<div id="outline-container-orgdf91e56" class="outline-5">
+<h5 id="orgdf91e56"><span class="section-number-5">3.21.2.1.</span> CSS</h5>
+<div class="outline-text-5" id="text-3-21-2-1">
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">progress bar</span><span style="color: #4b4a0000fafa;"> */</span>
+<span style="color: #5165e4;">#progressBar</span> <span style="color: #c035aa;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">position</span>: fixed;
+    <span style="color: #ad45ba; font-weight: bold;">top</span>: 0;
+    <span style="color: #ad45ba; font-weight: bold;">left</span>: 0;
+    <span style="color: #ad45ba; font-weight: bold;">height</span>: 5px; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Adjust thickness as needed</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">background-color</span>: <span style="color: #ffffff; background-color: #808080;">gray</span>; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Progress bar color</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">width</span>: 0%; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Initial width is 0%</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">z-index</span>: 9999; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Ensure it stays on top</span><span style="color: #4b4a0000fafa;"> */</span>
+<span style="color: #c035aa;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org0ad7619" class="outline-5">
+<h5 id="org0ad7619"><span class="section-number-5">3.21.2.2.</span> Javascript</h5>
+<div class="outline-text-5" id="text-3-21-2-2">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">progress bar
+</span><span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">script.js
+</span>document.addEventListener<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"DOMContentLoaded"</span>, <span style="color: #5165e4;">()</span> =&gt; <span style="color: #5165e4;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">progressBar</span> = document.getElementById<span style="color: #007f6f;">(</span><span style="color: #007f6f;">"progressBar"</span><span style="color: #007f6f;">)</span>;
+
+    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">updateProgressBar</span> = <span style="color: #007f6f;">()</span> =&gt; <span style="color: #007f6f;">{</span>
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">scrollTop</span> =
+            document.documentElement.scrollTop || document.body.scrollTop;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">scrollHeight</span> =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+        <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">scrollPercentage</span> = <span style="color: #ad45ba;">(</span>scrollTop / scrollHeight<span style="color: #ad45ba;">)</span> * 100;
+
+        progressBar.style.width = <span style="color: #007f6f;">`${scrollPercentage}%`</span>;
+    <span style="color: #007f6f;">}</span>;
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Initial call to set progress bar on page load
+</span>    updateProgressBar<span style="color: #007f6f;">()</span>;
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Add scroll event listener to update the progress bar
+</span>    window.addEventListener<span style="color: #007f6f;">(</span><span style="color: #007f6f;">"scroll"</span>, updateProgressBar<span style="color: #007f6f;">)</span>;
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org5ec1665" class="outline-4">
+<h4 id="org5ec1665"><span class="section-number-4">3.21.3.</span> footnotes</h4>
+<div class="outline-text-4" id="text-3-21-3">
+</div>
+<div id="outline-container-orgde57c2b" class="outline-5">
+<h5 id="orgde57c2b"><span class="section-number-5">3.21.3.1.</span> CSS</h5>
+<div class="outline-text-5" id="text-3-21-3-1">
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #4b4a0000fafa;">/** </span><span style="color: #4b4a0000fafa;">sticky footnotes</span><span style="color: #4b4a0000fafa;"> **/</span>
+<span style="color: #5165e4;">#footnotes</span> <span style="color: #c035aa;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">position</span>: fixed; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Fixes the div to the viewport</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">bottom</span>: 1vh ;   <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Distance from the bottom</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">left</span>: 0vw;    <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Distance from the right</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">width</span>: 20vw;   <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Set a width for the TOC</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">overflow-y</span>: auto; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Enables vertical scrolling</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">overflow-x</span>: hidden; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Hide horizontal scrollbar if any</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">max-height</span>: 50vh; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Ensures it doesn't exceed viewport height</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">margin: 1rem;</span><span style="color: #4b4a0000fafa;"> */</span>
+<span style="color: #c035aa;">}</span>
+<span style="color: #5165e4;">#footnotes h2</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">margin</span>: 0;<span style="color: #c035aa;">}</span>
+
+#footnotes::-webkit-scrollbar <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">display</span>: none;<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#text-footnotes a, #text-footnotes p</span> <span style="color: #c035aa;">{</span>
+  <span style="color: #ad45ba; font-weight: bold;">text-decoration</span>: none;
+  <span style="color: #ad45ba; font-weight: bold;">padding</span>: .125rem 0;
+  <span style="color: #ad45ba; font-weight: bold;">color</span>: <span style="color: #000000; background-color: #ccc;">#ccc</span>;
+  <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">smooth</span><span style="color: #4b4a0000fafa;"> */</span>
+  <span style="color: #ad45ba; font-weight: bold;">transition</span>: all 50ms ease-in-out;
+<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#text-footnotes a:hover,
+#text-footnotes a:focus</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">color</span>: <span style="color: #ffffff; background-color: #666;">#666</span>;<span style="color: #c035aa;">}</span>
+<span style="color: #5165e4;">#text-footnotes p:hover,
+#text-footnotes p:focus</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">color</span>: <span style="color: #ffffff; background-color: #666;">#666</span>;<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#text-footnotes ul, #text-footnotes ol</span> <span style="color: #c035aa;">{</span>
+  <span style="color: #ad45ba; font-weight: bold;">list-style</span>: none;
+  <span style="color: #ad45ba; font-weight: bold;">margin</span>: 0;
+  <span style="color: #ad45ba; font-weight: bold;">padding</span>: 0;
+<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#text-footnotes p.footpara.active</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">color</span>: <span style="color: #ffffff; background-color: #333;">#333</span>; <span style="color: #ad45ba; font-weight: bold;">font-weight</span>: bold;<span style="color: #c035aa;">}</span>
+<span style="color: #5165e4;">#text-footnotes sup a.active</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">color</span>: <span style="color: #ffffff; background-color: #0000ff;">blue</span>;<span style="color: #c035aa;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf9ab31a" class="outline-5">
+<h5 id="orgf9ab31a"><span class="section-number-5">3.21.3.2.</span> Javascript</h5>
+<div class="outline-text-5" id="text-3-21-3-2">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Followable, scrollable footnotes
+</span>window.addEventListener<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"DOMContentLoaded"</span>, <span style="color: #5165e4;">()</span> =&gt; <span style="color: #5165e4;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">observer</span> = <span style="color: #ad45ba; font-weight: bold;">new</span> <span style="color: #0f7a9d;">IntersectionObserver</span><span style="color: #007f6f;">(</span><span style="color: #ad45ba;">(</span>entries<span style="color: #ad45ba;">)</span> =&gt; <span style="color: #ad45ba;">{</span>
+        entries.forEach<span style="color: #1f6fbf;">(</span><span style="color: #4f7d0f;">(</span>entry<span style="color: #4f7d0f;">)</span> =&gt; <span style="color: #4f7d0f;">{</span>
+            <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">ignore if entry is child of #content-clone
+</span>            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>entry.target.closest<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">"#content-clone"</span><span style="color: #3f6faf;">)</span><span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                <span style="color: #ad45ba; font-weight: bold;">return</span>;
+            <span style="color: #705ae3;">}</span>
+            <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Check if target is an outline-text div
+</span>            id = entry.target.getAttribute<span style="color: #705ae3;">(</span><span style="color: #007f6f;">"id"</span><span style="color: #705ae3;">)</span>;
+
+            <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">fnLink</span> = document
+                .querySelector<span style="color: #705ae3;">(</span><span style="color: #007f6f;">`#footnotes sup a[href="#${id}"]`</span><span style="color: #705ae3;">)</span>
+                .closest<span style="color: #705ae3;">(</span><span style="color: #007f6f;">"sup"</span><span style="color: #705ae3;">)</span>
+                .nextElementSibling.querySelector<span style="color: #705ae3;">(</span><span style="color: #007f6f;">"p"</span><span style="color: #705ae3;">)</span>;
+            <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">fnLink1</span> = document.querySelector<span style="color: #705ae3;">(</span>
+                <span style="color: #007f6f;">`#footnotes sup a[href="#${id}"]`</span>,
+            <span style="color: #705ae3;">)</span>;
+            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>fnLink<span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">action</span> = entry.intersectionRatio &gt; 0 ? <span style="color: #007f6f;">"add"</span> : <span style="color: #007f6f;">"remove"</span>;
+                fnLink.classList<span style="color: #3f6faf;">[</span>action<span style="color: #3f6faf;">](</span><span style="color: #007f6f;">"active"</span><span style="color: #3f6faf;">)</span>;
+                fnLink1.classList<span style="color: #3f6faf;">[</span>action<span style="color: #3f6faf;">](</span><span style="color: #007f6f;">"active"</span><span style="color: #3f6faf;">)</span>;
+
+                <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Scroll active link into view
+</span>                <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #3f6faf;">(</span>entry.intersectionRatio &gt; 0<span style="color: #3f6faf;">)</span> <span style="color: #3f6faf;">{</span>
+                    fnLink.scrollIntoView<span style="color: #b65050;">(</span><span style="color: #c035aa;">{</span>
+                        behavior: <span style="color: #007f6f;">"smooth"</span>,
+                        block: <span style="color: #007f6f;">"nearest"</span>,
+                    <span style="color: #c035aa;">}</span><span style="color: #b65050;">)</span>;
+                <span style="color: #3f6faf;">}</span>
+            <span style="color: #705ae3;">}</span>
+        <span style="color: #4f7d0f;">}</span><span style="color: #1f6fbf;">)</span>;
+    <span style="color: #ad45ba;">}</span><span style="color: #007f6f;">)</span>;
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Collect all headings and outline divs
+</span>    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">headings</span> = <span style="color: #007f6f;">[</span>...document.querySelectorAll<span style="color: #ad45ba;">(</span><span style="color: #007f6f;">"sup a.footref"</span><span style="color: #ad45ba;">)</span><span style="color: #007f6f;">]</span>;
+
+    headings.forEach<span style="color: #007f6f;">(</span><span style="color: #ad45ba;">(</span>heading<span style="color: #ad45ba;">)</span> =&gt; observer.observe<span style="color: #ad45ba;">(</span>heading<span style="color: #ad45ba;">)</span><span style="color: #007f6f;">)</span>;
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+
+<span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Clickable Footnotes
+</span>document.addEventListener<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"DOMContentLoaded"</span>, <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #5165e4;">()</span> <span style="color: #5165e4;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">tocLinks</span> = document.querySelectorAll<span style="color: #007f6f;">(</span><span style="color: #007f6f;">"#footnotes a[href^='#']"</span><span style="color: #007f6f;">)</span>;
+
+    tocLinks.forEach<span style="color: #007f6f;">(</span><span style="color: #ad45ba;">(</span>link<span style="color: #ad45ba;">)</span> =&gt; <span style="color: #ad45ba;">{</span>
+        link.addEventListener<span style="color: #1f6fbf;">(</span><span style="color: #007f6f;">"click"</span>, <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #4f7d0f;">(</span><span style="color: #3f6faf;">event</span><span style="color: #4f7d0f;">)</span> <span style="color: #4f7d0f;">{</span>
+            event.preventDefault<span style="color: #705ae3;">()</span>;
+            targetId = <span style="color: #c035aa;">this</span>.getAttribute<span style="color: #705ae3;">(</span><span style="color: #007f6f;">"href"</span><span style="color: #705ae3;">)</span>.substring<span style="color: #705ae3;">(</span>1<span style="color: #705ae3;">)</span>;
+            targetId = CSS.escape<span style="color: #705ae3;">(</span>targetId<span style="color: #705ae3;">)</span>;
+            <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">elements</span> = document.querySelectorAll<span style="color: #705ae3;">(</span><span style="color: #007f6f;">`#${targetId}`</span><span style="color: #705ae3;">)</span>;
+            <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">targetElement</span> = Array.from<span style="color: #705ae3;">(</span>elements<span style="color: #705ae3;">)</span>.filter<span style="color: #705ae3;">(</span>
+                <span style="color: #3f6faf;">(</span>el<span style="color: #3f6faf;">)</span> =&gt; !el.closest<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">"#content-clone"</span><span style="color: #3f6faf;">)</span>,
+            <span style="color: #705ae3;">)[</span>0<span style="color: #705ae3;">]</span>;
+            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>targetElement<span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                targetElement.scrollIntoView<span style="color: #3f6faf;">(</span><span style="color: #b65050;">{</span>
+                    behavior: <span style="color: #007f6f;">"smooth"</span>,
+                    block: <span style="color: #007f6f;">"start"</span>,
+                <span style="color: #b65050;">}</span><span style="color: #3f6faf;">)</span>;
+            <span style="color: #705ae3;">}</span>
+        <span style="color: #4f7d0f;">}</span><span style="color: #1f6fbf;">)</span>;
+    <span style="color: #ad45ba;">}</span><span style="color: #007f6f;">)</span>;
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaa26e87" class="outline-4">
+<h4 id="orgaa26e87"><span class="section-number-4">3.21.4.</span> foldable-headings</h4>
+<div class="outline-text-4" id="text-3-21-4">
+</div>
+<div id="outline-container-orge8866b5" class="outline-5">
+<h5 id="orge8866b5"><span class="section-number-5">3.21.4.1.</span> CSS</h5>
+<div class="outline-text-5" id="text-3-21-4-1">
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #5165e4;">.outline-6</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">cursor</span>: pointer; <span style="color: #c035aa;">}</span>
+<span style="color: #5165e4;">.outline-6.folded</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">max-height</span>: 2em; <span style="color: #ad45ba; font-weight: bold;">background</span>: <span style="color: #000000; background-color: #f9f9f9;">#f9f9f9</span>; <span style="color: #ad45ba; font-weight: bold;">overflow</span>: clip;<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">.outline-5</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">cursor</span>: pointer; <span style="color: #c035aa;">}</span>
+<span style="color: #5165e4;">.outline-5.folded</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">max-height</span>: 2em; <span style="color: #ad45ba; font-weight: bold;">background</span>: <span style="color: #000000; background-color: #f9f9f9;">#f9f9f9</span>; <span style="color: #ad45ba; font-weight: bold;">overflow</span>: clip;<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">.outline-4</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">cursor</span>: pointer; <span style="color: #c035aa;">}</span>
+<span style="color: #5165e4;">.outline-4.folded</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">max-height</span>: 2em; <span style="color: #ad45ba; font-weight: bold;">background</span>: <span style="color: #000000; background-color: #f9f9f9;">#f9f9f9</span>; <span style="color: #ad45ba; font-weight: bold;">overflow</span>: clip;<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">.outline-3</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">cursor</span>: pointer; <span style="color: #c035aa;">}</span>
+<span style="color: #5165e4;">.outline-3.folded</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">max-height</span>: 2em; <span style="color: #ad45ba; font-weight: bold;">background</span>: <span style="color: #000000; background-color: #f9f9f9;">#f9f9f9</span>; <span style="color: #ad45ba; font-weight: bold;">overflow</span>: clip;<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">.outline-2</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">cursor</span>: pointer; <span style="color: #c035aa;">}</span>
+<span style="color: #5165e4;">.outline-2.folded</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">max-height</span>: 2em; <span style="color: #ad45ba; font-weight: bold;">background</span>: <span style="color: #000000; background-color: #f9f9f9;">#f9f9f9</span>; <span style="color: #ad45ba; font-weight: bold;">overflow</span>: clip;<span style="color: #c035aa;">}</span>
+
+#outline-2::-webkit-scrollbar <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">display</span>: none;<span style="color: #c035aa;">}</span>
+#outline-3::-webkit-scrollbar <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">display</span>: none;<span style="color: #c035aa;">}</span>
+#outline-4::-webkit-scrollbar <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">display</span>: none;<span style="color: #c035aa;">}</span>
+#outline-5::-webkit-scrollbar <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">display</span>: none;<span style="color: #c035aa;">}</span>
+#outline-6::-webkit-scrollbar <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">display</span>: none;<span style="color: #c035aa;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6fa6f87" class="outline-5">
+<h5 id="org6fa6f87"><span class="section-number-5">3.21.4.2.</span> Javascript</h5>
+<div class="outline-text-5" id="text-3-21-4-2">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Foldable divs
+</span>document.addEventListener<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"DOMContentLoaded"</span>, <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #5165e4;">()</span> <span style="color: #5165e4;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">foldableDivs</span> = document.querySelectorAll<span style="color: #007f6f;">(</span><span style="color: #007f6f;">'[class^="outline-"]'</span><span style="color: #007f6f;">)</span>;
+
+    foldableDivs.forEach<span style="color: #007f6f;">(</span><span style="color: #ad45ba;">(</span>div<span style="color: #ad45ba;">)</span> =&gt; <span style="color: #ad45ba;">{</span>
+        div.addEventListener<span style="color: #1f6fbf;">(</span><span style="color: #007f6f;">"click"</span>, <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #4f7d0f;">()</span> <span style="color: #4f7d0f;">{</span>
+            event.stopPropagation<span style="color: #705ae3;">()</span>; <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Prevents the event from bubbling up to parent divs
+</span>            <span style="color: #c035aa;">this</span>.classList.toggle<span style="color: #705ae3;">(</span><span style="color: #007f6f;">"folded"</span><span style="color: #705ae3;">)</span>;
+        <span style="color: #4f7d0f;">}</span><span style="color: #1f6fbf;">)</span>;
+    <span style="color: #ad45ba;">}</span><span style="color: #007f6f;">)</span>;
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org3ebdca0" class="outline-4">
+<h4 id="org3ebdca0"><span class="section-number-4">3.21.5.</span> toc</h4>
+<div class="outline-text-4" id="text-3-21-5">
+</div>
+<div id="outline-container-org787aa55" class="outline-5">
+<h5 id="org787aa55"><span class="section-number-5">3.21.5.1.</span> CSS</h5>
+<div class="outline-text-5" id="text-3-21-5-1">
+<div class="org-src-container">
+<pre class="src src-css"><span style="color: #4b4a0000fafa;">/** </span><span style="color: #4b4a0000fafa;">sticky ToC</span><span style="color: #4b4a0000fafa;"> **/</span>
+<span style="color: #5165e4;">#table-of-contents</span> <span style="color: #c035aa;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">position</span>: fixed; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Fixes the div to the viewport</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">top</span>: 0vh;      <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Distance from the top</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">bottom</span>: 0vh ;   <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Distance from the bottom</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">left</span>: 0vw;    <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Distance from the right</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">width</span>: 20vw;   <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Set a width for the TOC</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">overflow-y</span>: auto; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Enables vertical scrolling</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">overflow-x</span>: hidden; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Hide horizontal scrollbar if any</span><span style="color: #4b4a0000fafa;"> */</span>
+    <span style="color: #ad45ba; font-weight: bold;">max-height</span>: 49vh; <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">Ensures it doesn't exceed viewport height</span><span style="color: #4b4a0000fafa;"> */</span>
+        <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">margin: 1rem;</span><span style="color: #4b4a0000fafa;"> */</span>
+
+<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#table-of-contents h2</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">margin</span>: 0;<span style="color: #c035aa;">}</span>
+
+#table-of-contents::-webkit-scrollbar <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">display</span>: none;<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#text-table-of-contents a</span> <span style="color: #c035aa;">{</span>
+  <span style="color: #ad45ba; font-weight: bold;">text-decoration</span>: none;
+  <span style="color: #ad45ba; font-weight: bold;">display</span>: block;
+  //padding: .125rem 0;
+  <span style="color: #ad45ba; font-weight: bold;">color</span>: <span style="color: #000000; background-color: #ccc;">#ccc</span>;
+  <span style="color: #4b4a0000fafa;">/* </span><span style="color: #4b4a0000fafa;">smooth</span><span style="color: #4b4a0000fafa;"> */</span>
+  <span style="color: #ad45ba; font-weight: bold;">transition</span>: all 50ms ease-in-out;
+<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#text-table-of-contents a:hover,
+#text-table-of-contents a:focus</span> <span style="color: #c035aa;">{</span><span style="color: #ad45ba; font-weight: bold;">color</span>: <span style="color: #ffffff; background-color: #666;">#666</span>;<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#table-of-contents ul, #table-of-contents ol</span> <span style="color: #c035aa;">{</span>
+  <span style="color: #ad45ba; font-weight: bold;">list-style</span>: none;
+  <span style="color: #ad45ba; font-weight: bold;">margin</span>: 0;
+  <span style="color: #ad45ba; font-weight: bold;">padding</span>: 0;
+<span style="color: #c035aa;">}</span>
+
+<span style="color: #5165e4;">#text-table-of-contents li.active &gt; a</span> <span style="color: #c035aa;">{</span>
+  <span style="color: #ad45ba; font-weight: bold;">color</span>: <span style="color: #ffffff; background-color: #333;">#333</span>;
+  <span style="color: #ad45ba; font-weight: bold;">font-weight</span>: bold;
+<span style="color: #c035aa;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org15f06bb" class="outline-5">
+<h5 id="org15f06bb"><span class="section-number-5">3.21.5.2.</span> Javascript</h5>
+<div class="outline-text-5" id="text-3-21-5-2">
+<div class="org-src-container">
+<pre class="src src-javascript"><span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Followable, scrollable table of contents
+</span>window.addEventListener<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"DOMContentLoaded"</span>, <span style="color: #5165e4;">()</span> =&gt; <span style="color: #5165e4;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">observer</span> = <span style="color: #ad45ba; font-weight: bold;">new</span> <span style="color: #0f7a9d;">IntersectionObserver</span><span style="color: #007f6f;">(</span><span style="color: #ad45ba;">(</span>entries<span style="color: #ad45ba;">)</span> =&gt; <span style="color: #ad45ba;">{</span>
+        entries.forEach<span style="color: #1f6fbf;">(</span><span style="color: #4f7d0f;">(</span>entry<span style="color: #4f7d0f;">)</span> =&gt; <span style="color: #4f7d0f;">{</span>
+            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>entry.target.getAttribute<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">"id"</span><span style="color: #3f6faf;">)</span> === <span style="color: #007f6f;">"text-tldr"</span><span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                <span style="color: #ad45ba; font-weight: bold;">return</span>;
+            <span style="color: #705ae3;">}</span>
+            <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">ignore if entry is child of #content-clone
+</span>            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>entry.target.closest<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">"#content-clone"</span><span style="color: #3f6faf;">)</span><span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                <span style="color: #ad45ba; font-weight: bold;">return</span>;
+            <span style="color: #705ae3;">}</span>
+            <span style="color: #ad45ba; font-weight: bold;">let</span> <span style="color: #3f6faf;">id</span> = <span style="color: #007f6f;">""</span>;
+            <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">empty headings
+</span>            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>entry.target.tagName.match<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">/^H[2-6]$/</span><span style="color: #3f6faf;">)</span><span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                id = entry.target.getAttribute<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">"id"</span><span style="color: #3f6faf;">)</span> || <span style="color: #007f6f;">""</span>;
+
+                <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">tocLink</span> = document.querySelector<span style="color: #3f6faf;">(</span>
+                    <span style="color: #007f6f;">`#text-table-of-contents a[href="#${id}"]`</span>,
+                <span style="color: #3f6faf;">)</span>;
+                <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">nextSibling</span> = entry.target.nextElementSibling;
+                <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #3f6faf;">(</span>tocLink &amp;&amp; !nextSibling<span style="color: #3f6faf;">)</span> <span style="color: #3f6faf;">{</span>
+                    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">action</span> =
+                        entry.intersectionRatio &gt; 0 ? <span style="color: #007f6f;">"add"</span> : <span style="color: #007f6f;">"remove"</span>;
+                    tocLink.parentElement.classList<span style="color: #b65050;">[</span>action<span style="color: #b65050;">](</span><span style="color: #007f6f;">"active"</span><span style="color: #b65050;">)</span>;
+
+                    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Scroll active link into view
+</span>                    <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #b65050;">(</span>entry.intersectionRatio &gt; 0<span style="color: #b65050;">)</span> <span style="color: #b65050;">{</span>
+                        tocLink.scrollIntoView<span style="color: #c035aa;">(</span><span style="color: #5165e4;">{</span>
+                            behavior: <span style="color: #007f6f;">"smooth"</span>,
+                            block: <span style="color: #007f6f;">"nearest"</span>,
+                        <span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+                    <span style="color: #b65050;">}</span>
+                <span style="color: #3f6faf;">}</span>
+            <span style="color: #705ae3;">}</span>
+
+            <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Check if target is an outline-text div
+</span>            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>
+                entry.target.tagName === <span style="color: #007f6f;">"DIV"</span> &amp;&amp;
+                entry.target.className.match<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">/outline-text-[2-6]/</span><span style="color: #3f6faf;">)</span>
+            <span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                id =
+                    entry.target.previousElementSibling?.getAttribute<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">"id"</span><span style="color: #3f6faf;">)</span> ||
+                    <span style="color: #007f6f;">""</span>;
+
+                <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">tocLink</span> = document.querySelector<span style="color: #3f6faf;">(</span>
+                    <span style="color: #007f6f;">`#text-table-of-contents a[href="#${id}"]`</span>,
+                <span style="color: #3f6faf;">)</span>;
+                <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #3f6faf;">(</span>tocLink<span style="color: #3f6faf;">)</span> <span style="color: #3f6faf;">{</span>
+                    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">action</span> =
+                        entry.intersectionRatio &gt; 0 ? <span style="color: #007f6f;">"add"</span> : <span style="color: #007f6f;">"remove"</span>;
+                    tocLink.parentElement.classList<span style="color: #b65050;">[</span>action<span style="color: #b65050;">](</span><span style="color: #007f6f;">"active"</span><span style="color: #b65050;">)</span>;
+
+                    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Scroll active link into view
+</span>                    <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #b65050;">(</span>entry.intersectionRatio &gt; 0<span style="color: #b65050;">)</span> <span style="color: #b65050;">{</span>
+                        tocLink.scrollIntoView<span style="color: #c035aa;">(</span><span style="color: #5165e4;">{</span>
+                            behavior: <span style="color: #007f6f;">"smooth"</span>,
+                            block: <span style="color: #007f6f;">"nearest"</span>,
+                        <span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+                    <span style="color: #b65050;">}</span>
+                <span style="color: #3f6faf;">}</span>
+            <span style="color: #705ae3;">}</span>
+        <span style="color: #4f7d0f;">}</span><span style="color: #1f6fbf;">)</span>;
+    <span style="color: #ad45ba;">}</span><span style="color: #007f6f;">)</span>;
+
+    <span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Collect all headings and outline divs
+</span>    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">headings</span> = <span style="color: #007f6f;">[</span>
+        ...document.querySelectorAll<span style="color: #ad45ba;">(</span><span style="color: #007f6f;">"h2[id], h3[id], h4[id], h5[id], h6[id]"</span><span style="color: #ad45ba;">)</span>,
+        ...document.querySelectorAll<span style="color: #ad45ba;">(</span>
+            <span style="color: #007f6f;">"div.outline-text-2, div.outline-text-3, div.outline-text-4, div.outline-text-5, div.outline-text-6"</span>,
+        <span style="color: #ad45ba;">)</span>,
+    <span style="color: #007f6f;">]</span>;
+
+    headings.forEach<span style="color: #007f6f;">(</span><span style="color: #ad45ba;">(</span>heading<span style="color: #ad45ba;">)</span> =&gt; observer.observe<span style="color: #ad45ba;">(</span>heading<span style="color: #ad45ba;">)</span><span style="color: #007f6f;">)</span>;
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+
+<span style="color: #4b4a0000fafa;">// </span><span style="color: #4b4a0000fafa;">Clickable ToC
+</span>document.addEventListener<span style="color: #c035aa;">(</span><span style="color: #007f6f;">"DOMContentLoaded"</span>, <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #5165e4;">()</span> <span style="color: #5165e4;">{</span>
+    <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">tocLinks</span> = document.querySelectorAll<span style="color: #007f6f;">(</span>
+        <span style="color: #007f6f;">"#text-table-of-contents a[href^='#']"</span>,
+    <span style="color: #007f6f;">)</span>;
+
+    tocLinks.forEach<span style="color: #007f6f;">(</span><span style="color: #ad45ba;">(</span>link<span style="color: #ad45ba;">)</span> =&gt; <span style="color: #ad45ba;">{</span>
+        link.addEventListener<span style="color: #1f6fbf;">(</span><span style="color: #007f6f;">"click"</span>, <span style="color: #ad45ba; font-weight: bold;">function</span> <span style="color: #4f7d0f;">(</span><span style="color: #3f6faf;">event</span><span style="color: #4f7d0f;">)</span> <span style="color: #4f7d0f;">{</span>
+            event.preventDefault<span style="color: #705ae3;">()</span>;
+            <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">targetId</span> = <span style="color: #c035aa;">this</span>.getAttribute<span style="color: #705ae3;">(</span><span style="color: #007f6f;">"href"</span><span style="color: #705ae3;">)</span>.substring<span style="color: #705ae3;">(</span>1<span style="color: #705ae3;">)</span>;
+            <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">elements</span> = document.querySelectorAll<span style="color: #705ae3;">(</span><span style="color: #007f6f;">`#${targetId}`</span><span style="color: #705ae3;">)</span>;
+            <span style="color: #ad45ba; font-weight: bold;">const</span> <span style="color: #3f6faf;">targetElement</span> = Array.from<span style="color: #705ae3;">(</span>elements<span style="color: #705ae3;">)</span>.filter<span style="color: #705ae3;">(</span>
+                <span style="color: #3f6faf;">(</span>el<span style="color: #3f6faf;">)</span> =&gt; !el.closest<span style="color: #3f6faf;">(</span><span style="color: #007f6f;">"#content-clone"</span><span style="color: #3f6faf;">)</span>,
+            <span style="color: #705ae3;">)[</span>0<span style="color: #705ae3;">]</span>;
+            <span style="color: #ad45ba; font-weight: bold;">if</span> <span style="color: #705ae3;">(</span>targetElement<span style="color: #705ae3;">)</span> <span style="color: #705ae3;">{</span>
+                targetElement.scrollIntoView<span style="color: #3f6faf;">(</span><span style="color: #b65050;">{</span>
+                    behavior: <span style="color: #007f6f;">"smooth"</span>,
+                    block: <span style="color: #007f6f;">"start"</span>,
+                <span style="color: #b65050;">}</span><span style="color: #3f6faf;">)</span>;
+            <span style="color: #705ae3;">}</span>
+        <span style="color: #4f7d0f;">}</span><span style="color: #1f6fbf;">)</span>;
+    <span style="color: #ad45ba;">}</span><span style="color: #007f6f;">)</span>;
+<span style="color: #5165e4;">}</span><span style="color: #c035aa;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-tldr" class="outline-2">
+<h2 id="tldr"><span class="section-number-2">4.</span> Generate a TLDR for this document that will be displayed at the top of the static-site version of this document.  Include internal org links to headings in this document where relevant. Org links look like this: <a href="#org839a9be"></a>. Do not use any bullets for the explanation, but you can use line breaks to help with readability.  Be verbose and describe as many sections as possible</h2>
+<div class="outline-text-2" id="text-tldr">
+<p>
+This document serves as a comprehensive demonstration of Org mode authoring for static sites, showing advanced features and customizations. At the top, a <a href="#org52cd402">progress bar and minimap</a> enhance navigation. The document explores embedding <a href="#orgbbd2561">interactive charts with Plotly</a>, and suggests automations for easier iframing. It includes <a href="#org798355e">narrative text</a>, CSS and JS linking details, and example paragraphs, quotes, and layout concepts.
+</p>
+
+<p>
+There's an overview of using both <a href="#my-custom-section">modern layouts via CSS grid</a>, with practical HTML examples. Internal links (such as <a href="post1.html">Post 1</a>) and <a href="#org9537c62">site-wide style</a> are covered, including the use of org-html-themes, local and global CSS, and custom inline styles. 
+</p>
+
+<p>
+Basic Org constructs are featured under <a href="#org16a8a9b">3.8</a>, including <a href="#org27d13ad">tagged sections</a>, <a href="#org60bc3cd">lists and formatting</a>, and <a href="#org84ccbe1">tables</a>. Source code examples are provided for <a href="#orgeaad3ca">bash scripts</a> and <a href="#org7374f7b">python</a>, including venv and session hints. Embedding media is demonstrated with <a href="#orgc9b0d87">images</a>, remote files, SVG diagrams, and eg <a href="#orgbe2284b">Mermaid charts</a>. 
+</p>
+
+<p>
+There's also coverage of internal <a href="#orge371afe">verbatim and code syntax</a>, proper handling of <a href="#org839a9be">footnotes with references</a>, and ideas for future transclusion and file composition.
+</p>
+
+<p>
+Document concludes with a detailed <a href="#org839a9be">footnotes section</a> and plans for CSS-driven layout enhancements, including arranging multiple views or panels side by side (figures + captions) using CSS grid.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+new footnote 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+lorem impsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+This is how to write code with python 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+This is the footnote.  lorem impsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <b>Excepteur sint occaecat cupidatat</b> non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+even more 
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6" role="doc-backlink">6</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+More footnotes 
+</p></div></div>
+
+
+</div>
+</div></div>
+</body>
+</html>
