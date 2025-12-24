@@ -38,14 +38,14 @@
 
   ;;(add-hook 'after-save-hook 'magit-after-save-refresh-status)
 
-  (require 'magit-margin)
-  (require 'magit-section)
+  ;;(require 'magit-margin)
+  ;;(require 'magit-section)
 
-  (setq magit-log-margin-show-shortstat t)
-  (setq magit-status-margin '(t age-abbreviated magit-log-margin-width nil 6))
-  (setq magit-log-margin '(t age-abbreviated magit-log-margin-width nil 6))
-  (add-hook 'magit-status-mode-hook 'magit-toggle-log-margin-style)
-  (add-hook 'magit-log-mode-hook 'magit-toggle-log-margin-style)
+  ;(setq magit-log-margin-show-shortstat t)
+  ;(setq magit-status-margin '(t age-abbreviated magit-log-margin-width nil 6))
+  ;(setq magit-log-margin '(t age-abbreviated magit-log-margin-width nil 6))
+  ;(add-hook 'magit-status-mode-hook 'magit-toggle-log-margin-style)
+  ;(add-hook 'magit-log-mode-hook 'magit-toggle-log-margin-style)
 
   (general-unbind :keymaps 'magit-status-mode-map :states 'normal "M-<tab>")
   (general-unbind :keymaps 'magit-mode-map :states 'normal "M-<tab>")
