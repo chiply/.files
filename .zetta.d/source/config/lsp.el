@@ -3,9 +3,6 @@
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
 
-
-
-
 ;; can let you see what's being watched... useful for debugging purposes
 ;; (lsp--all-watchable-directories "~/source_code/workflow-activity-registry" lsp-file-watch-ignored-directories)
 
@@ -189,6 +186,12 @@ point."
 
 
   :config
+  (add-to-list 'lsp-language-id-configuration '("\\.svelte$" . "svelte"))
+  (lsp-register-client
+     (make-lsp-client :new-connection (lsp-stdio-connection "svelte-language-server")
+                      :major-modes '(svelte-mode)
+                      :priority 1
+                      :server-id 'svelte-ls))
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection "yaml-language-server")
                     :activation-fn (lsp-activate-on "yaml")
@@ -218,10 +221,6 @@ point."
   (setq lsp-headerline-breadcrumb-segments '(symbols))
   (setq lsp-headerline-breadcrumb-enable-symbol-numbers nil)
   (setq lsp-headerline-arrow ">")
-
-  
-
-
   
   ;; need to turn on and off for the breadcrumb to be used elsewhere
   (lsp-headerline-breadcrumb-mode 1)
@@ -246,7 +245,10 @@ point."
 
 
   :hook ((python-ts-mode . (lambda ()
-                             (lsp-deferred))))
+                             (lsp-deferred)))
+         ((svelte-mode . (lambda ()
+                          (lsp))))
+         )
   )
 
 

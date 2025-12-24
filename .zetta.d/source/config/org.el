@@ -193,3 +193,99 @@ The PARAMS are the 3rd element of the info for the same src block."
                                           (file-name-directory
                                            (cdr (assq :tangle params)))))
             bare))))))
+
+;; needed by my blog
+(defun org-add-custom-ids ()
+  "Add CUSTOM_ID properties to each heading in the current Org buffer."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward org-heading-regexp nil t)
+      (let* ((heading (org-get-heading t t t t))
+             (custom-id (replace-regexp-in-string
+                         "[^a-zA-Z0-9_-]" "-"
+                         (downcase heading)))
+             (existing-id (org-entry-get nil "CUSTOM_ID")))
+        (org-set-property "CUSTOM_ID" custom-id)))))
+
+
+
+
+(defvar my-org-treemap-temp-file "~/treemap.html") ; Firefox inside Snap can't access /tmp
+(defvar my-org-treemap-command "treemap" "Executable to generate a treemap.")
+
+(defun my-org-treemap-include-p (node)
+  (not (or (member "notree" (org-element-property :tags node))
+           (org-element-property-inherited :archivedp node 'with-self))))
+
+(defun my-org-treemap--node-label (node)
+  "Return heading title with CUSTOM_ID appended if present."
+  (let ((title (org-no-properties (org-element-property :raw-value node)))
+         (cid   (org-element-property :CUSTOM_ID node)))
+    (if cid
+        (format "%s" cid)
+      title)))
+
+(defun my-org-treemap-data (node &optional path)
+  "Output the size of headings underneath this one."
+  (let ((sub
+         (apply
+          'append
+          (org-element-map
+              (org-element-contents node)
+              '(headline)
+            (lambda (child)
+              (if (my-org-treemap-include-p child)
+                  (my-org-treemap-data
+                   child
+                   (append path (list (my-org-treemap--node-label node))))
+                (list
+                 (list
+                  (-
+                   (org-element-end child)
+                   (org-element-begin child))
+                  (string-join
+                   (cdr
+                    (append path
+                            (list
+                             (my-org-treemap--node-label node)
+                             (my-org-treemap--node-label child))))
+                   "/")
+                  nil))))
+            nil nil 'headline))))
+    (append
+     (list
+      (list
+       (-
+        (org-element-end node)
+        (org-element-begin node)
+        (apply '+ (mapcar 'car sub))
+        )
+       (string-join
+        (cdr
+         (append path
+                 (list (my-org-treemap--node-label node))))
+        "/")
+       (my-org-treemap-include-p node)))
+     sub)))
+
+(defun my-org-treemap ()
+  "Generate a treemap."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((file (expand-file-name (expand-file-name my-org-treemap-temp-file)))
+          (data (cdr (my-org-treemap-data (org-element-parse-buffer)))))
+      (with-temp-file file
+        (call-process-region
+         (mapconcat
+          (lambda (entry)
+            (if (elt entry 2)
+                (format "%d %s\n" (car entry)
+                        (replace-regexp-in-string org-link-bracket-re "\\2" (cadr entry)))
+              ""))
+          data
+          "")
+         nil
+         my-org-treemap-command nil t t))
+      (browse-url (concat "file://" (expand-file-name my-org-treemap-temp-file))))))
