@@ -107,6 +107,7 @@ chmod +x ~/.files/install_emacs_distros.sh && ~/.files/install_emacs_distros.sh
 npm install -g vscode-json-languageserver
 npm install -g eslint
 ;;npm install -g @github/copilot-language-server
+npm i -g svelte-language-server
 
 
 # nvm node

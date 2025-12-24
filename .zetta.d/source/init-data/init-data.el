@@ -199,6 +199,7 @@
    "telephone-line.el"
    "corfu.el"
    "typescript-ts-mode.el"
+   "typescript-mode.el"
    "apheleia.el"
    "symbol-overlay.el"
    "hi-lock.el"
@@ -261,6 +262,8 @@
    "saveplace.el"
    ;;"buffer-terminator.el"
    "org-tree-slide.el"
+   ;; should be svelte-mode.el
+   "svelte.el"
    ;;"persist-text-scale.el"
    "cleanup.el"))
 

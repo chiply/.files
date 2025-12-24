@@ -88,7 +88,7 @@
       (
        :command "npx"
        :args ("-y" "@modelcontextprotocol/server-filesystem"
-              ,(expand-file-name "~/source_code/") ;; more dirs
+              ,(expand-file-name "~/") ;; more dirs
               )))
      ("sequentialthinking" .
       (
