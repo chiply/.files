@@ -1,0 +1,26 @@
+[project]
+name = "servers"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Charlie Baker",email = "misterchiply@gmail.com"}
+]
+readme = "README.md"
+requires-python = "3.11.6"
+dependencies = [
+    "langchain (>=0.3.27,<0.4.0)",
+    "mcp (>=1.15.0,<2.0.0)",
+    "langgraph (>=0.6.7,<0.7.0)",
+    "langchain-mcp-adapters (>=0.1.10,<0.2.0)",
+    "langchain-anthropic (>=0.3.20,<0.4.0)",
+    "fastmcp (>=2.12.3,<3.0.0)",
+    "langchain-openai (>=0.3.33,<0.4.0)"
+]
+
+[tool.poetry]
+packages = [{include = "servers", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

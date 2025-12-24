@@ -1,0 +1,17 @@
+
+* README
+:PROPERTIES:
+:org-remark-file: README.md
+:END:
+
+** LEFTOFF
+:PROPERTIES:
+:org-remark-id: f1982d53
+:org-remark-label: default
+:org-remark-highlight-date: [[Sep 25th, 2025]]
+:org-remark-beg: 1564
+:org-remark-end: 1571
+:org-remark-link: [[file:README.md::19]]
+:org-remark-original-text: LEFTOFF
+:CATEGORY: important
+:END:
