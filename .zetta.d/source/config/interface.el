@@ -140,8 +140,14 @@
   )
 
 (defun z-buffer-name ()
-  (if (buffer-file-name) (abbreviate-file-name (buffer-file-name)) "%b")
-  )
+  (if (buffer-file-name) (abbreviate-file-name (buffer-file-name)) "%b"))
+
+(defun z-gptel-processes ()
+  (when (boundp 'gptel--request-alist)
+    (let ((num-processes (length gptel--request-alist)))
+      (if (> num-processes 0)
+          (format " ai:%d " num-processes)
+        ""))))
 
 
 (setq tab-bar-format '(;; everything here on will be aligned on the right
@@ -159,6 +165,7 @@
                        z-tab-bar-spot-mode-line-string
                        new-line
                        z-tab-bar-modal
+                       z-gptel-processes
                        z-fish
                        tab-bar-format-align-right
                        z-tab-bar-recursion-level
