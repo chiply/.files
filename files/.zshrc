@@ -180,9 +180,10 @@ export PATH="$HOME/.local/bin:$PATH"
 RPROMPT=''
 export SHOW_AWS_PROMPT=false
 
-# Cache git info only on directory change
+# Cache git/pyenv info only on directory change
 _last_pwd=""
 _cached_git_root=""
+_cached_python_version=""
 
 function preexec() {
   timer=$(print -P %D{%s%3.})
@@ -210,10 +211,16 @@ function precmd() {
     unset timer
   fi
 
-  # Cache git root (only update on directory change)
+  # Cache git root and python version (only update on directory change)
   if [[ "$PWD" != "$_last_pwd" ]]; then
     _last_pwd="$PWD"
     _cached_git_root=$(git rev-parse --show-toplevel 2>/dev/null | xargs basename 2>/dev/null)
+    # Check for .python-version file
+    if [[ -f .python-version ]]; then
+      _cached_python_version=$(< .python-version)
+    else
+      _cached_python_version=""
+    fi
   fi
 }
 
@@ -221,7 +228,17 @@ _kube_prompt() {
   local kp=$(kube_ps1)
   [[ -n "$kp" ]] && echo "$kp"$'\n'
 }
-PROMPT='%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(_kube_prompt)$(pwd)'$'\n''> '
+
+_pyenv_prompt() {
+  # Show venv name if active, or .python-version if present
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    echo "[venv:$(basename $VIRTUAL_ENV)] "
+  elif [[ -n "$_cached_python_version" ]]; then
+    echo "[py:$_cached_python_version] "
+  fi
+}
+
+PROMPT='%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(git_super_status)'$'\n''$(_pyenv_prompt)$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(_kube_prompt)$(pwd)'$'\n''> '
 
 # how can I add current directory to the prompt
 
