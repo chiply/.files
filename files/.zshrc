@@ -141,8 +141,8 @@ _git_prompt() {
   if [[ -n "$ahead_behind" ]]; then
     local ahead=$(echo "$ahead_behind" | cut -f1)
     local behind=$(echo "$ahead_behind" | cut -f2)
-    [[ "$ahead" -gt 0 ]] && status_flags+=">"
-    [[ "$behind" -gt 0 ]] && status_flags+="<"
+    [[ "$ahead" -gt 0 ]] && status_flags+="${ahead}>"
+    [[ "$behind" -gt 0 ]] && status_flags+="${behind}<"
   fi
 
   if [[ -n "$status_flags" ]]; then
