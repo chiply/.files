@@ -47,7 +47,6 @@ export KUBE_PS1_SYMBOL_ENABLE=false
 ZSH_THEME_GIT_PROMPT_PREFIX="["
 ZSH_THEME_GIT_PROMPT_SUFFIX="]"
 ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
-ZSH_THEME_GIT_PROMPT_BRANCH=""
 ZSH_THEME_GIT_PROMPT_STAGED="+"
 ZSH_THEME_GIT_PROMPT_CONFLICTS="x"
 ZSH_THEME_GIT_PROMPT_CHANGED="*"
@@ -218,7 +217,11 @@ function precmd() {
   fi
 }
 
-PROMPT='%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(kube_ps1)'$'\n''$(pwd)'$'\n''> '
+_kube_prompt() {
+  local kp=$(kube_ps1)
+  [[ -n "$kp" ]] && echo "$kp"$'\n'
+}
+PROMPT='%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(_kube_prompt)$(pwd)'$'\n''> '
 
 # how can I add current directory to the prompt
 
