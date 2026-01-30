@@ -238,7 +238,7 @@ _pyenv_prompt() {
   fi
 }
 
-PROMPT='%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(git_super_status)'$'\n''$(_pyenv_prompt)$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(_kube_prompt)$(pwd)'$'\n''> '
+PROMPT=$'\n''%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(git_super_status)'$'\n''$(_pyenv_prompt)$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(_kube_prompt)$(pwd)'$'\n'
 
 # how can I add current directory to the prompt
 
