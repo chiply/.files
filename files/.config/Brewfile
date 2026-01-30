@@ -98,3 +98,4 @@ brew "feh"
 brew "w3m"
 # TODO deprecate as this is now part of sequoia 15.5
 cask "rectangle"
+cask "dash"

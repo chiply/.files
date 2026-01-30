@@ -199,3 +199,4 @@
 ** [[https://serve.podhome.fm/rss/1c0357c0-6aba-5766-a2d5-2090d8dab6bc][Data Engineering Podcast]] :podcast:data:dataengineering:
 ** [[https://peterattiadrive.libsyn.com/rss][Peter Attia The Drive]] :podcast:
 ** [[https://www.reddit.com/r/eink/.rss?][r/eink]] :reddit:eink:
+** [[https://www.chiply.dev/rss.xml][Charlie Holland's Blog]] :myblog:

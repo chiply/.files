@@ -245,10 +245,11 @@
    "marqueeo.el"
    "undo-tree.el"
    "org-remark.el"
+   ;; TODO figure out what is being used
    "elfeed.el"
-   "elfeed-protocol.el"
-   "elfeed-score.el"
-   "elfeed-org.el"
+   ;;"elfeed-protocol.el"
+   ;;;;"elfeed-score.el"
+   ;;"elfeed-org.el"
    "wombag.el"
    "whisper.el"
    "say.el"
@@ -262,9 +263,13 @@
    "saveplace.el"
    ;;"buffer-terminator.el"
    "org-tree-slide.el"
+   "org-transclusion.el"
    ;; should be svelte-mode.el
    "svelte.el"
    ;;"persist-text-scale.el"
+   "mastodon.el"
+   "consult-dash.el"
+   "erc.el"
    "cleanup.el"))
 
 

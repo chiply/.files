@@ -95,8 +95,8 @@
 
 
 ;;(add-hook 'org-mode-hook (lambda () (font-lock-add-keywords
-                                     ;;nil
-                                     ;;'(("^-\\{5,\\}"  0 '(:foreground "red" :weight bold))))))
+;;nil
+;;'(("^-\\{5,\\}"  0 '(:foreground "red" :weight bold))))))
 
 ;;(remove-hook 'org-mode-hook (lambda () (undo-tree-mode 1)))
 
@@ -221,7 +221,7 @@ The PARAMS are the 3rd element of the info for the same src block."
 (defun my-org-treemap--node-label (node)
   "Return heading title with CUSTOM_ID appended if present."
   (let ((title (org-no-properties (org-element-property :raw-value node)))
-         (cid   (org-element-property :CUSTOM_ID node)))
+        (cid   (org-element-property :CUSTOM_ID node)))
     (if cid
         (format "%s" cid)
       title)))
@@ -289,3 +289,9 @@ The PARAMS are the 3rd element of the info for the same src block."
          nil
          my-org-treemap-command nil t t))
       (browse-url (concat "file://" (expand-file-name my-org-treemap-temp-file))))))
+
+;; for blog
+(setq org-use-sub-superscripts '{})
+(setq org-export-with-sub-superscripts nil)
+
+(setq org-html-with-latex 'mathjax)

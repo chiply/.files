@@ -15,8 +15,7 @@
         org-archive-location "(todo) archive.org::* From %s"
         org-agenda-files '(
                            ;; order matters
-                           "~/logseq/graphs/main/pages/emacs.org"
-                           "~/logseq/graphs/main/pages/todo.org"
+                           "~/logseq/graphs/main/pages/(todo) todo.org"
                            )
         org-persist-directory (expand-file-name
                                ".data/org-persist"
@@ -205,7 +204,7 @@
    "a" (** z-org-append)
    "T" (** z-org-append-todo)
    "8" (** org-toggle-heading)
-   "O" (** org-capture)
+   "o" 'org-capture
    "z" (** org-add-note)
    "S" (** org-schedule)
    "D" (** org-deadline)
