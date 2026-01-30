@@ -218,7 +218,7 @@ function precmd() {
   fi
 }
 
-PROMPT=$'\n''%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(kube_ps1)'$'\n''$(pwd)'$'\n'
+PROMPT='%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(kube_ps1)'$'\n''$(pwd)'$'\n''> '
 
 # how can I add current directory to the prompt
 
