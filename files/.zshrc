@@ -33,8 +33,29 @@ plugins=(
     kubectl poetry zsh-syntax-highlighting direnv
 )
 source $ZSH/oh-my-zsh.sh
+
+# kube-ps1 grayscale settings
 export KUBE_PS1_BINARY=kubectl
 export KUBE_PS1_NS_ENABLE=true
+export KUBE_PS1_PREFIX=""
+export KUBE_PS1_SUFFIX=""
+export KUBE_PS1_CTX_COLOR=""
+export KUBE_PS1_NS_COLOR=""
+export KUBE_PS1_SYMBOL_ENABLE=false
+
+# git-prompt grayscale settings
+ZSH_THEME_GIT_PROMPT_PREFIX="["
+ZSH_THEME_GIT_PROMPT_SUFFIX="]"
+ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
+ZSH_THEME_GIT_PROMPT_BRANCH=""
+ZSH_THEME_GIT_PROMPT_STAGED="+"
+ZSH_THEME_GIT_PROMPT_CONFLICTS="x"
+ZSH_THEME_GIT_PROMPT_CHANGED="*"
+ZSH_THEME_GIT_PROMPT_BEHIND="<"
+ZSH_THEME_GIT_PROMPT_AHEAD=">"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
+ZSH_THEME_GIT_PROMPT_STASHED="$"
+ZSH_THEME_GIT_PROMPT_CLEAN=""
 
 
 
@@ -186,7 +207,7 @@ function precmd() {
     elif ((s > 0)); then timeprompt=${s}.$(printf %03d $ms)s
     else timeprompt=${ms}ms
     fi
-    timeprompt="%B%F{yellow}${timeprompt} %f%b"
+    timeprompt="%B${timeprompt} %b"
     unset timer
   fi
 
