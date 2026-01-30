@@ -1,6 +1,5 @@
 source ~/.localsecrets
 source ~/.tokens
-source ~/.jfrog_credentials
 
 # this script assumes thigns have already been bootstrapped
 export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew:$PATH
@@ -26,12 +25,12 @@ zstyle ':omz:update' frequency 1
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(
-    codeclimate common-aliases aliases alias-finder copybuffer
-    copyfile copypath dirhistory docker docker-compose extract fd
-    frontend-search gh brew git-extras gitfast git-lfs git-prompt
-    history httpie jsontools pip ripgrep safe-paste screen terraform
-    tmux themes tmuxinator zsh-autosuggestions kube-ps1 aws npm
-    dirpersist kubectl poetry zsh-syntax-highlighting direnv
+    common-aliases aliases copybuffer copyfile copypath
+    dirhistory docker docker-compose extract
+    gh brew git-extras gitfast git-lfs git-prompt
+    history jsontools pip safe-paste terraform
+    tmux tmuxinator zsh-autosuggestions kube-ps1 aws npm
+    kubectl poetry zsh-syntax-highlighting direnv
 )
 source $ZSH/oh-my-zsh.sh
 export KUBE_PS1_BINARY=kubectl
@@ -79,30 +78,22 @@ complete -C '/usr/local/bin/aws_completer' aws
 complete -C '/usr/local/bin/aws_completer' awslocal
 
 
-# autosuggestion
-source ~/zsh-snap/znap.zsh
-
-znap source marlonrichert/zsh-autocomplete
+# autosuggestion (using oh-my-zsh zsh-autosuggestions plugin)
 bindkey "^ " autosuggest-fetch
 bindkey "^f" forward-char
 bindkey "^w" forward-word
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-
-# autocompletion
-zstyle ':autocomplete:*' min-input 2
-zstyle ':autocomplete:*' min-delay 0.001
-zstyle ':autocomplete:*' list-lines 6
-zstyle ':autocomplete:history-search:*' list-lines 6
-zstyle ':autocomplete:history-incremental-search-*:*' list-lines 6
-zstyle ':autocomplete:*' insert-unambiguous yes
 
 
 # aliases
 source ~/.aliases/index
 
 
-# kubernetes autocompletion
-source <(kubectl completion zsh)
+# kubernetes autocompletion (cached for faster startup)
+if [[ ! -f ~/.zcompdump-kubectl ]] || [[ ~/.zcompdump-kubectl -ot $(which kubectl) ]]; then
+  kubectl completion zsh > ~/.zcompdump-kubectl
+fi
+source ~/.zcompdump-kubectl
 
 alias cat="bat --theme=GitHub --style=\"numbers,changes,header\""
 alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
@@ -111,16 +102,20 @@ alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
 
 
 
-# pyenv
+# pyenv lazy-loading - only initialize when first using pyenv
 export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+export PATH="$PYENV_ROOT/bin:$PATH"
+pyenv() {
+  unfunction pyenv 2>/dev/null
+  eval "$(command pyenv init -)"
+  pyenv "$@"
+}
 
 
 
 # language server specific settings
 export LSP_USE_PLISTS=true
-unexport VIRTUAL_ENV
+unset VIRTUAL_ENV
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
@@ -129,9 +124,29 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 #export BROOT_CONFIG_DIR=~/.config/broot
 #source ~/.config/broot/launcher/bash/br
 
+# NVM lazy-loading - only initialize when first using node/npm/nvm
 export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+nvm() {
+  unfunction nvm node npm npx 2>/dev/null
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
+node() {
+  unfunction nvm node npm npx 2>/dev/null
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  node "$@"
+}
+npm() {
+  unfunction nvm node npm npx 2>/dev/null
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  npm "$@"
+}
+npx() {
+  unfunction nvm node npm npx 2>/dev/null
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  npx "$@"
+}
 
 
 
@@ -145,12 +160,17 @@ export PATH="$HOME/.local/bin:$PATH"
 RPROMPT=''
 export SHOW_AWS_PROMPT=false
 
+# Cache git info only on directory change
+_last_pwd=""
+_cached_git_root=""
+
 function preexec() {
   timer=$(print -P %D{%s%3.})
 }
 
 function precmd() {
-  timeprompt=""	
+  # Timer logic
+  timeprompt=""
   if [ $timer ]; then
     now=$(print -P %D{%s%3.})
     local d_ms=$(($now - $timer))
@@ -161,18 +181,23 @@ function precmd() {
     local h=$((d_s / 3600))
 
     if   ((h > 0)); then timeprompt=${h}h${m}m${s}s
-    elif ((m > 0)); then timeprompt=${m}m${s}.$(printf $(($ms / 100)))s # 1m12.3s
-    elif ((s > 9)); then timeprompt=${s}.$(printf %02d $(($ms / 10)))s # 12.34s
-    elif ((s > 0)); then timeprompt=${s}.$(printf %03d $ms)s # 1.234s
+    elif ((m > 0)); then timeprompt=${m}m${s}.$(printf $(($ms / 100)))s
+    elif ((s > 9)); then timeprompt=${s}.$(printf %02d $(($ms / 10)))s
+    elif ((s > 0)); then timeprompt=${s}.$(printf %03d $ms)s
     else timeprompt=${ms}ms
     fi
     timeprompt="%B%F{yellow}${timeprompt} %f%b"
     unset timer
   fi
+
+  # Cache git root (only update on directory change)
+  if [[ "$PWD" != "$_last_pwd" ]]; then
+    _last_pwd="$PWD"
+    _cached_git_root=$(git rev-parse --show-toplevel 2>/dev/null | xargs basename 2>/dev/null)
+  fi
 }
 
-export PROMPT=$'\n''%n@%m'$'\n''$(git rev-parse --show-toplevel 2> /dev/null | xargs basename || pwd ):$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''[pyenv:$(pyenv local)]*$(aws_prompt_info)*$(kube_ps1)'$'\n''$(pwd)'$'\n'
-#'x---}-> '
+PROMPT=$'\n''%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(git_super_status)'$'\n''$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(kube_ps1)'$'\n''$(pwd)'$'\n'
 
 # how can I add current directory to the prompt
 
