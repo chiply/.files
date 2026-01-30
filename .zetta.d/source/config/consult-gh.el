@@ -1,9 +1,12 @@
 (use-package consult-gh
-  :ensure (:wait t
-                 :files ("*.el")
-                 )
+  :ensure (consult-gh
+           :host github
+           :repo "armindarvish/consult-gh"
+           :files ("*.el")
+           :wait t
+           )
   :demand t
-  :after consult
+  :after consult nerd-icons
 
   :config
   ;;add your main GitHub account (replace "armindarvish" with your user or org)
@@ -47,6 +50,7 @@
    )
 
   ;; redefined as this was breaking
+  ;; LEFTOFF - split style is the issues?
   (defun consult-gh--get-split-style-character (&optional style)
     "Get the character for consult async split STYLE.
 
@@ -56,7 +60,8 @@ STYLE defaults to `consult-async-split-style'."
        ((equal style 'none) "")
        ((equal style 'perl) "#")
        ((equal style 'comma) ",")
-       ((equal style 'semicolon) ",")))))
+       ((equal style 'semicolon) ","))))
+  )
 
 (use-package consult-gh-embark
   :ensure (:wait t)

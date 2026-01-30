@@ -1,356 +1,62 @@
 ;;;; -*- lexical-binding: t -*-
-;; ** TODO elfeed: minflux category turns into tag, but can only apply one -- elfeed autotag to get around this? https://github.com/paulelms/elfeed-autotag
-;; ** TODO elfeed: practical alternative to filter on multiple tags?
-;; ** DONE elfeed: cleanup feeds -- seeking alpha -- anything super high traffic
-;; ** TODO elfeed: often have to 're-init' to get latest feeds
-;; ** TODO elfeed: elfeed embark?
-;;
-;;(use-package elfeed
-;;:init
-;;
-;;
-;;
-;;
-;;:config
-;;
-;;(defun elfeed-search-format-date (date)
-;;(format-time-string "%Y-%m-%d %H:%M" (seconds-to-time date)))
-;;
-;;
-;;(setq browse-url-generic-program nil)
-;; 
-;;
-  ;;;; doesn't really work
-;;
-;;(defun browse-url-mpv (url &optional single)
-    ;;;; LEFT OFF - replace this function? use vterm, async has problems running mpv
-;;(start-process "mpv" "*mpv*" "mpv" (shell-quote-argument url))
-;;)
-;;
-;;
-;;(defun z-shr-browse-url ()
-;;(interactive)
-;;(let ((browse-url-browser-function 'browse-url-default-browser))
-;;(call-interactively 'shr-browse-url)
-;;)
-;;)
-;;
-;;:general
-;;(
-;;:states '(normal)
-;;:keymaps '(elfeed-show-mode-map)
-;;"C-c C-S-o" 'z-org-open-at-point
-;;"C-c C-o" 'org-open-at-point
-;;"B" 'elfeed-show-eww-open
-;;)
-;;(
-;;:states '(normal)
-;;:keymaps '(elfeed-search-mode-map)
-;;"t" 'prot-elfeed-search-tag-filter
-   ;;;; quick tags
-;;"l" (elfeed-tag-selection-as 'readlater)
-;;"d" (elfeed-tag-selection-as 'junk)
-;;"B" 'elfeed-search-eww-open
-;;"r" 'elfeed-search-untag-all-unread
-;;"R" 'elfeed-search-tag-all-unread
-;;)
-;;)
-;;
-;;
-;;
-;;(use-package elfeed-tube
-;;:config
-;;(elfeed-tube-setup)
-;;
-;;:general
-;;(
-;;:states '(normal)
-;;:keymaps '( elfeed-show-mode-map)
-;;"F" 'elfeed-tube-fetch
-;;"C-s" 'elfeed-tube-save
-;;)
-;;)
-;;
-;;
-;;
-;;(use-package elfeed-summary
-;;:config
-;;(setq
-;;elfeed-summary-settings
-;;'(
-;;(group
-;;(:title . "All")
-;;(:elements
-;;(search (:filter . "@12-months-ago") (:title . "All"))
-;;)
-;;(:hide t))
-;;
-;;(group
-;;(:title . "Reading List")
-;;(:elements
-;;(search (:filter . "@12-months-ago +readlater") (:title . "All"))
-;;(query . (and readlater))
-;;)
-;;)
-;;
-;;(group
-;;(:title . "Today")
-;;(:elements
-;;(search (:filter . "@1-day-ago") (:title . "All"))
-;;)
-;;)
-;;
-;;(group
-;;(:title . "This Week")
-;;(:elements
-;;(search (:filter . "@7-days-ago") (:title . "All"))
-;;)
-;;(:hide t))
-;;
-;;(group
-;;(:title . "This Month")
-;;(:elements
-;;(search (:filter . "@31-days-ago") (:title . "All"))
-;;)
-;;(:hide t))
-;;
-     ;;;; News
-;;(group
-;;(:title . "News")
-;;(:elements
-;;(search (:filter . "@12-months-ago +news") (:title . "All"))
-;;(query . (and news))
-;;)
-;;(:hide t))
-;;
-     ;;;; Industry Updates
-;;(group
-;;(:title . "Industry updates")
-;;(:elements
-;;(search (:filter . "@12-months-ago +industry_update") (:title . "All"))
-;;(query . (and industry_update))
-;;(search (:filter . "@12-months-ago +awesome") (:title . "All"))
-;;(query . (and awesome))
-;;(search (:filter . "@12-months-ago +github") (:title . "All"))
-;;(query . (and github))
-;;(group
-;;(:title . "Github Activity Feeds")
-;;(:elements
-;;(search (:filter . "@12-months-ago +ghub") (:title . "All"))
-;;(query . (and ghub))
-;;)
-;;)
-;;)
-;;(:hide t))
-;;
-;;(group
-;;(:title . "Google Alerts")
-;;(:elements
-;;(search (:filter . "@12-months-ago +google_alerts") (:title . "All"))
-;;(query . (and google_alerts))
-;;)
-;;(:hide t))
-;;
-;;(group
-;;(:title . "Seeking alpha")
-;;(:elements
-;;(search (:filter . "@12-months-ago +seeking_alpha") (:title . "All"))
-;;(query . (and seeking_alpha))
-;;)
-;;(:hide t))
-;;
-;;(group
-;;(:title . "Market Watch")
-;;(:elements
-;;(search (:filter . "@12-months-ago +market_watch") (:title . "All"))
-;;(query . (and market_watch))
-;;)
-;;(:hide t))
-;;
-     ;;;; Tweets
-;;(group
-;;(:title . "Tweets")
-;;(:elements
-;;(search (:filter . "@12-months-ago +tweets") (:title . "All"))
-;;(query . (and tweets))
-;;)
-;;(:hide t))
-;;
-     ;;;; Reddit
-;;(group
-;;(:title . "Reddit")
-;;(:elements
-;;(search (:filter . "@12-months-ago +reddit") (:title . "All"))
-;;(query . (and reddit))
-;;)
-;;(:hide t))
-;; 
-;;
-;;
-     ;;;; Podcasts
-;;(group
-;;(:title . "podcasts")
-;;(:elements
-;;(search (:filter . "@12-months-ago +podcast") (:title . "All"))
-;;(query . (and podcast))
-;;)
-;;)
-;;
-;;
-     ;;;; Youtube
-;;(group
-;;(:title . "Youtube")
-;;(:elements
-;;(search (:filter . "@12-months-ago +youtube") (:title . "All"))
-;;(group (:title . "Industry") (:elements
-;;(search (:filter . "@12-months-ago +youtube +industry") (:title . "All"))
-;;(query . (and youtube industry))) (:hide t)
-;;)
-;;(group (:title . "Tech") (:elements
-;;(search (:filter . "@12-months-ago +youtube +technology") (:title . "All"))
-;;(query . (and youtube technology))) (:hide t))
-;;(group (:title . "Math") (:elements
-;;(search (:filter . "@12-months-ago +youtube +math") (:title . "All"))
-;;(query . (and youtube math))) (:hide t))
-;;(group (:title . "Science") (:elements
-;;(search (:filter . "@12-months-ago +youtube +science") (:title . "All"))
-;;(query . (and youtube science))) (:hide t))
-;;)
-;;(:hide t))
-;;
-     ;;;; release notes
-;;(group
-;;(:title . "AWS Docs")
-;;(:elements
-;;(search (:filter . "@12-months-ago +release_notes") (:title . "All"))
-;;(query . (and release_notes))
-;;)
-;;(:hide t))
-;;
-     ;;;; AWS Blogs
-;;(group
-;;(:title . "AWS Blogs")
-;;(:elements
-;;(search (:filter . "@12-months-ago +aws +blog") (:title . "All"))
-;;(query . (and aws blog))
-;;)
-;;(:hide t))
-;;
-     ;;;; Dataengineering
-;;(group
-;;(:title . "dataengineering")
-;;(:elements
-;;(search (:filter . "@12-months-ago +dataengineering") (:title . "All"))
-;;(query . (and dataengineering))
-;;)
-;;(:hide t))
-;;
-     ;;;; Dagster
-;;(group
-;;(:title . "dagster")
-;;(:elements
-;;(search (:filter . "@12-months-ago +dagster") (:title . "All"))
-;;(query . (and dagster))
-;;)
-;;(:hide t))
-;;
-     ;;;; python
-;;(group
-;;(:title . "python")
-;;(:elements
-;;(search (:filter . "@12-months-ago +python") (:title . "All"))
-;;(query . (and python))
-;;)
-;;(:hide t))
-;;
-     ;;;; faang_blog
-;;(group
-;;(:title . "faang_blog")
-;;(:elements
-;;(search (:filter . "@12-months-ago +faang_blog") (:title . "All"))
-;;(query . (and faang_blog))
-;;)
-;;(:hide t))
-;;
-     ;;;; Emacs
-;;(group
-;;(:title . "Emacs")
-;;(:elements
-;;(search (:filter . "@12-months-ago +emacs") (:title . "All tagged"))
-;;(search (:filter . "@12-months-ago emacs") (:title . "All mentions"))
-;;(query . (and emacs))
-;;)
-;;(:hide t))
-;; 
-     ;;;; Medrxiv
-;;(group
-;;(:title . "medrxiv")
-;;(:elements
-;;(search (:filter . "@12-months-ago +medrxiv") (:title . "All"))
-;;(query . (and medrxiv))
-;;)
-;;(:hide t))
-;;
-     ;;;; arxiv
-;;(group
-;;(:title . "arxiv")
-;;(:elements
-;;(search (:filter . "@12-months-ago +arxiv") (:title . "All"))
-;;(query . (and arxiv))
-;;)
-;;(:hide t))
-;;
-     ;;;; Datascience
-;;(group
-;;(:title . "datascience")
-;;(:elements
-;;(search (:filter . "@12-months-ago +datascience") (:title . "All"))
-;;(query . (and datascience))
-;;)
-;;(:hide t))
-;;
-     ;;;; Medium
-;;(group
-;;(:title . "medium")
-;;(:elements
-;;(search (:filter . "@12-months-ago +medium") (:title . "All"))
-;;(query . (and medium))
-;;)
-;;(:hide t))
-;;
-;;
-;;
-     ;;;; Comics
-;;(group
-;;(:title . "Funnies")
-;;(:elements
-;;(search (:filter . "@12-months-ago +comic") (:title . "All"))
-;;(search (:filter . "@12-months-ago +comic +dilbert") (:title . "Dilbert"))
-;;(search (:filter . "@12-months-ago +comic +xkcd") (:title . "xkcd"))
-;;)
-;;(:hide t))
-;;
-     ;;;; Ungrouped
-;;(group
-;;(:title . "Ungrouped")
-;;(:elements :misc)
-;;(:hide t))
-;;
-;;)))
 
-;; LEFTOFF
-;; elfeed-score?
+;; LEFTOFF -- pull the huge payload and test if it occusr succesfully
+;; and whetherr it tags stuff accurrately
+
+;; TODO elfeed: minflux category turns into tag, but can only apply
+;; one -- elfeed autotag to get around this?
+;; https://github.com/paulelms/elfeed-autotag
+
+;; TODO elfeed: practical alternative to filter on multiple tags?
+
+;; DONE elfeed: cleanup feeds -- seeking alpha -- anything super high
+;; traffic
+
+;; TODO elfeed: often have to 're-init' to get latest feeds
+
+;; TODO elfeed: elfeed embark?
+
+;; TODO not sure why, but these need to be ouotside of the use package
+;; since they're used in the general definiti.
+(defun my-elfeed-filter (filter-string)
+  "Set and apply a custom elfeed search filter."
+  (lambda () (interactive)
+    (elfeed-search-set-filter filter-string)
+    (elfeed-search-update--force)))
+
+(defun elfeed-tag-selection-as (mytag)
+  "Returns a function that tags an elfeed entry or selection as MYTAG"
+  (lambda ()
+    "Toggle a tag on an Elfeed search selection"
+    (interactive)
+    (elfeed-search-toggle-all mytag)))
+
+
+(use-package elfeed-protocol
+  :ensure (elfeed-protocol :type git :host github :repo "fasheng/elfeed-protocol" :wait t)
+  :demand t
+  :config
+  
+  (setq elfeed-protocol-fever-update-unread-only nil)
+  (setq elfeed-protocol-fever-fetch-category-as-tag t)
+  (setq elfeed-protocol-feeds '(("fever+https://charliebkr707@reader.miniflux.app"
+                                 :api-url "https://reader.miniflux.app/fever/"
+                                 :password "Emaj7#13")))
+
+
+  (setq elfeed-protocol-enabled-protocols '(fever))
+  (elfeed-protocol-enable)
+  (message "loaded elfeed protocol")
+  )
 
 (use-package elfeed
   :after embark
+  :demand t
+  :ensure (:wait t)
   :config
-  (defun elfeed-tag-selection-as (mytag)
-    "Returns a function that tags an elfeed entry or selection as MYTAG"
-    (lambda ()
-      "Toggle a tag on an Elfeed search selection"
-      (interactive)
-      (elfeed-search-toggle-all mytag)))
-
+  (setq elfeed-use-curl t)
+  (elfeed-set-timeout 36000)
+  (setq elfeed-curl-extra-arguments '("--insecure"))
   (defun prot-common-crm-exclude-selected-p (input)
     "Filter out INPUT from `completing-read-multiple'.
 Hide non-destructively the selected entries from the completion
@@ -399,14 +105,6 @@ minibuffer with something like `exit-minibuffer'."
              (input (string-join `(,elfeed-search-filter ,@tags) " ")))
         (setq elfeed-search-filter input))
       (elfeed-search-update :force)))
-
-  (defun my-elfeed-filter (filter-string)
-    "Set and apply a custom elfeed search filter."
-    (lambda () (interactive)
-      (elfeed-search-set-filter filter-string)
-      (elfeed-search-update--force)))
-
-  ;; 
   (setq elfeed-search-title-max-width 100)
   (defun elfeed-search-format-date (date)
     (format-time-string "%Y-%m-%d %H:%M" (seconds-to-time date)))
@@ -462,8 +160,8 @@ minibuffer with something like `exit-minibuffer'."
   (general-unbind :states 'normal :keymaps 'elfeed-search-mode-map "f")
   (general-unbind :states 'normal :keymaps 'elfeed-search-mode-map "R")
 
-  (setq elfeed-protocol-fever-update-unread-only t)
-  (setq elfeed-protocol-fever-fetch-category-as-tag nil)
+  
+
 
   :brushup
   (add-to-list 'brushup-styles
@@ -486,11 +184,7 @@ minibuffer with something like `exit-minibuffer'."
                   (set-face-attribute 'elfeed-search-tag-face nil
                                       :weight 'unspecified
                                       :foreground brushup-fg-4
-                                      :inherit nil)
-                  ))
-
-
-
+                                      :inherit nil)))
 
   ;; TODO these bindings don't get applied for some reason
   :general
@@ -517,6 +211,8 @@ minibuffer with something like `exit-minibuffer'."
    "fh" (my-elfeed-filter "@6-months-ago +unread +hackernews")
    "fn" (my-elfeed-filter "@6-months-ago +unread +npr")
    "fw" (my-elfeed-filter "@6-months-ago +unread +watches")
+   "fl" (my-elfeed-filter "@6-months-ago +readlater")
+   "fm" (my-elfeed-filter "@6-months-ago +myblog")
    ;; quick tags
    "l" (elfeed-tag-selection-as 'readlater)
    "d" (elfeed-tag-selection-as 'junk)
@@ -525,15 +221,95 @@ minibuffer with something like `exit-minibuffer'."
    ;; eyes strain
    "r" (lambda () (interactive)
          (elfeed-search-untag-all-unread)
-         (evil-scroll-line-down 1)
-         )
+         (evil-scroll-line-down 1))
    "tR" 'elfeed-search-tag-all-unread
-   "R" 'elfeed-protocol-fever-reinit
-   )
+   "R" 'elfeed-protocol-fever-reinit)
+
+  :hook (elfeed-search-update . elfeed-score-enable)
   )
 
+(use-package elfeed-org
+  :demand t
+  :ensure (:wait t)
+  :after elfeed org
+  :config
+  (setq rmh-elfeed-org-files
+        (list
+         (expand-file-name "~/.files/.zetta.d/elfeed.org")
+         ))
+  (elfeed-org)
+  (message "loaded elfeed-org")
+  )
 
+(use-package elfeed-score
+  :ensure (elfeed-score :type git :host github :repo "sp1ff/elfeed-score" :wait t)
+  :after elfeed-org
+  :demand t
+  :config
+  (progn
+    (elfeed-score-enable)
+    (define-key elfeed-search-mode-map "=" elfeed-score-map))
+  (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
+  ;; TODO add as a hook?
+  (message "loaded elfeed score")
 
+  ;; NOTE overriding the fn - probably shouldn't live here since this
+  ;; could entail features introduced by other packages, but remember
+  ;; there are issues loading all the elfeed stuff from 1 file
+  (defun elfeed-score-print-entry (entry)
+    "Print ENTRY to the Elfeed search buffer.
+This implementation is derived from `elfeed-search-print-entry--default'."
+    (let* ((date (elfeed-search-format-date (elfeed-entry-date entry)))
+           (title (or (elfeed-meta entry :title) (elfeed-entry-title entry) ""))
+           (title-faces (elfeed-search--faces (elfeed-entry-tags entry)))
+           (feed (elfeed-entry-feed entry))
+           (feed-title
+            (when feed
+              (or (elfeed-meta feed :title) (elfeed-feed-title feed))))
+           (tags (mapcar #'symbol-name (elfeed-entry-tags entry)))
+           (tags-str (mapconcat
+                      (lambda (s) (propertize s 'face 'elfeed-search-tag-face))
+                      tags ","))
+           (title-width (- (window-width) 10 elfeed-search-trailing-width))
+           (title-column (elfeed-format-column
+                          title (elfeed-clamp
+                                 elfeed-search-title-min-width
+                                 title-width
+                                 elfeed-search-title-max-width)
+                          :left))
+	       (score
+            (elfeed-score-format-score
+             (elfeed-score-scoring-get-score-from-entry entry))))
+      (insert score)
+      (insert (propertize title-column 'face title-faces 'kbd-help title) " ")
+      (when feed-title
+        (insert (propertize feed-title 'face 'elfeed-search-feed-face) " "))
+      (when tags
+        (insert "(" tags-str ")"))
+      (insert " ")
+      (insert (propertize date 'face 'font-lock-comment-face) " ")))
 
+  (defun elfeed-score-sort (a b)
+    "Return non-nil if A should sort before B.
 
+`elfeed-score' will substitute this for the Elfeed scoring function."
 
+    (let ((a-score (elfeed-score-scoring-get-score-from-entry a))
+          (b-score (elfeed-score-scoring-get-score-from-entry b)))
+      (if (> a-score b-score)
+          t
+        (let ((a-date (elfeed-entry-date a))
+              (a-title (elfeed-entry-title a))
+              (b-date (elfeed-entry-date b))
+              (b-title (elfeed-entry-title b))
+              )
+          (and
+           (eq a-score b-score)
+           (> a-date b-date)
+           (string> a-title b-title))))))
+
+  :general
+  (
+   :states '(normal)
+   :keymaps '(elfeed-search-mode-map)
+   "x" 'elfeed-score-explain))

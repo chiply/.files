@@ -30,7 +30,9 @@
              (string-match "reddit" (eww-current-url))
              (string-match "xkcd" (eww-current-url))
              )
-      (eww-readable)))
+      (eww-readable))
+    (toggle-truncate-lines -1)
+    )
 
   (defun z-eww-mode-functions ()
     ;; NOTE got the weird bug with shr-descend when disabling fonts
@@ -46,7 +48,7 @@
     "Set shr-inhibit-images based on URL before calling eww."
     (setq shr-inhibit-images 
           (cond
-           ((string-match-p "reddit\\.com\\|twitter\\.com|xkcd\\.com" url) nil)
+           ((string-match-p "reddit\\.com\\|twitter\\.com\\|xkcd\\.com\\|github\\.com\\|wikipedia\\.org" url) nil)
            (t t)))
     (apply orig-fun url args))
 

@@ -1,5 +1,7 @@
 (use-package dash)
-(use-package dash-docs)
+(use-package dash-docs :ensure (:wait t) :demand t
+  :config
+  (setq dash-docs-browser-function 'eww))
 (use-package dash-functional)
 (use-package s)
 (use-package ht)

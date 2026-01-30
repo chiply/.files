@@ -55,6 +55,7 @@
      ;; package is installed with pipx, can prompt an ai for this
      ("fastmcp_demo" . (:url "http://127.0.0.1:8000/mcp"))
      ("fastmcp_docs" . (:url "https://gofastmcp.com/mcp"))
+     ("playwright" . (:command "npx" :args ("@playwright/mcp@latest")))
      ("Demo" . (:command "poetry" :args ("run" "fastmcp"
                                                    "run" "/Users/charles.baker/.files/mcp_servers/servers/src/servers/server1.py:mcp"
                                                    )))
@@ -146,7 +147,7 @@
   :config
   (gptel-make-anthropic "Claude" :stream t :key gptel-api-key)
   (require 'gptel-integrations) ;; required for mcp stuff
-  (setq gptel-confirm-tool-calls 'auto)
+  (setq gptel-confirm-tool-calls nil)
   ;; NOTE messes up chat when using vscode-cp-proxy.  I think it
   ;; basically creates a syntax issue... probably something I can
   ;; figure out but won't spent too much time on it
