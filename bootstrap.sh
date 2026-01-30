@@ -29,11 +29,8 @@ pyenv install -v 3.11.9
 pyenv install -v 3.12.7
 pyenv local
 
-# poetry 
+# poetry
 curl -sSL https://install.python-poetry.org | python3 -
-mkdir -p ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/poetry
-poetry completions zsh > \
-       ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/poetry/_poetry
 
 # uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -50,8 +47,10 @@ brew tap Homebrew/bundle
 brew bundle \
      --force --no-lock \
      --file=~/.files/files/.config/Brewfile
-# oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# zinit (plugin manager for zsh - replaces oh-my-zsh)
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+mkdir -p "$(dirname $ZINIT_HOME)"
+git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 
 
 # if the fzf install script is at /usr/local/opt/fzf/install then ins
@@ -64,23 +63,8 @@ if [ -f /opt/homebrew/opt/fzf/install ]; then
 fi
 
 
-# znap: znap is a plugin manager for zsh that's simple, fast, and easy
-# to use.
-# Download Znap, if it's not there yet.
-[[ -r ~/znap/znap.zsh ]] ||
-    git clone --depth 1 -- \
-        https://github.com/marlonrichert/zsh-snap.git ~/znap
-source ~/znap/znap.zsh  # Start Znap
-
-# install autocomplete: incremental narrowing completing read
-# znap source marlonrichert/zsh-autocomplete
-
-# install autosuggestions: fish-like autosuggestions for zsh
-[ ! -e ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ] || \
-    rm -rf ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-git clone \
-    https://github.com/zsh-users/zsh-autosuggestions \
-    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# Note: zsh-autosuggestions and zsh-syntax-highlighting are now
+# managed by zinit (installed automatically on first shell launch)
 
 
 # AWS cli v2
@@ -93,11 +77,6 @@ gem install tmuxinator
 # how-2
 npm install -g how-2
 
-# syntax highlighting in the command line
-[ ! -e ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ] || \
-    rm -rf ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 
 # emacs
