@@ -265,6 +265,8 @@ source ~/.sh_utility_functions.sh
 # ============================================================================
 # PROMPT
 # ============================================================================
+setopt PROMPT_SUBST  # Enable command substitution in prompts
+
 RPROMPT=''
 export SHOW_AWS_PROMPT=false
 
