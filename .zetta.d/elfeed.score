@@ -28,6 +28,7 @@
 ;; NOTE keep my use case to basic sorting, try not to get too complex
 (
  ("tag"
+  (:tags (t . myblog) :value 1000)
   (:tags (t . xkcd) :value 110)
   (:tags (t . emacs-news) :value 110)
   (:tags (t . emacs) :value 100)

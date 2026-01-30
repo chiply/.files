@@ -15,31 +15,15 @@
           ;;"* INBOX %(if (file-exists-p (zett-org-get-title (org-capture-get :original-file))) \"\" \"[[file:%(abbreviate-file-name (org-capture-get :original-file))][%(zett-org-get-title (org-capture-get :original-file))]] \") :: %?\n"
           ;;:prepend t
           ;;) 
+          ;; TODO add linked versions
           (
-           "h" "private"
+           "o" "simple"
            entry
-           (file "~/.files/org-roam/daily/agenda.org")
+           (file "~/logseq/graphs/main/pages/capture.org")
            ;; note using custom function from above
-           "* INBOX %?"
+           "* %?\n%a"
            :prepend t
            )
-          (
-           "H" "public"
-           entry
-           (file "~/.files/org-roam/daily/agenda_pub.org")
-           ;; note using custom function from above
-           "* INBOX %?"
-           :prepend t
-           )
-          (
-           "f" "provate linked"
-           entry
-           (file "~/.files/org-roam/daily/agenda.org")
-           ;; note using custom function from above
-           "* INBOX %? \n%a\n%F "
-           :prepend t
-           )
-          
           )
         )
 

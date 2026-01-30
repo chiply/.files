@@ -205,3 +205,14 @@
 (add-to-list 'auto-mode-alist '("Makefile.*" . makefile-mode))
 (add-hook 'window-selection-change-functions (lambda (_) (force-mode-line-update)))
 
+(use-package trailing-newline-indicator
+  :ensure (trailing-newline-indicator
+           :host github
+           :repo "saulotoledo/trailing-newline-indicator")
+
+  :init
+  (global-trailing-newline-indicator-mode 1)
+
+  :config
+  (setq trailing-newline-indicator-show-line-number nil)
+  )
