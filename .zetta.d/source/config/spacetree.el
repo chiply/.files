@@ -26,47 +26,6 @@
 ;; space-tree is in the early stages of development and is not yet
 ;; feature-complete. It is not yet recommended for general use.
 
-;; NOTES:
-;; -- Name is not on the way of describing, but also bookmarking the
-;; space.  also gives a flat UI to bookamrks that point antwhere in
-;; the tree since you you are presented the completing read in a flat
-;; list
-;; -- Builtin faster than bookmark-view, minor tradeoff in having
-;; isolated points for a buffer across spaces
-;; -- BUG (FIXED): when splitting from a side window I get an error that actually
-;; corrupts the whole window display system; first hypothesis is that
-;; this has something to do with the function that empties the new
-;; workspace... may need to make this switch to a non side window
-;; (there will be at least 1) after the window conf is saved, and THEN
-;; -- NOTE This is a note on being able to use some thing like
-;; -- perspective in order to save state. Or purchasing state in
-;; -- general. And then the related problem which is that space tree
-;; -- is essentially just offering a way to switch to or to manage
-;; -- work spaces in a hierarchical fashion. But it doesn't do is
-;; -- offer a backend for creating andSaving and loading work
-;; -- spaces. Right now it's using the default, but it could just as
-;; -- easily be unit using winter mode to save and restore. You could
-;; -- just as easily be using bookmark – view, it could just as easily
-;; -- be using perspective. Which brings it full circle basicallyWhen
-;; -- considering switching to perspective to get persistent workspace
-;; -- configurations, one possible and probably the most viable
-;; -- solution is to simply abstract away the function being used to
-;; -- save and restore the window configuration.
-
-
-;; TODO:
-;; pop existing-space to THING and pop buffer to thing (would obviate
-;; need to conditionally clear existing-space out)
-;; remove name
-;; keybindings for insert mode (need to use keychord)
-;; actually implement a history feature with recent-space-list so we can go not just to the last
-;; forwards and backwards create a space if it doesn't exist -- change this
-;; last workpace, but by level, not by overall
-;; document edge case -- whatt about if a buffer is deleted in another window
-;; How does this package relate to magneto??  add magneto support eg switch to gitproject, but do so in a new space
-;; desktop persistance -- possible there are too many unwritable things could be a fools errand.... if we are going to try, it should be using bookmarks
-
-
 ;;; Code:
 
 
@@ -131,21 +90,6 @@ first space will be numbered 1.")
 ;; Utilities
 (defun st-window-state-put-safely (space)
   "Switches to workspace, ignores 'Selecting deleted buffer' error"
-  ;;;; restore buffers
-  ;;;; # doesn't work bc the buffer is #killed-buffer
-  ;;;; LEFT OFF -- trying recording the windows, then deleting the windows AFTER the switch happens
-  ;;;; this will have the affect of not restoring the windows pointing to killed buffers
-  ;;(-map (lambda (x)
-  ;;(pp x)
-  ;;(message (concat "restore" (buffer-name (cadr x))))
-  ;;(if (buffer-file-name (cadr x))
-  ;;(find-file-noselect (buffer-file-name (cadr x)))
-  ;;(get-buffer-create (buffer-name (cadr x)))))
-  ;;(-filter (lambda (x)
-  ;;(and (bufferp (cadr x)) (not (buffer-live-p (cadr x)))))
-  ;;(-map 'win-buf-from-leaf
-  ;;(extract-leaf space))))
-
   (let ((result (condition-case _ (window-state-put space) (error _))))
     (when (string= "Selecting deleted buffer" (cadr result))
       (message "Space contains deleted buffers"))))
@@ -604,26 +548,6 @@ the st-tree."
  )
 
 
-
-
-
-
-
-
-
-(defun extract-leaf (lst)
-  (cond
-   ((or (null lst) (not (listp lst))) nil)
-   ;; if the first of lst is 'leaf then return the whole list
-   ((eq (car lst) 'leaf) (list lst))
-   ((consp (car lst))
-    (append (if (eq (caar lst) 'leaf)
-                (list (car lst))
-              (extract-leaf (car lst)))
-            (extract-leaf (cdr lst))))
-   (t (extract-leaf (cdr lst)))))
-
-
 ;; each leaf looks like such (see above).  define a function that can
 ;; extract the value of parameters.clone-of and the buffer.  this
 ;; function will be called win-buf-from-leaf
@@ -637,31 +561,11 @@ the st-tree."
 
 ;; win-bufs for only windows with non-live buffers
 
-
-
-;; LEFT OFF -- more complicated than expected... need to modify function to delete the leafs, not extract them
-;; can probably do with a refactoring
-;; create an is-leaf function
-;; And even still I think there are edge cases I'm not considering... for example if you have (vc (leaf ...) (leaf ...)) then you need to delete the vc and flatten leafs if removing the leaf only leaves the vc or hc with a single element
-;; Other complexity is that the error handling makes the window-state-put stop as soon as it sees a killed-buffer... but we would want it to try and restore every window, handling the rror for each case, otherwsie it could error out before restoring a window pointing to a live buffer
-
-;; Cruder solution would be to restore the buffers, but I'm also not sure this would work 100% with things like * MINIMAP*
-
-;; what was the original issue i was trying to solve: using minimap.  is minimap worth it?  
-
-
-
 ;; init -- move to config
 ;; unless `st-tree` has elements, initialize space-tree
 (unless (ht-keys st-tree) (st-init))
-
 
 ;; END Config
 
 (provide 'space-tree)
 ;;; space-tree.el ends here
-
-
-
-
-
