@@ -1,23 +1,4 @@
-(defun z-load-extension-file (file)
-  (interactive)
-  "Load a file in current user's configuration directory"
-  (message file)
-  (let* ((emacsdir (expand-file-name user-emacs-directory))
-         (sourcefile-path (format "%ssource/z-lisp/%s" emacsdir file))
-         (file-extension (file-name-extension file))
-         (root (file-name-sans-extension file))
-         )
-    (cond
-     ((string= "el" file-extension)
-      (load-file sourcefile-path))
-     ((string= "org" file-extension)
-      (let* ((tanglefile-path (format "%sconfig/tangled/%s.el" emacsdir root)))
-        (org-babel-tangle-file sourcefile-path tanglefile-path)
-        (load-file tanglefile-path)
-        ))
-     )
-    )
-  )
+;; -*- lexical-binding: t; -*-
 
 (defun z-load-extension-file (file)
   (interactive)
@@ -269,24 +250,22 @@ Code:
 
 
 (defun z-touch-maybe (path)
-  "touches the file if it doesn't already exist."
-  (if (not (file-exists-p path))
-      (if (string-match-p
-           (regexp-quote ".")
-           (nth 0 (last (split-string path "/"))))
-          ;; it's a file, so touch
-          (progn
-            (message (shell-command-to-string (concat "touch " path)))
-            (message (concat "touch " path))
-            )
-        ;; it's a dir, so mkdir
+  "Create file or directory at PATH if it doesn't already exist.
+If PATH has an extension, creates a file; otherwise creates a directory."
+  (if (file-exists-p path)
+      (message "{%s} already exists" path)
+    (if (string-match-p
+         (regexp-quote ".")
+         (file-name-nondirectory path))
+        ;; it's a file, so create it
         (progn
-          (message (shell-command-to-string (concat "mkdir " path)))
-          (message (concat "mkdir " path))
-          )
-        )
-    (message (concat "{" path "} already exists")))
-  )
+          (make-directory (file-name-directory path) t)
+          (with-temp-file path (insert ""))
+          (message "Created file: %s" path))
+      ;; it's a dir, so mkdir
+      (progn
+        (make-directory path t)
+        (message "Created directory: %s" path)))))
 
 ;; leaves all but last dir
 (defun z-minify-path (path)

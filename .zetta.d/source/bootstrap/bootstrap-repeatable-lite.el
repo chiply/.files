@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 
 (use-package repeatable-lite
   :ensure nil

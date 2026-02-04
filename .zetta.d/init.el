@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; load init data
 (add-to-list 'load-path "~/.files/.zetta.d/source/init-data")
 (require 'init-data)

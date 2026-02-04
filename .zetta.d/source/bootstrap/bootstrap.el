@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (require 'bootstrap-elpaca)
 (require 'bootstrap-utils)
 (require 'bootstrap-keys)
