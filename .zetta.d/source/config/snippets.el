@@ -109,10 +109,11 @@
       ) 
     )
 
+  :config
   (z-snip-tangle-and-load (format "%ssource/snippets/.snippets.org" user-emacs-directory))
-  
+
   :display
-  ;;(z-side "snippet-mode" 'right 1) 
+  ;;(z-side "snippet-mode" 'right 1)
 
   :general
   (
