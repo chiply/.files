@@ -4,7 +4,8 @@
   :ensure (treemacs
            :files ("src/elisp/*.el"
                    "src/extra/*.el"))
-  :demand t 
+  :commands (treemacs treemacs-select-window treemacs-add-project
+             z-soda-drink-treemacs z-refresh-treemacs)
 
   ;;(setq treemacs-persist-file
   ;;(expand-file-name ".data/treemacs/.cache/treemacs-persist"

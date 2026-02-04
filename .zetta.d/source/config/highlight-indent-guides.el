@@ -23,7 +23,9 @@
   :config
   ;; no bitmap, changes widths
   (setq highlight-indent-guides-method 'fill)
-  (setq highlight-indent-guides-auto-enabled t)
+  ;; Disable auto mode to prevent errors during theme switching
+  ;; (faces can be nil during theme disable/enable cycle)
+  (setq highlight-indent-guides-auto-enabled nil)
   ;; useful because it lets trace up the stack to orient where you are
   ;; in the tree
   (setq highlight-indent-guides-responsive 'stack)
@@ -31,7 +33,21 @@
   ;; compromise between subtlety and clarity
   (setq highlight-indent-guides-auto-character-face-perc 5)
 
-  (highlight-indent-guides-auto-set-faces)
+  ;; Safely set faces after theme is fully loaded
+  (defun z-highlight-indent-guides-auto-set-faces-safe ()
+    "Set highlight-indent-guides faces only if colors are available."
+    (when (and (facep 'default)
+               (face-attribute 'default :foreground nil t)
+               (face-attribute 'default :background nil t))
+      (ignore-errors (highlight-indent-guides-auto-set-faces))))
+
+  ;; Run after theme loads with a small delay for safety
+  (add-hook 'enable-theme-functions
+            (lambda (_)
+              (run-with-idle-timer 0.1 nil #'z-highlight-indent-guides-auto-set-faces-safe)))
+
+  ;; Also run once at startup after everything is loaded
+  (add-hook 'emacs-startup-hook #'z-highlight-indent-guides-auto-set-faces-safe)
 
   ;;:hook (
          ;;(

@@ -1,4 +1,5 @@
 (use-package citar
+  :after all-the-icons
   :config
   (setq citar-symbols
         `((file ,(all-the-icons-faicon "file-o"
