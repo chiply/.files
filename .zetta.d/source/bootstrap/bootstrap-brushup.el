@@ -1,286 +1,220 @@
 ;; -*- lexical-binding: t; -*-
 
-(use-package color :ensure nil)
-(set-face-attribute 'default nil :height 200)
+;;; bootstrap-brushup.el --- Dynamic theme-aware color palette -*- lexical-binding: t; -*-
 
-(frame-parameter nil 'background-color)
+;;; Commentary:
+;;
+;; Brushup provides a dynamic color palette that adapts to any theme.
+;; It generates gradient colors from the current theme's foreground/background,
+;; allowing package face customizations to work consistently across themes.
+;;
+;; Usage in package configs:
+;;   (add-to-list 'brushup-styles
+;;     '(set-face-attribute 'some-face nil :background brushup-bg-2))
+;;
+;; Or with use-package:
+;;   :brushup
+;;   (add-to-list 'brushup-styles '(...))
+;;
+;; The styles are re-evaluated whenever the theme changes.
+;;
+;; Available palette variables:
+;;   brushup-fg, brushup-bg     - Theme's foreground/background
+;;   brushup-fg-1 to brushup-fg-6 - Foreground gradient (toward bg)
+;;   brushup-bg-1 to brushup-bg-6 - Background gradient (toward fg)
+;;   brushup-bg-1_0              - Subtle bg shift (for solaire-like effects)
+;;   brushup-dark-p              - t if current theme is dark
 
-;; Initialize brushup variables with safe defaults (updated properly after startup)
-(defvar brushup-dark-p t)
-(defvar brushup-fg "#ffffff")
-(defvar brushup-bg "#000000")
-(defvar brushup-gradient-step 7)
+;;; Code:
+
+(require 'color)
+
+;;;; Configuration
+
+(defvar brushup-gradient-step 7
+  "Percentage step for each gradient level.")
+
+;;;; Palette variables
+
+(defvar brushup-dark-p t "Non-nil if current theme is dark.")
+(defvar brushup-fg "#ffffff" "Theme foreground color.")
+(defvar brushup-bg "#000000" "Theme background color.")
+
+;; Foreground gradient (1=slight, 6=strong shift toward bg)
 (defvar brushup-fg-1 "#e6e6e6")
 (defvar brushup-fg-2 "#cccccc")
 (defvar brushup-fg-3 "#b3b3b3")
 (defvar brushup-fg-4 "#999999")
 (defvar brushup-fg-5 "#808080")
 (defvar brushup-fg-6 "#666666")
+
+;; Background gradient (1=slight, 6=strong shift toward fg)
 (defvar brushup-bg-1 "#1a1a1a")
-(defvar brushup-bg-1_0 "#0d0d0d")
+(defvar brushup-bg-1_0 "#0d0d0d" "Subtle bg shift for solaire-like effects.")
 (defvar brushup-bg-2 "#333333")
 (defvar brushup-bg-3 "#4d4d4d")
 (defvar brushup-bg-4 "#666666")
 (defvar brushup-bg-5 "#808080")
 (defvar brushup-bg-6 "#999999")
 
-(defun color-lighter-p (color1 color2)
-  "Return t if COLOR1 is lighter than COLOR2."
-  (let ((rgb1 (color-name-to-rgb color1))
-        (rgb2 (color-name-to-rgb color2)))
-    (when (and rgb1 rgb2)
-      (> (nth 2 (apply 'color-rgb-to-hsl rgb1))
-         (nth 2 (apply 'color-rgb-to-hsl rgb2))))))
+;;;; Core functions
 
-(defun theme-light-p ()
-  "Return t if the current theme is light, nil if dark.
-This checks the background color of the default face."
+(defun brushup--color-valid-p (color)
+  "Return non-nil if COLOR is a valid, specified color."
+  (and color
+       (not (string-prefix-p "unspecified" (format "%s" color)))
+       (color-name-to-rgb color)))
+
+(defun brushup--theme-dark-p ()
+  "Return non-nil if current theme appears dark."
   (let ((bg (face-background 'default)))
-    (when bg  ; ensure we have a background color
-      (color-lighter-p bg "gray50"))))
+    (when (brushup--color-valid-p bg)
+      (let ((lum (nth 2 (apply #'color-rgb-to-hsl (color-name-to-rgb bg)))))
+        (< lum 0.5)))))
 
-(defun theme-dark-p ()
-  "Return t if the current theme is dark, nil if light."
-  (not (theme-light-p)))
+(defun brushup--generate-gradient (base-color steps direction)
+  "Generate gradient colors from BASE-COLOR.
+STEPS is the number of gradient levels.
+DIRECTION is 1 for lighter, -1 for darker."
+  (let ((step brushup-gradient-step))
+    (cl-loop for i from 1 to steps
+             collect (color-lighten-name base-color (* i step direction)))))
 
 (defun brushup-init ()
-  ;; Skip initialization in batch mode or when colors are unspecified
-  (let* ((foreground (face-attribute 'default :foreground))
-         (background (face-attribute 'default :background))
-         (fg-valid (and foreground
-                        (not (string-prefix-p "unspecified" (format "%s" foreground)))
-                        (color-name-to-rgb foreground)))
-         (bg-valid (and background
-                        (not (string-prefix-p "unspecified" (format "%s" background)))
-                        (color-name-to-rgb background))))
-    (when (and fg-valid bg-valid)
-      (setq brushup-dark-p (theme-dark-p)
-            brushup-fg (if (equal foreground "black") "#000000" foreground)
-            brushup-bg (if (equal background "white") "#ffffff" background)
-            brushup-gradient-step 7)
+  "Initialize brushup palette from current theme colors.
+Called automatically on startup and theme changes."
+  (let ((fg (face-attribute 'default :foreground))
+        (bg (face-attribute 'default :background)))
+    (when (and (brushup--color-valid-p fg)
+               (brushup--color-valid-p bg))
+      ;; Normalize color names
+      (setq brushup-fg (if (equal fg "black") "#000000" fg)
+            brushup-bg (if (equal bg "white") "#ffffff" bg)
+            brushup-dark-p (brushup--theme-dark-p))
 
-      (setq
-       brushup-fg-1
-       (if brushup-dark-p
-           (color-lighten-name brushup-fg (- brushup-gradient-step))
-         (color-lighten-name brushup-fg brushup-gradient-step))
-       brushup-fg-2
-       (if brushup-dark-p
-           (color-lighten-name brushup-fg (* 2 (- brushup-gradient-step)))
-         (color-lighten-name brushup-fg (* 2 brushup-gradient-step )))
-       brushup-fg-3
-       (if brushup-dark-p
-           (color-lighten-name brushup-fg (* 3 (- brushup-gradient-step)))
-         (color-lighten-name brushup-fg (* 3 brushup-gradient-step )))
-       brushup-fg-4
-       (if brushup-dark-p
-           (color-lighten-name brushup-fg (* 4 (- brushup-gradient-step)))
-         (color-lighten-name brushup-fg (* 4 brushup-gradient-step )))
-       brushup-fg-5
-       (if brushup-dark-p
-           (color-lighten-name brushup-fg (* 5 (- brushup-gradient-step)))
-         (color-lighten-name brushup-fg (* 5 brushup-gradient-step )))
-       brushup-fg-6
-       (if brushup-dark-p
-           (color-lighten-name brushup-fg (* 6 (- brushup-gradient-step)))
-         (color-lighten-name brushup-fg (* 6 brushup-gradient-step )))
-       brushup-bg-1
-       (if brushup-dark-p
-           (color-lighten-name brushup-bg brushup-gradient-step)
-         (color-lighten-name brushup-bg (- brushup-gradient-step)))
-       brushup-bg-1_0 (color-lighten-name brushup-bg (- 3)) ;; for solair
-       brushup-bg-2
-       (if brushup-dark-p
-           (color-lighten-name brushup-bg (* 2 brushup-gradient-step))
-         (color-lighten-name brushup-bg (* 2 (- brushup-gradient-step))))
-       brushup-bg-3
-       (if brushup-dark-p
-           (color-lighten-name brushup-bg (* 3 brushup-gradient-step ))
-         (color-lighten-name brushup-bg (* 3 (- brushup-gradient-step))))
-       brushup-bg-4
-       (if brushup-dark-p
-           (color-lighten-name brushup-bg (* 4 brushup-gradient-step))
-         (color-lighten-name brushup-bg (* 4 (- brushup-gradient-step))))
-       brushup-bg-5
-       (if brushup-dark-p
-           (color-lighten-name brushup-bg (* 5 brushup-gradient-step))
-         (color-lighten-name brushup-bg (* 5 (- brushup-gradient-step))))
-       brushup-bg-6
-       (if brushup-dark-p
-           (color-lighten-name brushup-bg (* 6 brushup-gradient-step ))
-         (color-lighten-name brushup-bg (* 6 (- brushup-gradient-step))))))))
+      ;; Generate foreground gradient (toward background)
+      (let ((fg-gradient (brushup--generate-gradient
+                          brushup-fg 6
+                          (if brushup-dark-p -1 1))))
+        (setq brushup-fg-1 (nth 0 fg-gradient)
+              brushup-fg-2 (nth 1 fg-gradient)
+              brushup-fg-3 (nth 2 fg-gradient)
+              brushup-fg-4 (nth 3 fg-gradient)
+              brushup-fg-5 (nth 4 fg-gradient)
+              brushup-fg-6 (nth 5 fg-gradient)))
 
-;; Defer brushup-init until after startup for faster init
-;; (brushup-init is called via z-brushup on theme load anyway)
-(add-hook 'emacs-startup-hook #'brushup-init)
+      ;; Generate background gradient (toward foreground)
+      (let ((bg-gradient (brushup--generate-gradient
+                          brushup-bg 6
+                          (if brushup-dark-p 1 -1))))
+        (setq brushup-bg-1 (nth 0 bg-gradient)
+              brushup-bg-2 (nth 1 bg-gradient)
+              brushup-bg-3 (nth 2 bg-gradient)
+              brushup-bg-4 (nth 3 bg-gradient)
+              brushup-bg-5 (nth 4 bg-gradient)
+              brushup-bg-6 (nth 5 bg-gradient)))
 
-(setq brushup-styles '())
-(add-to-list 'brushup-styles '(brushup-init))
+      ;; Special subtle background shift
+      (setq brushup-bg-1_0 (color-lighten-name brushup-bg -3)))))
 
-(defun brushup-eval (function)
+;;;; Style system
+
+(defvar brushup-styles '()
+  "List of forms to evaluate when brushup runs.
+Each form typically calls `set-face-attribute' using brushup palette variables.")
+
+(defun brushup--eval-style (form)
+  "Safely evaluate a brushup style FORM."
   (condition-case err
-      (eval function)
-    (error (message (concat
-                     "error in brushup-eval"
-                     (error-message-string err))))))
-
+      (eval form t)
+    (error (message "brushup: error in style: %s" (error-message-string err)))))
 
 (defun brushup ()
+  "Refresh all brushup styles.
+Re-initializes the palette and evaluates all registered styles."
   (interactive)
-  ;; call to init; sets the brushup-fg/bg
-  (-map (lambda (function) (brushup-eval function)) brushup-styles))
+  (mapc #'brushup--eval-style brushup-styles))
 
+;; Register palette init as first style
+(add-to-list 'brushup-styles '(brushup-init))
 
+;;;; Default face overrides
 
-(defun z-brushup ()
-  "Mostly handles themeing, but also takes care of other things that
-seem to require loading after the client starts up"
-  (interactive) 
+(defun brushup--apply-base-faces ()
+  "Apply brushup's base face customizations."
   (when window-system
-    (brushup)
+    ;; Region
+    (set-face-attribute 'region nil
+                        :background (if brushup-dark-p
+                                        (color-lighten-name brushup-fg -60)
+                                      brushup-bg-3)
+                        :foreground 'unspecified)
+    ;; Mode line
+    (set-face-attribute 'mode-line nil
+                        :background brushup-bg-1_0
+                        :foreground 'unspecified
+                        :box nil :underline nil :overline nil)
+    (when (facep 'mode-line-active)
+      (set-face-attribute 'mode-line-active nil
+                          :background brushup-bg-1_0
+                          :foreground 'unspecified
+                          :box nil :underline nil :overline nil))
+    (set-face-attribute 'mode-line-inactive nil
+                        :foreground brushup-bg-6
+                        :background brushup-bg
+                        :underline nil :box nil)
+    ;; Header line
+    (set-face-attribute 'header-line nil
+                        :background brushup-bg
+                        :underline nil :box nil :inherit nil)
+    ;; Comments and docs
+    (let ((comment-color (if brushup-dark-p
+                             (color-lighten-name brushup-bg 40)
+                           (color-lighten-name brushup-bg -50))))
+      (set-face-attribute 'font-lock-comment-face nil
+                          :foreground comment-color :slant 'normal)
+      (set-face-attribute 'font-lock-doc-face nil
+                          :foreground comment-color :slant 'normal))
+    ;; Misc
+    (set-face-attribute 'font-lock-string-face nil :slant 'normal)
+    (set-face-attribute 'sh-heredoc nil :foreground brushup-fg :weight 'normal)
+    (set-face-attribute 'button nil
+                        :foreground brushup-fg :background brushup-bg
+                        :box nil :underline t)
+    (set-face-attribute 'minibuffer-prompt nil
+                        :foreground brushup-fg :background brushup-bg-1_0)
+    (set-face-background 'fringe brushup-bg)))
 
-    ;; default
-    (condition-case nil
-        (progn
-          (set-face-attribute
-           'region nil
-           :background (if brushup-dark-p
-                           (color-lighten-name brushup-fg (- 60))
-                         brushup-bg-3)
-           :foreground 'unspecified)
+(add-to-list 'brushup-styles '(brushup--apply-base-faces))
 
-          (setq ansi-term-color-vector [term term-color-black term-color-red
-                                             term-color-green term-color-yellow
-                                             term-color-blue term-color-magenta
-                                             term-color-cyan term-color-white])
+;;;; Font normalization
 
-          (set-face-attribute
-           'mode-line nil
-           :background brushup-bg-1_0
-           :foreground 'unspecified
-           :box nil
-           :underline nil
-           :overline nil
-           )
-
-          ;; Emacs 29+ has mode-line-active face
-          (when (facep 'mode-line-active)
-            (set-face-attribute
-             'mode-line-active nil
-             :background brushup-bg-1_0
-             :foreground 'unspecified
-             :box nil
-             :underline nil
-             :overline nil
-             ))
-
-          (set-face-attribute
-           'mode-line-inactive nil
-           :foreground brushup-bg-6
-           :background brushup-bg
-           :underline nil
-           :box nil
-           )
-
-          (set-face-attribute
-           'header-line nil
-           ;;:weight 'normal
-           :background brushup-bg
-           :underline nil
-           :font "Terminus (TTF)"
-           :box nil
-           :inherit nil)
-
-          (set-face-attribute
-           'sh-heredoc nil
-           :foreground brushup-fg
-           :weight 'normal)
-
-          (set-face-attribute
-           'button nil
-           :foreground brushup-fg
-           :background brushup-bg
-           :box nil
-           :underline t)
-
-          (set-face-attribute
-           'font-lock-comment-face nil
-           :foreground
-           (if brushup-dark-p
-               (color-lighten-name brushup-bg 200)
-             (color-lighten-name brushup-bg -50))
-           :slant 'normal)
-          (set-face-attribute
-           'font-lock-doc-face nil
-           :foreground
-           (if brushup-dark-p
-               (color-lighten-name brushup-bg 200)
-             (color-lighten-name brushup-bg -50))
-           :slant 'normal)
-
-          (set-face-attribute
-           'font-lock-string-face nil
-           :slant 'normal)
-
-          (set-face-attribute
-           'font-lock-doc-face nil
-           :foreground
-           (if brushup-dark-p
-               (color-lighten-name brushup-bg 30)
-             (color-lighten-name brushup-bg -30)
-             ))
-
-          ;; creates nice separator overlay between candidates
-          (set-face-attribute 'minibuffer-prompt nil
-          :foreground brushup-fg
-          :background brushup-bg-1_0)
-
-          (set-face-background 'fringe brushup-bg)
-
-          (set-face-attribute
-           'default nil
-           :background 'unspecified)
-
-
-          )
-      (error (message "error in z-brushup"))
-      )
-    )
-  )
-
-(defun z-patch-face-fonts ()
-  "I really don’t like bold text at ALL. Just disable them. This function is
-        run after:
-            a) startup is done i.e. as late as possible, and
-            b) after a theme change.
-        Hopefully by that time all faces are loaded."
-  (interactive)
+(defun brushup--normalize-fonts ()
+  "Remove italic slant from all faces.
+Run after theme changes to enforce consistent typography."
   (mapc (lambda (face)
-          (set-face-attribute face nil
-                              :slant 'normal
-                              ;; NOTE need to do more work on the
-                              ;; pipeline to remove this as weight is
-                              ;; used in completion uis
-                              ;;:weight 'normal
-                              ))
+          (when (face-attribute face :slant nil t)
+            (set-face-attribute face nil :slant 'normal)))
         (face-list)))
 
-(add-to-list 'brushup-styles '(z-patch-face-fonts))
+(add-to-list 'brushup-styles '(brushup--normalize-fonts))
 
+;;;; use-package integration
 
-(defun my-buffer-face-mode-pt-mono ()
-  "Sets a fixed width (monospace) font in current buffer"
-  (interactive)
-  (setq buffer-face-mode-face '(:family "Terminus (TTF)"))
-  (buffer-face-mode))
-
+;; The :brushup keyword is a convenience for adding to brushup-styles.
+;; It's equivalent to putting (add-to-list 'brushup-styles ...) in :config.
 (defalias 'use-package-handler/:brushup 'use-package-handle-forms)
 (defalias 'use-package-normalize/:brushup 'use-package-normalize-forms)
 (add-to-list 'use-package-keywords :brushup t)
 
-;; Run z-brushup after any theme is loaded to override theme's mode-line styling
-(add-hook 'enable-theme-functions (lambda (_theme) (z-brushup)))
+;;;; Hooks
+
+;; Initialize on startup
+(add-hook 'emacs-startup-hook #'brushup)
+
+;; Re-apply on theme change
+(add-hook 'enable-theme-functions (lambda (_theme) (brushup)))
 
 (provide 'bootstrap-brushup)
 
-
+;;; bootstrap-brushup.el ends here
