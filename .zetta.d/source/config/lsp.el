@@ -8,6 +8,7 @@
 
 (use-package lsp-mode
   :init
+  ;; Variables that can be set before lsp-mode loads
   (setq
    lsp-progress-via-spinner nil
    lsp-progress-spinner-type nil
@@ -16,7 +17,6 @@
    lsp-idle-delay 0.500
    lsp-tooltip-idle-delay 0.500
    lsp-headerline-breadcrumb-enable nil
-   lsp-headerline-breadcrumb-enable-1 t
    lsp-enable-snippet nil
    lsp-enable-indentation nil
    lsp-enable-xref t
@@ -33,126 +33,14 @@
                      ".data/lsp/.lsp-session-v1" user-emacs-directory)
    lsp-log-io nil
    ;; performance
-   lsp-use-plists t
-   )
+   lsp-use-plists t)
 
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.nx\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.ruff_cache\\'")
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.cache\\'")
-
-  ;; see issue: https://github.com/tigersoldier/company-lsp/issues/145
-  (defun lsp--sort-completions (completions)
-    (lsp-completion--sort-completions completions))
-
-  (defun lsp--annotate (item)
-    (lsp-completion--annotate item))
-
-  (defun lsp--resolve-completion (item)
-    (lsp-completion--resolve item))
-
-  (defun lsp-describe-thing-at-point-1 ()
-    "Display the type signature and documentation of the thing at
-point."
-    (interactive)
-    (let ((thing (z-contiguous-chars-at-point))
-          (contents (-some->> (lsp--text-document-position-params)
-                      (lsp--make-request "textDocument/hover")
-                      (lsp--send-request)
-                      (lsp:hover-contents))))
-      (if (and contents (not (equal contents "")))
-          (let* ((lsp-help-buf-name (concat "*L: " thing "*"))
-                 (buf (get-buffer-create lsp-help-buf-name)))
-            (with-current-buffer buf
-              (text-mode)
-              (erase-buffer)
-              (insert (string-trim-right
-                       (lsp--render-on-hover-content contents t)))
-              (beginning-of-buffer))
-            (display-buffer buf)
-            )
-        (lsp--info "No content at point."))))
-
-  (defun lsp-find-definition-1 ()
-    "Display the type signature and documentation of the thing at
-point."
-    (interactive)
-    (lsp-find-definition)
-    (let ((buf (current-buffer)))
-      (bury-buffer)
-      (display-buffer-in-side-window
-       buf
-       '(
-         (side . right)
-         (window-width . 0.30)
-         (window-parameters . ((no-delete-other-windows . 1)))
-         ))
-      )
-    )
-  (defun evil-goto-definition-1 ()
-    "Display the type signature and documentation of the thing at
-point."
-    (interactive)
-    (evil-goto-definition)
-    (let ((buf (current-buffer)))
-      (bury-buffer)
-      (display-buffer-in-side-window
-       buf
-       '(
-         (side . right)
-         (slot . 1)
-         (window-width . 0.30)
-         (window-parameters . ((no-delete-other-windows . 1)))
-         ))
-      )
-    )
-
-  (defun lsp-headerline--enable-breadcrumb-1 ()
-    "Enable headerline breadcrumb mode."
-    (when (and lsp-headerline-breadcrumb-enable-1
-               (lsp-feature? "textDocument/documentSymbol"))
-      (lsp-headerline-breadcrumb-mode-1 1)))
-
-  (defun lsp-headerline--disable-breadcrumb-1 ()
-    "Disable headerline breadcrumb mode."
-    (lsp-headerline-breadcrumb-mode-1 -1))
-
-  (define-minor-mode lsp-headerline-breadcrumb-mode-1
-    "Toggle breadcrumb on headerline."
-    :group 'lsp-headerline
-    :global nil
-    (cond
-     (lsp-headerline-breadcrumb-mode-1
-      ;; make sure header-line-format, if non-nil, is a list.  as
-      ;; mode-line-format says: "The value may be nil, a string, a
-      ;; symbol or a list."
-      (add-hook 'xref-after-jump-hook #'lsp-headerline-check-breadcrumb nil t)
-
-      (add-hook 'lsp-on-idle-hook #'lsp-headerline-check-breadcrumb nil t)
-      (add-hook 'lsp-configure-hook #'lsp-headerline--enable-breadcrumb-1 nil t)
-      (add-hook 'lsp-unconfigure-hook #'lsp-headerline--disable-breadcrumb-1 nil t))
-     (t
-      (remove-hook 'lsp-on-idle-hook #'lsp-headerline-check-breadcrumb t)
-      (remove-hook 'lsp-configure-hook #'lsp-headerline--enable-breadcrumb-1 t)
-      (remove-hook 'lsp-unconfigure-hook #'lsp-headerline--disable-breadcrumb-1 t)
-
-      (remove-hook 'xref-after-jump-hook #'lsp-headerline-check-breadcrumb t)
-
-      (setq lsp-headerline--path-up-to-project-segments nil)
-      )))
-
-  ;; TODO turn into a function
-  (add-hook 'lsp-configure-hook (lambda()
-                                  ;; need this to load the other functions
-                                  ;; in breadcrumb mode that are not
-                                  ;; re-implemented above
-                                  (message "ran hook lsp-mode-hook")
-                                  (lsp-headerline-breadcrumb-mode 0) 
-                                  (lsp-headerline-breadcrumb-mode-1 1)))
+  ;; Custom variable for breadcrumb mode variant
+  (defvar lsp-headerline-breadcrumb-enable-1 t)
 
   ;; python
   (setq lsp-language-id-configuration '())
   (add-to-list 'lsp-language-id-configuration '(python-ts-mode . "python"))
-
   ;; yaml
   (add-to-list 'lsp-language-id-configuration '(yaml-mode . "yaml"))
   ;; bash
@@ -186,6 +74,99 @@ point."
 
 
   :config
+  ;; Add ignored directories
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.nx\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.ruff_cache\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.cache\\'")
+
+  ;; see issue: https://github.com/tigersoldier/company-lsp/issues/145
+  (defun lsp--sort-completions (completions)
+    (lsp-completion--sort-completions completions))
+
+  (defun lsp--annotate (item)
+    (lsp-completion--annotate item))
+
+  (defun lsp--resolve-completion (item)
+    (lsp-completion--resolve item))
+
+  (defun lsp-describe-thing-at-point-1 ()
+    "Display the type signature and documentation of the thing at point."
+    (interactive)
+    (let ((thing (z-contiguous-chars-at-point))
+          (contents (-some->> (lsp--text-document-position-params)
+                      (lsp--make-request "textDocument/hover")
+                      (lsp--send-request)
+                      (lsp:hover-contents))))
+      (if (and contents (not (equal contents "")))
+          (let* ((lsp-help-buf-name (concat "*L: " thing "*"))
+                 (buf (get-buffer-create lsp-help-buf-name)))
+            (with-current-buffer buf
+              (text-mode)
+              (erase-buffer)
+              (insert (string-trim-right
+                       (lsp--render-on-hover-content contents t)))
+              (beginning-of-buffer))
+            (display-buffer buf))
+        (lsp--info "No content at point."))))
+
+  (defun lsp-find-definition-1 ()
+    "Display the type signature and documentation of the thing at point."
+    (interactive)
+    (lsp-find-definition)
+    (let ((buf (current-buffer)))
+      (bury-buffer)
+      (display-buffer-in-side-window
+       buf
+       '((side . right)
+         (window-width . 0.30)
+         (window-parameters . ((no-delete-other-windows . 1)))))))
+
+  (defun evil-goto-definition-1 ()
+    "Display the type signature and documentation of the thing at point."
+    (interactive)
+    (evil-goto-definition)
+    (let ((buf (current-buffer)))
+      (bury-buffer)
+      (display-buffer-in-side-window
+       buf
+       '((side . right)
+         (slot . 1)
+         (window-width . 0.30)
+         (window-parameters . ((no-delete-other-windows . 1)))))))
+
+  (defun lsp-headerline--enable-breadcrumb-1 ()
+    "Enable headerline breadcrumb mode."
+    (when (and lsp-headerline-breadcrumb-enable-1
+               (lsp-feature? "textDocument/documentSymbol"))
+      (lsp-headerline-breadcrumb-mode-1 1)))
+
+  (defun lsp-headerline--disable-breadcrumb-1 ()
+    "Disable headerline breadcrumb mode."
+    (lsp-headerline-breadcrumb-mode-1 -1))
+
+  (define-minor-mode lsp-headerline-breadcrumb-mode-1
+    "Toggle breadcrumb on headerline."
+    :group 'lsp-headerline
+    :global nil
+    (cond
+     (lsp-headerline-breadcrumb-mode-1
+      (add-hook 'xref-after-jump-hook #'lsp-headerline-check-breadcrumb nil t)
+      (add-hook 'lsp-on-idle-hook #'lsp-headerline-check-breadcrumb nil t)
+      (add-hook 'lsp-configure-hook #'lsp-headerline--enable-breadcrumb-1 nil t)
+      (add-hook 'lsp-unconfigure-hook #'lsp-headerline--disable-breadcrumb-1 nil t))
+     (t
+      (remove-hook 'lsp-on-idle-hook #'lsp-headerline-check-breadcrumb t)
+      (remove-hook 'lsp-configure-hook #'lsp-headerline--enable-breadcrumb-1 t)
+      (remove-hook 'lsp-unconfigure-hook #'lsp-headerline--disable-breadcrumb-1 t)
+      (remove-hook 'xref-after-jump-hook #'lsp-headerline-check-breadcrumb t)
+      (setq lsp-headerline--path-up-to-project-segments nil))))
+
+  ;; TODO turn into a function
+  (add-hook 'lsp-configure-hook (lambda()
+                                  (message "ran hook lsp-mode-hook")
+                                  (lsp-headerline-breadcrumb-mode 0)
+                                  (lsp-headerline-breadcrumb-mode-1 1)))
+
   (add-to-list 'lsp-language-id-configuration '("\\.svelte$" . "svelte"))
   (lsp-register-client
      (make-lsp-client :new-connection (lsp-stdio-connection "svelte-language-server")
@@ -196,7 +177,6 @@ point."
    (make-lsp-client :new-connection (lsp-stdio-connection "yaml-language-server")
                     :activation-fn (lsp-activate-on "yaml")
                     :server-id 'yaml-language-server))
-
 
   ;; this needs to go to private
   ;; also, use expand-file-name
@@ -221,7 +201,7 @@ point."
   (setq lsp-headerline-breadcrumb-segments '(symbols))
   (setq lsp-headerline-breadcrumb-enable-symbol-numbers nil)
   (setq lsp-headerline-arrow ">")
-  
+
   ;; need to turn on and off for the breadcrumb to be used elsewhere
   (lsp-headerline-breadcrumb-mode 1)
   (lsp-headerline-breadcrumb-mode -1)
