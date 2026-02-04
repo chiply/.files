@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (setq z-files-that-need-creating '("~/.dir-locals.el" "~/.private.el"))
 
 (setq
@@ -231,6 +233,7 @@
    "flappy-fish.el"
    "biome.el"
    ;;"spot.el"
+   "spot4e.el"
    "doric-themes.el"
    "graphviz-dot-mode.el"
    ;;"magit-delta.el"

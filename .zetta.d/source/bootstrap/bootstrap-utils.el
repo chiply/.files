@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package dash)
 (use-package dash-docs :ensure (:wait t) :demand t
   :config

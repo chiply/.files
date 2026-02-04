@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; for binding keys
 (use-package general :demand t :ensure (:wait t))
 

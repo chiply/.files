@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (use-package color :ensure nil)
 (set-face-attribute 'default nil :height 200)
 
