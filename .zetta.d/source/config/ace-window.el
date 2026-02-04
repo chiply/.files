@@ -1,5 +1,5 @@
 (use-package ace-window
-  :demand t
+  :commands (ace-window ace-select-window ace-delete-window ace-swap-window)
   :brushup
   (add-to-list 'brushup-styles
                '(progn

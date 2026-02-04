@@ -40,7 +40,7 @@
 ;; left off (and last for the day... when doing ,w c-S-D, this closes the minimap.  Need to change this special function to change the minimap setting prior to and after )
 
 (use-package minimap
-  :demand t
+  :commands (minimap-mode minimap-update)
   :config
 
   ;; overwriting the minor mode definition and other functions allows for ignored buffers, which is necessary.  For example agenda --> agenda.org would break all of emacs on me

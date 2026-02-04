@@ -23,7 +23,7 @@
 (setq enable-recursive-minibuffers t)
 
 (require 'sh-script)
-(use-package bash-completion :demand t)
+(use-package bash-completion :commands bash-completion-dynamic-complete-nocomint)
 (defun my-sh-completion-at-point ()
   (let ((end (point))
         (beg (save-excursion (sh-beginning-of-command))))

@@ -1,9 +1,8 @@
 (use-package web-mode
-  :demand t
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.vue?\\'" . web-mode)
+         ("\\.jinja2?\\'" . web-mode))
   :config
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.jinja2?\\'" . web-mode))
   (setq web-mode-engines-alist
         '(("django"    . "\\.html\\'"))
         web-mode-ac-sources-alist

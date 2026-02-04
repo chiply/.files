@@ -1,10 +1,10 @@
 ;; spotify
 (use-package spot4e
-  :straight nil
+  :ensure nil
   :load-path "~/.files/.zetta.d/source/zettapkg/spot4e"
-  :demand t
+  :commands (hydra-spot4e/body spot4e-refresh)
 
-  :init
+  :config
   (run-with-timer 0 (* 60 59) 'spot4e-refresh)
 
   :general

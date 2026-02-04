@@ -1,6 +1,6 @@
 (use-package ibuffer
   :ensure nil
-  :demand t
+  :commands ibuffer
 
   :init
   (defun z-soda-create-and-display-ibuffer (&optional buf-or-mode-name)
