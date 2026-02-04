@@ -1,5 +1,5 @@
 (use-package org-capture
-  :straight nil
+  :ensure nil
 
   :init
   (setq org-capture-templates
@@ -19,7 +19,7 @@
           (
            "o" "simple"
            entry
-           (file "~/logseq/graphs/main/pages/capture.org")
+           (file "~/logseq/pages/capture.org")
            ;; note using custom function from above
            "* %?\n%a"
            :prepend t

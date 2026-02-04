@@ -48,8 +48,7 @@
   ;;  M-x customize-group RET combobulate RET
   ;;
   (use-package combobulate
-    :straight
-    (combobulate :type git :host github :repo "mickeynp/combobulate")
+    :ensure (combobulate :host github :repo "mickeynp/combobulate")
     :preface
     ;; You can customize Combobulate's key prefix here.
     ;; Note that you may have to restart Emacs for this to take effect!

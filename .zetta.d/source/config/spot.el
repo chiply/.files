@@ -1,6 +1,6 @@
 ;; spotify
 (use-package spot
-  :straight nil
+  :ensure nil
   :load-path "~/.files/.zetta.d/source/zettapkg/spot"
   :after (consult consult-omni ht marginalia embark)
   :demand t

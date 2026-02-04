@@ -1,6 +1,5 @@
 (use-package yaml
-  :straight (yaml :type git :host github :repo "zkry/yaml.el")
-  )
+  :ensure (yaml :host github :repo "zkry/yaml.el"))
 
 (defun jpt-yaml-indentation-level (s)
   (if (string-match "^ " s)
