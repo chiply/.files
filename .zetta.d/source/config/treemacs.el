@@ -135,5 +135,6 @@
                             (text-scale-set -2)
                             (toggle-truncate-lines -1)))))
 
-(use-package treemacs-magit)
+(use-package treemacs-magit
+  :after (treemacs magit))
 
