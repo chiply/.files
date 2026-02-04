@@ -3,6 +3,24 @@
 
 (frame-parameter nil 'background-color)
 
+;; Initialize brushup variables with safe defaults (updated properly after startup)
+(defvar brushup-dark-p t)
+(defvar brushup-fg "#ffffff")
+(defvar brushup-bg "#000000")
+(defvar brushup-gradient-step 7)
+(defvar brushup-fg-1 "#e6e6e6")
+(defvar brushup-fg-2 "#cccccc")
+(defvar brushup-fg-3 "#b3b3b3")
+(defvar brushup-fg-4 "#999999")
+(defvar brushup-fg-5 "#808080")
+(defvar brushup-fg-6 "#666666")
+(defvar brushup-bg-1 "#1a1a1a")
+(defvar brushup-bg-1_0 "#0d0d0d")
+(defvar brushup-bg-2 "#333333")
+(defvar brushup-bg-3 "#4d4d4d")
+(defvar brushup-bg-4 "#666666")
+(defvar brushup-bg-5 "#808080")
+(defvar brushup-bg-6 "#999999")
 
 (defun color-lighter-p (color1 color2)
   "Return t if COLOR1 is lighter than COLOR2."
@@ -85,7 +103,9 @@ This checks the background color of the default face."
      (color-lighten-name brushup-bg (* 6 (- brushup-gradient-step)))))
   )
 
-(brushup-init)
+;; Defer brushup-init until after startup for faster init
+;; (brushup-init is called via z-brushup on theme load anyway)
+(add-hook 'emacs-startup-hook #'brushup-init)
 
 (setq brushup-styles '())
 (add-to-list 'brushup-styles '(brushup-init))
@@ -133,7 +153,19 @@ seem to require loading after the client starts up"
            :foreground 'unspecified
            :box nil
            :underline nil
+           :overline nil
            )
+
+          ;; Emacs 29+ has mode-line-active face
+          (when (facep 'mode-line-active)
+            (set-face-attribute
+             'mode-line-active nil
+             :background brushup-bg-1_0
+             :foreground 'unspecified
+             :box nil
+             :underline nil
+             :overline nil
+             ))
 
           (set-face-attribute
            'mode-line-inactive nil
@@ -238,6 +270,9 @@ seem to require loading after the client starts up"
 (defalias 'use-package-handler/:brushup 'use-package-handle-forms)
 (defalias 'use-package-normalize/:brushup 'use-package-normalize-forms)
 (add-to-list 'use-package-keywords :brushup t)
+
+;; Run z-brushup after any theme is loaded to override theme's mode-line styling
+(add-hook 'enable-theme-functions (lambda (_theme) (z-brushup)))
 
 (provide 'bootstrap-brushup)
 

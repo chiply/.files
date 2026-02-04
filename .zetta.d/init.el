@@ -2,20 +2,20 @@
 (add-to-list 'load-path "~/.files/.zetta.d/source/init-data")
 (require 'init-data)
 
-; bootstrap
+;; bootstrap
 (add-to-list 'load-path "~/.files/.zetta.d/source/bootstrap")
 (require 'bootstrap)
 
 ;; install mandatory config files
 (-each z-files-that-need-creating 'z-touch-maybe)
 
+;; load private.el early (before config files that need API keys)
+(load-file "~/.private.el")
+
 ;; load user config files
 (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
 
 (elpaca-process-queues)
-
-;; load private.el
-(load-file "~/.private.el")
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
