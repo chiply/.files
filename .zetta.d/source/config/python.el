@@ -11,9 +11,8 @@
     (if (string= dir "/") nil dir)))
 
 (use-package pyvenv
-  :after lsp-mode
-  :init
-  (pyvenv-mode)
+  :commands (pyvenv-mode pyvenv-activate pyvenv-deactivate)
+  :hook (python-ts-mode . pyvenv-mode)
   :config
   ;;(setq pyvenv-post-activate-hooks '())
   (defun z-pyvenv-activate-poetry ()
@@ -29,27 +28,27 @@
           (pyvenv-activate venv)
           (setq-local z-pyvenv-virtual-env venv)))
       (unless lsp-mode (lsp-deferred))))
-  (add-hook 'buffer-list-update-hook 'z-pyvenv-activate-poetry))
+  ;; Use python-ts-mode-hook instead of buffer-list-update-hook for performance
+  (add-hook 'python-ts-mode-hook 'z-pyvenv-activate-poetry))
 
 (use-package poetry)
 
 (use-package python
-  :straight nil
-
-  :config
+  :ensure nil
+  :mode ("\\.py\\'" . python-ts-mode)
+  :init
   (setq python-shell-interpreter "python3")
   (setq python-indent-guess-indent-offset t)
   (setq python-indent-guess-indent-offset-verbose 4)
 
-  ;; Debugging
-  (require 'dap-python)
-
-  (setq dap-python-executable "python3")
-  (setq dap-python-debugger 'debugpy)
-  ;; feels hacky
-  (defun dap-python--pyenv-executable-find (command)
-    (concat pyvenv-virtual-env "bin/python3")
-    )
+  :config
+  ;; Debugging - defer to when dap-mode is actually loaded
+  (with-eval-after-load 'dap-mode
+    (require 'dap-python)
+    (setq dap-python-executable "python3")
+    (setq dap-python-debugger 'debugpy)
+    (defun dap-python--pyenv-executable-find (command)
+      (concat pyvenv-virtual-env "bin/python3")))
 
   :general
   (

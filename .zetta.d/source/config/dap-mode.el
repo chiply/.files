@@ -1,6 +1,7 @@
 (use-package dap-mode
-  :config
+  :commands (dap-debug dap-hydra dap-mode dap-ui-mode)
 
+  :config
   (setq dap-ui-variable-length 1000)
 
   ;; lang specific

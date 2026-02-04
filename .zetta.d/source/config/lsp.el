@@ -380,6 +380,7 @@ point."
  "H" 'z-jump-to-doc)
 
 (use-package lsp-ui
+  :after lsp-mode
   :config
   ;; sideline
 
@@ -470,11 +471,13 @@ point."
   )
 
 (use-package lsp-pylsp
-  :straight nil
+  :ensure nil
+  :after lsp-mode
   :custom
   (lsp-pylsp-plugins-flake8-enabled nil))
 
 (use-package lsp-pyright
+  :after lsp-mode
   :custom (lsp-pyright-langserver-command "basedpyright"))
 
 ;; NOTE don't use as not all lsps provide compatibility

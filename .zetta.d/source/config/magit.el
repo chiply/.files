@@ -2,6 +2,7 @@
 
 (use-package ghub
   ;;:ensure (ghub :type git :host github :repo "magit/ghub" :tag "v4.1.1")
+  :defer t
   :config
   ;; NOTE backwards compat with forge
   (setq ghub-default-host "api.github.com")

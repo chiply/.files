@@ -24,8 +24,11 @@
 
 (defun color-lighter-p (color1 color2)
   "Return t if COLOR1 is lighter than COLOR2."
-  (> (nth 2 (apply 'color-rgb-to-hsl (color-name-to-rgb color1)))
-     (nth 2 (apply 'color-rgb-to-hsl (color-name-to-rgb color2)))))
+  (let ((rgb1 (color-name-to-rgb color1))
+        (rgb2 (color-name-to-rgb color2)))
+    (when (and rgb1 rgb2)
+      (> (nth 2 (apply 'color-rgb-to-hsl rgb1))
+         (nth 2 (apply 'color-rgb-to-hsl rgb2))))))
 
 (defun theme-light-p ()
   "Return t if the current theme is light, nil if dark.
@@ -39,69 +42,71 @@ This checks the background color of the default face."
   (not (theme-light-p)))
 
 (defun brushup-init ()
-  (setq brushup-dark-p (theme-dark-p)
-        brushup-fg (let ((foreground (face-attribute 'default :foreground)))
-                     (if (equal foreground "black")
-                         (message "#000000")
-                       (message foreground)))
-        brushup-bg (let ((background (face-attribute 'default :background)))
-                     (if (equal background "white")
-                         (message "#ffffff")
-                       (message background)))
-        brushup-gradient-step 7
-        )
+  ;; Skip initialization in batch mode or when colors are unspecified
+  (let* ((foreground (face-attribute 'default :foreground))
+         (background (face-attribute 'default :background))
+         (fg-valid (and foreground
+                        (not (string-prefix-p "unspecified" (format "%s" foreground)))
+                        (color-name-to-rgb foreground)))
+         (bg-valid (and background
+                        (not (string-prefix-p "unspecified" (format "%s" background)))
+                        (color-name-to-rgb background))))
+    (when (and fg-valid bg-valid)
+      (setq brushup-dark-p (theme-dark-p)
+            brushup-fg (if (equal foreground "black") "#000000" foreground)
+            brushup-bg (if (equal background "white") "#ffffff" background)
+            brushup-gradient-step 7)
 
-  (setq
-   brushup-fg-1
-   (if brushup-dark-p
-       (color-lighten-name brushup-fg (- brushup-gradient-step))
-     (color-lighten-name brushup-fg brushup-gradient-step))
-   brushup-fg-2
-   (if brushup-dark-p
-       (color-lighten-name brushup-fg (* 2 (- brushup-gradient-step)))
-     (color-lighten-name brushup-fg (* 2 brushup-gradient-step )))
-   brushup-fg-3
-   (if brushup-dark-p
-       (color-lighten-name brushup-fg (* 3 (- brushup-gradient-step)))
-     (color-lighten-name brushup-fg (* 3 brushup-gradient-step )))
-   brushup-fg-4
-   (if brushup-dark-p
-       (color-lighten-name brushup-fg (* 4 (- brushup-gradient-step)))
-     (color-lighten-name brushup-fg (* 4 brushup-gradient-step )))
-   brushup-fg-5
-   (if brushup-dark-p
-       (color-lighten-name brushup-fg (* 5 (- brushup-gradient-step)))
-     (color-lighten-name brushup-fg (* 5 brushup-gradient-step )))
-   brushup-fg-6
-   (if brushup-dark-p
-       (color-lighten-name brushup-fg (* 6 (- brushup-gradient-step)))
-     (color-lighten-name brushup-fg (* 6 brushup-gradient-step )))
-   brushup-bg-1
-   (if brushup-dark-p
-       (color-lighten-name brushup-bg brushup-gradient-step)
-     (color-lighten-name brushup-bg (- brushup-gradient-step)))
-   brushup-bg-1_0 (color-lighten-name brushup-bg (- 3)) ;; for solair
-   brushup-bg-2
-   (if brushup-dark-p
-       (color-lighten-name brushup-bg (* 2 brushup-gradient-step))
-     (color-lighten-name brushup-bg (* 2 (- brushup-gradient-step))))
-   brushup-bg-3
-   (if brushup-dark-p
-       (color-lighten-name brushup-bg (* 3 brushup-gradient-step ))
-     (color-lighten-name brushup-bg (* 3 (- brushup-gradient-step))))
-   brushup-bg-4
-   (if brushup-dark-p
-       (color-lighten-name brushup-bg (* 4 brushup-gradient-step))
-     (color-lighten-name brushup-bg (* 4 (- brushup-gradient-step))))
-   brushup-bg-5
-   (if brushup-dark-p
-       (color-lighten-name brushup-bg (* 5 brushup-gradient-step))
-     (color-lighten-name brushup-bg (* 5 (- brushup-gradient-step))))
-   brushup-bg-6
-   (if brushup-dark-p
-       (color-lighten-name brushup-bg (* 6 brushup-gradient-step ))
-     (color-lighten-name brushup-bg (* 6 (- brushup-gradient-step)))))
-  )
+      (setq
+       brushup-fg-1
+       (if brushup-dark-p
+           (color-lighten-name brushup-fg (- brushup-gradient-step))
+         (color-lighten-name brushup-fg brushup-gradient-step))
+       brushup-fg-2
+       (if brushup-dark-p
+           (color-lighten-name brushup-fg (* 2 (- brushup-gradient-step)))
+         (color-lighten-name brushup-fg (* 2 brushup-gradient-step )))
+       brushup-fg-3
+       (if brushup-dark-p
+           (color-lighten-name brushup-fg (* 3 (- brushup-gradient-step)))
+         (color-lighten-name brushup-fg (* 3 brushup-gradient-step )))
+       brushup-fg-4
+       (if brushup-dark-p
+           (color-lighten-name brushup-fg (* 4 (- brushup-gradient-step)))
+         (color-lighten-name brushup-fg (* 4 brushup-gradient-step )))
+       brushup-fg-5
+       (if brushup-dark-p
+           (color-lighten-name brushup-fg (* 5 (- brushup-gradient-step)))
+         (color-lighten-name brushup-fg (* 5 brushup-gradient-step )))
+       brushup-fg-6
+       (if brushup-dark-p
+           (color-lighten-name brushup-fg (* 6 (- brushup-gradient-step)))
+         (color-lighten-name brushup-fg (* 6 brushup-gradient-step )))
+       brushup-bg-1
+       (if brushup-dark-p
+           (color-lighten-name brushup-bg brushup-gradient-step)
+         (color-lighten-name brushup-bg (- brushup-gradient-step)))
+       brushup-bg-1_0 (color-lighten-name brushup-bg (- 3)) ;; for solair
+       brushup-bg-2
+       (if brushup-dark-p
+           (color-lighten-name brushup-bg (* 2 brushup-gradient-step))
+         (color-lighten-name brushup-bg (* 2 (- brushup-gradient-step))))
+       brushup-bg-3
+       (if brushup-dark-p
+           (color-lighten-name brushup-bg (* 3 brushup-gradient-step ))
+         (color-lighten-name brushup-bg (* 3 (- brushup-gradient-step))))
+       brushup-bg-4
+       (if brushup-dark-p
+           (color-lighten-name brushup-bg (* 4 brushup-gradient-step))
+         (color-lighten-name brushup-bg (* 4 (- brushup-gradient-step))))
+       brushup-bg-5
+       (if brushup-dark-p
+           (color-lighten-name brushup-bg (* 5 brushup-gradient-step))
+         (color-lighten-name brushup-bg (* 5 (- brushup-gradient-step))))
+       brushup-bg-6
+       (if brushup-dark-p
+           (color-lighten-name brushup-bg (* 6 brushup-gradient-step ))
+         (color-lighten-name brushup-bg (* 6 (- brushup-gradient-step))))))))
 
 ;; Defer brushup-init until after startup for faster init
 ;; (brushup-init is called via z-brushup on theme load anyway)
