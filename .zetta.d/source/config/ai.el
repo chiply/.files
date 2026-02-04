@@ -205,7 +205,7 @@
 (use-package gptel-quick
   :ensure (gptel-quick :type git :host github :repo "karthink/gptel-quick")
   :demand t
-  :after gptel
+  :after (gptel embark)
   :config
   (keymap-set embark-general-map "?" #'gptel-quick)
   (setq gptel-quick-timeout 10000))
