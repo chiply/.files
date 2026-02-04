@@ -1,5 +1,5 @@
 (use-package vterm
-  :demand t
+  :commands (vterm vterm-mode vterm-other-window)
   :init
 
   (defun z-soda-prompt-term-buffer ()

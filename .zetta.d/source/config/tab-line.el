@@ -1,6 +1,6 @@
 (use-package tab-line
-  :straight nil
-  :demand t
+  :ensure nil
+  :hook (elpaca-after-init . global-tab-line-mode)
 
   :config
   (defun is-buffer (buffer)
@@ -234,8 +234,6 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
   ;;(setq tab-line-tabs-function 'z-project-mode-buffers)
 
   (setq tab-line-tabs-function 'tab-line-tabs-window-buffers)
-
-  (global-tab-line-mode 1)
 
   ;;:brushup
   ;; NOTE This achieves the desired effect of having all tabs be

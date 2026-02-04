@@ -1,17 +1,13 @@
 (use-package display-line-numbers
-  :straight nil
-  :demand t
-
-  :init 
+  :ensure nil
+  :init
   (setq-default
    display-line-numbers-type 'visual
    display-line-numbers-current-absolute t
    display-line-numbers-width-start 5 display-line-numbers-widen t
    display-line-numbers 'relative display-line-numbers-major-tick 20
    display-line-numbers-minor-tick 10)
-
-  :config
-  (global-display-line-numbers-mode)
+  :hook (elpaca-after-init . global-display-line-numbers-mode)
 
   :brushup
   (add-to-list 'brushup-styles

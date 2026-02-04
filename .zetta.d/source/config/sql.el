@@ -1,8 +1,8 @@
 
 
 (use-package sql
-  :straight nil
-  :demand t
+  :ensure nil
+  :commands (sql-mode sql-interactive-mode sql-connect)
 
   :display
   ;;(z-side "^\\*sql--*" 'top)

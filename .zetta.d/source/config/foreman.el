@@ -1,6 +1,5 @@
 (use-package foreman
-  :straight nil
+  :ensure nil
   :load-path "~/.files/.zetta.d/source/zettapkg/foreman"
-  :demand t
-
+  :commands foreman
   )

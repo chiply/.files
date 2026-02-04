@@ -1,8 +1,9 @@
 (use-package simple
   :ensure nil ;; builtin
-  :demand t
-  :config
+  :commands (shell-command async-shell-command)
+  :init
   (setq kill-ring-max 10000)
+  :config
 
   ;; NOTE commenting out to prevent shell-command-to-string from
   ;; writing to history
