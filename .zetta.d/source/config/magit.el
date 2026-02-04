@@ -9,7 +9,9 @@
 
 (use-package magit
   ;;:ensure (magit :type git :host github :repo "magit/magit" :tag "v4.1.1")
-  :demand t
+  :commands (magit-status magit-blame magit-log magit-branch magit-commit
+             magit-push magit-pull magit-fetch magit-stage magit-stage-modified
+             magit-tag magit-show-refs z-magit-project)
   :init
 
   (setq magit-branch-read-upstream-first 'fallback)
@@ -21,7 +23,7 @@
   (setq magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
 
   :config
-  (setq magit-git-executable (string-trim (shell-command-to-string "which git")))
+  (setq magit-git-executable (or (executable-find "git") "git"))
   
   ;; project.el
   (keymap-substitute project-prefix-map #'project-vc-dir #'magit)
