@@ -1,7 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LSP MODE
-;; for performance
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 1024 1024))
+;; NOTE: GC and read-process-output-max tuning is handled in early-init.el
 
 ;; can let you see what's being watched... useful for debugging purposes
 ;; (lsp--all-watchable-directories "~/source_code/workflow-activity-registry" lsp-file-watch-ignored-directories)
