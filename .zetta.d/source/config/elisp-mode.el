@@ -1,6 +1,6 @@
 (use-package elisp-mode
-  :straight nil
-  :demand t
+  :ensure nil
+  :commands (emacs-lisp-mode lisp-interaction-mode)
 
   :general
   (

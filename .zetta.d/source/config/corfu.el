@@ -1,5 +1,5 @@
 (use-package corfu
-  :demand t
+  :hook (elpaca-after-init . global-corfu-mode)
   ;; Optional customizations
   :custom
   ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
@@ -21,9 +21,6 @@
   ;; be used globally (M-/).  See also the customization variable
   ;; `global-corfu-modes' to exclude certain modes.
   :config
-  (global-corfu-mode)
-
-
   (defun corfu-move-to-minibuffer ()
     (interactive)
     (pcase completion-in-region--data

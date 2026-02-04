@@ -1,8 +1,6 @@
 (use-package display-fill-column-indicator
-  :straight nil 
-  :demand t
-  :config
-  (global-display-fill-column-indicator-mode)
+  :ensure nil
+  :hook (elpaca-after-init . global-display-fill-column-indicator-mode)
 
   :brushup
   

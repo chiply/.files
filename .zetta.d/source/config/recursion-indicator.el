@@ -1,7 +1,5 @@
 (use-package recursion-indicator
-  :demand t
-  :config
-  (recursion-indicator-mode)
+  :hook (elpaca-after-init . recursion-indicator-mode)
 
     :brushup
   (add-to-list 'brushup-styles

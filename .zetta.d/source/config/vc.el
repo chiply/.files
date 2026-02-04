@@ -1,8 +1,8 @@
 (use-package vc
-  :straight nil
-  :demand t
+  :ensure nil
+  :commands vc-refresh-state
 
-  :config
+  :init
   (setq vc-follow-symlinks t)
 
   :evil

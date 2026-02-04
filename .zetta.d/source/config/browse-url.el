@@ -1,6 +1,6 @@
 (use-package browse-url
-  :straight nil
-  :demand t
+  :ensure nil
+  :commands browse-url
   ;;:config
   ;; unsetting this for now
   ;;(setq

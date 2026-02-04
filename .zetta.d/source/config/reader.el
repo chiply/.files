@@ -7,4 +7,4 @@
                    :repo "divyaranjan/emacs-reader"
                    :files ("*.el" "render-core.so")
                    :pre-build ("make" "all"))
-  :demand t)
+  :commands reader-mode)

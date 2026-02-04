@@ -1,6 +1,6 @@
 (use-package embark
   :ensure (:wait t)
-  :demand t
+  :commands (embark-act embark-dwim embark-bindings embark-act-all)
   :config
   ;;(setq embark-prefix-help-command #'embark-prefix-help-command)
   (defun embark-act-noquit ()

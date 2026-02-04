@@ -1,6 +1,6 @@
 (use-package image-mode
-  :straight nil
-  :demand t
+  :ensure nil
+  :commands image-mode
   :config
   (defun z-image-mode-eaf-open ()
     (interactive)

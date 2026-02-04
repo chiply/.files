@@ -1,7 +1,5 @@
 (use-package svelte-mode
-  :demand t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.svelte\\'" . svelte-mode))
+  :mode "\\.svelte\\'"
   :general
   (:keymaps 'svelte-mode-map
             :states '(normal visual)

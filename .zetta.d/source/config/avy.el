@@ -1,6 +1,6 @@
 (use-package avy
   :ensure (:wait t)
-  :demand t
+  :commands (avy-goto-char-timer evil-avy-goto-char-timer)
   :config
   (setq avy-ignored-modes
         '(image-mode doc-view-mode pdf-view-mode))

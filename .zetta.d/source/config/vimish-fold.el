@@ -1,5 +1,5 @@
 (use-package vimish-fold
-  :demand t
+  :commands (vimish-fold vimish-fold-mode vimish-fold-toggle vimish-fold-avy)
   :init
   (defun z-vimish-fold-tap (&optional thing)
     "If fold exists within tap, then toggle, otherwise create fold

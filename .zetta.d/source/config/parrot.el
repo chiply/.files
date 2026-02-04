@@ -1,5 +1,5 @@
 (use-package parrot
-  :demand t
+  :commands (parrot-mode parrot-start-animation)
   :ensure (parrot :type git :host github :repo "positron-solutions/parrot")
   :config
   (setq parrot-party-on-magit-push t)

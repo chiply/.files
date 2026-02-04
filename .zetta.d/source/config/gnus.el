@@ -1,6 +1,6 @@
 (use-package gnus
   :ensure nil
-  :demand t
+  :commands gnus
   :config
   (setq gnus-select-method '(nnnil ""))
   (setq gnus-secondary-select-methods '((nntp "news.gmane.io")))

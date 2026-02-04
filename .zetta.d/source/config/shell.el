@@ -12,8 +12,8 @@
 (setq password-cache-expiry 3600)
 
 (use-package shell
-  :straight nil
-  :demand t
+  :ensure nil
+  :commands shell
   :general
   (
    :keymaps '(shell-command-mode-map)

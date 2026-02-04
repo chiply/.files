@@ -26,7 +26,7 @@
                        "--ignore-sys-deps")
            )
 
-  :demand t
+  :commands (eaf-open eaf-open-browser)
 
   ;; Evil mode doesn't work well with eaf keybindings.
   :init (evil-set-initial-state 'eaf-mode 'emacs)

@@ -1,12 +1,13 @@
 (use-package bookmark
-  :straight nil
-  :demand t
+  :ensure nil
+  :commands (bookmark-set bookmark-jump bookmark-bmenu-list)
 
-  :config
+  :init
   (setq bookmark-fringe-mark 'bookmark-mark)
   (setq bookmark-save-flag t)
-
   (add-to-list 'desktop-globals-to-save 'bookmark-alist)
+
+  :config
 
   :display
   ;;(z-side "^\\*Bookmark List*" 'right -10)

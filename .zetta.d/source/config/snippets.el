@@ -4,7 +4,7 @@
 
 
 (use-package yasnippet
-  :demand t
+  :hook (elpaca-after-init . yas-global-mode)
 
   :init
 
@@ -17,8 +17,6 @@
           ,(format "%ssource/snippets/snippets/personal" user-emacs-directory)
           )
         )
-
-  (yas-global-mode 1)
 
 
 
@@ -139,13 +137,7 @@
   ;;:config
   ;;(py-snippets-initialize))
 
-;; not the greatest, but it's one of the better solutions that
-;; actually supports type hinting
-(use-package numpydoc
-  :config
-  (setq numpydoc-insertion-style nil)
-  :bind (:map python-ts-mode-map
-              ("C-c C-n" . numpydoc-generate)))
+;; numpydoc configured in python.el
 
 
 ;; excellent for discoverability.  like autocompletion, but at the top

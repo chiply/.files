@@ -1,5 +1,4 @@
 (use-package text-mode
-  :straight nil
-  :demand t
+  :ensure nil
   :hook (text-mode . (lambda () (toggle-truncate-lines 1)))
  )

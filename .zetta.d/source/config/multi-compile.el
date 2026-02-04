@@ -11,21 +11,20 @@
 
 ;;;;;;;;;;;;;;;; DEPENDENCIES
 (use-package templatel)
-(use-package compile-multi :demand t)
-(use-package consult-compile-multi :demand t :config (consult-compile-multi-mode))
+(use-package compile-multi :commands compile-multi)
+(use-package consult-compile-multi :after compile-multi :config (consult-compile-multi-mode))
 (use-package all-the-icons-completion
-  :demand t
+  :hook (elpaca-after-init . all-the-icons-completion-mode)
   :config
-  (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
-(use-package compile-multi-all-the-icons :demand t)
-(use-package compile-multi-embark :demand t :config (compile-multi-embark-mode +1))
-(use-package projection :demand t)
+(use-package compile-multi-all-the-icons :after compile-multi)
+(use-package compile-multi-embark :after (compile-multi embark) :config (compile-multi-embark-mode +1))
+(use-package projection :commands projection-mode)
 (use-package projection-multi
-  :demand t
+  :after projection
   :config
   (require 'projection-multi-make))
-(use-package projection-multi-embark :demand t)
+(use-package projection-multi-embark :after (projection embark))
 
 ;; TODO - timing of setting local and latest-transient -- should only happen once the transient has been executed, but this may be challenging or require more refactoring
 

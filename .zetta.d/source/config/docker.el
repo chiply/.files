@@ -4,7 +4,7 @@
   ;; viewing, modifying, running etc...
   ;; convention is used for the creation of 1 off containers, and is
   ;; likely becoming obsoltete
-  :demand t
+  :commands (docker docker-containers docker-images docker-volumes docker-networks)
 
 
   :display

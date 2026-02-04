@@ -1,6 +1,6 @@
 (use-package eww
-  :straight nil
-  :demand t
+  :ensure nil
+  :commands (eww eww-browse-url)
   :config
   (setq eww-auto-rename-buffer 'title)
   (setq eww-bookmarks-directory (expand-file-name "data/eww" user-emacs-directory))
@@ -62,7 +62,7 @@
     (interactive)
     (browse-url (thing-at-point 'url)))
 
-  (setq eww-default-download-directory "~/logseq/graphs/main/assets/")
+  (setq eww-default-download-directory "~/logseq/assets/")
 
   :general
   (

@@ -1,9 +1,8 @@
 (use-package grep
   :ensure nil
-  :demand t
   :after embark
+  :mode ("\\.grep\\'" . grep-mode)
   :config
-  (add-to-list 'auto-mode-alist '("\\.grep\\'" . grep-mode))
 
   ;; TODO doesn't work
   (general-unbind 'grep-mode-map "g r")

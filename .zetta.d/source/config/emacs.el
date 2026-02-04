@@ -1,8 +1,8 @@
 (use-package emacs
   :ensure nil
-  :demand t
-  :config
+  :init
   (setq ring-bell-function #'ignore)
+  :config
   (general-define-key
    :keymaps 'override
    "M-q" 'fill-paragraph))

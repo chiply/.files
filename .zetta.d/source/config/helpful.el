@@ -1,5 +1,6 @@
 (use-package helpful
-  :demand t
+  :commands (helpful-callable helpful-function helpful-variable helpful-key
+             helpful-command helpful-at-point helpful-symbol)
   :init
 
   (defun z-helpful-at-point ()

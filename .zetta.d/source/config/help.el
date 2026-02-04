@@ -1,6 +1,4 @@
 (use-package help
   :ensure nil
-  :demand t
-  :config
-  
+  :commands (describe-mode describe-function describe-variable)
   )

@@ -33,7 +33,8 @@
 
 
 (use-package elfeed-protocol
-  :ensure (elfeed-protocol :type git :host github :repo "fasheng/elfeed-protocol" :wait t)
+  :ensure (elfeed-protocol :host github :repo "fasheng/elfeed-protocol")
+  :after elfeed
   :demand t
   :config
   
@@ -51,7 +52,7 @@
 
 (use-package elfeed
   :after embark
-  :demand t
+  :commands elfeed
   :ensure (:wait t)
   :config
   (setq elfeed-use-curl t)

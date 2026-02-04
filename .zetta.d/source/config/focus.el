@@ -1,6 +1,5 @@
 (use-package focus
-  ;; need to load the funcitons as super structure nav relies
-  :demand t
+  :commands focus-mode
 
   :init
   (defun z-focus-mode (thing)
