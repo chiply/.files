@@ -1,31 +1,36 @@
-(use-package org-capture
-  :ensure nil
+;; -*- lexical-binding: t; -*-
 
-  :init
-  (setq org-capture-templates
-        '(
-          ;; LEFT OFF - can keep this around, but make another for public-- captal should be public
-          ;;(
-          ;;"H" "Linked header"
-          ;;entry
-          ;;(file "~/.files/org-roam/agenda.org")
-           ;;;; note using custom function from above
-           ;;;; can refine thiis... But for now it's a dumb link to the originial file.  org-roam processes this since
-           ;;;; the target is an org-roam directory
-          ;;"* INBOX %(if (file-exists-p (zett-org-get-title (org-capture-get :original-file))) \"\" \"[[file:%(abbreviate-file-name (org-capture-get :original-file))][%(zett-org-get-title (org-capture-get :original-file))]] \") :: %?\n"
-          ;;:prepend t
-          ;;) 
-          ;; TODO add linked versions
-          (
-           "o" "simple"
-           entry
-           (file "~/logseq/pages/capture.org")
-           ;; note using custom function from above
-           "* %?\n%a"
-           :prepend t
-           )
-          )
-        )
+;;; Searching logseq todo headings
+;; Functions z-logseq-todo-files and related are defined in bootstrap-org.el
 
-  ;;:hook (org-capture-after-finalize . z-refresh-agenda)
-  )
+(defun z-logseq-search-headings ()
+  "Search through headings in all logseq (todo) files using org-ql-find."
+  (interactive)
+  (let ((files (z-logseq-todo-files)))
+    (if files
+        (org-ql-find files)
+      (message "No (todo) files found in %s" z-logseq-pages-dir))))
+
+(defun z-logseq-search-todos ()
+  "Search through TODO items in all logseq (todo) files."
+  (interactive)
+  (let ((files (z-logseq-todo-files)))
+    (if files
+        (org-ql-search files '(todo))
+      (message "No (todo) files found in %s" z-logseq-pages-dir))))
+
+(defun z-logseq-consult-headings ()
+  "Search headings in logseq (todo) files using consult."
+  (interactive)
+  (let ((files (z-logseq-todo-files)))
+    (if files
+        (consult-org-heading nil files)
+      (message "No (todo) files found in %s" z-logseq-pages-dir))))
+
+;; Keybindings for logseq search commands
+(general-define-key
+ :keymaps 'launch-map
+ :prefix "o"
+ "s" 'z-logseq-search-headings
+ "t" 'z-logseq-search-todos
+ "h" 'z-logseq-consult-headings)

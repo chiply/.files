@@ -15,10 +15,8 @@
         org-attach-store-link-p 'file
         org-hide-leading-stars nil
         org-archive-location "(todo) archive.org::* From %s"
-        org-agenda-files '(
-                           ;; order matters
-                           "~/logseq/pages/(todo) todo.org"
-                           )
+        ;; org-agenda-files populated by z-logseq-update-agenda-files
+        org-agenda-files '()
         org-persist-directory (expand-file-name
                                ".data/org-persist"
                                user-emacs-directory)
@@ -248,6 +246,76 @@
                                   (when (fboundp 'undo-tree-mode)
                                     (undo-tree-mode +1))
                                   )))))
+
+;;; Logseq TODO files management
+(defvar z-logseq-pages-dir "~/logseq/pages/"
+  "Directory containing logseq pages.")
+
+(defun z-logseq-todo-files ()
+  "Return list of files in logseq pages starting with '(todo)'."
+  (when (file-directory-p z-logseq-pages-dir)
+    (directory-files z-logseq-pages-dir t "^(todo).*\\.org$")))
+
+(defun z-logseq-todo-file-name (file)
+  "Extract the name part from a (todo) FILE path.
+E.g., '(todo) emacs.org' -> 'emacs'"
+  (let ((basename (file-name-base file)))
+    (if (string-match "^(todo) \\(.+\\)$" basename)
+        (match-string 1 basename)
+      basename)))
+
+(defun z-logseq-todo-capture-key (name)
+  "Generate a capture key from NAME.
+Uses first letter, or first two letters if conflicts exist."
+  (downcase (substring name 0 1)))
+
+(defun z-logseq-generate-capture-templates ()
+  "Generate org-capture templates for all (todo) files."
+  (let ((files (z-logseq-todo-files))
+        (used-keys '())
+        templates)
+    (dolist (file files)
+      (let* ((name (z-logseq-todo-file-name file))
+             (base-key (z-logseq-todo-capture-key name))
+             ;; Handle key conflicts by appending numbers
+             (key (if (member base-key used-keys)
+                      (let ((i 2) new-key)
+                        (while (member (setq new-key (format "%s%d" base-key i)) used-keys)
+                          (setq i (1+ i)))
+                        new-key)
+                    base-key)))
+        (push key used-keys)
+        (push (list key
+                    (format "TODO → %s" name)
+                    'entry
+                    (list 'file file)
+                    "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n"
+                    :prepend t)
+              templates)))
+    (nreverse templates)))
+
+(defun z-logseq-update-agenda-files ()
+  "Add all (todo) files to org-agenda-files."
+  (let ((todo-files (z-logseq-todo-files)))
+    (dolist (file todo-files)
+      (add-to-list 'org-agenda-files file t))))
+
+;;; org-capture configuration
+(require 'org-capture)
+
+;; Build capture templates: base + logseq (todo) files
+(setq org-capture-templates
+      (append
+       '(("o" "Simple capture"
+          entry
+          (file "~/logseq/pages/capture.org")
+          "* %?\n%a"
+          :prepend t))
+       ;; Add logseq (todo) file templates dynamically
+       (z-logseq-generate-capture-templates)))
+
+;; Add (todo) files to agenda
+(z-logseq-update-agenda-files)
 
 (provide 'bootstrap-org)
 
