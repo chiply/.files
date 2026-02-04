@@ -1,6 +1,6 @@
 (use-package consult-web
-  :straight (consult-web :type git :host github :repo "armindarvish/consult-web" :branch "main"
-                         :files (:defaults "sources/*.el"))
+  :ensure (consult-web :host github :repo "armindarvish/consult-web" :branch "main"
+                       :files (:defaults "sources/*.el"))
   :after consult
   :custom
   ;; General settings that apply to all sources

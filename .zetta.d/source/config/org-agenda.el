@@ -1,1 +1,1 @@
-(use-package org-agenda :straight nil)
+(use-package org-agenda :ensure nil)

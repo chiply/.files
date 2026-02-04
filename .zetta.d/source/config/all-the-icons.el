@@ -1,11 +1,9 @@
 (use-package all-the-icons
-  :ensure t
-  :straight (all-the-icons
-             :type git
-             :host github
-             :repo "domtronn/all-the-icons.el"
-             :branch "svg"
-             :files (:defaults "svg"))
+  :ensure (all-the-icons
+           :host github
+           :repo "domtronn/all-the-icons.el"
+           :branch "svg"
+           :files (:defaults "svg"))
   :if (display-graphic-p)
   :config
   ;;(use-package octicons)

@@ -1,5 +1,5 @@
 (use-package replace
-  :straight nil
+  :ensure nil
 
   :evil
   (evil-set-initial-state 'occur-mode 'normal)

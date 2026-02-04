@@ -141,7 +141,7 @@
       (message "major mode is elfeed-show-mode")
       (expand-file-name
        (concat
-        "~/logseq/graphs/main/pages/(highlights elfeed) "
+        "~/logseq/pages/(highlights elfeed) "
         (let ((link-parts (split-string (org-store-link nil) "\\]\\[")))
           (my-org-remark-sanitize-notes-file-name
            (concat (nth 0 (split-string (nth 1 link-parts) "\\]\\]"))
@@ -150,21 +150,21 @@
      ((eq major-mode 'wombag-show-mode)
       (expand-file-name
        (concat
-        "~/logseq/graphs/main/pages/(highlights wombag) "
+        "~/logseq/pages/(highlights wombag) "
         (my-org-remark-notes-file-name-url
          (alist-get 'url wombag-show-entry)))))
      ;; Wombag
      ((eq major-mode 'pubmed-show-mode)
       (expand-file-name
        (concat
-        "~/logseq/graphs/main/pages/(highlights pubmed) "
+        "~/logseq/pages/(highlights pubmed) "
         (my-org-remark-notes-file-name-url
          (pubmed-extract-pmid)))))
      ;; Eww
      ((eq major-mode 'eww-mode)
       (expand-file-name
        (concat
-        "~/logseq/graphs/main/pages/(highlights eww) "
+        "~/logseq/pages/(highlights eww) "
         (my-org-remark-notes-file-name-url
          (eww-current-url)))))
      ;; if it is a file

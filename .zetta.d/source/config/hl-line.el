@@ -1,5 +1,5 @@
 (use-package hl-line
-  :straight nil
+  :ensure nil
   :init
   ;; NOTE causes lagging of beacon mode, so leaving off
   (global-hl-line-mode 1)

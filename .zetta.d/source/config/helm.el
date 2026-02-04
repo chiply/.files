@@ -1,5 +1,5 @@
 (use-package helm
-  :straight t
+  :ensure t
 
   :general
   (

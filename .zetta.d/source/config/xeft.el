@@ -1,6 +1,6 @@
 (use-package xeft
   :config
-  (setq xeft-directory (expand-file-name "~/logseq/graphs/main/pages"))
+  (setq xeft-directory (expand-file-name "~/logseq/pages"))
   )
 
 

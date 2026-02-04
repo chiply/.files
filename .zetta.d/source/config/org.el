@@ -110,6 +110,8 @@
   :ensure nil
   :demand t
   :config
+  ;; Load ox-md first so we can derive from 'md backend
+  (require 'ox-md)
   ;; fropm https://emacs.stackexchange.com/questions/42471/how-to-export-markdown-from-org-mode-with-syntax
   (org-export-define-derived-backend 'mymd 'md
     :menu-entry

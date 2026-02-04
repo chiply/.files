@@ -1,13 +1,25 @@
+#!/bin/bash
+
+# Prompt for sudo password upfront and keep alive
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 mkdir -p ~/.tmux/themes
 
 touch ~/.localsecrets
 touch ~/.tokens
 
-# macos thing
-xcode-select --install
+# macos thing - skip if already installed
+if ! xcode-select -p &>/dev/null; then
+    xcode-select --install
+    # Wait for installation to complete
+    until xcode-select -p &>/dev/null; do
+        sleep 5
+    done
+fi
 
-# install brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# install brew (non-interactive)
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew update
 brew upgrade
 
@@ -23,10 +35,10 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 # only install if the versions don't already exist
-pyenv install -v 3.10.0
-pyenv install -v 3.11.6
-pyenv install -v 3.11.9
-pyenv install -v 3.12.7
+pyenv install -s 3.10.0
+pyenv install -s 3.11.6
+pyenv install -s 3.11.9
+pyenv install -s 3.12.7
 pyenv local
 
 # poetry
@@ -49,8 +61,10 @@ brew bundle \
      --file=~/.files/files/.config/Brewfile
 # zinit (plugin manager for zsh - replaces oh-my-zsh)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-mkdir -p "$(dirname $ZINIT_HOME)"
-git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+if [ ! -d "$ZINIT_HOME" ]; then
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
 
 
 # if the fzf install script is at /usr/local/opt/fzf/install then ins
@@ -79,13 +93,18 @@ npm install -g how-2
 
 
 
+# fonts for emacs
+brew install --cask font-terminus
+
 # emacs
 chmod +x ~/.files/install_emacs_distros.sh && ~/.files/install_emacs_distros.sh
 
 ## language servers (not all should be installed into global scope, eg python)
+# TODO move this to Brewfile
+brew install npm
 npm install -g vscode-json-languageserver
 npm install -g eslint
-;;npm install -g @github/copilot-language-server
+npm install -g @github/copilot-language-server
 npm i -g svelte-language-server
 
 
