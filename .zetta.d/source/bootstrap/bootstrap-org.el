@@ -15,7 +15,7 @@
         org-archive-location "(todo) archive.org::* From %s"
         org-agenda-files '(
                            ;; order matters
-                           "~/logseq/graphs/main/pages/(todo) todo.org"
+                           "~/logseq/pages/(todo) todo.org"
                            )
         org-persist-directory (expand-file-name
                                ".data/org-persist"
@@ -242,8 +242,9 @@
                                   ;; NOTE prevents indefinte
                                   ;; indentation of code blocks
                                   (electric-indent-mode -1)
-                                  (toggle-truncate-lines -1) 
-                                  (undo-tree-mode +1)
+                                  (toggle-truncate-lines -1)
+                                  (when (fboundp 'undo-tree-mode)
+                                    (undo-tree-mode +1))
                                   )))))
 
 (provide 'bootstrap-org)

@@ -178,7 +178,7 @@
    "json-mode.el"
    "jsonian.el"
    "consult-gh.el"
-   "consult-omni.el"
+   ;;"consult-omni.el"
    "speed-type.el"
    "spray.el"
    "key-quiz.el"

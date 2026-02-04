@@ -1,5 +1,5 @@
 (use-package desktop
-  :straight nil
+  :ensure nil
   :config
   (setq desktop-base-file-name (expand-file-name ".data/desktop/.emacs.desktop" user-emacs-directory))
   (setq desktop-restore-frames nil)

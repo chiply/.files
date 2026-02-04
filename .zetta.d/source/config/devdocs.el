@@ -19,8 +19,9 @@
                            z-devdocs-installed-langs :test 'string=))
 
   ;; install all missing devdocs
-  (dolist (lang z-devdocs-uninstalled-langs)
-    (devdocs-install lang))
+  ;; TODO -- might be running into API errors here
+  ;;(dolist (lang z-devdocs-uninstalled-langs)
+    ;;(devdocs-install lang))
 
   )
 

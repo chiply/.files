@@ -1,6 +1,6 @@
 (use-package wombag
   :after (embark org)
-  :straight (wombag :type git :host github :repo "karthink/wombag")
+  :ensure (wombag :host github :repo "karthink/wombag")
 
   :config
   (setq wombag-host "https://app.wallabag.it"
