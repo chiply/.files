@@ -6,7 +6,7 @@
     (async-shell-command
      (concat "cd " dir " && " "wget " url))
     ;; add bibtex entry
-    (org-ref-url-html-to-bibtex "~/.files/.lit/bibliography.bib" url)))
+    (org-ref-url-html-to-bibtex (expand-file-name "bibliography.bib" zetta-literature-dir) url)))
 
 ;; note!  embark act on links browses to them...
 
@@ -22,7 +22,7 @@
     (async-shell-command (concat "cd ~/Downloads/ && wget " url))
 
     (progn
-      (find-file "~/.files/.lit/bibliography.bib")
+      (find-file (expand-file-name "bibliography.bib" zetta-literature-dir))
       (evil-goto-line)
       (insert
        "\n"

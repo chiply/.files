@@ -6,9 +6,9 @@
           (org-cite-insert nil)))
   (require 'bibtex)
 
-  (setq bibtex-completion-bibliography '("~/.files/.lit/bibliography.bib")
-        bibtex-completion-library-path '("~/.files/.lit/pdf/")
-        bibtex-completion-notes-path "~/.files/org-roam/"
+  (setq bibtex-completion-bibliography (list (expand-file-name "bibliography.bib" zetta-literature-dir))
+        bibtex-completion-library-path (list (expand-file-name "pdf/" zetta-literature-dir))
+        bibtex-completion-notes-path "~/org-roam/"
         org-ref-bibtex-pdf-download-dir "~/pdfs/"
         bibtex-completion-notes-template-multiple-files "* ${author-or-editor}, ${title}, ${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n"
 

@@ -17,7 +17,7 @@
 (require 'convention-execute)
 
 ;; config
-(defvar convention-dir "~/.files/.zetta.d/source/zettapkg/convention/"
+(defvar convention-dir (expand-file-name "source/zettapkg/convention/" user-emacs-directory)
   "Absolute path of the directory containing convention code on the end user's machine")
 
 

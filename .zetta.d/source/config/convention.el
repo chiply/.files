@@ -1,6 +1,6 @@
 ;;(use-package convention
   ;;:straight nil
-  ;;:load-path "~/.files/.zetta.d/source/zettapkg/convention"
+  ;;:load-path (expand-file-name "source/zettapkg/convention" user-emacs-directory)
   ;;:demand t
 ;;
   ;;:hydra
