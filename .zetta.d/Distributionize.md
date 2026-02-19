@@ -271,7 +271,7 @@ Sequential. Task 4 blocked by 1-3. Task 5 blocked by 4. Task 6 blocked by 5.
 
   Each module directory gets a `config.el` that loads its constituent files.
 
-- [ ] **Task 5: Write `zetta-modules!` macro** *(blocked by: 4)*
+- [x] **Task 5: Write `zetta-modules!` macro** *(blocked by: 4)*
 
   Write the core macro that replaces the flat `user-files` list in `init-data.el`.
 
