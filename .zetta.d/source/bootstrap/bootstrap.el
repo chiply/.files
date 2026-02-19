@@ -9,5 +9,6 @@
 (require 'bootstrap-evil)
 (require 'bootstrap-org)
 (require 'bootstrap-zettafn)
+(require 'bootstrap-modules)
 
 (provide 'bootstrap)

@@ -11,6 +11,12 @@
 ;; install mandatory config files
 (-each z-files-that-need-creating 'z-touch-maybe)
 
+;; load user module config (~/.zetta.el) if it exists
+;; this can call `zetta-modules!' to override the default user-files
+(let ((zetta-config (expand-file-name "~/.zetta.el")))
+  (when (file-exists-p zetta-config)
+    (load-file zetta-config)))
+
 ;; load private.el early (before config files that need API keys)
 (load-file "~/.private.el")
 
