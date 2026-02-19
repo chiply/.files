@@ -26,7 +26,7 @@
   "Load a file in current user's configuration directory"
   (message file)
   (let* ((emacsdir (expand-file-name user-emacs-directory))
-         (sourcefile-path (format "%ssource/config/%s" emacsdir file))
+         (sourcefile-path (format "%smodules/%s" emacsdir file))
          (file-extension (file-name-extension file))
          (root (file-name-sans-extension file))
          )
@@ -34,7 +34,7 @@
      ((string= "el" file-extension)
       (load-file sourcefile-path))
      ((string= "org" file-extension)
-      (let* ((tanglefile-path (format "%sconfig/tangled/%s.el" emacsdir root)))
+      (let* ((tanglefile-path (format "%smodules/tangled/%s.el" emacsdir root)))
         (org-babel-tangle-file sourcefile-path tanglefile-path)
         (load-file tanglefile-path)
         ))
