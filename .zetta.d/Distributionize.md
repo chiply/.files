@@ -332,7 +332,7 @@ Tasks 7 and 8 can run in parallel. Task 9 blocked by 5 and 7.
   - Update distro to reference via `:ensure (:host github :repo "you/<pkg>")`
   - Keep local dev path in personal `~/.zetta.el` via `:ensure nil` + `load-path`
 
-- [ ] **Task 9: Write `bin/zetta` CLI wrapper** *(blocked by: 5, 7)*
+- [x] **Task 9: Write `bin/zetta` CLI wrapper** *(blocked by: 5, 7)*
 
   Shell script with subcommands:
 
