@@ -20,6 +20,14 @@ Download Terminus TTF from https://files.ax86.net/terminus-ttf/")
 (defvar zetta-logseq-dir "~/logseq/pages/"
   "Directory containing Logseq pages.  Set in ~/.zetta.el.")
 
+(defvar zetta-use-lockfile t
+  "When non-nil, pin packages to versions in elpaca-lock.el.
+Set to nil in ~/.zetta.el for bleeding-edge packages.")
+
+;; Apply lockfile preference (elpaca-lock-file is set in bootstrap-elpaca.el)
+(unless zetta-use-lockfile
+  (setq elpaca-lock-file nil))
+
 ;;; Module system
 
 (defvar zetta-modules-dir (expand-file-name "modules" user-emacs-directory)

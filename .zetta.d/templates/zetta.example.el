@@ -43,6 +43,14 @@
 ;; (setq zetta-logseq-dir "~/logseq/pages/")
 
 ;;; ————————————————————————————————————————————————
+;;; Package management
+;;; ————————————————————————————————————————————————
+
+;; Pin packages to lockfile versions for reproducibility (default: t)
+;; Set to nil to use latest package versions from MELPA/GitHub
+;; (setq zetta-use-lockfile nil)
+
+;;; ————————————————————————————————————————————————
 ;;; Modules
 ;;; ————————————————————————————————————————————————
 
