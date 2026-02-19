@@ -21,7 +21,7 @@
       (all-the-icons-icon-for-mode 'copilot-mode)))
 
   (telephone-line-defsegment zt-icon-side-window ()
-    (when (z-side-window-p (selected-window)) " {S} "))
+    (when (zetta-side-window-p (selected-window)) " {S} "))
 
   (telephone-line-defsegment zt-flappy-fish ()
     (if (equal
@@ -56,7 +56,7 @@
     (let ((result (shell-command-to-string
                    "git rev-parse --is-inside-work-tree")))
       (when (and result (string= result "true\n"))
-        (nth 0 (z-get-repo-name)))))
+        (nth 0 (zetta-get-repo-name)))))
 
   (telephone-line-defsegment zt-vc-segment-branch ()
     (let ((result (shell-command-to-string
@@ -87,10 +87,10 @@
     ;; TODO separate this out
     (concat
      (when repeat-in-progress "R")
-     (let ((icon (z-line-tramp-icon))) (when icon "T"))
-     (let ((icon (z-line-docker-icon))) (when icon "D"))
-     (let ((icon (z-line-narrowed-icon))) (when icon "N"))
-     (let ((icon (z-line-hydra-indicator-icon))) (when icon "H"))
+     (let ((icon (zetta-line-tramp-icon))) (when icon "T"))
+     (let ((icon (zetta-line-docker-icon))) (when icon "D"))
+     (let ((icon (zetta-line-narrowed-icon))) (when icon "N"))
+     (let ((icon (zetta-line-hydra-indicator-icon))) (when icon "H"))
      ))
 
   (telephone-line-defsegment zt-anzu-segment ()
@@ -98,7 +98,7 @@
     )
 
   (telephone-line-defsegment zt-iedit-segment ()
-    (let ((icon (z-line-iedit-icon)))
+    (let ((icon (zetta-line-iedit-icon)))
       (when icon 
         ;; the car of iedit-mode-line unioned with the cdr of iedit-mode-line
         (cons (replace-regexp-in-string
@@ -113,13 +113,13 @@
   (telephone-line-defsegment zt-parrot ()
     (when (or
            (and
-            (equal z-parrot-window (selected-window))
-            (equal z-parrot-buffer (current-buffer))
+            (equal zetta-parrot-window (selected-window))
+            (equal zetta-parrot-buffer (current-buffer))
             (string= (symbol-name major-mode) "org-mode"))
            (and
             (string= (symbol-name major-mode) "magit-status-mode")
-            (equal z-parrot-window (selected-window))
-            (equal z-parrot-buffer (current-buffer))))
+            (equal zetta-parrot-window (selected-window))
+            (equal zetta-parrot-buffer (current-buffer))))
       (parrot-create)))
 
   (telephone-line-defsegment zt-popper-popup ()

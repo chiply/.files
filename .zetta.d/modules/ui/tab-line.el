@@ -36,7 +36,7 @@
        (with-current-buffer buffer default-directory)))))
 
 
-  ;; CONDITIONS (for use in z-project-mode-buffers)
+  ;; CONDITIONS (for use in zetta-project-mode-buffers)
   (setq is-grep-or-occur '(is-grep is-occur))
   (setq is-magit-or-helpful '(is-magit is-helpful))
   (setq is-terminal-application '(is-terminal-application))
@@ -45,17 +45,17 @@
 
 
   ;; HELPERS
-  (defun z-tab-line-test-buffer (buffer conditions)
+  (defun zetta-tab-line-test-buffer (buffer conditions)
     (seq-some (lambda (condition) (funcall condition buffer)) conditions))
 
-  (defun z-tab-line-filter-buffers (buffers conditions)
+  (defun zetta-tab-line-filter-buffers (buffers conditions)
     (seq-sort-by
      #'buffer-name #'string<
      (seq-filter
       (lambda (buffer)
         (and ;; make sure it isn't a closed tab
          (not (member buffer (window-parameter (selected-window) 'closed-tabs)))
-         (z-tab-line-test-buffer buffer conditions)))
+         (zetta-tab-line-test-buffer buffer conditions)))
       buffers)))
 
   ;; BUFER SCOPES
@@ -63,32 +63,32 @@
   ;; create a buffer local variable
 
   ;; Create a hook to set a window parameter anytime a window is created
-  ;; (set-window-parameter (selected-window) 'z-tab-line-scope 'z-tab-line-scope-project-buffers)
+  ;; (set-window-parameter (selected-window) 'zetta-tab-line-scope 'zetta-tab-line-scope-project-buffers)
 
   ;; scopes == each scope is a function that returns a list of buffers
-  (defun z-tab-line-scope-all-buffers ()
+  (defun zetta-tab-line-scope-all-buffers ()
     ;; todo implement all buffers (not just recently visited)?
     ;;(buffer-list)
-    (z-tab-line-filter-buffers (tab-line-tabs-window-buffers) '(is-buffer)))
+    (zetta-tab-line-filter-buffers (tab-line-tabs-window-buffers) '(is-buffer)))
 
-  (defun z-tab-line-scope-all-buffers-same-mode ()
-    (z-tab-line-filter-buffers (z-tab-line-scope-all-buffers) '(is-current-major-mode)))
+  (defun zetta-tab-line-scope-all-buffers-same-mode ()
+    (zetta-tab-line-filter-buffers (zetta-tab-line-scope-all-buffers) '(is-current-major-mode)))
 
-  (defun z-tab-line-scope-project-buffers ()
-    (z-tab-line-filter-buffers (z-tab-line-scope-all-buffers) '(is-project-buffer)))
+  (defun zetta-tab-line-scope-project-buffers ()
+    (zetta-tab-line-filter-buffers (zetta-tab-line-scope-all-buffers) '(is-project-buffer)))
 
-  (defun z-tab-line-scope-project-buffers-same-mode ()
-    (z-tab-line-filter-buffers (z-tab-line-scope-project-buffers) '(is-current-major-mode)))
+  (defun zetta-tab-line-scope-project-buffers-same-mode ()
+    (zetta-tab-line-filter-buffers (zetta-tab-line-scope-project-buffers) '(is-current-major-mode)))
 
   ;; UI for setting scope
-  (defun z-tab-line-toggle-scope ()
+  (defun zetta-tab-line-toggle-scope ()
     (interactive)
     (let ((scopes
-           '(z-tab-line-scope-all-buffers
-             z-tab-line-scope-all-buffers-same-mode
-             z-tab-line-scope-project-buffers
-             z-tab-line-scope-project-buffers-same-mode)))
-      (set-window-parameter (selected-window) 'z-tab-line-scope
+           '(zetta-tab-line-scope-all-buffers
+             zetta-tab-line-scope-all-buffers-same-mode
+             zetta-tab-line-scope-project-buffers
+             zetta-tab-line-scope-project-buffers-same-mode)))
+      (set-window-parameter (selected-window) 'zetta-tab-line-scope
                             (intern (completing-read "Scope: " scopes)))))
 
 
@@ -127,7 +127,7 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
 
 
 
-  (defun z-tab-line-close-tab ()
+  (defun zetta-tab-line-close-tab ()
     (interactive)
     (let ((closed-tabs (window-parameter (selected-window) 'closed-tabs)))
       (set-window-parameter
@@ -148,24 +148,24 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
   ;; in action -- but the semantics are simply listing groups in order
   ;; of precedence
 
-  (defun z-tab-line-get-scope ()
+  (defun zetta-tab-line-get-scope ()
     (or
-     (window-parameter (selected-window) 'z-tab-line-scope)
-     'z-tab-line-scope-project-buffers))
+     (window-parameter (selected-window) 'zetta-tab-line-scope)
+     'zetta-tab-line-scope-project-buffers))
 
-  (defun z-project-mode-buffers ()
+  (defun zetta-project-mode-buffers ()
     ;; should be project buffers, for window (union of prev and next)
-    (let ((buffers (funcall (z-tab-line-get-scope))))
+    (let ((buffers (funcall (zetta-tab-line-get-scope))))
       (cond
-       ((and (z-tab-line-test-buffer (current-buffer) is-magit-or-helpful)
+       ((and (zetta-tab-line-test-buffer (current-buffer) is-magit-or-helpful)
              (window-parameter (selected-window) 'window-side))
-        (z-tab-line-filter-buffers buffers is-magit-or-helpful))
-       ((and (z-tab-line-test-buffer (current-buffer) is-grep-or-occur)
+        (zetta-tab-line-filter-buffers buffers is-magit-or-helpful))
+       ((and (zetta-tab-line-test-buffer (current-buffer) is-grep-or-occur)
              (window-parameter (selected-window) 'window-side))
-        (z-tab-line-filter-buffers buffers is-grep-or-occur))
-       ((and (z-tab-line-test-buffer (current-buffer) is-terminal-application)
+        (zetta-tab-line-filter-buffers buffers is-grep-or-occur))
+       ((and (zetta-tab-line-test-buffer (current-buffer) is-terminal-application)
              (window-parameter (selected-window) 'window-side))
-        (z-tab-line-filter-buffers buffers is-terminal-application))
+        (zetta-tab-line-filter-buffers buffers is-terminal-application))
        (t (seq-sort-by #'buffer-name #'string< buffers)))))
 
   ;; buffers in projectile projects, show other project buffers
@@ -204,7 +204,7 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
       )
     "Alist of integers to strings of circled unicode numbers.")
 
-  (defun z-tab-line-tab-name-buffer (buffer &optional _buffers)
+  (defun zetta-tab-line-tab-name-buffer (buffer &optional _buffers)
     (let* ((buffer-name (buffer-name buffer))
            (bufnm buffer-name)
            (bufnm (string-replace "helpful function" "H" bufnm))
@@ -230,8 +230,8 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
 
 
 
-  (setq tab-line-tab-name-function 'z-tab-line-tab-name-buffer)
-  ;;(setq tab-line-tabs-function 'z-project-mode-buffers)
+  (setq tab-line-tab-name-function 'zetta-tab-line-tab-name-buffer)
+  ;;(setq tab-line-tabs-function 'zetta-project-mode-buffers)
 
   (setq tab-line-tabs-function 'tab-line-tabs-window-buffers)
 
@@ -284,7 +284,7 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
   (
    :keymaps 'override
    ;; closes tab, doesn't kill buffer
-   ;;"s-w" 'z-tab-line-close-tab
+   ;;"s-w" 'zetta-tab-line-close-tab
    "s-w" 'tab-line-close-tab-1
    )
 

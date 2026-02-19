@@ -4,13 +4,13 @@
 
   :init
 
-  ;;(z-load-extension-file "dired/dired.el")
+  ;;(zetta-load-extension-file "dired/dired.el")
   (when (string= system-type "darwin")       
     (setq dired-use-ls-dired nil))
 
   (setq dired-use-ls-dired nil)
 
-  (defun z-dired-file-peak ()
+  (defun zetta-dired-file-peak ()
     "
 A docstring
 "
@@ -18,11 +18,11 @@ A docstring
     (interactive)
     (let* ((file (dired-get-file-for-visit))
            (buf (find-file-noselect file)))
-      (z-indirect-buffer buf)
+      (zetta-indirect-buffer buf)
       ) 
     )
 
-  (defun z-soda-create-and-display-dired (&optional buf-or-mode-name)
+  (defun zetta-soda-create-and-display-dired (&optional buf-or-mode-name)
     (if (cdr (project-current nil))
         (let ((buf (current-buffer)))
           ;; can yield unexpect results on remote, so manually
@@ -53,7 +53,7 @@ A docstring
     )
 
   ;; function that returns the directory for the thing at point 
-  (defun z-dired-dir-at-point ()
+  (defun zetta-dired-dir-at-point ()
     (interactive)
     (let ((thing (dired-get-file-for-visit)))
       (if (file-directory-p thing)
@@ -71,7 +71,7 @@ A docstring
   (defun dired-ace-new-file-vert ()
     "Use ace window to select a window for opening a file from dired."
     (interactive)
-    (let* ((file (z-dired-dir-at-point)))
+    (let* ((file (zetta-dired-dir-at-point)))
       (if (file-directory-p (dired-get-file-for-visit))
           (dired-find-file)
         ;;(if (> (length (aw-window-list)) 1)
@@ -86,7 +86,7 @@ A docstring
   (defun dired-ace-new-file-hor ()
     "Use ace window to select a window for opening a file from dired."
     (interactive)
-    (let* ((file (z-dired-dir-at-point)))
+    (let* ((file (zetta-dired-dir-at-point)))
       (if (file-directory-p (dired-get-file-for-visit))
           (dired-find-file)
         (if (> (length (aw-window-list)) 1)
@@ -148,49 +148,49 @@ A docstring
         )
       ))
 
-  (defun z-dired-do-flagged-delete ()
+  (defun zetta-dired-do-flagged-delete ()
     "Performs delete and reverts buffer"
     (interactive)
     (dired-do-flagged-delete)
     (unless (file-remote-p default-directory) (revert-buffer)))
 
-  (defun z-dired-do-delete ()
+  (defun zetta-dired-do-delete ()
     "Performs delete and reverts buffer"
     (interactive)
     (dired-do-delete)
     (unless (file-remote-p default-directory) (revert-buffer)))
 
-  (defun z-dired-do-copy ()
+  (defun zetta-dired-do-copy ()
     "Performs copy and reverts buffer"
     (interactive)
     (dired-do-copy)
     (unless (file-remote-p default-directory) (revert-buffer)))
 
-  (defun z-dired-do-rename ()
+  (defun zetta-dired-do-rename ()
     "Performs delete and reverts buffer"
     (interactive)
     (dired-do-rename)
     (unless (file-remote-p default-directory) (revert-buffer)))
 
-  (defun z-dired-create-directory ()
+  (defun zetta-dired-create-directory ()
     "Performs delete and reverts buffer"
     (interactive)
     (call-interactively #'dired-create-directory)
     (unless (file-remote-p default-directory) (revert-buffer)))
 
-  (defun z-dired-subtree-cycle ()
+  (defun zetta-dired-subtree-cycle ()
     (interactive)
     (dired-subtree-cycle 10)
     (unless (file-remote-p default-directory) (revert-buffer)))
 
-  (defun z-dired-subtree-toggle ()
+  (defun zetta-dired-subtree-toggle ()
     (interactive)
     (dired-subtree-toggle)
     (unless (file-remote-p default-directory) (revert-buffer))
     (file-remote-p default-directory)
     )
 
-  (defun z-dired-ag ()
+  (defun zetta-dired-ag ()
     "Convenient helm ag for directory at point in dired buffers"
     (interactive)
     (let ((dir (if  (file-directory-p (dired-get-file-for-visit))
@@ -200,26 +200,26 @@ A docstring
 
 
 
-  (defun z-dired-ranger-copy ()
+  (defun zetta-dired-ranger-copy ()
     (interactive)
     (call-interactively 'dired-ranger-copy)
     (unless (file-remote-p default-directory) (revert-buffer))
     )
 
-  (defun z-dired-ranger-paste ()
+  (defun zetta-dired-ranger-paste ()
     (interactive)
     (call-interactively 'dired-ranger-paste)
     (unless (file-remote-p default-directory) (revert-buffer))
     )
 
-  (defun z-dired-ranger-move ()
+  (defun zetta-dired-ranger-move ()
     (interactive)
     (call-interactively 'dired-ranger-move)
     (unless (file-remote-p default-directory) (revert-buffer))
     )
 
 
-  (defun z-dired-open-in-chrome ()
+  (defun zetta-dired-open-in-chrome ()
     (interactive)
     (let (
           (file (dired-get-file-for-visit))
@@ -263,29 +263,29 @@ Version 2019-11-04"
                               (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
 
-  (defun z-soda-drink-dired ()
+  (defun zetta-soda-drink-dired ()
     (interactive)
-    (z-soda-drink
-     (quote z-soda-create-and-display-dired)
+    (zetta-soda-drink
+     (quote zetta-soda-create-and-display-dired)
      "dired-mode"))
 
 
-  (defun z-soda-cap-dired ()
+  (defun zetta-soda-cap-dired ()
     (interactive)
-    (z-soda-cap "\\dired-mode*" 1))
+    (zetta-soda-cap "\\dired-mode*" 1))
   
 
   (general-define-key
    :keymaps 'menu-run-map
-   "d" (** z-soda-drink-dired)
-   "D" (** z-soda-cap-dired))
+   "d" (** zetta-soda-drink-dired)
+   "D" (** zetta-soda-cap-dired))
 
 
   :general
   (
    :keymaps '(dired-mode-map)
-   "<tab>" 'z-dired-subtree-toggle
-   "S-<tab>" 'z-dired-subtree-cycle
+   "<tab>" 'zetta-dired-subtree-toggle
+   "S-<tab>" 'zetta-dired-subtree-cycle
    "o" 'dired-ace-find-file
    "v" 'dired-ace-find-file-vert
    "h" 'dired-ace-find-file-hor
@@ -294,19 +294,19 @@ Version 2019-11-04"
    "H" 'dired-ace-new-file-hor
    "J" 'dired-subtree-down
    "K" 'dired-subtree-up
-   "p" 'z-dired-file-peak
-   "A" 'z-dired-ag
+   "p" 'zetta-dired-file-peak
+   "A" 'zetta-dired-ag
    "r" 'revert-buffer
-   "R" 'z-dired-do-rename
-   "x" 'z-dired-do-flagged-delete
-   "D" 'z-dired-do-delete
-   "C" 'z-dired-do-copy
-   "+" 'z-dired-create-directory
+   "R" 'zetta-dired-do-rename
+   "x" 'zetta-dired-do-flagged-delete
+   "D" 'zetta-dired-do-delete
+   "C" 'zetta-dired-do-copy
+   "+" 'zetta-dired-create-directory
    "y" 'evil-yank
-   "Y" 'z-dired-ranger-copy
-   "P" 'z-dired-ranger-paste
-   "M" 'z-dired-ranger-move
-   "B" 'z-dired-open-in-chrome
+   "Y" 'zetta-dired-ranger-copy
+   "P" 'zetta-dired-ranger-paste
+   "M" 'zetta-dired-ranger-move
+   "B" 'zetta-dired-open-in-chrome
    ;;"gg" 'evil-goto-first-line
    "G" 'evil-goto-line
    "<C-return>" 'xah-open-in-external-app

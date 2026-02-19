@@ -29,9 +29,9 @@ Zetta supports three modal editing systems, switchable at runtime:
 
 | Key | Command | Mode |
 |-----|---------|------|
-| `s-z e` | `z-state-evil` | Evil mode (vim emulation) |
-| `s-z m` | `z-state-meow` | Meow mode (selection-first editing) |
-| `s-z E` | `z-state-emacs` | Vanilla Emacs (no modal editing) |
+| `s-z e` | `zetta-state-evil` | Evil mode (vim emulation) |
+| `s-z m` | `zetta-state-meow` | Meow mode (selection-first editing) |
+| `s-z E` | `zetta-state-emacs` | Vanilla Emacs (no modal editing) |
 
 `s-` is the Super key (Command on macOS, Windows key on Linux).
 
@@ -46,7 +46,7 @@ Evil mode is active by default.
 
 ## Side Window Display
 
-The `z-side` system manages side windows for buffers like Messages, compilation output, and help.
+The `zetta-side` system manages side windows for buffers like Messages, compilation output, and help.
 
 Run menu commands (`**, r m` etc.) use the `**` repeatable-lite macro for quick toggling:
 

@@ -3,7 +3,7 @@
              helpful-command helpful-at-point helpful-symbol)
   :init
 
-  (defun z-helpful-at-point ()
+  (defun zetta-helpful-at-point ()
     (interactive)
     (let ((buf (current-buffer)))
       (helpful-at-point)
@@ -13,13 +13,13 @@
 
   (setq helpful-switch-buffer-function 'display-buffer)
 
-  (defun z-soda-cap-help ()
+  (defun zetta-soda-cap-help ()
     (interactive)
-    (z-soda-cap "[H|h]elp*" 1))
+    (zetta-soda-cap "[H|h]elp*" 1))
 
   (general-define-key
    :keymaps 'menu-run-map
-   "H" (** z-soda-cap-help))
+   "H" (** zetta-soda-cap-help))
 
 
   :general
@@ -28,11 +28,11 @@
    "c" 'helpful-command
    "f" 'helpful-function
    "v" 'helpful-variable
-   "h" 'z-jump-to-doc
+   "h" 'zetta-jump-to-doc
    "k" 'helpful-key
    "a" 'helm-apropos
    "A" 'apropos
-   "m" 'z-describe-mode
+   "m" 'zetta-describe-mode
    "i" 'info
    )
 

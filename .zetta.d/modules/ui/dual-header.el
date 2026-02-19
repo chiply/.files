@@ -52,7 +52,7 @@
 (defun mode-line-render (left)
   left)
 
-(defun z-set-dual-header ()
+(defun zetta-set-dual-header ()
  (setq-default
   header-line-format
   ;;header-line-format
@@ -65,7 +65,7 @@
         (svg-image
          (tag
           (format-mode-line
-           (z-get-line-format default-line-align-left-devel-1 "" "")
+           (zetta-get-line-format default-line-align-left-devel-1 "" "")
            )
           15 "Terminus (TTF)" brushup-fg-3
           (format-mode-line default-line-align-left-devel-2)
@@ -74,8 +74,8 @@
          :ascent 100)))))))
  )
 
-(z-set-dual-header)
+(zetta-set-dual-header)
 
-(add-to-list 'brushup-styles '(z-set-dual-header))
+(add-to-list 'brushup-styles '(zetta-set-dual-header))
 
-(add-hook 'magit-status-mode-hook 'z-set-dual-header)
+(add-hook 'magit-status-mode-hook 'zetta-set-dual-header)

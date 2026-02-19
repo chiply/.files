@@ -29,7 +29,7 @@
 ;; functionality from multiple features
 
 ;; can repeat-mode be temprarily turned on?
-(defmacro z-crud-repeat-map (keymap key command &optional repeat hint)
+(defmacro zetta-crud-repeat-map (keymap key command &optional repeat hint)
   `(progn
      ;; bind key
      ;; todo use general instead?  what are the advantages there?
@@ -41,13 +41,13 @@
      (if ,hint (put ,command 'repeat-hint ,hint)
        (remprop ,command 'repeat-hint))))
 
-;; define a macro that can be used to run z-crud-repeat-map for a set
+;; define a macro that can be used to run zetta-crud-repeat-map for a set
 ;; of commands, supplied with the following syntax
-(defmacro z-crud-repeat-map-set (keymap &rest commands)
+(defmacro zetta-crud-repeat-map-set (keymap &rest commands)
   `(progn
      (when (not (keymapp ,keymap)) (defvar ,keymap))
      ,@(mapcar (lambda (command)
-                 `(z-crud-repeat-map
+                 `(zetta-crud-repeat-map
                    ,keymap
                    ,(nth 0 command)
                    ,(nth 1 command)
@@ -56,9 +56,9 @@
                commands)))
 
 ;; eg
-;;(z-crud-repeat-map comma-repeat-map "1" #'command1 t "command 1")
+;;(zetta-crud-repeat-map comma-repeat-map "1" #'command1 t "command 1")
 
-(z-crud-repeat-map-set
+(zetta-crud-repeat-map-set
  comma-repeat-map
  ("1" #'command1 t "command 1")
  ("2" #'command2 t "command 2")

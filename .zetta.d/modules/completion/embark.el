@@ -17,7 +17,7 @@
           ))
   (setq embark-confirm-act-all nil)
 
-  (define-key embark-general-map (kbd "C-b") 'z-bookmark-create)
+  (define-key embark-general-map (kbd "C-b") 'zetta-bookmark-create)
   (define-key embark-general-map (kbd "!") 'symbol-overlay-put)
   (define-key embark-general-map (kbd "C-!") 'symbol-overlay-remove-all)
 
@@ -109,7 +109,7 @@ targets."
   :general
   (
    ;; override alone doesn't work here for some reason
-   :keymaps (append z-modal-states-non-insert '(override))
+   :keymaps (append zetta-modal-states-non-insert '(override))
    "C-." 'embark-act
    "C-h B" 'embark-bindings
    "C-;" 'embark-dwim

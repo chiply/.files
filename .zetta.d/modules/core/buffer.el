@@ -1,4 +1,4 @@
-(defun z-indirect-buffer (&optional buffer)
+(defun zetta-indirect-buffer (&optional buffer)
   (interactive)
   (let* ((cbuf-name (buffer-name buffer))
          (ibuf-name (format "*indirect--%s*" cbuf-name))
@@ -20,4 +20,4 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; display
-;;(z-side "^\\*indirect*" 'right)
+;;(zetta-side "^\\*indirect*" 'right)

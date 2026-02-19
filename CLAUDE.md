@@ -66,7 +66,7 @@ The Emacs configuration lives in `.zetta.d/` and uses **Elpaca** as the package 
    - `init-data.el` - Defines `user-files` list of configs to load
    - `bootstrap.el` - Core modules (see below)
    - `~/.private.el` - Private API keys and credentials
-   - Each file in `user-files` via `z-load-config-file`
+   - Each file in `user-files` via `zetta-load-config-file`
 3. **bootstrap.el** requires (in order):
    - `bootstrap-elpaca` - Elpaca package manager setup
    - `bootstrap-utils` - Utility functions
@@ -152,8 +152,8 @@ The config supports multiple modal editing systems (Evil, Meow, Emacs).
 ```
 
 **Naming conventions:**
-- Custom functions: prefix with `z-` (e.g., `z-find-poetry-project-root`)
-- Custom variables: prefix with `z-` (e.g., `z-pyvenv-virtual-env`)
+- Custom functions: prefix with `zetta-` (e.g., `zetta-find-poetry-project-root`)
+- Custom variables: prefix with `zetta-` (e.g., `zetta-pyvenv-virtual-env`)
 
 ### Common Gotchas
 

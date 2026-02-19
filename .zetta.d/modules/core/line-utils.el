@@ -14,40 +14,40 @@
 
 
 ;;;; functions for generating icons
-(defun z-line-iedit-icon ()
+(defun zetta-line-iedit-icon ()
   (when (and (boundp 'iedit-mode) iedit-mode)
     (all-the-icons-material
      "find_replace"
      :face 'mode-line )))
 
-(defun z-line-github-icon ()
+(defun zetta-line-github-icon ()
   (when vc-mode
     (all-the-icons-faicon
      "github"
      :face 'mode-line )))
 
-(defun z-line-modified-icon ()
+(defun zetta-line-modified-icon ()
   (when (buffer-modified-p)
     (all-the-icons-material
      "change_history"
      :face 'mode-line 
      )))
 
-(defun z-line-tramp-icon ()
+(defun zetta-line-tramp-icon ()
   (when (member "ssh" (4mn-get-tramp-hop-types))
     (all-the-icons-faicon "server"
                           
                           :face 'mode-line ))
   )
 
-(defun z-line-docker-icon ()
+(defun zetta-line-docker-icon ()
   (when (member "docker" (4mn-get-tramp-hop-types))
     (all-the-icons-fileicon
      "dockerfile"
      
      :face 'mode-line )))
 
-(defun z-line-hydra-indicator-icon ()
+(defun zetta-line-hydra-indicator-icon ()
   (if (and
        ;; hydra loaded
        (boundp 'hydra-curr-map)
@@ -63,13 +63,13 @@
        )
     nil))
 
-(defun z-line-narrowed-icon ()
+(defun zetta-line-narrowed-icon ()
   (when (buffer-narrowed-p) "N"))
 
 
 
 
-(defun z-get-repo-name ()
+(defun zetta-get-repo-name ()
   (last (split-string
          (nth 0 (split-string
                  (shell-command-to-string
@@ -79,14 +79,14 @@
          ))
   )
 
-(defun z-get-branch-name ()
+(defun zetta-get-branch-name ()
   (nth 0 (split-string
           (shell-command-to-string
            "git rev-parse --abbrev-ref HEAD")
           "\n")))
 
 
-(defun z-line-col () 
+(defun zetta-line-col () 
   (let ((col-length (length (int-to-string (current-column)))))
     (cond
      ((eq col-length 1) "%c%2 ")
@@ -131,7 +131,7 @@
 (defun reserve-left/middle (line-align-middle)
   (/ (length (format-mode-line line-align-middle)) 2))
 
-(defun z-do-reserve-left/middle (line-align-middle)
+(defun zetta-do-reserve-left/middle (line-align-middle)
   (if (eq ml-selected-window (selected-window))
       (mode-line-fill-center 'mode-line (reserve-left/middle line-align-middle))
     (mode-line-fill-center 'mode-line-inactive
@@ -141,7 +141,7 @@
 (defun reserve-middle/right (line-align-right)
   (+ RIGHT_PADDING (length (format-mode-line line-align-right))))
 
-(defun z-do-reserve-middle/right (line-align-right)
+(defun zetta-do-reserve-middle/right (line-align-right)
   (if (eq ml-selected-window (selected-window))
       (mode-line-fill-right 'mode-line
                             (reserve-middle/right line-align-right))
@@ -151,17 +151,17 @@
 
 
 ;; extremely conduing, but vars need to be passed to eval as strings
-(defun z-get-line-format (line-align-left line-align-middle line-align-right)
+(defun zetta-get-line-format (line-align-left line-align-middle line-align-right)
   (list
    ;; Left
    line-align-left
 
    ;; Middle
-   '(:eval (z-do-reserve-left/middle 'line-align-middle))
+   '(:eval (zetta-do-reserve-left/middle 'line-align-middle))
    line-align-middle
 
    ;; Right
-   '(:eval (z-do-reserve-middle/right 'line-align-right))
+   '(:eval (zetta-do-reserve-middle/right 'line-align-right))
    line-align-right
    )
   )

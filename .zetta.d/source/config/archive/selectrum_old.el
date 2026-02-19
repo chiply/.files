@@ -35,7 +35,7 @@
                 ;;(setq selectrum-max-window-height 20)))
    ;;)
 ;;
-  ;;:hook (use-package--selectrum--post-config . z-brushup)
+  ;;:hook (use-package--selectrum--post-config . zetta-brushup)
   ;;)
 
 

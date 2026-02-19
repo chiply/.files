@@ -15,7 +15,7 @@
   :demand t
   :config
 
-  (defun z-cursor-in-which-key-slot ()
+  (defun zetta-cursor-in-which-key-slot ()
     (and
      (eq 0 (window-parameter (selected-window) 'window-slot))
      (eq 'top (window-parameter (selected-window) 'window-side))
@@ -35,7 +35,7 @@
   (defun which-key-custom-show-popup-function (act-popup-dim)
     (let* ((alist `((window-width . fit-horizontally)
                     (window-height . fit-window-to-buffer)
-                    (side . ,(if (z-cursor-in-which-key-slot)
+                    (side . ,(if (zetta-cursor-in-which-key-slot)
                                  (intern "bottom")
                                (intern "top")
                                ))
@@ -43,7 +43,7 @@
                     )))
       
       (display-buffer-in-side-window which-key--buffer alist)
-      (setq z-which-key-showing t)
+      (setq zetta-which-key-showing t)
       ;;(setq which-key-idle-delay 1000)
       (setq prefix-help-command 'which-key-C-h-dispatch)
       ))
@@ -51,7 +51,7 @@
 
   (defun which-key-custom-hide-popup-function ()
     (when (buffer-live-p which-key--buffer)
-      (setq z-which-key-showing nil)
+      (setq zetta-which-key-showing nil)
       (quit-windows-on which-key--buffer)
       ))
 
@@ -219,20 +219,20 @@ Finally, show the buffer."
 
 
 
-(defun z-state-meow ()
+(defun zetta-state-meow ()
   (interactive)
   (evil-mode -1)
   (meow-setup)
   (meow-global-mode 1)
   (message "meow enabled"))
 
-(defun z-state-evil ()
+(defun zetta-state-evil ()
   (interactive)
   (evil-mode t)
   (meow-global-mode -1)
   (message "evil enabled"))
 
-(defun z-state-emacs ()
+(defun zetta-state-emacs ()
   (interactive)
   (evil-mode -1)
   (meow-global-mode -1)
@@ -240,9 +240,9 @@ Finally, show the buffer."
 
 (general-define-key
  :keymaps 'override
- "s-z m" 'z-state-meow
- "s-z e" 'z-state-evil
- "s-z E" 'z-state-emacs)
+ "s-z m" 'zetta-state-meow
+ "s-z e" 'zetta-state-evil
+ "s-z E" 'zetta-state-emacs)
 
 (defmacro defprefix (prefix name key)
   `(progn
@@ -272,7 +272,7 @@ Finally, show the buffer."
 ;; but not in insert states.  This block of codes simplifies setup by
 ;; defining a prefix-command, 'launch-map, and binding the launch key
 ;; (,) to this prefix.  Then, the keymap is bound to , in all modal
-;; keymaps (defined in z-modal-states-non-insert).  In this way, code
+;; keymaps (defined in zetta-modal-states-non-insert).  In this way, code
 ;; elsewhere in the config can declare keybindings that apply ACROSS
 ;; MULTIPLE MODAL EDITING SYSTEMS AND DEFAUKT KEYBINDINGS, by simply
 ;; defining a keysequence on the 'launch-map, as opposed to defining 3
@@ -309,17 +309,17 @@ Finally, show the buffer."
 (defvar launch-key ",")
 
 ;; NOTE unused currently
-(defvar z-modal-states-insert '(evil-insert-state-map
+(defvar zetta-modal-states-insert '(evil-insert-state-map
                                 meow-insert-state-keymap))
 
-(defvar z-modal-states-non-insert '(evil-normal-state-map
+(defvar zetta-modal-states-non-insert '(evil-normal-state-map
                                     evil-visual-state-map
                                     meow-beacon-state-keymap
                                     meow-motion-state-keymap
                                     meow-normal-state-keymap))
 
 ;; Bind launch map to , in non insert states
-(general-define-key :keymaps z-modal-states-non-insert launch-key 'launch-map)
+(general-define-key :keymaps zetta-modal-states-non-insert launch-key 'launch-map)
 
 ;; Bind launch map to C-, in insert states.  Compatible with meow and embark-become
 (general-define-key (concat "C-" launch-key) 'launch-map)
@@ -343,7 +343,7 @@ Finally, show the buffer."
 ;;       ,(append '(general-define-key) '(:keymaps 'launch-map) pairs)
 ;;       ;; insert
 ;;       ,(append '(general-define-key)
-;;                '(:keymaps z-modal-states-insert)
+;;                '(:keymaps zetta-modal-states-insert)
 ;;                (mapcar
 ;;                 (lambda (x)
 ;;                   (if (eq (mod (seq-position pairs x) 2) 1)

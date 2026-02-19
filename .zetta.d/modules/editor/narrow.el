@@ -1,10 +1,10 @@
-(defun z-narrow-to-fold-dwim ()
+(defun zetta-narrow-to-fold-dwim ()
   "If fold exists within tap, then toggle, otherwise create fold
 around tap.  If region active, then fold in this region.  If active
 folds in tap (eg tap itself isn't what is folded, but rather a subset
 of tap), then toggle the closest fold"
   (interactive)
-  (let* ((bnds (z-locate-thing thing))
+  (let* ((bnds (zetta-locate-thing thing))
          (beg-thing (nth 0 bnds))
          (end-thing (nth 1 bnds))
          (bol (save-excursion (back-to-indentation) (point)))
@@ -17,7 +17,7 @@ of tap), then toggle the closest fold"
 
 
 
-(defun z-narrow-or-widen (p)
+(defun zetta-narrow-or-widen (p)
   ;; note that narrowing adds artifical space to beginning and end,
   ;; it's practical to be aware of the effects of this
   (interactive "P")
@@ -43,10 +43,10 @@ of tap), then toggle the closest fold"
            (fold-at-point fold)
            ;; if at first thing, take 1 as lower bound, otherwise
            ;; beginning of thing - 1.
-           (beg (if (z-thing-at-bobp)
+           (beg (if (zetta-thing-at-bobp)
                     1
                   (- (ov-beg fold-at-point) 1)))
-           (end (if (z-thing-at-eobp)
+           (end (if (zetta-thing-at-eobp)
                     (save-excursion (end-of-buffer) (point))
                   (+ 1 (ov-end fold-at-point))))
            )
@@ -57,7 +57,7 @@ of tap), then toggle the closest fold"
     (let (
           ;; if at first thing, take 1 as lower bound, otherwise
           ;; beginning of thing - 1.
-          (beg (if (z-thing-at-bobp)
+          (beg (if (zetta-thing-at-bobp)
                    1
                  (save-excursion
                    (beginning-of-thing focus-current-thing)
@@ -65,7 +65,7 @@ of tap), then toggle the closest fold"
                    (beginning-of-line)
                    (- (point) 1)
                    )))
-          (end (if (z-thing-at-eobp)
+          (end (if (zetta-thing-at-eobp)
                    (save-excursion (end-of-buffer) (point))
                  (+ 1 (cdr (bounds-of-thing-at-point focus-current-thing)))))
           )
@@ -78,7 +78,7 @@ of tap), then toggle the closest fold"
 
 (general-define-key
  :keymaps '(override)
- "s-n" 'z-narrow-or-widen
+ "s-n" 'zetta-narrow-or-widen
  )
 
 

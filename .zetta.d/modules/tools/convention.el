@@ -22,11 +22,11 @@
 ;;
     ;;("rc" convention-stop-and-remove-container "Stop and remove" :exit t :column "REPL")
     ;;("D" convention-connect-to-container "Local (container)" :exit t)
-    ;;("R" z-ssh-shell "Remote" :exit t)
+    ;;("R" zetta-ssh-shell "Remote" :exit t)
 ;;
 ;;
     ;;("C-d" convention-dock "Local (container)" :exit t :column "ssh")
-    ;;("C-r" z-ssh "Remote" :exit t)
+    ;;("C-r" zetta-ssh "Remote" :exit t)
 ;;
     ;;("u" convention-initiate-build-ui "Build ui" :exit t)
     ;;)

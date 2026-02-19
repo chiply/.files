@@ -1,11 +1,11 @@
 (use-package iedit
   :init
-  (defun z-iedit-initiate ()
+  (defun zetta-iedit-initiate ()
     (interactive)
     (when (not (and (boundp 'iedit-mode) iedit-mode))
       (iedit-mode)))
 
-  (defun z-iedit-terminate ()
+  (defun zetta-iedit-terminate ()
     (interactive)
     (when (and (boundp 'iedit-mode) iedit-mode)
       (iedit-mode)))
@@ -22,7 +22,7 @@
   :general
   (
    :keymaps 'menu-iedit-map
-   "," 'z-iedit-terminate
+   "," 'zetta-iedit-terminate
    "j" (** iedit-next-occurrence)
    "k" (** iedit-prev-occurrence)
    "gg" (** iedit-goto-first-occurrence)
@@ -34,8 +34,8 @@
    "J" (** iedit-expand-down-to-occurence)
    "K" (** iedit-expand-up-to-occurence )
    "r" (** iedit-replace-occurrences)
-   "i" (** z-iedit-initiate)
+   "i" (** zetta-iedit-initiate)
    )
 
-  :hook (use-package--iedit--post-config . z-brushup)
+  :hook (use-package--iedit--post-config . zetta-brushup)
   )
