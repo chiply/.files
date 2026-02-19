@@ -183,7 +183,7 @@ The restore workflow is the rough edge. With straight.el you run `straight-thaw-
 
 Tasks 1-3 can be done in parallel. All must complete before Phase 2.
 
-- [ ] **Task 1: Remove hardcoded credentials from config files**
+- [x] **Task 1: Remove hardcoded credentials from config files**
 
   CRITICAL. Multiple files contain plaintext credentials:
 

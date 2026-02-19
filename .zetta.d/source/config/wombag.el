@@ -3,12 +3,9 @@
   :ensure (wombag :host github :repo "karthink/wombag")
 
   :config
-  (setq wombag-host "REMOVED-WALLABAG-HOST"
-        wombag-username "REMOVED-WALLABAG-USERNAME"
-        wombag-password "***REMOVED***"
-        ;; workmac
-        wombag-client-id "***REMOVED***"
-        wombag-client-secret "***REMOVED***")
+  ;; Credentials set in ~/.private.el:
+  ;; wombag-host, wombag-username, wombag-password,
+  ;; wombag-client-id, wombag-client-secret
 
   (defun wombag-link-open (id _)
     (wombag-show-entry
