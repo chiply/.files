@@ -3,6 +3,10 @@
 ;; Copy this file to ~/.private.el and fill in your credentials.
 ;; ~/.private.el is loaded early in init.el and is NOT tracked by git.
 
+;; IRC (erc)
+(setq erc-nick "YOUR_IRC_NICK")
+(setq erc-user-full-name "Your Name")
+
 ;; Spotify (spot4e)
 (setq spot4e-client-id "YOUR_SPOTIFY_CLIENT_ID")
 (setq spot4e-client-secret "YOUR_SPOTIFY_CLIENT_SECRET")

@@ -198,7 +198,7 @@ Tasks 1-3 can be done in parallel. All must complete before Phase 2.
 
   After fixing, **rotate/regenerate all exposed credentials** (Spotify, Wallabag, Miniflux).
 
-- [ ] **Task 2: Audit and remove personal identifiers**
+- [x] **Task 2: Audit and remove personal identifiers**
 
   Remove or abstract personal identifiers:
 
@@ -371,6 +371,18 @@ Tasks 7 and 8 can run in parallel. Task 9 blocked by 5 and 7.
   Repo-wide find-and-replace of `z-` prefixed functions and variables to `zetta-`. Must only rename custom definitions, not built-in Emacs functions.
 
   This is optional but recommended for a public distro. **Do last** as it touches every file.
+
+- [ ] **Task 12: Rotate exposed credentials** *(independent)*
+
+  Credentials for the following services were previously committed to git history and must be regenerated:
+
+  | Service | What to rotate |
+  |---------|----------------|
+  | Spotify | Client ID and secret at [developer.spotify.com](https://developer.spotify.com/dashboard) |
+  | Wallabag | Password + regenerate OAuth client at your Wallabag instance |
+  | Miniflux | Password at your Miniflux instance |
+
+  After rotating, update the new values in `~/.private.el`. Consider running `git filter-repo` or BFG Repo-Cleaner to scrub the old values from git history before making the repo public.
 
 ---
 

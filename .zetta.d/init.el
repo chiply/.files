@@ -27,8 +27,6 @@
  '(connection-local-criteria-alist
    '(((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)
-     ((:application tramp :machine "REMOVED-HOST")
-      tramp-connection-local-darwin-ps-profile)
      ((:application tramp)
       tramp-connection-local-default-system-profile
       tramp-connection-local-default-shell-profile)
