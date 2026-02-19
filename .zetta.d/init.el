@@ -27,8 +27,6 @@
  '(connection-local-criteria-alist
    '(((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)
-     ((:application tramp :machine "WQN4T69J6P")
-      tramp-connection-local-darwin-ps-profile)
      ((:application tramp)
       tramp-connection-local-default-system-profile
       tramp-connection-local-default-shell-profile)
