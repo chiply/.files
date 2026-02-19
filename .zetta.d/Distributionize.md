@@ -351,7 +351,7 @@ Tasks 7 and 8 can run in parallel. Task 9 blocked by 5 and 7.
 
 ### Phase 4: Polish
 
-- [ ] **Task 10: Write README and module documentation** *(blocked by: 4, 5, 9)*
+- [x] **Task 10: Write README and module documentation** *(blocked by: 4, 5, 9)*
 
   1. **`README.md`** (repo root):
      - Elevator pitch (brushup, triple-modal, repeatable-lite)
