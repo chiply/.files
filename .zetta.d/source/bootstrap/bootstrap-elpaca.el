@@ -49,6 +49,11 @@
 (setq elpaca-use-package-by-default t)
 (setq elpaca-queue-limit 8)
 
+;; Enable lockfile for reproducible builds.
+;; The lockfile pins all packages to exact commits.
+;; Set `zetta-use-lockfile' to nil in ~/.zetta.el to use latest versions.
+(setq elpaca-lock-file (expand-file-name "elpaca-lock.el" user-emacs-directory))
+
 ;; use-package is built-in in Emacs 29+, but we configure it after elpaca-use-package is ready
 (setq use-package-always-ensure t)
 (setq use-package-inject-hooks t)

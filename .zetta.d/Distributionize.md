@@ -304,7 +304,7 @@ Sequential. Task 4 blocked by 1-3. Task 5 blocked by 4. Task 6 blocked by 5.
 
 Tasks 7 and 8 can run in parallel. Task 9 blocked by 5 and 7.
 
-- [ ] **Task 7: Enable Elpaca lockfile and generate initial lock** *(blocked by: 5)*
+- [x] **Task 7: Enable Elpaca lockfile and generate initial lock** *(blocked by: 5)*
 
   1. Add to `bootstrap-elpaca.el`:
      ```elisp
