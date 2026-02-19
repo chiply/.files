@@ -34,7 +34,7 @@
   (setq highlight-indent-guides-auto-character-face-perc 5)
 
   ;; Safely set faces after theme is fully loaded
-  (defun z-highlight-indent-guides-auto-set-faces-safe ()
+  (defun zetta-highlight-indent-guides-auto-set-faces-safe ()
     "Set highlight-indent-guides faces only if colors are available."
     (when (and (facep 'default)
                (face-attribute 'default :foreground nil t)
@@ -44,10 +44,10 @@
   ;; Run after theme loads with a small delay for safety
   (add-hook 'enable-theme-functions
             (lambda (_)
-              (run-with-idle-timer 0.1 nil #'z-highlight-indent-guides-auto-set-faces-safe)))
+              (run-with-idle-timer 0.1 nil #'zetta-highlight-indent-guides-auto-set-faces-safe)))
 
   ;; Also run once at startup after everything is loaded
-  (add-hook 'emacs-startup-hook #'z-highlight-indent-guides-auto-set-faces-safe)
+  (add-hook 'emacs-startup-hook #'zetta-highlight-indent-guides-auto-set-faces-safe)
 
   ;;:hook (
          ;;(

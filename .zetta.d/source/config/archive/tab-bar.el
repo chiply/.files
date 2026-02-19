@@ -1,10 +1,10 @@
-;;(setq z-ws-cfg-tabbar-list '(
+;;(setq zetta-ws-cfg-tabbar-list '(
                              ;;;; car is ws cfg and cdr is list of tabs
                              ;;((main 1) . ("default"))
                              ;;))
 
 
-;;(defun z-new-tab ()
+;;(defun zetta-new-tab ()
   ;;(interactive)
   ;;(let ((tabname (completing-read "tab name: " '()))
         ;;;; is needed for rename function to work on the right tabkj?
@@ -15,13 +15,13 @@
     ;;(tab-bar-rename-tab tabname)
     ;;(setf
      ;;(alist-get
-      ;;`(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
-      ;;z-ws-cfg-tabbar-list
+      ;;`(,(intern (car (car zetta-ws-alist))) ,(winds-get-cur-cfg))
+      ;;zetta-ws-cfg-tabbar-list
       ;;nil nil 'equal)
      ;;(append
       ;;(alist-get
-       ;;`(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
-       ;;z-ws-cfg-tabbar-list
+       ;;`(,(intern (car (car zetta-ws-alist))) ,(winds-get-cur-cfg))
+       ;;zetta-ws-cfg-tabbar-list
        ;;nil nil 'equal)
       ;;`(,tabname))
      ;;)
@@ -29,11 +29,11 @@
   ;;)
 
 
-;;(defun z-get-tab-bar-tabs-for-ws-cfg ()
+;;(defun zetta-get-tab-bar-tabs-for-ws-cfg ()
   ;;(interactive)
   ;;(alist-get
-   ;;`(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
-   ;;z-ws-cfg-tabbar-list
+   ;;`(,(intern (car (car zetta-ws-alist))) ,(winds-get-cur-cfg))
+   ;;zetta-ws-cfg-tabbar-list
    ;;nil nil 'equal
    ;;)
   ;;)
@@ -45,7 +45,7 @@
 
 ;; gets tabs for current ws cfg -- thiis shuold be the tab bar function
 ;; NEED CONFIG IN HERE
-;;(defun z-tab-bar-tabs (&optional frame)
+;;(defun zetta-tab-bar-tabs (&optional frame)
   ;;(let ((tabs (frame-parameter frame 'tabs)))
     ;;(if tabs
         ;;(let* ((current-tab (tab-bar--current-tab-find tabs))
@@ -61,7 +61,7 @@
       ;;(tab-bar-tabs-set tabs frame))
     ;;;; CHANGING THIS PART -- filtering for membershiip in list
     ;;(-filter
-     ;;(lambda (tab) (member (cdr (assq 'name tab)) (z-get-tab-bar-tabs-for-ws-cfg)))
+     ;;(lambda (tab) (member (cdr (assq 'name tab)) (zetta-get-tab-bar-tabs-for-ws-cfg)))
      ;;tabs)
     ;;)
   ;;)

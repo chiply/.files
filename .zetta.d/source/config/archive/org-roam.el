@@ -8,9 +8,9 @@
   (org-roam-db-autosync-mode)
   (setq org-roam-completion-everywhere t)
 
-  (defun z-org-roam-node-find ()
+  (defun zetta-org-roam-node-find ()
     (interactive)
-    (setq z-captured-from-win (selected-window))
+    (setq zetta-captured-from-win (selected-window))
     (org-roam-node-find))
 
   (setq org-roam-capture-templates
@@ -24,12 +24,12 @@
           )
         )
 
-  (defun z-org-roam-capture () (interactive)
-         (setq z-captured-from-win (selected-window))
+  (defun zetta-org-roam-capture () (interactive)
+         (setq zetta-captured-from-win (selected-window))
          (org-roam-capture))
 
 
-  (defun z-get-header-from-link (s)
+  (defun zetta-get-header-from-link (s)
     (interactive)
     (nth 0 (split-string
             (nth 3 (split-string s "\\["))
@@ -43,13 +43,13 @@
            (end (org-element-property :end context)))
       (when (eq type 'link)
 
-        (z-get-header-from-link
+        (zetta-get-header-from-link
          (buffer-substring beg end)
          )
 
         )))
 
-  (defun z-jump-to-agenda-entry (&optional noselect)
+  (defun zetta-jump-to-agenda-entry (&optional noselect)
     (interactive)
     ;; agenda command (from lambda)
     (let ((buf (current-buffer))
@@ -57,7 +57,7 @@
           )
 
       (progn
-        (z-org-agenda "1" org-super-agenda-groups-main)
+        (zetta-org-agenda "1" org-super-agenda-groups-main)
         (org-agenda-redo)
         )
 
@@ -66,12 +66,12 @@
        (search-forward-regexp re nil t)
        (search-backward-regexp re nil t)
        )
-      ;;(z-agenda-org-goto)
+      ;;(zetta-agenda-org-goto)
 
       (if noselect
           (select-window (get-buffer-window buf))
         (progn
-          (z-org-agenda "1" org-super-agenda-groups-main)
+          (zetta-org-agenda "1" org-super-agenda-groups-main)
           (org-agenda-redo)
           )
         )
@@ -80,26 +80,26 @@
       )
     )
 
-  (defun z-org-roam-list-node-titles ()
+  (defun zetta-org-roam-list-node-titles ()
     (interactive)
     (-map (lambda (x) `(,(org-roam-node-title x))) (org-roam-node-list))
     )
 
-  (defun z-org-roam-agenda-set-tag ()
+  (defun zetta-org-roam-agenda-set-tag ()
     (interactive)
     (org-agenda-set-tags (replace-regexp-in-string
                           "-" "_"
                           (replace-regexp-in-string
                            " " "_"
-                           (completing-read "org-roam " (z-org-roam-list-node-titles)))))
+                           (completing-read "org-roam " (zetta-org-roam-list-node-titles)))))
     (org-agenda-redo)
     )
 
   :general 
   (
    :keymaps 'override
-   "s-o" 'z-org-roam-node-find
-   "s-O" 'z-org-roam-capture
+   "s-o" 'zetta-org-roam-node-find
+   "s-O" 'zetta-org-roam-capture
    "s-i" 'org-roam-node-insert
    )
   )

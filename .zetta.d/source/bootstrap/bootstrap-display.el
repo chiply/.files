@@ -1,19 +1,19 @@
 ;; -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Core functions / utils
-(defun z-soda-get-buffer-window (buf-name)
+(defun zetta-soda-get-buffer-window (buf-name)
   (get-buffer-window (if (get-buffer buf-name)
                          (get-buffer buf-name)
                        (message "fooobar"))))
 
-(defun z-soda-buffer-displayed-p (buf-name)
-  (window-live-p (z-soda-get-buffer-window buf-name)))
+(defun zetta-soda-buffer-displayed-p (buf-name)
+  (window-live-p (zetta-soda-get-buffer-window buf-name)))
 
-(defun z-soda-delete (buf-name)           ;
+(defun zetta-soda-delete (buf-name)           ;
   (interactive)
-  (delete-window (z-soda-get-buffer-window buf-name)))
+  (delete-window (zetta-soda-get-buffer-window buf-name)))
 
-(defun z-soda-list-displaying-buffers ()
+(defun zetta-soda-list-displaying-buffers ()
   "Lists the buffers that are being displayed in the current
 frame.  This is done by looping through each displaying window
 and storing the buf-or-mode-name of the buffer being sdisplayed in that
@@ -25,45 +25,45 @@ window to the buffer list that gets returned."
       (other-window 1))
     (butlast lst 0)))
 
-(defun z-soda-sidewindow-p (buf)
+(defun zetta-soda-sidewindow-p (buf)
   (if (window-parameter (get-buffer-window buf) 'window-slot)
       (message "yes")
     (message "no")))
 
-(defun z-soda-list-displaying-side-windows ()
+(defun zetta-soda-list-displaying-side-windows ()
   (interactive)
   (let (
-        (bufs (z-soda-list-displaying-buffers))
+        (bufs (zetta-soda-list-displaying-buffers))
         )
-    (when (member "yes" (mapcar 'z-soda-sidewindow-p bufs))
+    (when (member "yes" (mapcar 'zetta-soda-sidewindow-p bufs))
       (message "foo"))))
 
-(defun z-soda-get-mode (buffer)
+(defun zetta-soda-get-mode (buffer)
   (with-current-buffer buffer major-mode))
 
-(defun z-soda-mode-displayed-p (mode)
+(defun zetta-soda-mode-displayed-p (mode)
   "Returns buf-name of buffer if a buffer with the major mode is
 being displayed, otherwise returns nil"
-  (let ((displaying-buffers (z-soda-list-displaying-buffers)))
+  (let ((displaying-buffers (zetta-soda-list-displaying-buffers)))
     (-filter
-     (lambda (buffer) (string-match mode (symbol-name (z-soda-get-mode buffer))))
+     (lambda (buffer) (string-match mode (symbol-name (zetta-soda-get-mode buffer))))
      displaying-buffers)))
 
-(defun z-soda-list-mode-buffers (mode)
+(defun zetta-soda-list-mode-buffers (mode)
   "Returns buf-name of buffer if a buffer with the major mode is
 being displayed, otherwise returns nil"
   (let ((displaying-buffers (buffer-list)))
     (-filter
-     (lambda (buffer) (string-match mode (symbol-name (z-soda-get-mode buffer))))
+     (lambda (buffer) (string-match mode (symbol-name (zetta-soda-get-mode buffer))))
      displaying-buffers)))
 
-(defun z-soda-mode-name (mode)
+(defun zetta-soda-mode-name (mode)
   (lambda (buffer &rest optional)
     (with-current-buffer buffer
       (string-match mode (symbol-name major-mode)))))
 
 
-(defun z-soda-count-windows ()
+(defun zetta-soda-count-windows ()
   (setq lst '())
   (while (not (member (selected-window) lst))
     (setq lst (cons (selected-window) lst))
@@ -77,14 +77,14 @@ being displayed, otherwise returns nil"
 ;; tryign this ou for now
 (setq window-sides-vertical t)
 
-;; note you need to reevaluate the z-side function
-(setq z-side-display-default-height-top 0.2)
-(setq z-side-display-default-height-bottom 0.2)
-(setq z-side-display-default-width-left 0.2)
-(setq z-side-display-default-width-right 0.25)
+;; note you need to reevaluate the zetta-side function
+(setq zetta-side-display-default-height-top 0.2)
+(setq zetta-side-display-default-height-bottom 0.2)
+(setq zetta-side-display-default-width-left 0.2)
+(setq zetta-side-display-default-width-right 0.25)
 
 
-(defun z-side (&rest args)
+(defun zetta-side (&rest args)
   ;; delete old config
   (let ((regex (or (plist-get args :regex) (error "must supply regex")))
         (side (or (plist-get args :side) nil))
@@ -106,13 +106,13 @@ being displayed, otherwise returns nil"
     ;; set height or width if side window
     (let ((height (cond
                    ((and size size2) size)
-                   ((equal side 'top) (or size z-side-display-default-height-top))
-                   ((equal side 'bottom) (or size z-side-display-default-height-bottom))
+                   ((equal side 'top) (or size zetta-side-display-default-height-top))
+                   ((equal side 'bottom) (or size zetta-side-display-default-height-bottom))
                    ((or (equal side 'left) (equal side 'right)) nil)))
           (width (cond
                   ((and size size2) size2)
-                  ((equal side 'left) (or size z-side-display-default-width-left))
-                  ((equal side 'right) (or size z-side-display-default-width-right))
+                  ((equal side 'left) (or size zetta-side-display-default-width-left))
+                  ((equal side 'right) (or size zetta-side-display-default-width-right))
                   ((or (equal side 'top) (equal side 'bottom)) nil)))
           (slot (or slot 0)))
 
@@ -120,7 +120,7 @@ being displayed, otherwise returns nil"
       (add-to-list
        'display-buffer-alist
        (if (string-match "-mode$" regex)
-           `(,(z-soda-mode-name regex)
+           `(,(zetta-soda-mode-name regex)
              (display-buffer-reuse-window display-buffer-in-side-window)
              (reusable-frames . visible)
              (side . ,side) (slot . ,slot)
@@ -137,61 +137,61 @@ being displayed, otherwise returns nil"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Soda drink, cao, and switch to buffer
-(defun z-soda-drink (func &optional buf-or-mode-name)
+(defun zetta-soda-drink (func &optional buf-or-mode-name)
   (cond
    ;; displayed (by buffer name)
-   ((z-soda-buffer-displayed-p buf-or-mode-name)
+   ((zetta-soda-buffer-displayed-p buf-or-mode-name)
     (select-window (get-buffer-window buf-or-mode-name)))
    ;; displayed (by mode name)
-   ((z-soda-mode-displayed-p buf-or-mode-name)
-    (select-window (get-buffer-window (nth 0 (z-soda-mode-displayed-p buf-or-mode-name)))))
+   ((zetta-soda-mode-displayed-p buf-or-mode-name)
+    (select-window (get-buffer-window (nth 0 (zetta-soda-mode-displayed-p buf-or-mode-name)))))
    ;; running, not displayed
-   ((and (get-buffer buf-or-mode-name) (not (z-soda-buffer-displayed-p buf-or-mode-name)))
+   ((and (get-buffer buf-or-mode-name) (not (zetta-soda-buffer-displayed-p buf-or-mode-name)))
     (display-buffer buf-or-mode-name))
 
    ((not (get-buffer buf-or-mode-name))
     (funcall func buf-or-mode-name)))
   )
 
-(defun z-soda-cap (target &optional mode-based)
+(defun zetta-soda-cap (target &optional mode-based)
   ;; what about closing based on mode?
   (interactive)
   (if mode-based
       ;; do a mode-based delete (should only be one window with that mode, based on how this tool is used)
-      (let ((buf (nth 0 (z-soda-mode-displayed-p target))))
+      (let ((buf (nth 0 (zetta-soda-mode-displayed-p target))))
         (if buf
-            (z-soda-delete buf)
+            (zetta-soda-delete buf)
           (message "Nothing like this is being displayed at the moment")))
     ;; otherwise, do a buffer-based delete
-    (z-soda-delete target)))
+    (zetta-soda-delete target)))
 
 
-(defun z-soda-create-and-display-messages (&optional buf-or-mode-name)
+(defun zetta-soda-create-and-display-messages (&optional buf-or-mode-name)
   (let ((buf (current-buffer)))
     (let ((newbuf (get-buffer-create "*Messages*")))
       (switch-to-buffer buf)
       (display-buffer newbuf))))
 
 
-(defun z-soda-drink-messages ()
+(defun zetta-soda-drink-messages ()
   (interactive)
-  (z-soda-drink (quote z-soda-create-and-display-messages) "*Messages*"))
+  (zetta-soda-drink (quote zetta-soda-create-and-display-messages) "*Messages*"))
 
-(defun z-soda-cap-messages ()
+(defun zetta-soda-cap-messages ()
   (interactive)
-  (z-soda-cap "*Messages*"))
+  (zetta-soda-cap "*Messages*"))
 
-(defun z-soda-cap-info ()
+(defun zetta-soda-cap-info ()
   (interactive)
-  (z-soda-cap "*info*"))
+  (zetta-soda-cap "*info*"))
 
 (general-define-key
  :keymaps 'menu-run-map
- "m" (** z-soda-drink-messages)
+ "m" (** zetta-soda-drink-messages)
  "c"  (** calendar)
  "i"  (** info)
- "M" (** z-soda-cap-messages)
- "I" (** z-soda-cap-info))
+ "M" (** zetta-soda-cap-messages)
+ "I" (** zetta-soda-cap-info))
 
 (defalias 'use-package-handler/:display 'use-package-handle-forms)
 (defalias 'use-package-normalize/:display 'use-package-normalize-forms)

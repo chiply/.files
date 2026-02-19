@@ -27,7 +27,7 @@
   (add-to-list 'desktop-globals-to-save 'dogears-list)
 
   :display
-  ;;(z-side "^\\*Dogears List*" 'right -11 0.20 0.25)
+  ;;(zetta-side "^\\*Dogears List*" 'right -11 0.20 0.25)
 
   :general
   (

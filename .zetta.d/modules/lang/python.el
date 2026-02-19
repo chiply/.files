@@ -1,6 +1,6 @@
 ;; write a function that finds the first parent directory with a pyproject.toml
 ;; the function should return nil if no such directory is found
-(defun z-find-poetry-project-root ()
+(defun zetta-find-poetry-project-root ()
   (interactive)
   (let ((dir (file-name-directory (buffer-file-name))))
     (while (and
@@ -15,21 +15,21 @@
   :hook (python-ts-mode . pyvenv-mode)
   :config
   ;;(setq pyvenv-post-activate-hooks '())
-  (defun z-pyvenv-activate-poetry ()
+  (defun zetta-pyvenv-activate-poetry ()
     (interactive)
     (when (and (eq major-mode 'python-ts-mode)
-               (z-find-poetry-project-root))
-      (if (and (boundp 'z-pyvenv-virtual-env) z-pyvenv-virtual-env)
-          (pyvenv-activate z-pyvenv-virtual-env)
+               (zetta-find-poetry-project-root))
+      (if (and (boundp 'zetta-pyvenv-virtual-env) zetta-pyvenv-virtual-env)
+          (pyvenv-activate zetta-pyvenv-virtual-env)
         (let* ((_ (pyvenv-deactivate))
                (cmd "poetry env info --path")
                (output (shell-command-to-string cmd))
                (venv (replace-regexp-in-string "\n" "" output)))
           (pyvenv-activate venv)
-          (setq-local z-pyvenv-virtual-env venv)))
+          (setq-local zetta-pyvenv-virtual-env venv)))
       (unless lsp-mode (lsp-deferred))))
   ;; Use python-ts-mode-hook instead of buffer-list-update-hook for performance
-  (add-hook 'python-ts-mode-hook 'z-pyvenv-activate-poetry))
+  (add-hook 'python-ts-mode-hook 'zetta-pyvenv-activate-poetry))
 
 (use-package poetry)
 

@@ -20,10 +20,10 @@
 
 
 
-  (defun z-snippet-file-displayed-p ()
+  (defun zetta-snippet-file-displayed-p ()
     (interactive)
     (let* ((buffers-being-displayed (-filter
-                                     (lambda (x) (z-soda-buffer-displayed-p x))
+                                     (lambda (x) (zetta-soda-buffer-displayed-p x))
                                      (buffer-list)))
            (names-of-buffers-being-displayed (-map
                                               (lambda (x) (buffer-name x))
@@ -35,7 +35,7 @@
       )
     )
 
-  (defun z-snip-view-snippet-file ()
+  (defun zetta-snip-view-snippet-file ()
     (interactive)
     (let ((dir user-emacs-directory))
       (select-window
@@ -44,7 +44,7 @@
       )
     )
 
-  (defun z-snip-search-snippets ()
+  (defun zetta-snip-search-snippets ()
     (interactive)
     (let ((mode (symbol-name major-mode))
           (win (selected-window))
@@ -52,7 +52,7 @@
           (inhibit-quit t)
           )
       (unless (with-local-quit
-                (z-snip-view-snippet-file)
+                (zetta-snip-view-snippet-file)
                 (consult-line (concat mode " "))
                 t)
         (progn
@@ -65,26 +65,26 @@
 
   ;; got from
   ;; https://emacs.stackexchange.com/questions/61108/make-tangle-dont-add-a-newline-at-the-end-of-the-file
-  (defun z-zap-newline-at-eob ()
+  (defun zetta-zap-newline-at-eob ()
     (let ((make-backup-files nil)) 
-      (message "running z-zap-newline-at-eob")
+      (message "running zetta-zap-newline-at-eob")
       (goto-char (point-max))
       (when (equal (char-before) ?\n)
         (delete-char -1)
         (save-buffer))))
 
-  (defun z-snip-tangle-and-load (&optional file)
+  (defun zetta-snip-tangle-and-load (&optional file)
     (interactive)
-    (add-hook 'org-babel-post-tangle-hook #'z-zap-newline-at-eob)
+    (add-hook 'org-babel-post-tangle-hook #'zetta-zap-newline-at-eob)
     (if file
         (org-babel-tangle-file file)
       (org-babel-tangle)
       )
     (yas-reload-all)
-    (remove-hook 'org-babel-post-tangle-hook #'z-zap-newline-at-eob)
+    (remove-hook 'org-babel-post-tangle-hook #'zetta-zap-newline-at-eob)
     )
 
-  (defun z-snip-new-snippet ()
+  (defun zetta-snip-new-snippet ()
     (interactive)
     (let ((mode (symbol-name major-mode))
           (win (selected-window))
@@ -92,7 +92,7 @@
           (inhibit-quit t)
           )
       (if (with-local-quit
-            (z-snip-view-snippet-file)
+            (zetta-snip-view-snippet-file)
             (consult-line (concat mode " ") 1)
             (org-end-of-subtree)
             t)
@@ -110,15 +110,15 @@
     )
 
   :config
-  (z-snip-tangle-and-load (format "%ssource/snippets/.snippets.org" user-emacs-directory))
+  (zetta-snip-tangle-and-load (format "%ssource/snippets/.snippets.org" user-emacs-directory))
 
   :display
-  ;;(z-side "snippet-mode" 'right 1)
+  ;;(zetta-side "snippet-mode" 'right 1)
 
   :general
   (
    :keymaps 'yas-keymap
-   "C-;" 'z-completion-at-point
+   "C-;" 'zetta-completion-at-point
    "<tab>" 'yas-next-field
    "<S-tab>" 'yas-prev-field
    )

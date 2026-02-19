@@ -1,32 +1,32 @@
-(setq z-gh-list-run-command-for-watch "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[] | select(.updatedAt > (now - ( 0.1 * 86400))) ]'")
-(setq z-gh-run-watch-command "gh run watch -i 10 %s; osascript -e 'display notification \"%s %s\" with title \"%s || %s\" sound name \"Frog\"'")
-(setq z-gh-list-run-command-for-view "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[]| select(.updatedAt > (now-( 30 * 86400)))]'")
-(setq z-gh-view-run-command "gh run view %s --log")
+(setq zetta-gh-list-run-command-for-watch "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[] | select(.updatedAt > (now - ( 0.1 * 86400))) ]'")
+(setq zetta-gh-run-watch-command "gh run watch -i 10 %s; osascript -e 'display notification \"%s %s\" with title \"%s || %s\" sound name \"Frog\"'")
+(setq zetta-gh-list-run-command-for-view "gh run list --json conclusion,databaseId,displayTitle,event,headBranch,name,startedAt,status,updatedAt,workflowDatabaseId --jq ' [.[]| select(.updatedAt > (now-( 30 * 86400)))]'")
+(setq zetta-gh-view-run-command "gh run view %s --log")
 
 (defun completing-read-value (prompt list)
   (let* ((selected-run-key (let ((vertico-sort-function nil)) (completing-read prompt list))))
     (alist-get selected-run-key list nil nil 'string=)))
 
-(defun z-gh-pick-run (dir cmd)
+(defun zetta-gh-pick-run (dir cmd)
   (interactive)
   (let* ((default-directory dir)
          (json (shell-command-to-string cmd))
          (json-ht (json-parse-string json))
-         (runs (z-gh-add-keys-to-record json-ht)))
+         (runs (zetta-gh-add-keys-to-record json-ht)))
     (completing-read-value "" runs)))
 
-(defun z-gh-add-keys-to-record (data)
+(defun zetta-gh-add-keys-to-record (data)
   (-map
    (lambda (x)
      `(,(mapconcat (lambda (x) (if (numberp x) (number-to-string x) x)) (ht-values x) " ")
        . ,x))
    data))
 
-(defun z-gh-run-watch (dir nosleep)
+(defun zetta-gh-run-watch (dir nosleep)
   (interactive)
   (let* ((default-directory dir)
-         (run (z-gh-pick-run dir (concat (if nosleep "" "sleep 5 && ") z-gh-list-run-command-for-watch)))
-         (cmd (format z-gh-run-watch-command
+         (run (zetta-gh-pick-run dir (concat (if nosleep "" "sleep 5 && ") zetta-gh-list-run-command-for-watch)))
+         (cmd (format zetta-gh-run-watch-command
                       (ht-get run "databaseId")
                       (ht-get run "displayTitle")
                       (concat "on " (ht-get run "headBranch"))
@@ -41,11 +41,11 @@
     (display-buffer bufnm)
     ))
 
-(defun z-gh-run-view-log (dir)
+(defun zetta-gh-run-view-log (dir)
   (let* ((default-directory dir)
-         (run (z-gh-pick-run dir z-gh-list-run-command-for-view))
+         (run (zetta-gh-pick-run dir zetta-gh-list-run-command-for-view))
          (id (ht-get run "databaseId"))
-         (cmd (format z-gh-view-run-command id))
+         (cmd (format zetta-gh-view-run-command id))
          (bufnm (format "*GHA log: %s || %s*"
                         (project-name (project-current nil default-directory))
                         (ht-get run "name"))))
@@ -57,13 +57,13 @@
 
 
 ;; UI
-(defun z-gh-run-watch-interact (&optional arg)
+(defun zetta-gh-run-watch-interact (&optional arg)
   (interactive "P")
-  (z-gh-run-watch default-directory arg))
+  (zetta-gh-run-watch default-directory arg))
 
-(defun z-gh-run-view-log-interact ()
+(defun zetta-gh-run-view-log-interact ()
   (interactive)
-  (z-gh-run-view-log default-directory))
+  (zetta-gh-run-view-log default-directory))
 
 
 
@@ -72,6 +72,6 @@
 
  :states '(normal visual)
  :keymaps 'magit-mode-map
- "g a w" 'z-gh-run-watch-interact
- "g a l" 'z-gh-run-view-log-interact)
+ "g a w" 'zetta-gh-run-watch-interact
+ "g a l" 'zetta-gh-run-view-log-interact)
 

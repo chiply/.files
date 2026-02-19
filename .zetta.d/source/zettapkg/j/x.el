@@ -13,10 +13,10 @@
 
 (use-package multi-compile
   :config
-  (defun z-multi-compile ()
+  (defun zetta-multi-compile ()
     default-directory
     )
-  (setq multi-compile-default-directory-function 'z-multi-compile)
+  (setq multi-compile-default-directory-function 'zetta-multi-compile)
 
   )
 

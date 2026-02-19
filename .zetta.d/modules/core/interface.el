@@ -29,7 +29,7 @@
   (save-some-buffers)
   (kill-emacs))
 
-(defun z-scratch ()
+(defun zetta-scratch ()
   (interactive)
   (let* ((major-mode-input (completing-read "Enter a major mode: "
                                             '("python" "sql" "elisp"))))
@@ -41,12 +41,12 @@
 (setq enable-local-variables :all)
 
 ;;(defhydra+ hydra-window ()
-;;("C-S" z-scratch :exit t)
-;;("C-S-<backspace>" z-server-shutdown-save-desktop))
+;;("C-S" zetta-scratch :exit t)
+;;("C-S-<backspace>" zetta-server-shutdown-save-desktop))
 
 (general-define-key :keymaps 'menu-window-keymap
-                    "C-S" 'z-scratch
-                    "C-S-<backspace>" 'z-server-shutdown-save-desktop)
+                    "C-S" 'zetta-scratch
+                    "C-S-<backspace>" 'zetta-server-shutdown-save-desktop)
 
 (setq-default left-margin-width 2)
 (setq-default right-margin-width 2)
@@ -54,8 +54,8 @@
 ;;(setq-default right-fringe-width 5)
 
 
-(defun z-tab-bar-hydra ()
-  (let ((icon (z-line-hydra-indicator-icon))) (when icon "H")))
+(defun zetta-tab-bar-hydra ()
+  (let ((icon (zetta-line-hydra-indicator-icon))) (when icon "H")))
 
 (defun zmc-modeline-indicator ()
   (concat
@@ -80,22 +80,22 @@
 ;;(defun repeat-indicator-icon ()
 ;;(if (and (boundp 'menu--indicator) menu--indicator) "** " "__ "))
 
-(defun z-pyvenv-activate-poetry-modeline ()
-  (and (boundp 'z-pyvenv-virtual-env)
+(defun zetta-pyvenv-activate-poetry-modeline ()
+  (and (boundp 'zetta-pyvenv-virtual-env)
        (concat "{venv:"
-               (z-minify-path z-pyvenv-virtual-env)
+               (zetta-minify-path zetta-pyvenv-virtual-env)
                "/"
-               (car (last (split-string z-pyvenv-virtual-env "/")))
+               (car (last (split-string zetta-pyvenv-virtual-env "/")))
                "}")))
 
 (defun new-line () "\n")
 (defun new-line-1 () "2")
 (defun new-line-2 () "\n")
 
-(defun z-nyan ()
+(defun zetta-nyan ()
   (nyan-create))
 
-(defun z-current-prefix ()
+(defun zetta-current-prefix ()
   (let ((descr (key-description
                 (or
                  (and
@@ -111,19 +111,19 @@
 ;; otherwise prefix keys won't show up
 (add-hook 'prefix-command-echo-keystrokes-functions 'force-mode-line-update)
 
-(defun z-insert-space () " ")
+(defun zetta-insert-space () " ")
 
 ;; in *scratch*:
 
-(defun z-fish ()
+(defun zetta-fish ()
   (concat fish-mode-line-string " "))
 
-(defun z-tab-bar-spot-mode-line-string ()
+(defun zetta-tab-bar-spot-mode-line-string ()
   (if (fboundp 'spot-mode-line-string)
       (spot-mode-line-string)
     "*"))
 
-(defun z-tab-bar-modal ()
+(defun zetta-tab-bar-modal ()
   (or
    (when (and (boundp 'evil-mode) evil-mode) "evil")
    (when (and (boundp 'meow-mode) meow-mode) "meow")
@@ -132,17 +132,17 @@
      "emacs"))
   )
 
-(defun z-tab-bar-recursion-level ()
+(defun zetta-tab-bar-recursion-level ()
   (let ((recursion-level (minibuffer-depth)))
     (if (zerop recursion-level)
         "[R:0] "
       (format " [R:%d] " recursion-level)))
   )
 
-(defun z-buffer-name ()
+(defun zetta-buffer-name ()
   (if (buffer-file-name) (abbreviate-file-name (buffer-file-name)) "%b"))
 
-(defun z-gptel-processes ()
+(defun zetta-gptel-processes ()
   (when (boundp 'gptel--request-alist)
     (let ((num-processes (length gptel--request-alist)))
       (if (> num-processes 0)
@@ -151,24 +151,24 @@
 
 
 (setq tab-bar-format '(;; everything here on will be aligned on the right
-                       ;;z-tab-bar-hydra
-                       z-buffer-name
+                       ;;zetta-tab-bar-hydra
+                       zetta-buffer-name
                        zmc-modeline-indicator
-                       z-pyvenv-activate-poetry-modeline
+                       zetta-pyvenv-activate-poetry-modeline
                        ;; doesn't work in tab bar as it doesn't get
                        ;; updated reliably... note that even when
                        ;; using the entry and exist hooks it doesn't
                        ;; work
                        ;;key-state
-                       ;;z-nyan
+                       ;;zetta-nyan
                        new-line
-                       z-tab-bar-spot-mode-line-string
+                       zetta-tab-bar-spot-mode-line-string
                        new-line
-                       z-tab-bar-modal
-                       z-gptel-processes
-                       z-fish
+                       zetta-tab-bar-modal
+                       zetta-gptel-processes
+                       zetta-fish
                        tab-bar-format-align-right
-                       z-tab-bar-recursion-level
+                       zetta-tab-bar-recursion-level
                        recursion-indicator--string
                        ;;"  "
                        pom-ind
@@ -179,8 +179,8 @@
                        ;; these go together
                        ;; TODO add current map
                        internal-echo-keystrokes-prefix ;; universal arg
-                       z-insert-space
-                       z-current-prefix
+                       zetta-insert-space
+                       zetta-current-prefix
                        st-modeline-lighter
                        ))
 

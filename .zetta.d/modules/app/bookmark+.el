@@ -6,7 +6,7 @@
                    "*.el")
            :main "bookmark+.el")
   :config
-  (defun z-bookmark-create ()
+  (defun zetta-bookmark-create ()
     (interactive)
     (bookmark-set)
     (bmkp-set-lighting-for-this-buffer 'rfringe nil 'auto nil t)
@@ -43,7 +43,7 @@ expected read format."
   (
    :keymaps 'override
    :prefix "s-b"
-   "n" 'z-bookmark-create
+   "n" 'zetta-bookmark-create
    )
   :hook ((org-mode python-ts-mode emacs-lisp-mode)
          . (lambda ()

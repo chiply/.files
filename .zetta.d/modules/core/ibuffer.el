@@ -3,22 +3,22 @@
   :commands ibuffer
 
   :init
-  (defun z-soda-create-and-display-ibuffer (&optional buf-or-mode-name)
+  (defun zetta-soda-create-and-display-ibuffer (&optional buf-or-mode-name)
     (interactive)
     (ibuffer nil buf-or-mode-name nil []))
 
-  (defun z-soda-drink-ibuffer ()
+  (defun zetta-soda-drink-ibuffer ()
     (interactive)
-    (z-soda-drink (quote z-soda-create-and-display-ibuffer) "*Ibuffer*"))
+    (zetta-soda-drink (quote zetta-soda-create-and-display-ibuffer) "*Ibuffer*"))
 
-  (defun z-soda-cap-ibuffer ()
+  (defun zetta-soda-cap-ibuffer ()
     (interactive)
-    (z-soda-cap "*Ibuffer*"))
+    (zetta-soda-cap "*Ibuffer*"))
 
   (general-define-key
    :keymaps 'menu-run-map
-   "b" (** z-soda-drink-ibuffer)
-   "B" (** z-soda-cap-ibuffer))
+   "b" (** zetta-soda-drink-ibuffer)
+   "B" (** zetta-soda-cap-ibuffer))
 
   :hook (
          (ibuffer-mode . (lambda () (visual-line-mode -1)))

@@ -8,10 +8,10 @@
 
 
   :display
-  ;;(z-side "^\\*docker-im*" 'top)
-  ;;(z-side "^\\*docker-cont*" 'top)
-  ;;(z-side "^\\*docker-vol*" 'top)
-  ;;(z-side "^\\* docker*" 'top)
+  ;;(zetta-side "^\\*docker-im*" 'top)
+  ;;(zetta-side "^\\*docker-cont*" 'top)
+  ;;(zetta-side "^\\*docker-vol*" 'top)
+  ;;(zetta-side "^\\* docker*" 'top)
 
   :evil
   (evil-set-initial-state 'docker-volume-mode 'normal)

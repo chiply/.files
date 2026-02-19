@@ -8,10 +8,10 @@
             '(lambda ()
                (progn
                  (compilation-minor-mode t)
-                 (z-highlight-phrases)
+                 (zetta-highlight-phrases)
                  )))
   ;;(detached-init)
-  (defun z-detached-alert-notification (session) (ignore))
+  (defun zetta-detached-alert-notification (session) (ignore))
 
   (advice-add 'detached-shell-command :after
             (lambda (&rest args)
@@ -19,7 +19,7 @@
 
   :custom ((detached-show-output-on-attach t)
            (detached-terminal-data-command system-type)
-           (detached-notification-function #'z-detached-alert-notification))
+           (detached-notification-function #'zetta-detached-alert-notification))
 
   :general
   (

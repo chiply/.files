@@ -10,8 +10,8 @@
   :config
 
   :display
-  ;;(z-side "^\\*Bookmark List*" 'right -10)
-  ;;(z-side "^\\*Embark Export Bookmarks*" 'right -10)
+  ;;(zetta-side "^\\*Bookmark List*" 'right -10)
+  ;;(zetta-side "^\\*Embark Export Bookmarks*" 'right -10)
 
   :evil
   (evil-set-initial-state 'bookmark-edit-annotation-mode 'normal)

@@ -47,18 +47,18 @@
 (setq org-export-use-babel t)
 
 ;; convenient super bindinigs for organization
-(setq z-captured-from-win "")
+(setq zetta-captured-from-win "")
 
 (general-define-key 
  :kemaps 'override
  "s-t" '(lambda () (interactive)
-          (setq z-captured-from-win (selected-window))
+          (setq zetta-captured-from-win (selected-window))
           (org-capture nil "h")
           (org-set-property "received" (format-time-string "%Y-%m-%d %a %H:%M"))
           (org-id-get-create)
           )
  "s-T" '(lambda () (interactive)
-          (setq z-captured-from-win (selected-window))
+          (setq zetta-captured-from-win (selected-window))
           (org-capture nil "H")
           (org-set-property "received" (format-time-string "%Y-%m-%d %a %H:%M"))
           (org-id-get-create)
@@ -68,11 +68,11 @@
 ;; note order matters here as there is overlap between org
 ;; roam and org-mode (org-roam is in org mode, but it matches
 ;; for this first, so it displays in slot 2, not slot 1)
-;;(z-side "^\\*org-roa*" 'right 2 0.20 0.30)
+;;(zetta-side "^\\*org-roa*" 'right 2 0.20 0.30)
 
 
 ;;;;;;;;;;;;;;;;; Literature management
-;;(z-side "bibliography.bib" 'right 2 0.30)
+;;(zetta-side "bibliography.bib" 'right 2 0.30)
 
 (setq org-ref-insert-link-function 'org-ref-insert-link-hydra/body
       org-ref-insert-label-function 'org-ref-insert-label-link

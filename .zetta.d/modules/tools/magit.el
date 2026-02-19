@@ -12,11 +12,11 @@
   ;;:ensure (magit :type git :host github :repo "magit/magit" :tag "v4.1.1")
   :commands (magit-status magit-blame magit-log magit-branch magit-commit
              magit-push magit-pull magit-fetch magit-stage magit-stage-modified
-             magit-tag magit-show-refs z-magit-project)
+             magit-tag magit-show-refs zetta-magit-project)
   :init
 
   (setq magit-branch-read-upstream-first 'fallback)
-  (defun z-magit-project ()
+  (defun zetta-magit-project ()
     (interactive)
     (let ((dir (completing-read "Project: " (project-known-project-roots))))
       (magit-status dir)))
@@ -77,7 +77,7 @@
   
   (general-define-key
    :keymaps 'launch-map
-   "G" 'z-magit-project)
+   "G" 'zetta-magit-project)
   
   (general-define-key
    :keymaps 'text-mode-map

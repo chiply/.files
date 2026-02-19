@@ -2,7 +2,7 @@
   :ensure nil
   :commands (xref-find-definitions xref-go-back xref-go-forward)
   :config
-  ;;(z-side "^\\*xref*" 'right -1)
+  ;;(zetta-side "^\\*xref*" 'right -1)
 
   :general
   (

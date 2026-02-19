@@ -1,13 +1,13 @@
 (use-package vimish-fold
   :commands (vimish-fold vimish-fold-mode vimish-fold-toggle vimish-fold-avy)
   :init
-  (defun z-vimish-fold-tap (&optional thing)
+  (defun zetta-vimish-fold-tap (&optional thing)
     "If fold exists within tap, then toggle, otherwise create fold
 around tap.  If region active, then fold in this region.  If active
 folds in tap (eg tap itself isn't what is folded, but rather a subset
 of tap), then toggle the closest fold"
     (interactive)
-    (let* ((bnds (z-locate-thing thing))
+    (let* ((bnds (zetta-locate-thing thing))
            (beg-thing (nth 0 bnds))
            (end-thing (nth 1 bnds))
            (bol (save-excursion (back-to-indentation) (point)))
@@ -84,7 +84,7 @@ of tap), then toggle the closest fold"
               python-ts-mode-map emacs-lisp-mode-map
               lisp-interaction-mode-map sql-mode-map yaml-mode-map
               css-mode-map dockerfile-mode-map terraform-mode-map)
-   "<tab>" 'z-vimish-fold-tap
+   "<tab>" 'zetta-vimish-fold-tap
    "<S-tab>" 'vimish-fold-toggle-all
    )
   )

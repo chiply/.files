@@ -2,7 +2,7 @@
   :commands focus-mode
 
   :init
-  (defun z-focus-mode (thing)
+  (defun zetta-focus-mode (thing)
     "Thing is a quoted symbol"
     (setq-local focus-current-thing thing))
 
@@ -31,7 +31,7 @@
 
 
   ;;:hook (((prog-mode) . (lambda () (focus-mode)))
-         ;;(emacs-lisp-mode . (lambda () (z-focus-mode 'defun)))
-         ;;((python-ts-mode sql-mode yaml-mode sh-mode) . (lambda () (z-focus-mode 'defun))))
-  ;;(use-package--focus--post-config . (lambda () (z-brushup))))
+         ;;(emacs-lisp-mode . (lambda () (zetta-focus-mode 'defun)))
+         ;;((python-ts-mode sql-mode yaml-mode sh-mode) . (lambda () (zetta-focus-mode 'defun))))
+  ;;(use-package--focus--post-config . (lambda () (zetta-brushup))))
   )

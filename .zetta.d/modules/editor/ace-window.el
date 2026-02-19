@@ -37,5 +37,5 @@
    "," 'ace-window
    )
 
-  :hook (use-package--ace-window--post-config . z-brushup)
+  :hook (use-package--ace-window--post-config . zetta-brushup)
   )

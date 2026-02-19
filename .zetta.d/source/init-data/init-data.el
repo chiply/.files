@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-(setq z-files-that-need-creating '("~/.dir-locals.el" "~/.private.el"))
+(setq zetta-files-that-need-creating '("~/.dir-locals.el" "~/.private.el"))
 
 (setq
  user-files

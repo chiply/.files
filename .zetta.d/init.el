@@ -9,7 +9,7 @@
 (require 'bootstrap)
 
 ;; install mandatory config files
-(-each z-files-that-need-creating 'z-touch-maybe)
+(-each zetta-files-that-need-creating 'zetta-touch-maybe)
 
 ;; load user module config (~/.zetta.el) if it exists
 ;; this can call `zetta-modules!' to override the default user-files
@@ -21,7 +21,7 @@
 (load-file "~/.private.el")
 
 ;; load user config files
-(-map (lambda (pkg) (z-load-config-file pkg)) user-files)
+(-map (lambda (pkg) (zetta-load-config-file pkg)) user-files)
 
 (elpaca-process-queues)
 

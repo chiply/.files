@@ -9,7 +9,7 @@
 (defun jmespath-query ()
   (interactive)
   (let ((bufnm (format "*jmespath-query-%s*" (nth 0 (split-string (buffer-name) "\\.")))))
-   (if (z-soda-buffer-displayed-p bufnm)
+   (if (zetta-soda-buffer-displayed-p bufnm)
        (select-window (get-buffer-window bufnm))
      (progn
        (split-window-vertically 10)

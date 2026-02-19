@@ -32,14 +32,14 @@
   :init (evil-set-initial-state 'eaf-mode 'emacs)
 
   :config
-  (defun z-eaf-switch-to-eww ()
+  (defun zetta-eaf-switch-to-eww ()
     (interactive)
     (eww-browse-url (eaf-get-path-or-url))
     )
 
-  (defun z-eaf-org-agenda ()
+  (defun zetta-eaf-org-agenda ()
     (interactive)
-    (z-org-agenda "1" org-super-agenda-groups-main)
+    (zetta-org-agenda "1" org-super-agenda-groups-main)
     (org-agenda-redo) 
     )
   (require 'eaf-browser)
@@ -54,7 +54,7 @@
   (eaf-browser-continue-where-left-off t)
   (eaf-browser-enable-adblocker t)
   :config
-  (eaf-bind-key z-eaf-switch-to-eww "C-&" eaf-browser-keybinding)
+  (eaf-bind-key zetta-eaf-switch-to-eww "C-&" eaf-browser-keybinding)
   (eaf-bind-key nil "," eaf-browser-keybinding)
 
   (eaf-bind-key consult-buffer ",b" eaf-browser-keybinding)
@@ -63,7 +63,7 @@
   (eaf-bind-key project-find-file ",p" eaf-browser-keybinding)
   (eaf-bind-key find-file ",f" eaf-browser-keybinding)
   (eaf-bind-key kill-current-buffer ",b" eaf-browser-keybinding)
-  (eaf-bind-key z-eaf-org-agenda ",a" eaf-browser-keybinding)
+  (eaf-bind-key zetta-eaf-org-agenda ",a" eaf-browser-keybinding)
   )
 
 ;; note pymupdf is a dependency!!!

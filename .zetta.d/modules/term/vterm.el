@@ -2,15 +2,15 @@
   :commands (vterm vterm-mode vterm-other-window)
   :init
 
-  (defun z-soda-prompt-term-buffer ()
+  (defun zetta-soda-prompt-term-buffer ()
     (let ((mode-buffers (-map
                          (lambda (x) (buffer-name x))
-                         (z-soda-list-mode-buffers "\\term-mode*"))))
+                         (zetta-soda-list-mode-buffers "\\term-mode*"))))
       (completing-read "Proces Buffer: " mode-buffers)
       ))
 
 
-  (defun z-soda-create-and-display-term (buf-or-mode-name)
+  (defun zetta-soda-create-and-display-term (buf-or-mode-name)
     (interactive)
     (let* ((buf (current-buffer))
            (program (completing-read
@@ -142,26 +142,26 @@ Prompt for a vterm buffer and store it as a buffer-local variable."
 
   (add-hook 'vterm-mode-hook 'my-buffer-face-mode-pt-mono)
 
-  (defun z-soda-drink-term ()
+  (defun zetta-soda-drink-term ()
     (interactive)
-    (z-soda-drink (quote z-soda-create-and-display-term) (z-soda-prompt-term-buffer)))
+    (zetta-soda-drink (quote zetta-soda-create-and-display-term) (zetta-soda-prompt-term-buffer)))
 
-  (defun z-soda-cap-term ()
+  (defun zetta-soda-cap-term ()
     (interactive)
-    (z-soda-cap "\\term-mode*" 1))
+    (zetta-soda-cap "\\term-mode*" 1))
 
   (general-define-key
    :keymaps 'menu-run-map
-   "s" (** z-soda-drink-term)
-   "S" (** z-soda-cap-term))
+   "s" (** zetta-soda-drink-term)
+   "S" (** zetta-soda-cap-term))
 
   :display
-  ;;(z-side "^\\*zsh*" 'bottom)
-  ;;(z-side "^\\*bash*" 'bottom)
-  ;;(z-side "^\\*python3*" 'bottom 1)
-  ;;(z-side "^\\*ipython*" 'bottom 1)
-  ;;(z-side "^\\*ssh*" 'bottom 1)
-  ;;(z-side "^\\*sqlite3*" 'bottom 2)
+  ;;(zetta-side "^\\*zsh*" 'bottom)
+  ;;(zetta-side "^\\*bash*" 'bottom)
+  ;;(zetta-side "^\\*python3*" 'bottom 1)
+  ;;(zetta-side "^\\*ipython*" 'bottom 1)
+  ;;(zetta-side "^\\*ssh*" 'bottom 1)
+  ;;(zetta-side "^\\*sqlite3*" 'bottom 2)
 
   :general
   (

@@ -190,7 +190,7 @@ minibuffer with something like `exit-minibuffer'."
   (
    :states '(normal)
    :keymaps '(elfeed-show-mode-map)
-   "C-c C-S-o" 'z-org-open-at-point
+   "C-c C-S-o" 'zetta-org-open-at-point
    "C-c C-o" 'org-open-at-point
    "B" 'elfeed-show-eww-open
    "SPC" 'elfeed-show-next

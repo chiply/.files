@@ -5,7 +5,7 @@
 ;; this will make it read much much clearner and make it easier to
 ;; test these functions which is important as these functions need to
 ;; be very efficient
-;; z-line-...
+;; zetta-line-...
 
 ;; TODO
 ;; need 1 per line
@@ -28,7 +28,7 @@
         " "
         (:eval
          (let ((path (abbreviate-file-name default-directory)))
-           (if (> (length path) 30) (z-minify-path default-directory) path)))
+           (if (> (length path) 30) (zetta-minify-path default-directory) path)))
         " "
         "%c|%l(%p)"
         ))
@@ -85,7 +85,7 @@
                  (all-the-icons-icon-for-mode 'lsp-mode)))
         (:eval (when (and (boundp 'copilot-mode) copilot-mode)
                  (all-the-icons-icon-for-mode 'copilot-mode)))
-        (:eval (when (z-side-window-p (selected-window)) " {S} "))
+        (:eval (when (zetta-side-window-p (selected-window)) " {S} "))
         " "
         
         (:eval (let ((result (shell-command-to-string
@@ -105,7 +105,7 @@
                    ;; modeline
                    (concat " {"
                            (all-the-icons-icon-for-mode 'magit-status-mode)
-                           (nth 0 (z-get-repo-name))
+                           (nth 0 (zetta-get-repo-name))
                            " "
                            (vc-git--symbolic-ref (or (buffer-file-name) default-directory))
                            (all-the-icons-icon-for-mode 'magit-refs-mode)
@@ -115,11 +115,11 @@
                  (if (string= " not-checked" text) "" text)))
         (:eval (concat (or (if (boundp 'latest-transient) latest-transient) (if (boundp 'local-transient) local-transient)) " "))
         (:eval (when (or
-                      (z-line-tramp-icon)
-                      (z-line-docker-icon)
-                      (z-line-narrowed-icon)
-                      (z-line-iedit-icon)
-                      (z-line-hydra-indicator-icon)
+                      (zetta-line-tramp-icon)
+                      (zetta-line-docker-icon)
+                      (zetta-line-narrowed-icon)
+                      (zetta-line-iedit-icon)
+                      (zetta-line-hydra-indicator-icon)
                       )
                  " "
                  ))
@@ -135,13 +135,13 @@
         ;; the working and not working icons... will just table this
         ;; for now as I can hack around this by using one of the
         ;; icon-for commands
-        (:eval (let ((icon (z-line-tramp-icon))) (when icon "T")))
-        (:eval (let ((icon (z-line-docker-icon))) (when icon "D")))
-        (:eval (let ((icon (z-line-narrowed-icon))) (when icon "N")))
-        ;;(:eval (let ((icon (z-line-iedit-icon))) (when icon "I")))
-        (:eval (let ((icon (z-line-hydra-indicator-icon))) (when icon "H")))
+        (:eval (let ((icon (zetta-line-tramp-icon))) (when icon "T")))
+        (:eval (let ((icon (zetta-line-docker-icon))) (when icon "D")))
+        (:eval (let ((icon (zetta-line-narrowed-icon))) (when icon "N")))
+        ;;(:eval (let ((icon (zetta-line-iedit-icon))) (when icon "I")))
+        (:eval (let ((icon (zetta-line-hydra-indicator-icon))) (when icon "H")))
         (:eval (anzu--update-mode-line))
-        (:eval (let ((icon (z-line-iedit-icon))) (when icon iedit-mode-line)))
+        (:eval (let ((icon (zetta-line-iedit-icon))) (when icon iedit-mode-line)))
         (:eval repeat-echo-mode-line-string)
         (:eval (when (eq major-mode 'magit-status-mode) (nyan-create)))))
 
@@ -152,8 +152,8 @@
 
 (setq anzu-cons-mode-line-p nil)
 
-;;(setq-default mode-line-format (z-get-line-format default-line-align-left "" ""))
-;;(setq-default header-line-format (z-get-line-format default-line-align-left-devel-1 "" "" ))
+;;(setq-default mode-line-format (zetta-get-line-format default-line-align-left "" ""))
+;;(setq-default header-line-format (zetta-get-line-format default-line-align-left-devel-1 "" "" ))
 
 
 ;; for apps that strangely don't take the defaults
@@ -164,11 +164,11 @@
                     '(:eval
                       (let ((path (abbreviate-file-name default-directory)))
                         (if (> (length path) 30)
-                            (z-minify-path default-directory)
+                            (zetta-minify-path default-directory)
                           path)))))
              (setq header-line-format (list
-                                       '(:eval (z-get-repo-name))
+                                       '(:eval (zetta-get-repo-name))
                                        ":"
-                                       '(:eval (z-get-branch-name))
+                                       '(:eval (zetta-get-branch-name))
                                        ))))
 

@@ -22,5 +22,5 @@
    ;;"/" 'evil-search-highlight-persist-remove-all
    ;;)
 ;;
-  ;;:hook (use-package--evil-search-highlight-persist--post-config . z-brushup)
+  ;;:hook (use-package--evil-search-highlight-persist--post-config . zetta-brushup)
   ;;)

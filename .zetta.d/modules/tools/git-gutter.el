@@ -37,5 +37,5 @@
    "j" (** git-gutter:next-hunk)
    "k" (** git-gutter:previous-hunk))
 
-  :hook (use-package--git-gutter--post-config . z-brushup)
+  :hook (use-package--git-gutter--post-config . zetta-brushup)
   )

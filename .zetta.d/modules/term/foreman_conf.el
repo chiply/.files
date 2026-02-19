@@ -269,7 +269,7 @@
   (interactive)
   (let* (
          (innercmd (4mn-get-inner-cmd))
-         (thing (format "%s\n" (string-trim (z-get-thing thing)))) 
+         (thing (format "%s\n" (string-trim (zetta-get-thing thing)))) 
          (code (format
                 "%s\n"
                 (string-trim
@@ -315,7 +315,7 @@
                                  (buffer-list)
                                  )))
                (detached-shell-command innercmd nil)
-               (with-current-buffer (z-detached-get-newest-buffer)
+               (with-current-buffer (zetta-detached-get-newest-buffer)
                  (rename-buffer bufnm)
                  )
                )

@@ -389,7 +389,7 @@
 
 
 
-(defun z-embark-bind-keys ()
+(defun zetta-embark-bind-keys ()
   (setq embark-maps-list (-map (lambda (x) (if (listp (cdr x)) (car (cdr x)) (cdr x))) embark-keymap-alist))
   (-map (lambda (x)
           (condition-case nil
@@ -398,5 +398,5 @@
         embark-maps-list)
   )
 
-(add-hook 'elpaca-after-init-hook (lambda () (z-embark-bind-keys)))
+(add-hook 'elpaca-after-init-hook (lambda () (zetta-embark-bind-keys)))
 

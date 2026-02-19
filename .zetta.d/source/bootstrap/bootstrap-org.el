@@ -15,7 +15,7 @@
         org-attach-store-link-p 'file
         org-hide-leading-stars nil
         org-archive-location "(todo) archive.org::* From %s"
-        ;; org-agenda-files populated by z-logseq-update-agenda-files
+        ;; org-agenda-files populated by zetta-logseq-update-agenda-files
         org-agenda-files '()
         org-persist-directory (expand-file-name
                                ".data/org-persist"
@@ -31,8 +31,8 @@
         org-log-reschedule 'time
         org-log-into-drawer t
         ;; Custom: also log initial deadline/schedule creation
-        z-org-log-initial-deadline 'time
-        z-org-log-initial-schedule 'time
+        zetta-org-log-initial-deadline 'time
+        zetta-org-log-initial-schedule 'time
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
         org-refile-targets '((nil :maxlevel . 10) ;; current buf
@@ -112,7 +112,7 @@
           ))
       ))
 
-  (defun z-org-open-at-point ()
+  (defun zetta-org-open-at-point ()
     (interactive)
     (let ((browse-url-browser-function 'browse-url-default-browser))
       (call-interactively 'org-open-at-point)))
@@ -145,30 +145,30 @@
       (set-face-attribute 'org-document-info-keyword nil :background brushup-bg :foreground brushup-bg-6 :extend nil)
       ))
 
-  (defun z-org-go ()
+  (defun zetta-org-go ()
     (interactive)
     (org-refile '(1)))
 
-  (defun z-org-append ()
+  (defun zetta-org-append ()
     (interactive)
     (org-insert-heading-respect-content)
     (evil-append 1)
     )
 
-  (defun z-org-append-todo ()
+  (defun zetta-org-append-todo ()
     (interactive)
     (org-insert-heading-respect-content)
     (evil-append 1)
     )
 
-  (defun call-z-org-todo-with-prefix ()
+  (defun call-zetta-org-todo-with-prefix ()
     (interactive)
     (let ((current-prefix-arg '(4)))
-      (call-interactively 'z-org-todo)
+      (call-interactively 'zetta-org-todo)
       )
     )
 
-  (defun z-org-call-tangle-with-prefix ()
+  (defun zetta-org-call-tangle-with-prefix ()
     (interactive)
     (setq current-prefix-arg '(4))
     (call-interactively 'org-babel-tangle))
@@ -192,28 +192,28 @@
    )
   (
    :keymaps '(org-mode-map org-agenda-mode-map)
-   "C-c C-S-o" 'z-org-open-at-point
+   "C-c C-S-o" 'zetta-org-open-at-point
    "C-c C-o" 'org-open-at-point
    )
   (
    ;; TODO make this org-specific -- already tried, but couldn't get
    ;; the keybindings to work
    :keymaps 'menu-org-map
-   "g" (** z-org-go)
+   "g" (** zetta-org-go)
    "j" (** org-next-visible-heading)
    "k" (** org-previous-visible-heading)
    "U" (** outline-up-heading)
    "J" (** org-move-subtree-down)
    "K" (** org-move-subtree-up)
 
-   "a" (** z-org-append)
-   "T" (** z-org-append-todo)
+   "a" (** zetta-org-append)
+   "T" (** zetta-org-append-todo)
    "8" (** org-toggle-heading)
    "o" 'org-capture
    "z" (** org-add-note)
    "S" (** org-schedule)
    "D" (** org-deadline)
-   "t" (** call-z-org-todo-with-prefix)
+   "t" (** call-zetta-org-todo-with-prefix)
 
    ;; tree structure
    "h" (** org-metaleft)
@@ -234,7 +234,7 @@
    ;; misc
    "m" (** org-mark-element)
    "M" (** org-mark-subtree)
-   "C-t" (** z-org-call-tangle-with-prefix)
+   "C-t" (** zetta-org-call-tangle-with-prefix)
    "C-S-t" (** org-babel-tangle)
    )
 
@@ -254,15 +254,15 @@
 
 ;;; Logseq TODO files management
 ;; zetta-logseq-dir is defined in bootstrap-modules.el
-(defvar z-logseq-pages-dir zetta-logseq-dir
+(defvar zetta-logseq-pages-dir zetta-logseq-dir
   "Directory containing logseq pages.  Defaults to `zetta-logseq-dir'.")
 
-(defun z-logseq-todo-files ()
+(defun zetta-logseq-todo-files ()
   "Return list of files in logseq pages starting with '(todo)'."
-  (when (file-directory-p z-logseq-pages-dir)
-    (directory-files z-logseq-pages-dir t "^(todo).*\\.org$")))
+  (when (file-directory-p zetta-logseq-pages-dir)
+    (directory-files zetta-logseq-pages-dir t "^(todo).*\\.org$")))
 
-(defun z-logseq-todo-file-name (file)
+(defun zetta-logseq-todo-file-name (file)
   "Extract the name part from a (todo) FILE path.
 E.g., '(todo) emacs.org' -> 'emacs'"
   (let ((basename (file-name-base file)))
@@ -270,19 +270,19 @@ E.g., '(todo) emacs.org' -> 'emacs'"
         (match-string 1 basename)
       basename)))
 
-(defun z-logseq-todo-capture-key (name)
+(defun zetta-logseq-todo-capture-key (name)
   "Generate a capture key from NAME.
 Uses first letter, or first two letters if conflicts exist."
   (downcase (substring name 0 1)))
 
-(defun z-logseq-generate-capture-templates ()
+(defun zetta-logseq-generate-capture-templates ()
   "Generate org-capture templates for all (todo) files."
-  (let ((files (z-logseq-todo-files))
+  (let ((files (zetta-logseq-todo-files))
         (used-keys '())
         templates)
     (dolist (file files)
-      (let* ((name (z-logseq-todo-file-name file))
-             (base-key (z-logseq-todo-capture-key name))
+      (let* ((name (zetta-logseq-todo-file-name file))
+             (base-key (zetta-logseq-todo-capture-key name))
              ;; Handle key conflicts by appending numbers
              (key (if (member base-key used-keys)
                       (let ((i 2) new-key)
@@ -300,9 +300,9 @@ Uses first letter, or first two letters if conflicts exist."
               templates)))
     (nreverse templates)))
 
-(defun z-logseq-update-agenda-files ()
+(defun zetta-logseq-update-agenda-files ()
   "Add all (todo) files to org-agenda-files."
-  (let ((todo-files (z-logseq-todo-files)))
+  (let ((todo-files (zetta-logseq-todo-files)))
     (dolist (file todo-files)
       (add-to-list 'org-agenda-files file t))))
 
@@ -318,16 +318,16 @@ Uses first letter, or first two letters if conflicts exist."
           "* %?\n%a"
           :prepend t))
        ;; Add logseq (todo) file templates dynamically
-       (z-logseq-generate-capture-templates)))
+       (zetta-logseq-generate-capture-templates)))
 
 ;; Add (todo) files to agenda
-(z-logseq-update-agenda-files)
+(zetta-logseq-update-agenda-files)
 
 ;;; Log initial deadline/schedule creation
 ;; org-log-redeadline and org-log-reschedule only log *changes*, not initial
 ;; creation. These advice functions add logging when deadline/schedule is first set.
 
-(defcustom z-org-log-initial-deadline nil
+(defcustom zetta-org-log-initial-deadline nil
   "Non-nil means log when a deadline is initially set.
 Can be `time' to log just timestamp, `note' to also prompt for a note,
 or nil to disable."
@@ -336,7 +336,7 @@ or nil to disable."
                  (const :tag "Note" note))
   :group 'org)
 
-(defcustom z-org-log-initial-schedule nil
+(defcustom zetta-org-log-initial-schedule nil
   "Non-nil means log when a schedule is initially set.
 Can be `time' to log just timestamp, `note' to also prompt for a note,
 or nil to disable."
@@ -345,11 +345,11 @@ or nil to disable."
                  (const :tag "Note" note))
   :group 'org)
 
-(defun z-org--log-initial-timestamp (type timestamp)
+(defun zetta-org--log-initial-timestamp (type timestamp)
   "Log initial creation of TYPE (deadline or scheduled) with TIMESTAMP."
   (let* ((log-setting (if (eq type 'deadline)
-                          z-org-log-initial-deadline
-                        z-org-log-initial-schedule))
+                          zetta-org-log-initial-deadline
+                        zetta-org-log-initial-schedule))
          (note-text (format "Initially %s on %s"
                             (if (eq type 'deadline) "set deadline" "scheduled")
                             (format-time-string
@@ -358,7 +358,7 @@ or nil to disable."
       (org-add-log-setup (if (eq type 'deadline) 'redeadline 'reschedule)
                          timestamp nil log-setting note-text))))
 
-(defun z-org-deadline-log-initial-a (orig-fun &optional arg time)
+(defun zetta-org-deadline-log-initial-a (orig-fun &optional arg time)
   "Advice to log when a deadline is initially set (not just changed).
 Wraps `org-deadline' to detect when there was no previous deadline."
   (let ((had-deadline (org-entry-get nil "DEADLINE")))
@@ -366,11 +366,11 @@ Wraps `org-deadline' to detect when there was no previous deadline."
     ;; Log if this was an initial set (no previous deadline) and we're not removing
     (when (and (not had-deadline)
                (not (equal arg '(4)))  ; C-u removes deadline
-               z-org-log-initial-deadline
+               zetta-org-log-initial-deadline
                (org-entry-get nil "DEADLINE"))
-      (z-org--log-initial-timestamp 'deadline (org-entry-get nil "DEADLINE")))))
+      (zetta-org--log-initial-timestamp 'deadline (org-entry-get nil "DEADLINE")))))
 
-(defun z-org-schedule-log-initial-a (orig-fun &optional arg time)
+(defun zetta-org-schedule-log-initial-a (orig-fun &optional arg time)
   "Advice to log when a schedule is initially set (not just changed).
 Wraps `org-schedule' to detect when there was no previous schedule."
   (let ((had-schedule (org-entry-get nil "SCHEDULED")))
@@ -378,12 +378,12 @@ Wraps `org-schedule' to detect when there was no previous schedule."
     ;; Log if this was an initial set (no previous schedule) and we're not removing
     (when (and (not had-schedule)
                (not (equal arg '(4)))  ; C-u removes schedule
-               z-org-log-initial-schedule
+               zetta-org-log-initial-schedule
                (org-entry-get nil "SCHEDULED"))
-      (z-org--log-initial-timestamp 'scheduled (org-entry-get nil "SCHEDULED")))))
+      (zetta-org--log-initial-timestamp 'scheduled (org-entry-get nil "SCHEDULED")))))
 
-(advice-add 'org-deadline :around #'z-org-deadline-log-initial-a)
-(advice-add 'org-schedule :around #'z-org-schedule-log-initial-a)
+(advice-add 'org-deadline :around #'zetta-org-deadline-log-initial-a)
+(advice-add 'org-schedule :around #'zetta-org-schedule-log-initial-a)
 
 (provide 'bootstrap-org)
 

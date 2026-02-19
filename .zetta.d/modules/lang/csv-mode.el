@@ -8,5 +8,5 @@
 
   ;; note: align mode breaks when increasing text-scale, so disable this...
   :hook
-  (csv-mode . (lambda () (setq-local z-zen-disable t) (text-scale-adjust 0)))
+  (csv-mode . (lambda () (setq-local zetta-zen-disable t) (text-scale-adjust 0)))
   )

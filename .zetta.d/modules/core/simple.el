@@ -14,12 +14,12 @@
               (lambda (&rest args)
                 (append-to-zsh-history (car args))))
 
-  (defun z-shell-command ()
+  (defun zetta-shell-command ()
     (interactive)
     (let ((shell-command-history (parse-zsh-history "~/.zsh_history")))
       (call-interactively 'shell-command)))
 
-  (defun z-async-shell-command ()
+  (defun zetta-async-shell-command ()
     (interactive)
     (let ((shell-command-history (parse-zsh-history "~/.zsh_history")))
       (call-interactively 'async-shell-command)))
@@ -27,8 +27,8 @@
   :general
   (
    :keymaps 'override
-   "M-&" 'z-async-shell-command
-   "M-!" 'z-shell-command
+   "M-&" 'zetta-async-shell-command
+   "M-!" 'zetta-shell-command
    )
   
   )

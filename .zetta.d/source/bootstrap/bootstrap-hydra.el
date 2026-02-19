@@ -24,7 +24,7 @@
   :ensure (:wait t)
   :demand t
   :init
-  (defun z-hydra-init (name)
+  (defun zetta-hydra-init (name)
     "Function used to instantiate a hydra following a special
 template.  This template handles setting up a generic docstring, C-g
 for quitting, and s-x for hide-showing the hint."
@@ -45,7 +45,7 @@ for quitting, and s-x for hide-showing the hint."
     (eval `(hydra-set-property (intern ,name) :verbosity 0))
     ;; add the name to the hydra registry (useful for introspection)
     (push name hydra-registry))
-  (z-hydra-init "hydra-window")
+  (zetta-hydra-init "hydra-window")
 
 
 
@@ -55,7 +55,7 @@ for quitting, and s-x for hide-showing the hint."
     "Redefine an existing hydra by adding new heads.
 Arguments are same as of `defhydra'."
     (unless (and (fboundp (intern (concat (symbol-name name) "/body"))))
-      (z-hydra-init (symbol-name name)))
+      (zetta-hydra-init (symbol-name name)))
     (declare (indent defun) (doc-string 3))
     (unless (stringp docstring)
       (setq heads (cons docstring heads))
@@ -98,7 +98,7 @@ Arguments are same as of `defhydra'."
    ;;"p" 'hydra-project/body
    ;;)
 
-  :hook (use-package--hydra--post-config . z-brushup)
+  :hook (use-package--hydra--post-config . zetta-brushup)
   )
 
 

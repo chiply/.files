@@ -20,7 +20,7 @@ A plan for transforming this personal Emacs configuration into a distributable E
 | `space-tree/` (zettapkg) | Clean workspace management — MELPA-ready |
 | `convention/` (zettapkg) | Docker container workflow, well-modularized |
 | `gha/` (zettapkg) | GitHub Actions integration, generic workflow |
-| `z-load-config-file()` | Generic file loading mechanism |
+| `zetta-load-config-file()` | Generic file loading mechanism |
 
 ### Partially Distributable (Need Abstraction)
 
@@ -28,7 +28,7 @@ A plan for transforming this personal Emacs configuration into a distributable E
 |---|---|
 | `init.el` | Logic is generic; hardcoded personal paths (bookmarks, tramp profiles) |
 | `init-data.el` | List structure is sound; 276-entry list contents are personal |
-| `bootstrap-display.el` | Framework (`z-side`) is generic; dimension configs are personal |
+| `bootstrap-display.el` | Framework (`zetta-side`) is generic; dimension configs are personal |
 | `bootstrap-org.el` | Core setup generic; custom variables and paths mixed in |
 | `bootstrap-zettafn.el` | Half utility library, half personal tools |
 | `spot4e/` (zettapkg) | **Exposes hardcoded Spotify API credentials — must remove before any distribution** |
@@ -281,7 +281,7 @@ Sequential. Task 4 blocked by 1-3. Task 5 blocked by 4. Task 6 blocked by 5.
   - Categories with sub-lists load only the specified files
   - Respect bootstrap load order (core first)
   - Support disabling defaults: `(:ui -treemacs -nyan-mode)`
-  - Integrate with `z-load-config-file` for actual file loading
+  - Integrate with `zetta-load-config-file` for actual file loading
 
   Lives in a new `bootstrap-modules.el`, called from the user's `~/.zetta.el`.
 
@@ -366,7 +366,7 @@ Tasks 7 and 8 can run in parallel. Task 9 blocked by 5 and 7.
 
   4. **Module headers** — Each module's `config.el` gets a comment block explaining purpose and required external tools
 
-- [ ] **Task 11: Rename `z-` prefix to `zetta-` namespace** *(blocked by: 4, 5)*
+- [x] **Task 11: Rename `z-` prefix to `zetta-` namespace** *(blocked by: 4, 5)*
 
   Repo-wide find-and-replace of `z-` prefixed functions and variables to `zetta-`. Must only rename custom definitions, not built-in Emacs functions.
 
@@ -534,4 +534,4 @@ These ship with the distro and are loaded directly from the tree. No separate in
 
 ## Naming
 
-The current internal prefix is `z-` for functions and variables. For a distribution, consider whether to keep this or adopt a more distinctive namespace (e.g., `zetta-`). Consistency matters — pick one and use it everywhere.
+The internal prefix is `zetta-` for all custom functions and variables. This was renamed from the original `z-` prefix for clarity and to avoid namespace collisions.

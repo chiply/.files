@@ -32,8 +32,8 @@
 ;;(setq which-key-persistent-popup t)
 ;;(defun zfun1 () (interactive) (message "one"))
 ;;(defun zfun2 () (interactive) (message "two"))
-;;(defvar-keymap z-repeat-map :repeat t "1" 'zfun1 "2" 'zfun2)
-;;(general-define-key :keymaps 'override "C-c @" z-repeat-map)
+;;(defvar-keymap zetta-repeat-map :repeat t "1" 'zfun1 "2" 'zfun2)
+;;(general-define-key :keymaps 'override "C-c @" zetta-repeat-map)
 
 
 ;; TODO document decision to not create hydra/transient helpers:
@@ -250,7 +250,7 @@ function weirdly leaves the map message in the echo area, not sure why")
               ;; isn't bound when displaying which-key this way
               (progn
                 (which-key--create-buffer-and-show nil menu--active-km)
-                ;;(setq z-which-key-showing t)
+                ;;(setq zetta-which-key-showing t)
                 )
               )
             (setq menu--which-key-toggle t))

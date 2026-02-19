@@ -1,4 +1,4 @@
-(setq z-spaces (ht-create))
+(setq zetta-spaces (ht-create))
 
 
 

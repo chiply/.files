@@ -8,7 +8,7 @@
   ;; git config --local github.user USERNAME
   :init
   (setq auth-sources '("~/.authinfo"))
-  ;;(z-side "\\forge-topic-mode" 'right 2)
+  ;;(zetta-side "\\forge-topic-mode" 'right 2)
   :general
   (
    :keymaps 'magit-status-mode-map

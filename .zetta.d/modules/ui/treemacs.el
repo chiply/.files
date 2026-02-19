@@ -5,7 +5,7 @@
            :files ("src/elisp/*.el"
                    "src/extra/*.el"))
   :commands (treemacs treemacs-select-window treemacs-add-project
-             z-soda-drink-treemacs z-refresh-treemacs)
+             zetta-soda-drink-treemacs zetta-refresh-treemacs)
 
   ;;(setq treemacs-persist-file
   ;;(expand-file-name ".data/treemacs/.cache/treemacs-persist"
@@ -65,9 +65,9 @@
 
   (treemacs-filewatch-mode t)
 
-  (defun z-refresh-treemacs ()
+  (defun zetta-refresh-treemacs ()
     (interactive)
-    (let ((treemacs-buf (nth 0 (z-soda-mode-displayed-p "treemacs-mode")))
+    (let ((treemacs-buf (nth 0 (zetta-soda-mode-displayed-p "treemacs-mode")))
           (win (selected-window)))
       (when treemacs-buf
         (progn
@@ -77,11 +77,11 @@
 
   ;; TODO update as this also jumps to other buffers displaying
   ;; treemacs like lsp symbols or lsp error list
-  (defun z-soda-drink-treemacs ()
+  (defun zetta-soda-drink-treemacs ()
     (interactive)
     (let* ((bufnm (current-buffer))
            (win (get-buffer-window bufnm))
-           (treemacs-buf (nth 0 (z-soda-mode-displayed-p "treemacs-mode")))
+           (treemacs-buf (nth 0 (zetta-soda-mode-displayed-p "treemacs-mode")))
            )
       (if treemacs-buf
           (select-window (get-buffer-window treemacs-buf))
@@ -91,7 +91,7 @@
           )
         )))
 
-  (defun z-soda-toggle-treemacs-follow-mode ()
+  (defun zetta-soda-toggle-treemacs-follow-mode ()
     (interactive)
     (if treemacs-tag-follow-mode
         (progn
@@ -107,10 +107,10 @@
 
   (general-define-key
    :keymaps 'menu-run-map
-   "t" (** z-soda-drink-treemacs)
+   "t" (** zetta-soda-drink-treemacs)
    "T" (** treemacs)
-   "C-t" (** z-refresh-treemacs)
-   "M-t" (** z-soda-toggle-treemacs-follow-mode))
+   "C-t" (** zetta-refresh-treemacs)
+   "M-t" (** zetta-soda-toggle-treemacs-follow-mode))
 
   ;;:brushup
   ;;(add-to-list 'brushup-styles
@@ -130,7 +130,7 @@
    "d" 'treemacs-delete-file
    )
 
-  :hook ((use-package--treemacs--post-config . z-brushup)
+  :hook ((use-package--treemacs--post-config . zetta-brushup)
          (treemacs-mode . (lambda ()
                             (text-scale-set -2)
                             (toggle-truncate-lines -1)))))

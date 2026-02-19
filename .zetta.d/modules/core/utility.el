@@ -1,4 +1,4 @@
-(defun z-wget ()
+(defun zetta-wget ()
   (interactive)
   (let ((dir "~/Downloads/")
         (url (eww-current-url)))
@@ -13,7 +13,7 @@
 ;; presumably get these from some interactive function
 
 ;; works reasonably well
-(defun z-download-pdf ()
+(defun zetta-download-pdf ()
   (interactive)
   (let* ((url (eww-current-url))
          (title (read-from-minibuffer "Title: "))

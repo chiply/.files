@@ -159,7 +159,7 @@
           ))
 
 
-  (defun z-spinner-compile-spin (&optional _)
+  (defun zetta-spinner-compile-spin (&optional _)
     (let* ((spinner (nth (random (length spinner-types)) spinner-types))
            (spinner-type-name (car spinner))
            (spinner-type-data (cdr spinner))
@@ -180,15 +180,15 @@
        )))
 
 
-  (add-hook 'compilation-start-hook 'z-spinner-compile-spin)
+  (add-hook 'compilation-start-hook 'zetta-spinner-compile-spin)
 
   ;; Stop
-  (defun z-compile-spin-stop (buffer result)
+  (defun zetta-compile-spin-stop (buffer result)
     "Executes spinner-stop strategy depending on compilation exit status."
     (cond ((string-match "^finished" result) (spinner-stop))
           ((string-match "^interrupt" result) (spinner-stop))
           ((string-match "^exited abnormally" result) (spinner-stop))))
 
-  (add-to-list 'compilation-finish-functions 'z-compile-spin-stop)
+  (add-to-list 'compilation-finish-functions 'zetta-compile-spin-stop)
 
   )
