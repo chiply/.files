@@ -2,7 +2,7 @@
 ;; spotify
 (use-package spot4e
   :ensure nil
-  :load-path (expand-file-name "source/zettapkg/spot4e" user-emacs-directory)
+  :load-path "source/zettapkg/spot4e"
   :commands (hydra-spot4e/body spot4e-refresh)
 
   :config

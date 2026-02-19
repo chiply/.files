@@ -3,7 +3,7 @@
 (use-package menu
   :ensure nil
   :demand t
-  :load-path (expand-file-name "source/zettapkg/menu" user-emacs-directory)
+  :load-path "source/zettapkg/menu"
   :after which-key
   :config
 
