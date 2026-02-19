@@ -211,7 +211,7 @@ Tasks 1-3 can be done in parallel. All must complete before Phase 2.
 
   Make these configurable via `defcustom` or user config variables.
 
-- [ ] **Task 3: Replace hardcoded paths with portable alternatives**
+- [x] **Task 3: Replace hardcoded paths with portable alternatives**
 
   ~30 files use `~/.files/.zetta.d/` or other absolute paths. Replace with `user-emacs-directory` and `expand-file-name`. Define a `zetta-dir` variable for the distro root.
 

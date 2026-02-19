@@ -1,5 +1,5 @@
 (use-package foreman
   :ensure nil
-  :load-path "~/.files/.zetta.d/source/zettapkg/foreman"
+  :load-path (expand-file-name "source/zettapkg/foreman" user-emacs-directory)
   :commands foreman
   )

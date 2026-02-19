@@ -15,14 +15,12 @@
 
   ;; NOT RECURSIVE!!! Need to specify explicitly
   (setq
-   citar-library-paths `(
-                         ,(expand-file-name "~/.files/.lit/pdf")
-                         )
+   citar-library-paths (list (expand-file-name "pdf" zetta-literature-dir))
    )
 
 
   :custom
-  (citar-bibliography '("~/.files/.lit/bibliography.bib"))
+  (citar-bibliography (list (expand-file-name "bibliography.bib" zetta-literature-dir)))
   )
 
 
