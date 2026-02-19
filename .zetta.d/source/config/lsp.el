@@ -64,11 +64,7 @@
 
 
   (setq lsp-sqls-server (expand-file-name "~/go/bin/sqls"))
-  (setq lsp-sqls-connections
-        '(
-          ((driver . "sqlite3") (dataSourceName . "test.db"))
-          ((driver . "postgresql") (dataSourceName . "host=127.0.0.1 port=5433 user=master password=mypassword dbname=master_data_store sslmode=disable"))
-          ))
+  ;; lsp-sqls-connections set in ~/.private.el
 
 
   :config
@@ -176,23 +172,7 @@
                     :activation-fn (lsp-activate-on "yaml")
                     :server-id 'yaml-language-server))
 
-  ;; this needs to go to private
-  ;; also, use expand-file-name
-  (setq
-   lsp-yaml-schemas
-   '(
-     ;; DEMO
-     (/Users/redacted/projects/spikes/jsonschema_for_configuration/schemas/schema0.json
-      .
-      ["product_*.yml"]
-      )
-     ;; other
-     ;; ...
-     ;; K8s - Note the LSP hours are a limited utility here because
-     ;; this doesn't work well with the template syntax that thinks
-     ;; like home uses
-     (https://kubernetesjsonschema.dev/v1.14.0/deployment-apps-v1.json . ["deployment.yaml"])
-     (https://kubernetesjsonschema.dev/v1.10.3-standalone/service-v1.json . ["service.yaml"])))
+  ;; lsp-yaml-schemas set in ~/.private.el
 
   (setq lsp-headerline-breadcrumb-icons-enable nil)
   (setq lsp-headerline-breadcrumb-enable-diagnostics t)

@@ -25,14 +25,20 @@
 (require 'url)
 
 ;;; Code:
-(defvar spot4e-client-id "7b036492368d47c492d048aa8aec339b")
-(defvar spot4e-client-secret "4deb0f8b549f436a9d46202e701b57b8")
-(defvar spot4e-id-secret
-  (concat spot4e-client-id ":" spot4e-client-secret))
-(defvar spot4e-b64-id-secret
-  (base64-encode-string spot4e-id-secret t))
+(defvar spot4e-client-id nil "Spotify client ID. Set in ~/.private.el.")
+(defvar spot4e-client-secret nil "Spotify client secret. Set in ~/.private.el.")
 (defvar spot4e-redirect-uri (url-hexify-string "https://spotify.com"))
-(defvar spot4e-auth-url-full
+
+(defun spot4e-id-secret ()
+  "Return client-id:client-secret string."
+  (concat spot4e-client-id ":" spot4e-client-secret))
+
+(defun spot4e-b64-id-secret ()
+  "Return base64-encoded client-id:client-secret."
+  (base64-encode-string (spot4e-id-secret) t))
+
+(defun spot4e-auth-url-full ()
+  "Return the full Spotify authorization URL."
   (url-encode-url
    (concat
     "https://accounts.spotify.com/en/authorize"
@@ -115,7 +121,7 @@ alist of headers, and DATA is request body data as JSON."
   "Obtain access_ and refresh_ tokens for user account."
   (interactive)
   ;; Copy auth URL to kill ring (to respect terminal emacs users)
-  (browse-url spot4e-auth-url-full)
+  (browse-url (spot4e-auth-url-full))
   (setq spot4e-auth-code (read-string "Enter code from URL: "))
   (setq spot4e-tokens-alist
         (spot4e-request "POST"
@@ -126,7 +132,7 @@ alist of headers, and DATA is request body data as JSON."
                         t
                         `(("Content-Type" . "application/x-www-form-urlencoded")
                           ("Content-Length" . "0")
-                          ("Authorization" . ,(concat "Basic " spot4e-b64-id-secret)))
+                          ("Authorization" . ,(concat "Basic " (spot4e-b64-id-secret))))
                         nil))
   (setq spot4e-access-token
         (alist-get-chain '(access_token) spot4e-tokens-alist))
@@ -145,7 +151,7 @@ alist of headers, and DATA is request body data as JSON."
                         t
                         `(("Content-Type" . "application/x-www-form-urlencoded")
                           ("Content-Length" . "0")
-                          ("Authorization" . ,(concat "Basic " spot4e-b64-id-secret)))
+                          ("Authorization" . ,(concat "Basic " (spot4e-b64-id-secret))))
                         nil))
   (setq spot4e-access-token
         (alist-get-chain '(access_token) spot4e-refresh-alist)))
