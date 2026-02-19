@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
 ;;; bootstrap-brushup.el --- Dynamic theme-aware color palette -*- lexical-binding: t; -*-
+;; Standalone version: https://github.com/chiply/brushup
 
 ;;; Commentary:
 ;;

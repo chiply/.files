@@ -315,7 +315,7 @@ Tasks 7 and 8 can run in parallel. Task 9 blocked by 5 and 7.
   4. Commit `elpaca-lock.el` into the repo
   5. Add `defcustom zetta-use-lockfile` (default `t`) so users can opt out
 
-- [ ] **Task 8: Extract standalone packages to separate repos** *(independent)*
+- [x] **Task 8: Extract standalone packages to separate repos** *(independent)*
 
   Extract the three most distribution-worthy packages from `source/zettapkg/`:
 
