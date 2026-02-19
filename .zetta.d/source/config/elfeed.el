@@ -234,7 +234,7 @@ minibuffer with something like `exit-minibuffer'."
   :config
   (setq rmh-elfeed-org-files
         (list
-         (expand-file-name "~/.files/.zetta.d/elfeed.org")
+         (expand-file-name "elfeed.org" user-emacs-directory)
          ))
   (elfeed-org)
   (message "loaded elfeed-org")

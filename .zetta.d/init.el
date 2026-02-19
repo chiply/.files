@@ -1,11 +1,11 @@
 ;; -*- lexical-binding: t; -*-
 
 ;; load init data
-(add-to-list 'load-path "~/.files/.zetta.d/source/init-data")
+(add-to-list 'load-path (expand-file-name "source/init-data" user-emacs-directory))
 (require 'init-data)
 
 ;; bootstrap
-(add-to-list 'load-path "~/.files/.zetta.d/source/bootstrap")
+(add-to-list 'load-path (expand-file-name "source/bootstrap" user-emacs-directory))
 (require 'bootstrap)
 
 ;; install mandatory config files
@@ -18,12 +18,17 @@
 (-map (lambda (pkg) (z-load-config-file pkg)) user-files)
 
 (elpaca-process-queues)
+
+;; Bookmarks file (set before custom-set-variables to override)
+(setq bmkp-last-as-first-bookmark-file
+      (expand-file-name "bookmarks" user-emacs-directory))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "~/.files/.zetta.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file nil)
  '(connection-local-criteria-alist
    '(((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)

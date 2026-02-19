@@ -2,7 +2,7 @@
 
 (defvar bootstrap-version)
 
-(setq straight-base-dir "~/.files/.zetta.d/source")
+(setq straight-base-dir (expand-file-name "source" user-emacs-directory))
 
 (let ((bootstrap-file
        (expand-file-name

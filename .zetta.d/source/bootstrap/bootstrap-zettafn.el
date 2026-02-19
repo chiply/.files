@@ -76,7 +76,7 @@ With a non-nil prefix ARG only show bindings in active maps."
     (write-region
      (point-min)
      (point-max)
-     "~/.files/.zetta.d/keybindings.org"
+     (expand-file-name "keybindings.org" user-emacs-directory)
      t)
     (kill-buffer)
     )
@@ -86,7 +86,7 @@ With a non-nil prefix ARG only show bindings in active maps."
 ;; build docs
 (defun z-build-docs ()
   (interactive)
-  (with-current-buffer (find-file-noselect "~/.files/.zetta.d/read.org")
+  (with-current-buffer (find-file-noselect (expand-file-name "read.org" user-emacs-directory))
     (org-babel-execute-buffer) 
     (save-buffer)
     (org-open-file (org-html-export-to-html))

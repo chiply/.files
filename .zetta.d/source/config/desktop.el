@@ -13,7 +13,7 @@
 
   (defun z-desktop-save ()
     (interactive)
-    (desktop-save "~/.files/.zetta.d/"))
+    (desktop-save user-emacs-directory))
 
   (defun z-server-shutdown-save-desktop ()
     (interactive)
