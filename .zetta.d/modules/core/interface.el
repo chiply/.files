@@ -1,6 +1,6 @@
 ;; download from https://files.ax86.net/terminus-ttf/ drag it into the
 ;; `Font Book` app
-(set-frame-font "Terminus (TTF)")
+(set-frame-font zetta-font)
 
 ;; prevent the *Warnings* buffer from popping up
 ;;(setq warning-minimum-level :emergency)

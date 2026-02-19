@@ -1,6 +1,6 @@
 (use-package modus-themes
   :init
-  (load-theme 'modus-operandi t))
+  (load-theme zetta-theme t))
 
 (message "nord-theme")
 (use-package nord-theme)

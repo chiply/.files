@@ -27,7 +27,12 @@
         org-startup-indented t
         org-refile-use-outline-path 'file
         org-log-refile 'time
+        org-log-redeadline 'time
+        org-log-reschedule 'time
         org-log-into-drawer t
+        ;; Custom: also log initial deadline/schedule creation
+        z-org-log-initial-deadline 'time
+        z-org-log-initial-schedule 'time
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
         org-refile-targets '((nil :maxlevel . 10) ;; current buf
@@ -248,8 +253,9 @@
                                   )))))
 
 ;;; Logseq TODO files management
-(defvar z-logseq-pages-dir "~/logseq/pages/"
-  "Directory containing logseq pages.")
+;; zetta-logseq-dir is defined in bootstrap-modules.el
+(defvar z-logseq-pages-dir zetta-logseq-dir
+  "Directory containing logseq pages.  Defaults to `zetta-logseq-dir'.")
 
 (defun z-logseq-todo-files ()
   "Return list of files in logseq pages starting with '(todo)'."
@@ -316,6 +322,68 @@ Uses first letter, or first two letters if conflicts exist."
 
 ;; Add (todo) files to agenda
 (z-logseq-update-agenda-files)
+
+;;; Log initial deadline/schedule creation
+;; org-log-redeadline and org-log-reschedule only log *changes*, not initial
+;; creation. These advice functions add logging when deadline/schedule is first set.
+
+(defcustom z-org-log-initial-deadline nil
+  "Non-nil means log when a deadline is initially set.
+Can be `time' to log just timestamp, `note' to also prompt for a note,
+or nil to disable."
+  :type '(choice (const :tag "Off" nil)
+                 (const :tag "Time" time)
+                 (const :tag "Note" note))
+  :group 'org)
+
+(defcustom z-org-log-initial-schedule nil
+  "Non-nil means log when a schedule is initially set.
+Can be `time' to log just timestamp, `note' to also prompt for a note,
+or nil to disable."
+  :type '(choice (const :tag "Off" nil)
+                 (const :tag "Time" time)
+                 (const :tag "Note" note))
+  :group 'org)
+
+(defun z-org--log-initial-timestamp (type timestamp)
+  "Log initial creation of TYPE (deadline or scheduled) with TIMESTAMP."
+  (let* ((log-setting (if (eq type 'deadline)
+                          z-org-log-initial-deadline
+                        z-org-log-initial-schedule))
+         (note-text (format "Initially %s on %s"
+                            (if (eq type 'deadline) "set deadline" "scheduled")
+                            (format-time-string
+                             (org-time-stamp-format 'long 'inactive)))))
+    (when log-setting
+      (org-add-log-setup (if (eq type 'deadline) 'redeadline 'reschedule)
+                         timestamp nil log-setting note-text))))
+
+(defun z-org-deadline-log-initial-a (orig-fun &optional arg time)
+  "Advice to log when a deadline is initially set (not just changed).
+Wraps `org-deadline' to detect when there was no previous deadline."
+  (let ((had-deadline (org-entry-get nil "DEADLINE")))
+    (funcall orig-fun arg time)
+    ;; Log if this was an initial set (no previous deadline) and we're not removing
+    (when (and (not had-deadline)
+               (not (equal arg '(4)))  ; C-u removes deadline
+               z-org-log-initial-deadline
+               (org-entry-get nil "DEADLINE"))
+      (z-org--log-initial-timestamp 'deadline (org-entry-get nil "DEADLINE")))))
+
+(defun z-org-schedule-log-initial-a (orig-fun &optional arg time)
+  "Advice to log when a schedule is initially set (not just changed).
+Wraps `org-schedule' to detect when there was no previous schedule."
+  (let ((had-schedule (org-entry-get nil "SCHEDULED")))
+    (funcall orig-fun arg time)
+    ;; Log if this was an initial set (no previous schedule) and we're not removing
+    (when (and (not had-schedule)
+               (not (equal arg '(4)))  ; C-u removes schedule
+               z-org-log-initial-schedule
+               (org-entry-get nil "SCHEDULED"))
+      (z-org--log-initial-timestamp 'scheduled (org-entry-get nil "SCHEDULED")))))
+
+(advice-add 'org-deadline :around #'z-org-deadline-log-initial-a)
+(advice-add 'org-schedule :around #'z-org-schedule-log-initial-a)
 
 (provide 'bootstrap-org)
 

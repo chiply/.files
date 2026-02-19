@@ -2,6 +2,25 @@
 
 ;; Module system for zetta.d
 ;; Provides `zetta-modules!' macro for declaring which modules to load.
+;; Also defines user-configurable variables for distro customization.
+
+;;; User-configurable variables
+;; These can be set in ~/.zetta.el before `zetta-modules!' is called.
+
+(defvar zetta-font "Terminus (TTF)"
+  "Default font family.  Set in ~/.zetta.el.
+Download Terminus TTF from https://files.ax86.net/terminus-ttf/")
+
+(defvar zetta-theme 'modus-operandi
+  "Default color theme to load at startup.  Set in ~/.zetta.el.")
+
+(defvar zetta-literature-dir "~/.lit/"
+  "Directory for bibliography files and PDFs.  Set in ~/.zetta.el.")
+
+(defvar zetta-logseq-dir "~/logseq/pages/"
+  "Directory containing Logseq pages.  Set in ~/.zetta.el.")
+
+;;; Module system
 
 (defvar zetta-modules-dir (expand-file-name "modules" user-emacs-directory)
   "Directory containing module subdirectories.")

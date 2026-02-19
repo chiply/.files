@@ -285,7 +285,7 @@ Sequential. Task 4 blocked by 1-3. Task 5 blocked by 4. Task 6 blocked by 5.
 
   Lives in a new `bootstrap-modules.el`, called from the user's `~/.zetta.el`.
 
-- [ ] **Task 6: Create user config template (`~/.zetta.el`)** *(blocked by: 5)*
+- [x] **Task 6: Create user config template (`~/.zetta.el`)** *(blocked by: 5)*
 
   Create a template user config file as the entry point for customization:
 
