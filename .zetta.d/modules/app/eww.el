@@ -25,7 +25,7 @@
        (defun shr-fill-line () nil))) ; Prevent individual line filling
 
   ;; This is how to control readble depending on the url
-  (defun z-eww-after-render-functions ()
+  (defun zetta-eww-after-render-functions ()
     (unless (or
              (string-match "reddit" (eww-current-url))
              (string-match "xkcd" (eww-current-url))
@@ -34,14 +34,14 @@
     (toggle-truncate-lines -1)
     )
 
-  (defun z-eww-mode-functions ()
+  (defun zetta-eww-mode-functions ()
     ;; NOTE got the weird bug with shr-descend when disabling fonts
     (setq shr-use-fonts t)
     (toggle-truncate-lines -1)
     (olivetti-mode -1))
 
-  (add-hook 'eww-after-render-hook 'z-eww-after-render-functions)
-  (add-hook 'eww-mode-hook 'z-eww-mode-functions)
+  (add-hook 'eww-after-render-hook 'zetta-eww-after-render-functions)
+  (add-hook 'eww-mode-hook 'zetta-eww-mode-functions)
 
   ;; This is how to set image settings conditionally per url
   (defun my-eww-inhibit-images-advice (orig-fun url &rest args)
@@ -54,11 +54,11 @@
 
   (advice-add 'eww :around #'my-eww-inhibit-images-advice)
 
-  (defun z-eww-switch-to-eaf ()
+  (defun zetta-eww-switch-to-eaf ()
     (interactive)
     (eaf-open-browser (eww-current-url)))
 
-  (defun z-eww-follow-link ()
+  (defun zetta-eww-follow-link ()
     (interactive)
     (browse-url (thing-at-point 'url)))
 
@@ -68,8 +68,8 @@
   (
    :keymaps '(eww-mode-map)
    :states '(normal)
-   "C-&" 'z-eww-switch-to-eaf
-   "<return>" 'z-eww-follow-link
+   "C-&" 'zetta-eww-switch-to-eaf
+   "<return>" 'zetta-eww-follow-link
    "x" '(lambda () (interactive) (kill-buffer (current-buffer)))
    "s-i" 'eww-toggle-images
    )

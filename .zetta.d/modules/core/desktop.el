@@ -6,17 +6,17 @@
   (setq desktop-load-locked-desktop t)
   (desktop-save-mode 1)
 
-  (defun z-desktop-buffers-not-to-save-function (fnm bufnm mode &rest rest)
+  (defun zetta-desktop-buffers-not-to-save-function (fnm bufnm mode &rest rest)
     nil
     )
-  (setq desktop-buffers-not-to-save-function 'z-desktop-buffers-not-to-save-function)
+  (setq desktop-buffers-not-to-save-function 'zetta-desktop-buffers-not-to-save-function)
 
-  (defun z-desktop-save ()
+  (defun zetta-desktop-save ()
     (interactive)
     (desktop-save user-emacs-directory))
 
-  (defun z-server-shutdown-save-desktop ()
+  (defun zetta-server-shutdown-save-desktop ()
     (interactive)
-    (z-desktop-save)
+    (zetta-desktop-save)
     (server-shutdown))
   )

@@ -1,11 +1,11 @@
 ;; -*- lexical-binding: t; -*-
 
-(defun z-load-extension-file (file)
+(defun zetta-load-extension-file (file)
   (interactive)
   "Load a file in current user's configuration directory"
   (message file)
   (let* ((emacsdir (expand-file-name user-emacs-directory))
-         (sourcefile-path (format "%ssource/z-lisp/%s" emacsdir file))
+         (sourcefile-path (format "%ssource/zetta-lisp/%s" emacsdir file))
          (file-extension (file-name-extension file))
          (root (file-name-sans-extension file))
          )
@@ -21,7 +21,7 @@
     )
   )
 
-(defun z-load-config-file (file)
+(defun zetta-load-config-file (file)
   (interactive)
   "Load a file in current user's configuration directory"
   (message file)
@@ -42,7 +42,7 @@
     )
   )
 
-(defun z-general-describe-keybindings (&optional arg)
+(defun zetta-general-describe-keybindings (&optional arg)
   "Show all keys that have been bound with general in an org buffer.
 Any local keybindings will be shown first followed by global keybindings.
 With a non-nil prefix ARG only show bindings in active maps."
@@ -84,7 +84,7 @@ With a non-nil prefix ARG only show bindings in active maps."
 
 
 ;; build docs
-(defun z-build-docs ()
+(defun zetta-build-docs ()
   (interactive)
   (with-current-buffer (find-file-noselect (expand-file-name "read.org" user-emacs-directory))
     (org-babel-execute-buffer) 
@@ -95,8 +95,8 @@ With a non-nil prefix ARG only show bindings in active maps."
   )
 
 
-(defun z-foobar (func)
-  (with-current-buffer (get-buffer-create "*z-tmp-autodoc*")
+(defun zetta-foobar (func)
+  (with-current-buffer (get-buffer-create "*zetta-tmp-autodoc*")
     (condition-case nil
         (pp-emacs-lisp-code (symbol-function func))
       (error nil)
@@ -106,13 +106,13 @@ With a non-nil prefix ARG only show bindings in active maps."
                       (save-excursion (end-of-buffer) (point))
                       ))
     )
-  (kill-buffer "*z-tmp-autodoc*")
+  (kill-buffer "*zetta-tmp-autodoc*")
   elisp-code
   )
 
 
 
-(defun z-docs-from-extension (ext)
+(defun zetta-docs-from-extension (ext)
   (let* ((fname (expand-file-name
                  (format "source/extension/%s.el" ext)
                  user-emacs-directory))
@@ -140,7 +140,7 @@ Documentation: %s\n\n" var  (documentation-property var 'variable-documentation)
     
     (dolist (funcs (sort funcs 'string-lessp))
       
-      ;;(kill-buffer "*z-tmp-autodoc*")
+      ;;(kill-buffer "*zetta-tmp-autodoc*")
 
       (progn
         
@@ -155,7 +155,7 @@ Code:
                         funcs
                         (or (help-function-arglist funcs) "")
                         (documentation funcs)
-                        (z-foobar funcs))
+                        (zetta-foobar funcs))
 
                 )))
     (org-mode)
@@ -169,12 +169,12 @@ Code:
 ;;(setq hi-lock-use-overlays t)
 
 ;; create a face inherits from 'link, except uses purple as the color
-(defface z-link-face
+(defface zetta-link-face
   '((t :inherit link :foreground "purple"))
   "Face for links."
   :group 'basic-faces)
 
-(defun z-highlight-phrases ()
+(defun zetta-highlight-phrases ()
   (interactive)
 
   ;; SQLALCHEMY Logs
@@ -238,7 +238,7 @@ Code:
   (highlight-phrase "Starting workflow" 'modus-themes-subtle-cyan)
 
   ;; paths
-  (highlight-regexp "\\(/\\|~\\)[^ ]+\\.[a-zA-Z0-9]+" 'z-link-face)
+  (highlight-regexp "\\(/\\|~\\)[^ ]+\\.[a-zA-Z0-9]+" 'zetta-link-face)
 
   ;; urls
   (highlight-regexp "http\\(s\\)?://[^ ]+" 'link)
@@ -249,7 +249,7 @@ Code:
 
 
 
-(defun z-touch-maybe (path)
+(defun zetta-touch-maybe (path)
   "Create file or directory at PATH if it doesn't already exist.
 If PATH has an extension, creates a file; otherwise creates a directory."
   (if (file-exists-p path)
@@ -268,7 +268,7 @@ If PATH has an extension, creates a file; otherwise creates a directory."
         (message "Created directory: %s" path)))))
 
 ;; leaves all but last dir
-(defun z-minify-path (path)
+(defun zetta-minify-path (path)
   (let* ((path (abbreviate-file-name path))
          (path-split (split-string path "/"))
          (leaf-dir-name (car (last path-split 2)))
@@ -281,7 +281,7 @@ If PATH has an extension, creates a file; otherwise creates a directory."
      "/" leaf-dir-name)))
 
 
-(defun z-create-scratch-buffer (mode)
+(defun zetta-create-scratch-buffer (mode)
   "Create a new scratch buffer to work in. (could be any mode)"
   (interactive "sMode: ")
   (switch-to-buffer (get-buffer-create (concat "*scratch-" mode "*")))

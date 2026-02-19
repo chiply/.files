@@ -35,7 +35,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;; CAP
 ;;;;;;;;;;; FILENAMES
 ;;;;;;;;;; BUFFER TEXT, with dabbrev
-(defun z-completion-at-point (arg)
+(defun zetta-completion-at-point (arg)
   "A very flexible and broadly scoped completion function.  This
 combines functionality from a lot of different completion packages and
 prioritizes them in an order that makes sense in almost all cases.
@@ -65,7 +65,7 @@ autocomplete down to the desired candidate
 3. dynamic expansion (hippie expand)
 
 The specific strategy is determined by a precedence of functions in
-z-hippie-expand
+zetta-hippie-expand
 
 notes: expansion is the keyword here, dynamic is used as a descriptor
 since there can be multiple candidates.  expansion is preferred over
@@ -177,7 +177,7 @@ tempel expand?)
                                dockerfile-mode-map terraform-mode-map mermaid-mode-map
                                makefile-bsdmake-mode-map conf-toml-mode-map markdown-mode-map)
  "C-;" 'indent-for-tab-command
- "<tab>" 'z-completion-at-point
+ "<tab>" 'zetta-completion-at-point
  )
 
 

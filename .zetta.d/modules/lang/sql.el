@@ -5,7 +5,7 @@
   :commands (sql-mode sql-interactive-mode sql-connect)
 
   :display
-  ;;(z-side "^\\*sql--*" 'top)
+  ;;(zetta-side "^\\*sql--*" 'top)
   
 
   :general

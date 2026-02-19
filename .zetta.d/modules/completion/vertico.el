@@ -19,7 +19,7 @@
 
   ;; NOTE experimenting with this for now.
   (setq vertico-multiform-commands
-        '((z-magit-project
+        '((zetta-magit-project
            posframe
            ;; NEED to do both here
            (vertico-flat-mode . -1)
@@ -45,23 +45,23 @@
   ;; this is super super hacky and bizarre... but it's the only way I
   ;; can get this to work
 
-  ;; only works when called from z-vertico-IS
+  ;; only works when called from zetta-vertico-IS
   ;; IS for intellisense
-  (setq z-vertico-IS-help-flag nil)
-  (setq z-vertico-IS-find-flag nil)
+  (setq zetta-vertico-IS-help-flag nil)
+  (setq zetta-vertico-IS-find-flag nil)
 
-  (defun z-vertico-IS-help ()
+  (defun zetta-vertico-IS-help ()
     (interactive)
-    (setq z-vertico-IS-help-flag t)
+    (setq zetta-vertico-IS-help-flag t)
     (vertico-exit)
-    (z-soda-create-and-display-term))
+    (zetta-soda-create-and-display-term))
 
-  (defun z-vertico-IS-find ()
+  (defun zetta-vertico-IS-find ()
     (interactive)
-    (setq z-vertico-IS-find-flag t)
+    (setq zetta-vertico-IS-find-flag t)
     (vertico-exit))
 
-  (defun z-vertico-IS ()
+  (defun zetta-vertico-IS ()
     (interactive)
     (when (not (or
                 (string= major-mode "emacs-lisp-mode")
@@ -81,19 +81,19 @@
       (if (and (boundp 'corfu--candidates) corfu--candidates)
           (corfu-quit))
       (completion-at-point)
-      (when z-vertico-IS-help-flag
+      (when zetta-vertico-IS-help-flag
         (if (or
              (string= major-mode "emacs-lisp-mode")
              (string= major-mode "lisp-interaction-mode")
              (string= major-mode "lisp-mode")
              (string= major-mode "lisp-data-mode"))
-            (z-helpful-at-point) 
+            (zetta-helpful-at-point) 
           (lsp-describe-thing-at-point-1))
         (progn (beginning-of-line) (kill-line))
         (progn (insert linetxt) (goto-char pt))
-        (setq z-vertico-IS-help-flag nil)
+        (setq zetta-vertico-IS-help-flag nil)
         (call-interactively 'vertico-repeat)) 
-      (when z-vertico-IS-find-flag
+      (when zetta-vertico-IS-find-flag
         (if (or
              (string= major-mode "emacs-lisp-mode")
              (string= major-mode "lisp-interaction-mode")
@@ -104,10 +104,10 @@
             ;; way we use let will inform this
             (evil-goto-definition-1) 
           (lsp-find-definition-1))
-        (z-vertico-IS-find)
+        (zetta-vertico-IS-find)
         (progn (beginning-of-line) (kill-line))
         (progn (insert linetxt) (goto-char pt))
-        (setq z-vertico-IS-find-flag nil)
+        (setq zetta-vertico-IS-find-flag nil)
         (call-interactively 'vertico-repeat))))
 
   (defun my/vertico-quick-embark (&optional arg)
@@ -125,8 +125,8 @@
             "C-SPC" 'embark-select
             
             ;; intellisesne
-            "C-S-h" 'z-vertico-IS-help
-            "C-S-d" 'z-vertico-IS-find
+            "C-S-h" 'zetta-vertico-IS-help
+            "C-S-d" 'zetta-vertico-IS-find
             "C-d" 'consult-dir
             ;; navigation
             "C-j" 'vertico-next
@@ -183,8 +183,8 @@
 
   ;; vertico-IS
   (
-   :keymaps z-modal-states-insert
-   "<C-SPC>" 'z-vertico-IS
+   :keymaps zetta-modal-states-insert
+   "<C-SPC>" 'zetta-vertico-IS
    )
   
   :hook (

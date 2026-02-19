@@ -1,6 +1,6 @@
 (use-package org-super-agenda
   :init
-  (setq z-org-super-agenda-auto-show-groups
+  (setq zetta-org-super-agenda-auto-show-groups
         '("Inbox"
           "In Mind"
           "Sync"
@@ -42,14 +42,14 @@
           (:name "To Archive" :todo ("CLOSED"))
           ))
 
-  (defun z-org-super-agenda-origami-fold-default ()
+  (defun zetta-org-super-agenda-origami-fold-default ()
     "Fold certain groups by default in Org Super Agenda buffer."
     (when org-super-agenda-groups
       (progn
         (forward-line 2)
         (cl-loop do (origami-forward-toggle-node (current-buffer) (point))
                  while (origami-forward-fold-same-level (current-buffer) (point)))
-        (--each z-org-super-agenda-auto-show-groups
+        (--each zetta-org-super-agenda-auto-show-groups
           (goto-char (point-min))
           (when (re-search-forward (rx-to-string `(seq bol " " ,it)) nil t)
             (origami-show-node (current-buffer) (point))))
@@ -57,7 +57,7 @@
       )
     )
 
-  (defun z-org-agenda (cmd grp)
+  (defun zetta-org-agenda (cmd grp)
     "Run org-agenda with the given CMD.  Use groups specified by
 GRP.  Note grouping is performed by org-super-agenda if grouping
 is provided."
@@ -70,29 +70,29 @@ is provided."
     )
 
   ;; common enough that I'm making it's own function
-  (defun z-org-agenda-main ()
+  (defun zetta-org-agenda-main ()
     (interactive)
-    (z-org-agenda "1" org-super-agenda-groups-main))
+    (zetta-org-agenda "1" org-super-agenda-groups-main))
 
-  (defun z-refresh-agenda ()
+  (defun zetta-refresh-agenda ()
     "Activates the agenda, refreshes it.  Cursor should remain
-where is was when z-refresh-agenda was called"
+where is was when zetta-refresh-agenda was called"
     (interactive)
     (save-selected-window
-      (z-org-agenda-main)
+      (zetta-org-agenda-main)
       (org-agenda-redo)
       )
     (message "AGENDA REFRESHED")
     )
 
-  (defun z-hide-agenda ()
+  (defun zetta-hide-agenda ()
     (interactive)
-    (z-org-agenda-main)
+    (zetta-org-agenda-main)
     (org-agenda-quit)
     ;; this restores the point to where it was when the function was called
     )
 
-  (defun z-highlight-agenda ()
+  (defun zetta-highlight-agenda ()
     (interactive)
     ;; web link
     (highlight-regexp "\\[\\[https.*?\\]\\]" 'modus-themes-nuanced-blue)
@@ -112,7 +112,7 @@ where is was when z-refresh-agenda was called"
 
   (general-define-key
    :keymaps 'menu-run-map
-   "a" (** z-org-agenda-main))
+   "a" (** zetta-org-agenda-main))
 
 
   (org-super-agenda-mode)
@@ -134,7 +134,7 @@ where is was when z-refresh-agenda was called"
 
   ;;:hydra
   ;;(defhydra+ hydra-run ()
-    ;;("a" z-org-agenda-main "Org Agenda")
+    ;;("a" zetta-org-agenda-main "Org Agenda")
     ;;)
 
 
@@ -154,11 +154,11 @@ where is was when z-refresh-agenda was called"
   (
    :keymaps '( org-agenda-mode-map org-super-agenda-header-map  )
    "vt" '(lambda () (interactive)
-           (z-org-agenda "1" org-super-agenda-groups-main))
+           (zetta-org-agenda "1" org-super-agenda-groups-main))
    "vT" '(lambda () (interactive)
-           (z-org-agenda "2" nil))
+           (zetta-org-agenda "2" nil))
    "va" '(lambda () (interactive)
-           (z-org-agenda "3" nil))
+           (zetta-org-agenda "3" nil))
    )
   (
    :keymaps '(org-super-agenda-header-map)
@@ -166,7 +166,7 @@ where is was when z-refresh-agenda was called"
    )
 
   :hook ((org-agenda-mode . origami-mode)
-         (org-agenda-finalize . z-org-super-agenda-origami-fold-default)
-         (org-agenda-finalize . z-highlight-agenda)
+         (org-agenda-finalize . zetta-org-super-agenda-origami-fold-default)
+         (org-agenda-finalize . zetta-highlight-agenda)
          )
   )

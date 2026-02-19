@@ -6,67 +6,67 @@
 
 
 ;; All the things
-(setq z-tap--things '("block" "brick" "symbol" "list" "sexp"
+(setq zetta-tap--things '("block" "brick" "symbol" "list" "sexp"
                       "defun" "filename" "url"
                       "email" "uuid" "word"
                       "sentence" "whitespace" "line"
                       "page" "orgtree" "paragraph" "button"))
 
 
-(defun z-intern-maybe (thing)
+(defun zetta-intern-maybe (thing)
   (if (symbolp thing) thing (intern thing)))
 
-(defun z-set-local-thing (&optional thing)
+(defun zetta-set-local-thing (&optional thing)
   "This is run as a hook on each relevant major-mode and can also be
 used to override thing at point for whatever reason"
   (interactive)
   (setq-local focus-current-thing
-              (z-intern-maybe
-               (or thing (completing-read "What thing? " z-tap--things)))))
+              (zetta-intern-maybe
+               (or thing (completing-read "What thing? " zetta-tap--things)))))
 
 
-(defun z-locate-thing (&optional thing)
+(defun zetta-locate-thing (&optional thing)
   (interactive)
   (let* ((bnds (bounds-of-thing-at-point
-                (z-intern-maybe (or thing focus-current-thing))))
+                (zetta-intern-maybe (or thing focus-current-thing))))
          (beg (if (string= thing "buf") (point-min) (car bnds)))
          (end (if (string= thing "buf") (point-max) (- (cdr bnds) 1))))
     (cons beg `(,end))))
 
-(defun z-locate-thing-beg (&optional thing)
+(defun zetta-locate-thing-beg (&optional thing)
   (interactive)
-  (let ((bnds (z-locate-thing thing))) (car bnds)))
+  (let ((bnds (zetta-locate-thing thing))) (car bnds)))
 
-(defun z-locate-thing-end (&optional thing)
+(defun zetta-locate-thing-end (&optional thing)
   (interactive)
-  (let ((bnds (z-locate-thing thing))) (cadr bnds)))
+  (let ((bnds (zetta-locate-thing thing))) (cadr bnds)))
 
 
 
-(defun z-get-thing (&optional thing)
+(defun zetta-get-thing (&optional thing)
   (interactive)
   (if (use-region-p)
       (buffer-substring-no-properties (region-beginning) (region-end)) 
-    (buffer-substring-no-properties (z-locate-thing-beg thing) (z-locate-thing-end thing))))
+    (buffer-substring-no-properties (zetta-locate-thing-beg thing) (zetta-locate-thing-end thing))))
 
-(defun z-pulse (&optional thing)
+(defun zetta-pulse (&optional thing)
   (interactive)
   ;; available things: generic + mode
-  (let* ((bnds (z-locate-thing thing)))
+  (let* ((bnds (zetta-locate-thing thing)))
     (pulse-momentary-highlight-region
      (car bnds) (cadr bnds)
      '(:background "black" :foreground "gray"))))
 
-(defun z-select (&optional thing)
+(defun zetta-select (&optional thing)
   (interactive)
-  (let ((bnds (z-locate-thing thing)))
+  (let ((bnds (zetta-locate-thing thing)))
     (set-mark (car bnds))
     (goto-char (cadr bnds))))
 
-(defun z-comment (&optional thing)
+(defun zetta-comment (&optional thing)
   (interactive)
   (save-excursion
-    (z-select)
+    (zetta-select)
     (call-interactively 'comment-or-uncomment-region)
     )
   )
@@ -82,17 +82,17 @@ used to override thing at point for whatever reason"
             lark-mode-map)
  "s-j" '(lambda () (interactive)
           (if (buffer-narrowed-p)
-              (progn (call-interactively 'z-narrow-or-widen)
+              (progn (call-interactively 'zetta-narrow-or-widen)
                      (focus-next-thing 1)
-                     (call-interactively 'z-narrow-or-widen)
+                     (call-interactively 'zetta-narrow-or-widen)
                      )
             (focus-next-thing 1))
           )
  "s-k" '(lambda () (interactive)
           (if (buffer-narrowed-p)
-              (progn (call-interactively 'z-narrow-or-widen)
+              (progn (call-interactively 'zetta-narrow-or-widen)
                      (focus-prev-thing 1)
-                     (call-interactively 'z-narrow-or-widen)
+                     (call-interactively 'zetta-narrow-or-widen)
                      )
             (focus-prev-thing 1))
           )
@@ -105,10 +105,10 @@ used to override thing at point for whatever reason"
           (re-search-backward "[^[:space:]\n]")
           (evil-end-of-line)
           )
- "s-x v" 'z-pulse
- "s-x V" 'z-select
- "s-x t" 'z-set-local-thing
- "s-/" 'z-comment
+ "s-x v" 'zetta-pulse
+ "s-x V" 'zetta-select
+ "s-x t" 'zetta-set-local-thing
+ "s-/" 'zetta-comment
  )
 
 (use-package expand-region
@@ -133,14 +133,14 @@ used to override thing at point for whatever reason"
    "C-e" 'er/expand-region))
 
 
-(defun z-thing-at-bobp ()
+(defun zetta-thing-at-bobp ()
   (interactive)
   (eq 1 (save-excursion
           (beginning-of-thing focus-current-thing)
           (point))))
 
 
-(defun z-thing-at-eobp ()
+(defun zetta-thing-at-eobp ()
   (interactive)
   (save-excursion
     (end-of-thing focus-current-thing)
@@ -247,7 +247,7 @@ used to override thing at point for whatever reason"
 
 
 
-(defun z-contiguous-chars-at-point ()
+(defun zetta-contiguous-chars-at-point ()
   (save-excursion
     (let* ((beg (progn (evil-backward-WORD-begin) (point)))
            (end (1+ (progn (evil-forward-WORD-end) (point))))

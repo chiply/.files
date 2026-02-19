@@ -15,17 +15,17 @@
 
 
 
-(defun z-theme-brushup ()
+(defun zetta-theme-brushup ()
   (interactive)
   (setq prefix-help-command 'versatile-C-h)
   (when debug-on-error
     (toggle-debug-on-error)
     (message "Debug-on-error is off"))
-  (z-brushup))
+  (zetta-brushup))
 
 (general-define-key
  :keymaps 'menu-theme-map
- "T" (** z-theme-brushup))
+ "T" (** zetta-theme-brushup))
 
 (general-define-key
  :keymaps 'menu-window-map
@@ -39,19 +39,19 @@
   ;;;;;;;;;;;;;;;; right, need to do this on a per mode basis if
   ;;;;;;;;;;;;;;;; you want to override the default width - 
   ;;;;;;;;;;;;;;;; NOTE OLIVETT-BODY-WIDTH is buffer local, minimum is NOT
-;;(defun z-generic-olivetti-mode ()
+;;(defun zetta-generic-olivetti-mode ()
 ;;(interactive)
 ;;(olivetti-mode +1)
 ;;(setq-local olivetti-body-width 0.80)
 ;;(setq-local olivetti-minimum-body-width 80)
 ;;(setq-local olivetti-recall-visual-line-mode-entry-state t)
 ;;)
-;;(add-hook 'org-mode-hook (lambda () (z-generic-olivetti-mode)))
-;;(add-hook 'python-ts-mode-hook (lambda () (z-generic-olivetti-mode)))
-;;(add-hook 'sql-mode-hook (lambda () (z-generic-olivetti-mode)))
-  ;;;;(add-hook 'emacs-lisp-mode-hook (lambda () (z-generic-olivetti-mode)))
-;;(add-hook 'web-mode-hook (lambda () (z-generic-olivetti-mode)))
-;;(add-hook 'css-mode-hook (lambda () (z-generic-olivetti-mode)))
+;;(add-hook 'org-mode-hook (lambda () (zetta-generic-olivetti-mode)))
+;;(add-hook 'python-ts-mode-hook (lambda () (zetta-generic-olivetti-mode)))
+;;(add-hook 'sql-mode-hook (lambda () (zetta-generic-olivetti-mode)))
+  ;;;;(add-hook 'emacs-lisp-mode-hook (lambda () (zetta-generic-olivetti-mode)))
+;;(add-hook 'web-mode-hook (lambda () (zetta-generic-olivetti-mode)))
+;;(add-hook 'css-mode-hook (lambda () (zetta-generic-olivetti-mode)))
 ;;)
 
 
@@ -81,11 +81,11 @@
 
 ;;(use-package solaire-mode
 ;;:config
-;;(defun z-solaire-fn ()
+;;(defun zetta-solaire-fn ()
 ;;(if (window-parameter (get-buffer-window (buffer-base-buffer)) 'window-slot)
 ;;t
 ;;nil))
-;;(setq solaire-mode-real-buffer-fn 'z-solaire-fn)
+;;(setq solaire-mode-real-buffer-fn 'zetta-solaire-fn)
 ;;(solaire-global-mode +1)
 ;;
 ;;:brushup
@@ -112,7 +112,7 @@
 ;;
 ;;:hook (
 ;;(treemacs-mode . solaire-mode)
-;;(use-package--solaire--post-config . z-brushup)
+;;(use-package--solaire--post-config . zetta-brushup)
 ;;)  
 ;;)
 

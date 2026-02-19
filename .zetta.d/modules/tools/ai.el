@@ -37,7 +37,7 @@
   :demand t
   :config
   ;; NOTE prepend mcp
-  (setq z-mcp-cautious-tools '("mcp-bash-mcp"))
+  (setq zetta-mcp-cautious-tools '("mcp-bash-mcp"))
 
   (require 'mcp-hub)
   (setq
@@ -100,7 +100,7 @@
     (interactive)
     (let ((tools (mcp-hub-get-all-tool :asyncp t :categoryp t)))
       (mapcar #'(lambda (tool)
-                  (when (member (plist-get tool :category) z-mcp-cautious-tools)
+                  (when (member (plist-get tool :category) zetta-mcp-cautious-tools)
                     ;; NOTE this doesn't seem to work... not sure
                     ;; why... for now, preferring not to use bash-mcp
                     ;; as I can't make it promp-only
@@ -133,7 +133,7 @@
                                         gptel-tools))))
               tools)))
 
-  (defun z-mcp-setup-gptel ()
+  (defun zetta-mcp-setup-gptel ()
     (interactive)
     ;; TODO comment out
     ;;(setq gptel-tools nil)
@@ -179,7 +179,7 @@
     :confirm t
     :include t))
 
-  (z-mcp-setup-gptel)
+  (zetta-mcp-setup-gptel)
 
   :general
   (

@@ -66,8 +66,8 @@ async-shell-command"
     (when (memq (process-status process) '(exit signal))
       (with-current-buffer buf
         (compilation-minor-mode t)
-        (z-compile-spin-stop buf signal)
-        ;;(z-highlight-phrases)
+        (zetta-compile-spin-stop buf signal)
+        ;;(zetta-highlight-phrases)
         (alert (concat bufnm " exited with signal: " signal)
                :title "zmc finished"))
       (shell-command-sentinel process signal))))
@@ -77,7 +77,7 @@ async-shell-command"
   (let* ((proc (progn
                  (async-shell-command command output-buffer error-buffer)
                  (with-current-buffer output-buffer
-                   (z-highlight-phrases))
+                   (zetta-highlight-phrases))
                  (get-buffer-process output-buffer))))
     (if (process-live-p proc)
         (progn
@@ -91,7 +91,7 @@ async-shell-command"
          (proc (progn
                  (detached-shell-command command)
                  (with-current-buffer output-buffer
-                   (z-highlight-phrases))
+                   (zetta-highlight-phrases))
                  (get-buffer-process output-buffer))))
     (if (process-live-p proc)
         (progn
@@ -675,7 +675,7 @@ CACHE: 1. latest/local transient 2. ~/.zmc-cache)"
 
 (general-define-key
  ;; override alone doesn't work...
- :keymaps (append z-modal-states-insert z-modal-states-non-insert '(override))
+ :keymaps (append zetta-modal-states-insert zetta-modal-states-non-insert '(override))
  "s-<return>" 'zmc
  "s-r" '(lambda () (interactive)
           (setq current-prefix-arg '(4))

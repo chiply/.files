@@ -3,6 +3,6 @@
   :config
   (load-theme 'ef-light t)
   ;; ensure brushup styling is applied after theme loads
-  (when (fboundp 'z-brushup)
-    (z-brushup)))
+  (when (fboundp 'zetta-brushup)
+    (zetta-brushup)))
   

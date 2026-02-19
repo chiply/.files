@@ -32,12 +32,12 @@ ARGS is args for `magit-run-git-async'"
   ;;(parrot-animate-on-load t)
   ;;(parrot-mode t)
   :config
-  (setq z-parrot-window nil)
-  (setq z-parrot-buffer nil)
-  (defun z-animate-parrot ()
+  (setq zetta-parrot-window nil)
+  (setq zetta-parrot-buffer nil)
+  (defun zetta-animate-parrot ()
     (interactive)
-    (setq z-parrot-window (selected-window))
-    (setq z-parrot-buffer (current-buffer))
+    (setq zetta-parrot-window (selected-window))
+    (setq zetta-parrot-buffer (current-buffer))
     (parrot-start-animation)
     )
 
@@ -46,7 +46,7 @@ ARGS is args for `magit-run-git-async'"
   (defun parrot--progress ()
     "Start a persistent parrot animation.
 Use `parrot-progress-finished' to stop."
-    (z-animate-parrot))
+    (zetta-animate-parrot))
 
   
   :hook

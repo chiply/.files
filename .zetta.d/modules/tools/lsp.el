@@ -86,7 +86,7 @@
   (defun lsp-describe-thing-at-point-1 ()
     "Display the type signature and documentation of the thing at point."
     (interactive)
-    (let ((thing (z-contiguous-chars-at-point))
+    (let ((thing (zetta-contiguous-chars-at-point))
           (contents (-some->> (lsp--text-document-position-params)
                       (lsp--make-request "textDocument/hover")
                       (lsp--send-request)
@@ -198,7 +198,7 @@
 
   ;;:display
   ;; for the lsp help buffers
-  ;;(z-side "^\\*L: *" 'right)
+  ;;(zetta-side "^\\*L: *" 'right)
 
 
 
@@ -211,22 +211,22 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Jumping to docs from point
-(defun z-jump-to-doc ()
+(defun zetta-jump-to-doc ()
   (interactive)
   (condition-case nil
       (helpful-at-point)
     (error (lsp-describe-thing-at-point-1))))
 
-(defun z-side-window-p (win)
+(defun zetta-side-window-p (win)
   (window-parameter win 'window-slot))
 
-(defun z-aw-window-list-nonside ()
+(defun zetta-aw-window-list-nonside ()
   "Counts non side windows"
-  (-filter (lambda (x) (not (z-side-window-p x))) (aw-window-list)))
+  (-filter (lambda (x) (not (zetta-side-window-p x))) (aw-window-list)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; Jumping to definition from point
-(defun z-jump-to-def ()
+(defun zetta-jump-to-def ()
   (interactive)
   (let ((buf (current-buffer)))
     (aw-select "select a window: "
@@ -239,10 +239,10 @@
   )
 
 
-(defun z-jump-to-def-vert ()
+(defun zetta-jump-to-def-vert ()
   (interactive)
   (let ((buf (current-buffer)))
-    (if (> (length (z-aw-window-list-nonside)) 1)
+    (if (> (length (zetta-aw-window-list-nonside)) 1)
         (aw-select "select a window: "
                    (lambda (window)
                      (aw-switch-to-window window)
@@ -262,10 +262,10 @@
     )
   )
 
-(defun z-jump-to-def-vert-1 ()
+(defun zetta-jump-to-def-vert-1 ()
   (interactive)
   (let ((buf (current-buffer)))
-    (if (> (length (z-aw-window-list-nonside)) 1)
+    (if (> (length (zetta-aw-window-list-nonside)) 1)
         (aw-select "select a window: "
                    (lambda (window)
                      (aw-switch-to-window window)
@@ -284,10 +284,10 @@
 
 
 
-(defun z-jump-to-def-hor ()
+(defun zetta-jump-to-def-hor ()
   (interactive)
   (let ((buf (current-buffer)))
-    (if (> (length (z-aw-window-list-nonside)) 1)
+    (if (> (length (zetta-aw-window-list-nonside)) 1)
         (aw-select "select a window: "
                    (lambda (window)
                      (aw-switch-to-window window)
@@ -302,10 +302,10 @@
         (switch-to-buffer buf)
         (evil-goto-definition)))))
 
-(defun z-jump-to-def-hor-1 ()
+(defun zetta-jump-to-def-hor-1 ()
   (interactive)
   (let ((buf (current-buffer)))
-    (if (> (length (z-aw-window-list-nonside)) 1)
+    (if (> (length (zetta-aw-window-list-nonside)) 1)
         (aw-select "select a window: "
                    (lambda (window)
                      (aw-switch-to-window window)
@@ -319,7 +319,7 @@
         (evil-goto-definition)))))
 
 
-(defun z-jump-to-def-side ()
+(defun zetta-jump-to-def-side ()
   (interactive)
   (let ((buf (current-buffer)))
     (select-window
@@ -335,7 +335,7 @@
 
 (general-define-key
  :keymaps 'launch-map
- "H" 'z-jump-to-doc)
+ "H" 'zetta-jump-to-doc)
 
 (use-package lsp-ui
   :after lsp-mode

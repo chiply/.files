@@ -13,7 +13,7 @@
 ;; how to handle renaming, deleting, etc...
 
 ;;;;;;;;;;;;;;;;;;;;;; Snapshots
-(defun z-strip-text-properties (str)
+(defun zetta-strip-text-properties (str)
   (let* ((foo    str)
          (start  0)
          (end    (length foo)))
@@ -21,24 +21,24 @@
     foo)
   )
 
-(defun z-get-snapshots ()
+(defun zetta-get-snapshots ()
   (let ((snapshots (-filter
                     (lambda (bm-view-name)
                       (string-match "snapshot-*" bm-view-name ))
                     (bookmark-view-names)
                     )))
     (when snapshots (-map
-                     (lambda (snapshot) (z-strip-text-properties snapshot))
+                     (lambda (snapshot) (zetta-strip-text-properties snapshot))
                      snapshots
                      ))
     )
   )
 
-(defun z-delete-snapshots ()
+(defun zetta-delete-snapshots ()
   (interactive)
   (-map
    (lambda (x) (bookmark-view-delete x))
-   (z-get-snapshots)
+   (zetta-get-snapshots)
    )
   )
 
@@ -53,9 +53,9 @@
 
   )
 
-(defun z-bookmark-view-generate-snapshot-name ()
+(defun zetta-bookmark-view-generate-snapshot-name ()
   ;; get names
-  (let* ((snapshots (z-get-snapshots)))
+  (let* ((snapshots (zetta-get-snapshots)))
     (if snapshots
         (progn 
           (setq snapshots-sorted (cl-sort snapshots 'snapshot-lessp))
@@ -71,77 +71,77 @@
 
 
 ;;;;;;;;;;;;; ws-cfg views
-(setq z-ws-cfg-bv-list '(
+(setq zetta-ws-cfg-bv-list '(
                          ;; car is ws cfg and cdr is a bookmark view (bv)
                          ((main 1) . ("bv--main-1: default"))
                          ))
-(setq z-ws-cfg-bv-current-bv "bv--main-1: default")
+(setq zetta-ws-cfg-bv-current-bv "bv--main-1: default")
 
-(setq z-ws-cfg-bv-leftoff '())
+(setq zetta-ws-cfg-bv-leftoff '())
 
-;;(add-to-list 'desktop-globals-to-save 'z-ws-cfg-bv-list)
-;;(add-to-list 'desktop-globals-to-save 'z-ws-cfg-bv-leftoff)
-;;(add-to-list 'desktop-globals-to-save 'z-ws-cfg-bv-current-bv)
+;;(add-to-list 'desktop-globals-to-save 'zetta-ws-cfg-bv-list)
+;;(add-to-list 'desktop-globals-to-save 'zetta-ws-cfg-bv-leftoff)
+;;(add-to-list 'desktop-globals-to-save 'zetta-ws-cfg-bv-current-bv)
 
 
-(defun z-ws-cfg-bvs ()
+(defun zetta-ws-cfg-bvs ()
   (alist-get
-   `(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
-   z-ws-cfg-bv-list
+   `(,(intern (car (car zetta-ws-alist))) ,(winds-get-cur-cfg))
+   zetta-ws-cfg-bv-list
    nil nil 'equal)
   )
 
 
-(defun z-ws-cfg-bv-new-bv (&optional name)
+(defun zetta-ws-cfg-bv-new-bv (&optional name)
   (interactive)
   ;;;; pre
   ;; save current bookmark
-  (bookmark-view-save z-ws-cfg-bv-current-bv)
+  (bookmark-view-save zetta-ws-cfg-bv-current-bv)
   ;; rest
   (let* ((name (or name (completing-read "bv name" '())))
          (bvprefix "bv--")
-         (bm-full-name (concat bvprefix (car (car z-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) (format ": %s" name))))
+         (bm-full-name (concat bvprefix (car (car zetta-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) (format ": %s" name))))
     (bookmark-view-save bm-full-name)
     (setf
      (alist-get
-      `(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
-      z-ws-cfg-bv-list
+      `(,(intern (car (car zetta-ws-alist))) ,(winds-get-cur-cfg))
+      zetta-ws-cfg-bv-list
       nil nil 'equal)
      (append
       (alist-get
-       `(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
-       z-ws-cfg-bv-list
+       `(,(intern (car (car zetta-ws-alist))) ,(winds-get-cur-cfg))
+       zetta-ws-cfg-bv-list
        nil nil 'equal)
-      `(,(concat bvprefix (car (car z-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) ": " name))))
+      `(,(concat bvprefix (car (car zetta-ws-alist)) "-" (number-to-string (winds-get-cur-cfg)) ": " name))))
     ;;(bookmark-view-open bm-full-name)
-    (setq z-ws-cfg-bv-current-bv bm-full-name)))
+    (setq zetta-ws-cfg-bv-current-bv bm-full-name)))
 
 
 ;; create the initional bookmark
-(z-ws-cfg-bv-new-bv "default")
+(zetta-ws-cfg-bv-new-bv "default")
 
 
-(defun z-ws-cfg-bv-switch (&optional name)
+(defun zetta-ws-cfg-bv-switch (&optional name)
   (interactive)
   ;; save current buffer state
-  (bookmark-view-save z-ws-cfg-bv-current-bv)
+  (bookmark-view-save zetta-ws-cfg-bv-current-bv)
   ;; should be switch or create
-  (let* ((name (or name (completing-read "select a tab: " (z-ws-cfg-bvs))))
+  (let* ((name (or name (completing-read "select a tab: " (zetta-ws-cfg-bvs))))
          (bvprefix "bv--"))
     (if (member name
                 (alist-get
-                 `(,(intern (car (car z-ws-alist))) ,(winds-get-cur-cfg))
-                 z-ws-cfg-bv-list nil nil 'equal))
+                 `(,(intern (car (car zetta-ws-alist))) ,(winds-get-cur-cfg))
+                 zetta-ws-cfg-bv-list nil nil 'equal))
         (progn
           ;; switch to the bookmark
           (bookmark-view name)
-          (setq z-ws-cfg-bv-current-bv name))
+          (setq zetta-ws-cfg-bv-current-bv name))
       (progn
-        (z-ws-cfg-bv-new-bv name)
-        (setq z-ws-cfg-bv-current-bv
+        (zetta-ws-cfg-bv-new-bv name)
+        (setq zetta-ws-cfg-bv-current-bv
               (concat
                bvprefix
-               (car (car z-ws-alist))
+               (car (car zetta-ws-alist))
                "-"
                (number-to-string (winds-get-cur-cfg))
                (format ": %s" name)))))))
@@ -149,16 +149,16 @@
 
 ;; need to introduce the notion of a current bookmark... note the leftoff functionality here
 ;; define update current bookmark
-(defun z-propertize-tab-bar-string-tab (str)
-  (if (string= str z-ws-cfg-bv-current-bv)
+(defun zetta-propertize-tab-bar-string-tab (str)
+  (if (string= str zetta-ws-cfg-bv-current-bv)
       ;;; ughh... need to modify the text to make the tab bar update
       ;;; immediately... this is an annoyance!  all caps is a good
       ;;; workaround
       (concat (propertize (upcase (nth 1 (split-string str ": "))) 'face 'focus-focused))
     (propertize (nth 1 (split-string str ": ")) 'face 'focus-unfocused)))
 
-(defun z-tab-bar-bvs ()
-  (let ((ws-cfg-bvs (z-ws-cfg-bvs))) 
+(defun zetta-tab-bar-bvs ()
+  (let ((ws-cfg-bvs (zetta-ws-cfg-bvs))) 
     (-filter (lambda (x) (member x ws-cfg-bvs)) (bookmark-view-names))))
 
 ;; redefined from winds.el
@@ -192,59 +192,59 @@
 
 
 
-(defun z-tab-bar-string ()
+(defun zetta-tab-bar-string ()
   (concat
    " { "
    (winds-get-status-msg)
-   "  [" (mapconcat 'z-propertize-tab-bar-string-tab (z-tab-bar-bvs) " | ") "]"
+   "  [" (mapconcat 'zetta-propertize-tab-bar-string-tab (zetta-tab-bar-bvs) " | ") "]"
    " }"))
 
-(defun z-ws-cfg-bv-switcher (dir)
-  (let* ((current-index (cl-position z-ws-cfg-bv-current-bv (z-tab-bar-bvs) :test 'equal))
+(defun zetta-ws-cfg-bv-switcher (dir)
+  (let* ((current-index (cl-position zetta-ws-cfg-bv-current-bv (zetta-tab-bar-bvs) :test 'equal))
          (previous-index (- current-index 1))
          (next-index (+ current-index 1))
          (previous-tab (if (>= previous-index 0)
-                           (nth previous-index (z-tab-bar-bvs))
-                         (or (car (last (z-tab-bar-bvs) 1))
+                           (nth previous-index (zetta-tab-bar-bvs))
+                         (or (car (last (zetta-tab-bar-bvs) 1))
                              ;; handles case when len = 1
-                             (car (z-tab-bar-bvs))
+                             (car (zetta-tab-bar-bvs))
                              )))
-         (next-tab (or (nth next-index (z-tab-bar-bvs)) (car (z-tab-bar-bvs)))))
+         (next-tab (or (nth next-index (zetta-tab-bar-bvs)) (car (zetta-tab-bar-bvs)))))
     (cond
-     ((string= dir "prev") (z-ws-cfg-bv-switch previous-tab))
-     ((string= dir "next") (z-ws-cfg-bv-switch next-tab)))))     
+     ((string= dir "prev") (zetta-ws-cfg-bv-switch previous-tab))
+     ((string= dir "next") (zetta-ws-cfg-bv-switch next-tab)))))     
 
 ;; works nicely!
 ;;(general-define-key
  ;;:keymaps 'override
  ;;:states '(normal visual)
- ;;"C-M-S-<tab>" (lambda () (interactive) (z-ws-cfg-bv-switcher "prev"))
- ;;"C-M-<tab>" (lambda () (interactive) (z-ws-cfg-bv-switcher "next"))
- ;;"g t" (lambda () (interactive) (z-ws-cfg-bv-switch))
+ ;;"C-M-S-<tab>" (lambda () (interactive) (zetta-ws-cfg-bv-switcher "prev"))
+ ;;"C-M-<tab>" (lambda () (interactive) (zetta-ws-cfg-bv-switcher "next"))
+ ;;"g t" (lambda () (interactive) (zetta-ws-cfg-bv-switch))
  ;;)
 
 
 (defun zpath ()
   (let ((path (abbreviate-file-name default-directory)))
     (if (> (length path) 30)
-        (z-minify-path default-directory)
+        (zetta-minify-path default-directory)
       path
       )
     ))
 
 (defun zwhitespace () (let ((x " ")) x))
 
-(defun z-org-outline-path ()
+(defun zetta-org-outline-path ()
   (when
       (string= major-mode "org-mode")
     (concat " > " (org-display-outline-path) "/" (org-get-heading))))
 
 ;; the interface to making snapshoots -- using consuot bookmark to
 ;; access them
-(defun z-bookmark-view-snapshot ()
+(defun zetta-bookmark-view-snapshot ()
   (interactive)
-  (let* ((name (z-bookmark-view-generate-snapshot-name))
-         (snapshotname (z-bookmark-view-generate-snapshot-name)))
+  (let* ((name (zetta-bookmark-view-generate-snapshot-name))
+         (snapshotname (zetta-bookmark-view-generate-snapshot-name)))
     (bookmark-view-save snapshotname) 
     ;; fixes strange issue caused by savnig the bookmark
     (bookmark-view snapshotname)

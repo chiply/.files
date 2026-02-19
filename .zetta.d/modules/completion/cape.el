@@ -26,18 +26,18 @@
    "y" '(yas-expand :wk "yasnippet")
 
    ;; === LSP completion (when in lsp-mode buffer) ===
-   "p" '(z-cape-complete-lsp :wk "lsp")
+   "p" '(zetta-cape-complete-lsp :wk "lsp")
 
    ;; === AI completion ===
-   "g" '(z-cape-complete-gptel :wk "gptel (AI)")
+   "g" '(zetta-cape-complete-gptel :wk "gptel (AI)")
 
    ;; === Meta/cascade ===
-   "c" '(z-completion-at-point :wk "cascade (smart)")
+   "c" '(zetta-completion-at-point :wk "cascade (smart)")
    "TAB" '(completion-at-point :wk "default capf")))
 
 ;;; Wrapper functions for better UX
 
-(defun z-cape-complete-lsp ()
+(defun zetta-cape-complete-lsp ()
   "Complete using LSP if available, with feedback."
   (interactive)
   (if (bound-and-true-p lsp-mode)
@@ -45,7 +45,7 @@
         (completion-at-point))
     (message "LSP not active in this buffer")))
 
-(defun z-cape-complete-gptel ()
+(defun zetta-cape-complete-gptel ()
   "Complete using gptel if available."
   (interactive)
   (if (fboundp 'gptel-complete)

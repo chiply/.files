@@ -17,17 +17,17 @@
   :general
   (
    :keymaps '(shell-command-mode-map)
-   "C" 'z-highlight-phrases
+   "C" 'zetta-highlight-phrases
    "S-<tab>" 'compilation-previous-error
    )
 
   :hook (shell-command-mode . (lambda () (progn
                                            (text-scale-set -2)
-                                           (z-highlight-phrases)
+                                           (zetta-highlight-phrases)
                                            (when (and
                                                   (boundp 'zmc-async-shell-command-spinners-enable)
                                                   zmc-async-shell-command-spinners-enable)
-                                             (z-spinner-compile-spin)))))
+                                             (zetta-spinner-compile-spin)))))
   )
 
 

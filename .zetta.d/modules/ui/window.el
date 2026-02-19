@@ -16,11 +16,11 @@
                                     :foreground brushup-bg
                                     )))
 
-(defun z-window-divider-mode ()
+(defun zetta-window-divider-mode ()
   (interactive)
   (call-interactively 'window-divider-mode))
 
-(defun z-scroll-bar-mode ()
+(defun zetta-scroll-bar-mode ()
   (interactive)
   (if (get-scroll-bar-mode) (set-scroll-bar-mode nil) (set-scroll-bar-mode 'left)))
 
@@ -38,13 +38,13 @@
  "C-t" (** toggle-truncate-lines)
  "C-t" (** toggle-truncate-lines)
  "C-w" (** toggle-word-wrap)
- "s" (** z-state-hydra/body)
+ "s" (** zetta-state-hydra/body)
  "f" (** consult-project-extra-find)
  "F" (** find-file)
  "x" (** execute-extended-command)
  "u" (** winner-undo)
- "o" (** z-window-divider-mode)
- "C-S-b b" (** z-scroll-bar-mode)
+ "o" (** zetta-window-divider-mode)
+ "C-S-b b" (** zetta-scroll-bar-mode)
  "r h" (** (lambda () (interactive) (shrink-window-horizontally 1)))
  "r C-h" (** (lambda () (interactive) (shrink-window-horizontally 2)))
  "r C-S-h" (** (lambda () (interactive) (shrink-window-horizontally 4)))
@@ -74,7 +74,7 @@
  )
 
 
-(defun z-async-blowup ()
+(defun zetta-async-blowup ()
   (interactive)
   (when (or (eq (window-parameter (selected-window) 'window-side) 'top)
             (eq (window-parameter (selected-window) 'window-side) 'bottom))
@@ -95,14 +95,14 @@
 
 (general-define-key
  :keymaps '(treemacs-mode-map)
- "C-p" 'z-async-blowup)
+ "C-p" 'zetta-async-blowup)
 
 
 
-(make-local-variable 'z-zen-disable)
+(make-local-variable 'zetta-zen-disable)
 
-;; (defun z-set-window-margin-zen ()
-;;   (unless (and (boundp 'z-zen-disable) z-zen-disable)
+;; (defun zetta-set-window-margin-zen ()
+;;   (unless (and (boundp 'zetta-zen-disable) zetta-zen-disable)
 ;;     (when
 ;;         (and
 ;;          (> (window-total-width) 160)
@@ -143,23 +143,23 @@
 ;;     )
 ;;   )
 
-;; (defun z-zen-mode ()
-;;   (add-hook 'window-configuration-change-hook 'z-set-window-margin-zen 0 'local)
+;; (defun zetta-zen-mode ()
+;;   (add-hook 'window-configuration-change-hook 'zetta-set-window-margin-zen 0 'local)
 ;;   )
-;; (add-hook 'prog-mode-hook 'z-zen-mode)
-;; (add-hook 'window-configuration-change-hook 'z-zen-mode)
+;; (add-hook 'prog-mode-hook 'zetta-zen-mode)
+;; (add-hook 'window-configuration-change-hook 'zetta-zen-mode)
 
 (general-define-key
  :keymaps 'override
- "s-+" '(lambda () (interactive) (setq-local z-zen-disable t) (call-interactively 'text-scale-increase))
- "s-=" '(lambda () (interactive) (setq-local z-zen-disable t) (call-interactively 'text-scale-increase))
+ "s-+" '(lambda () (interactive) (setq-local zetta-zen-disable t) (call-interactively 'text-scale-increase))
+ "s-=" '(lambda () (interactive) (setq-local zetta-zen-disable t) (call-interactively 'text-scale-increase))
 
- "s--" '(lambda () (interactive) (setq-local z-zen-disable t) (call-interactively 'text-scale-decrease))
+ "s--" '(lambda () (interactive) (setq-local zetta-zen-disable t) (call-interactively 'text-scale-decrease))
 
- "s-0" '(lambda () (interactive) (setq-local z-zen-disable t) (text-scale-adjust 0))
+ "s-0" '(lambda () (interactive) (setq-local zetta-zen-disable t) (text-scale-adjust 0))
  "s-)" '(lambda () (interactive)
           ;; unlock
-          (setq-local z-zen-disable nil)
+          (setq-local zetta-zen-disable nil)
           ;; and reset to (global) default size
           (text-scale-adjust 0))
  )

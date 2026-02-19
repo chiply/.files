@@ -12,7 +12,7 @@
 (setq tramp-verbose 1)
 
 
-(defun z-ssh ()
+(defun zetta-ssh ()
   "A function to conveniently ssh into a server"
   (interactive)
   (let* ((host (completing-read "Choose a server: " '("debian_droplet"
@@ -22,7 +22,7 @@
     ) 
   )
 
-(defun z-ssh-shell ()
+(defun zetta-ssh-shell ()
   "A function to conveniently ssh into a server"
   (interactive)
   (let* ((host (completing-read "Choose a server: " '("debian_droplet"

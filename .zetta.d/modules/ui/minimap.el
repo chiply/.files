@@ -57,7 +57,7 @@
   ;;(length (-filter
   ;;(lambda (ignored-buffer-regex)
   ;;(string-match ignored-buffer-regex (buffer-name (current-buffer))))
-  ;;z-minimap-ignored-buffers
+  ;;zetta-minimap-ignored-buffers
   ;;)) 
   ;;))
   ;;(apply 'derived-mode-p minimap-major-modes))
@@ -91,7 +91,7 @@
   ;;(length (-filter
   ;;(lambda (ignored-buffer-regex)
   ;;(string-match ignored-buffer-regex (buffer-name (current-buffer))))
-  ;;z-minimap-ignored-buffers
+  ;;zetta-minimap-ignored-buffers
   ;;)) 
   ;;))
   ;;
@@ -118,7 +118,7 @@
   ;;(minimap-get-window))
   ;;(delete-window (minimap-get-window))))))))))
   ;;
-  ;;(setq z-minimap-ignored-buffers '("agenda.org" "agenda_pub.org"))
+  ;;(setq zetta-minimap-ignored-buffers '("agenda.org" "agenda_pub.org"))
 
   ;;(setq minimap-major-modes
   ;;'(
@@ -152,12 +152,12 @@
                          (evil-emacs-state)
                          )))
 
-  (defun z-toggle-minimap ()
+  (defun zetta-toggle-minimap ()
     (interactive)
     (minimap-mode 'toggle)
     )
 
-  (defun z-toggle-minimap-follow ()
+  (defun zetta-toggle-minimap-follow ()
     (interactive)
     (if minimap-update-delay
         (setq minimap-update-delay nil)
@@ -196,9 +196,9 @@
   :general
   (
    :keymaps 'override
-   "s-[" 'z-toggle-minimap
+   "s-[" 'zetta-toggle-minimap
    "s-]" 'minimap-update
-   "s-}" 'z-toggle-minimap-follow
+   "s-}" 'zetta-toggle-minimap-follow
    )
   )
 

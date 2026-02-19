@@ -12,5 +12,5 @@
                   )
                )
 
-  :hook (use-package--focus--post-config . (lambda () (z-brushup)))
+  :hook (use-package--focus--post-config . (lambda () (zetta-brushup)))
   )
