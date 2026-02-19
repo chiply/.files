@@ -102,9 +102,9 @@
 ;;; ————————————————————————————————————————————————
 
 ;; Override or extend keybindings via general.el.
-;; Available prefix maps: launch-map, menu-window-keymap, menu-project-keymap,
-;;   menu-vc-keymap, menu-lookup-keymap, menu-org-keymap, menu-run-keymap,
-;;   menu-theme-keymap, menu-help-keymap
+;; Available prefix maps: launch-map, menu-window-map, menu-project-map,
+;;   menu-vc-map, menu-lookup-map, menu-org-map, menu-run-map,
+;;   menu-theme-map, menu-help-map, menu-smerge-map, menu-iedit-map
 ;;
 ;; (general-define-key
 ;;  :keymaps 'launch-map
