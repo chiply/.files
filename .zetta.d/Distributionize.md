@@ -177,34 +177,200 @@ The restore workflow is the rough edge. With straight.el you run `straight-thaw-
 
 ---
 
-## Implementation Steps (Ordered)
+## Task List
 
-### Phase 1: Cleanup and Security
+### Phase 1: Security & Cleanup
 
-1. **Remove credentials** — `spot4e.el` has hardcoded Spotify client ID and secret. Move to `~/.private.el` or environment variables immediately.
-2. **Audit for other personal data** — Tramp machine names in `init.el`, hardcoded bookmark paths, etc.
+Tasks 1-3 can be done in parallel. All must complete before Phase 2.
+
+- [ ] **Task 1: Remove hardcoded credentials from config files**
+
+  CRITICAL. Multiple files contain plaintext credentials:
+
+  | File | Line(s) | Content | Severity |
+  |------|---------|---------|----------|
+  | `source/zettapkg/spot4e/spot4e.el` | 28-29 | Spotify client ID and secret | CRITICAL |
+  | `source/config/wombag.el` | 7-11 | Wallabag username, plaintext password, OAuth client ID and secret | CRITICAL |
+  | `source/config/elfeed.el` | 43-45 | Miniflux username in URL, plaintext password | CRITICAL |
+  | `source/config/lsp.el` | 70 | Database connection string with password | MEDIUM |
+
+  For each: replace with a `defvar` defaulting to `nil`, add a comment pointing to `~/.private.el`, move actual values into `~/.private.el`. Create a `.private.sample.el` template showing what users need to set.
+
+  After fixing, **rotate/regenerate all exposed credentials** (Spotify, Wallabag, Miniflux).
+
+- [ ] **Task 2: Audit and remove personal identifiers**
+
+  Remove or abstract personal identifiers:
+
+  | File | Line(s) | Content |
+  |------|---------|---------|
+  | `init.el` | 30 | Tramp machine hostname `WQN4T69J6P` |
+  | `source/config/erc.el` | 10-11 | Hardcoded nick `charlieholland` and full name |
+  | `source/config/erc.el` | 1 | Google Drive share link in comment |
+  | `fetch_mail.sh` | 14 | Username `redacted` in mbsync command |
+
+  Make these configurable via `defcustom` or user config variables.
+
+- [ ] **Task 3: Replace hardcoded paths with portable alternatives**
+
+  ~30 files use `~/.files/.zetta.d/` or other absolute paths. Replace with `user-emacs-directory` and `expand-file-name`. Define a `zetta-dir` variable for the distro root.
+
+  Files to fix:
+
+  | File | Line(s) | Path |
+  |------|---------|------|
+  | `source/bootstrap/bootstrap-config.el` | 5 | `straight-base-dir` |
+  | `source/bootstrap/bootstrap-repeatable-lite.el` | 6 | `:load-path` |
+  | `source/bootstrap/bootstrap-zettafn.el` | 79, 89 | `keybindings.org`, `read.org` |
+  | `source/bootstrap/bootstrap-menu.el` | 6 | `:load-path` |
+  | `source/zettapkg/spot4e/spot4e.el` | 5 | `:load-path` |
+  | `source/config/convention.el` | 3 | `:load-path` |
+  | `source/config/foreman.el` | 3 | `:load-path` |
+  | `source/config/desktop.el` | 16 | desktop path |
+  | `source/config/elfeed.el` | 239 | `elfeed.org` path |
+  | `source/config/biblio.el` | 3 | bibliography path |
+  | `source/config/org-ref.el` | 9-11 | bibliography paths |
+  | `source/config/citar.el` | 19, 25 | bibliography paths |
+  | `source/config/utility.el` | 9, 25, 45 | bibliography and history paths |
+  | `source/config/simple.el` | 19, 24 | `.zsh_history` path |
+  | `source/config/multi-compile.el` | 613 | tmuxinator path |
+
+---
 
 ### Phase 2: Module System
 
-3. **Create the module directory structure** — Group the 276 config files from `source/config/` into `modules/{core,ui,completion,editor,lang,tools,app}/` directories.
-4. **Write the `zetta-modules!` macro** — Declarative module selection, replaces `user-files`.
-5. **Create a user config template** — `~/.zetta.el` that users copy and customize.
+Sequential. Task 4 blocked by 1-3. Task 5 blocked by 4. Task 6 blocked by 5.
 
-### Phase 3: Reproducibility
+- [ ] **Task 4: Create module directory structure** *(blocked by: 1, 2, 3)*
 
-6. **Enable Elpaca lockfile** — Set `elpaca-lock-file` in `bootstrap-elpaca.el`, generate initial lockfile, commit it.
-7. **Pin known-fragile packages** — Use `:ref` or `:tag` for packages with frequent breaking changes.
+  Reorganize the flat `source/config/` directory (~268 files) into module directories:
 
-### Phase 4: Packaging
+  ```
+  modules/
+  ├── core/       (17 files) — emacs, simple, utility, interface, desktop, remote,
+  │                             security, keys, xref, project, persist, smerge-mode,
+  │                             repeat-mode, saveplace, savehist, comint, cleanup
+  ├── completion/ (19 files) — completion, cape, dabbrev, helm, marginalia, orderless,
+  │                             embark, embark-consult, consult, tap, tap-block, vertico,
+  │                             prescient, mono-complete, consult-gh, consult-omni,
+  │                             consult-lsp, consult-dash, consult-ls-git
+  ├── ui/         (48 files) — display, hud, themes, modeline, treemacs, icons, fonts,
+  │                             rainbow, window, tab-line, breadcrumb, etc.
+  ├── editor/     (28 files) — evil extensions, smartparens, snippets, ace-window, avy,
+  │                             undo-tree, iedit, move-text, text-manipulation, etc.
+  ├── lang/       (23 files) — python, web-mode, js2-mode, typescript, yaml, terraform,
+  │                             sql, csv-mode, sh-script, json-mode, etc.
+  ├── tools/      (60 files) — magit, docker, lsp, dap, flycheck, compile, dired, grep,
+  │                             git-link, git-timemachine, pr-review, devdocs, etc.
+  ├── app/        (31 files) — elfeed, spotify, wombag, bookmarks, olivetti, mastodon,
+  │                             erc, nov, whisper, define-word, etc.
+  ├── org/        (11 files) — org, org-ql, org-capture, org-ref, pdf-tools, citar,
+  │                             org-remark, org-tree-slide, org-transclusion, etc.
+  └── term/       (4 files)  — shell, vterm, foreman, foreman_conf
+  ```
 
-8. **Extract standalone packages** — Publish `space-tree`, `repeatable-lite`, and `brushup` as independent packages (MELPA candidates). The distro depends on them, but they gain users independently.
-9. **Write the CLI wrapper** — `bin/zetta` shell script for install, sync, update, freeze, doctor commands.
+  Each module directory gets a `config.el` that loads its constituent files.
 
-### Phase 5: Documentation
+- [ ] **Task 5: Write `zetta-modules!` macro** *(blocked by: 4)*
 
-10. **Write a README** — Installation, module reference, quick start.
-11. **Keybinding cheat sheet** — Auto-generated from `general.el` declarations if possible, otherwise manual.
-12. **Module documentation** — Each module directory gets a brief header comment explaining what it provides.
+  Write the core macro that replaces the flat `user-files` list in `init-data.el`.
+
+  Requirements:
+  - Accept keyword-based module spec: `(zetta-modules! :core :completion :ui :editor :lang (python rust) :tools (magit lsp docker))`
+  - Categories without sub-lists load all files in that module directory
+  - Categories with sub-lists load only the specified files
+  - Respect bootstrap load order (core first)
+  - Support disabling defaults: `(:ui -treemacs -nyan-mode)`
+  - Integrate with `z-load-config-file` for actual file loading
+
+  Lives in a new `bootstrap-modules.el`, called from the user's `~/.zetta.el`.
+
+- [ ] **Task 6: Create user config template (`~/.zetta.el`)** *(blocked by: 5)*
+
+  Create a template user config file as the entry point for customization:
+
+  - `defcustom`-style variables: `zetta-leader-key`, `zetta-org-directory`, `zetta-font`, `zetta-theme`, `zetta-modal-system` (evil/meow/emacs)
+  - A `zetta-modules!` declaration with sensible defaults
+  - Comments explaining each option
+  - Sections for user's own `use-package` declarations and keybinding overrides
+
+  Deliverables:
+  1. `templates/zetta.example.el` — shipped with distro, documented
+  2. Logic in `init.el` to load `~/.zetta.el` if it exists, falling back to bundled defaults
+
+---
+
+### Phase 3: Reproducibility & Tooling
+
+Tasks 7 and 8 can run in parallel. Task 9 blocked by 5 and 7.
+
+- [ ] **Task 7: Enable Elpaca lockfile and generate initial lock** *(blocked by: 5)*
+
+  1. Add to `bootstrap-elpaca.el`:
+     ```elisp
+     (setq elpaca-lock-file (expand-file-name "elpaca-lock.el" user-emacs-directory))
+     ```
+  2. Start Emacs, let all packages install/build
+  3. Run `M-x elpaca-write-lock-file` to generate initial lockfile
+  4. Commit `elpaca-lock.el` into the repo
+  5. Add `defcustom zetta-use-lockfile` (default `t`) so users can opt out
+
+- [ ] **Task 8: Extract standalone packages to separate repos** *(independent)*
+
+  Extract the three most distribution-worthy packages from `source/zettapkg/`:
+
+  | Package | Status | Needs |
+  |---------|--------|-------|
+  | `space-tree` | Has proper package headers | LICENSE, README, CI |
+  | `repeatable-lite` | Functional | Package headers, LICENSE, README, CI |
+  | `brushup` | Currently in `bootstrap-brushup.el` | Extract to own `.el`, package headers, LICENSE, README, CI |
+
+  For each:
+  - Create repo at `~/source_code/<package-name>/`
+  - Add GPL-3.0 LICENSE, README with usage examples
+  - Set up GitHub Actions for byte-compilation testing
+  - Update distro to reference via `:ensure (:host github :repo "you/<pkg>")`
+  - Keep local dev path in personal `~/.zetta.el` via `:ensure nil` + `load-path`
+
+- [ ] **Task 9: Write `bin/zetta` CLI wrapper** *(blocked by: 5, 7)*
+
+  Shell script with subcommands:
+
+  | Command | Purpose |
+  |---------|---------|
+  | `zetta install` | Clone repo, run Emacs batch mode to install packages, native-compile |
+  | `zetta sync` | Re-evaluate config, install new packages, remove orphans |
+  | `zetta freeze` | Run `elpaca-write-lock-file` in batch mode, commit result |
+  | `zetta update` | `elpaca-pull-all` in batch mode (with lockfile backup) |
+  | `zetta doctor` | Diagnose: Emacs version, missing deps, broken packages, credential files |
+  | `zetta test` | Start daemon, verify startup, check for errors |
+
+  Written in bash/zsh. Calls `emacs --batch` or `emacsclient` as needed. Model after Doom's `bin/doom`.
+
+---
+
+### Phase 4: Polish
+
+- [ ] **Task 10: Write README and module documentation** *(blocked by: 4, 5, 9)*
+
+  1. **`README.md`** (repo root):
+     - Elevator pitch (brushup, triple-modal, repeatable-lite)
+     - Screenshots/GIFs
+     - Installation (`git clone` + `bin/zetta install`)
+     - Quick start (editing `~/.zetta.el`, choosing modules)
+     - Requirements (Emacs 29+, git, ripgrep, etc.)
+
+  2. **`docs/modules.md`** — Reference for each module category
+
+  3. **`docs/keybindings.md`** — Cheat sheet for `launch-map`, modal switching, key bindings
+
+  4. **Module headers** — Each module's `config.el` gets a comment block explaining purpose and required external tools
+
+- [ ] **Task 11: Rename `z-` prefix to `zetta-` namespace** *(blocked by: 4, 5)*
+
+  Repo-wide find-and-replace of `z-` prefixed functions and variables to `zetta-`. Must only rename custom definitions, not built-in Emacs functions.
+
+  This is optional but recommended for a public distro. **Do last** as it touches every file.
 
 ---
 
