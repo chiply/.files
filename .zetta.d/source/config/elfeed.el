@@ -40,9 +40,7 @@
   
   (setq elfeed-protocol-fever-update-unread-only nil)
   (setq elfeed-protocol-fever-fetch-category-as-tag t)
-  (setq elfeed-protocol-feeds '(("fever+https://charliebkr707@reader.miniflux.app"
-                                 :api-url "https://reader.miniflux.app/fever/"
-                                 :password "Emaj7#13")))
+  ;; elfeed-protocol-feeds set in ~/.private.el
 
 
   (setq elfeed-protocol-enabled-protocols '(fever))
