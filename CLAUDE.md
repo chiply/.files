@@ -1,6 +1,6 @@
 # .files Repository
 
-Personal dotfiles repository for bootstrapping macOS development environments, with a comprehensive Emacs configuration.
+Personal dotfiles repository for bootstrapping macOS development environments.
 
 ## Repository Structure
 
@@ -14,7 +14,6 @@ Personal dotfiles repository for bootstrapping macOS development environments, w
 │   ├── .aliases/             # Shell aliases
 │   ├── .config/              # Tool configurations (Brewfile, tmuxinator, etc.)
 │   └── .tmux/, .tmux.conf    # Tmux configuration
-└── .zetta.d/                 # Emacs configuration (see detailed section below)
 ```
 
 ### Other Directories
@@ -32,12 +31,13 @@ Run `bootstrap.sh` on a new machine to:
 5. Install Zinit (zsh plugin manager)
 6. Install tools (fzf, AWS CLI, tmuxinator)
 7. Install Emacs and language servers
+8. Clone zetta.d Emacs distribution to `~/.zetta.d`
 
 ---
 
 ## Emacs Configuration (.zetta.d)
 
-The Emacs configuration lives in `.zetta.d/` and uses **Elpaca** as the package manager.
+The Emacs configuration is a separate repository ([zetta.d](https://github.com/chiply/.zetta.d)) cloned to `~/.zetta.d/`. It uses **Elpaca** as the package manager.
 
 ### Directory Structure
 
@@ -188,7 +188,7 @@ The config supports multiple modal editing systems (Evil, Meow, Emacs).
 
 #### Automated Testing (Required)
 
-After making changes to any `.el` files in `.zetta.d/`, run the daemon test:
+After making changes to any `.el` files in `~/.zetta.d/`, run the daemon test:
 
 ```bash
 # Start Emacs daemon and capture output
@@ -223,7 +223,7 @@ emacs --daemon=t 2>&1 | grep -q "Starting Emacs daemon" && \
   emacsclient -s t -e '(kill-emacs)' && echo "SUCCESS" || echo "FAILED"
 
 # Batch mode test (faster, no daemon cleanup needed)
-emacs --batch -l ~/.files/.zetta.d/init.el 2>&1 | tail -5
+emacs --batch -l ~/.zetta.d/init.el 2>&1 | tail -5
 ```
 
 #### Manual Testing
