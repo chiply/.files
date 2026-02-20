@@ -99,6 +99,14 @@ brew install --cask font-terminus
 # emacs
 chmod +x ~/.files/install_emacs_distros.sh && ~/.files/install_emacs_distros.sh
 
+# zetta.d (emacs configuration)
+if [ -d "$HOME/.zetta.d" ]; then
+    cd "$HOME/.zetta.d"
+    git pull
+else
+    git clone https://github.com/chiply/.zetta.d.git "$HOME/.zetta.d"
+fi
+
 ## language servers (not all should be installed into global scope, eg python)
 # TODO move this to Brewfile
 brew install npm

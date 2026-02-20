@@ -1,8 +1,0 @@
-(use-package emacs
-  :ensure nil
-  :init
-  (setq ring-bell-function #'ignore)
-  :config
-  (general-define-key
-   :keymaps 'override
-   "M-q" 'fill-paragraph))
