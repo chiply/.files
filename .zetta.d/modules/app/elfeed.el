@@ -51,7 +51,7 @@
 (use-package elfeed
   :after embark
   :commands elfeed
-  :ensure (:wait t)
+  :ensure t
   :config
   (setq elfeed-use-curl t)
   (elfeed-set-timeout 36000)
@@ -229,7 +229,7 @@ minibuffer with something like `exit-minibuffer'."
 
 (use-package elfeed-org
   :demand t
-  :ensure (:wait t)
+  :ensure t
   :after elfeed org
   :config
   (setq rmh-elfeed-org-files
@@ -241,7 +241,7 @@ minibuffer with something like `exit-minibuffer'."
   )
 
 (use-package elfeed-score
-  :ensure (elfeed-score :type git :host github :repo "sp1ff/elfeed-score" :wait t)
+  :ensure (elfeed-score :type git :host github :repo "sp1ff/elfeed-score")
   :after elfeed-org
   :demand t
   :config

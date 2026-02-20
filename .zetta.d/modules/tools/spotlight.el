@@ -1,1 +1,2 @@
-(use-package spotlight)
+(use-package spotlight
+  :after counsel)

@@ -44,6 +44,7 @@
    "completion/tap.el"
    "completion/tap-block.el"
    "completion/vertico.el"
+   "completion/corfu.el"
    "completion/prescient.el"
    "completion/mono-complete.el"
    "completion/consult-gh.el"
@@ -51,7 +52,6 @@
    "completion/consult-lsp.el"
    "completion/consult-dash.el"
    "completion/consult-ls-git.el"
-   "completion/corfu.el"
 
    ;; ui
    "ui/display.el"

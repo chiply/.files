@@ -34,18 +34,17 @@
      )))
 
 (defun zetta-line-tramp-icon ()
-  (when (member "ssh" (4mn-get-tramp-hop-types))
+  (when (and (fboundp '4mn-get-tramp-hop-types)
+             (member "ssh" (4mn-get-tramp-hop-types)))
     (all-the-icons-faicon "server"
-                          
-                          :face 'mode-line ))
-  )
+                          :face 'mode-line)))
 
 (defun zetta-line-docker-icon ()
-  (when (member "docker" (4mn-get-tramp-hop-types))
+  (when (and (fboundp '4mn-get-tramp-hop-types)
+             (member "docker" (4mn-get-tramp-hop-types)))
     (all-the-icons-fileicon
      "dockerfile"
-     
-     :face 'mode-line )))
+     :face 'mode-line)))
 
 (defun zetta-line-hydra-indicator-icon ()
   (if (and

@@ -1,4 +1,5 @@
 (use-package ace-window
+  :demand t
   :commands (ace-window ace-select-window ace-delete-window ace-swap-window)
   :brushup
   (add-to-list 'brushup-styles
@@ -21,7 +22,13 @@
         aw-minibuffer-flag t
         aw-ignore-current nil
         )
-  (ace-window-display-mode)
+  ;; Don't use ace-window-display-mode — it prepends the window number
+  ;; to mode-line-format, duplicating what telephone-line's zt-ace-1
+  ;; segment already shows. Instead, hook aw-update directly to keep
+  ;; the ace-window-path window parameter populated for telephone-line.
+  (aw-update)
+  (add-hook 'window-configuration-change-hook #'aw-update)
+  (add-hook 'after-make-frame-functions (lambda (_) (aw-update)) t)
 
   ;; helm buffer bring buffer name temporarily intto the headerline
   ;; TODO change this -- more modular, add to list
