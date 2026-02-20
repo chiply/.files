@@ -398,5 +398,5 @@
         embark-maps-list)
   )
 
-(add-hook 'elpaca-after-init-hook (lambda () (zetta-embark-bind-keys)))
+(add-hook 'elpaca-after-init-hook (lambda () (when (require 'embark nil t) (zetta-embark-bind-keys))))
 

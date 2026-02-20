@@ -34,9 +34,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file nil)
+ '(bmkp-last-as-first-bookmark-file "~/.files/.zetta.d/bookmarks")
  '(connection-local-criteria-alist
    '(((:application tramp :machine "localhost")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "WQN4T69J6P")
       tramp-connection-local-darwin-ps-profile)
      ((:application tramp)
       tramp-connection-local-default-system-profile

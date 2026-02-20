@@ -3,7 +3,6 @@
            :host github
            :repo "armindarvish/consult-gh"
            :files ("*.el")
-           :wait t
            )
   :demand t
   :after consult nerd-icons
@@ -64,13 +63,13 @@ STYLE defaults to `consult-async-split-style'."
   )
 
 (use-package consult-gh-embark
-  :ensure (:wait t)
+  :ensure t
   :after consult-gh
   :config
   (consult-gh-embark-mode +1))
 
 (use-package consult-gh-forge
-  :ensure (:wait t)
+  :ensure t
   :after consult-gh
   :config
   (consult-gh-forge-mode +1))

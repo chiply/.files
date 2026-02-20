@@ -1,5 +1,5 @@
 (use-package avy
-  :ensure (:wait t)
+  :ensure t
   :commands (avy-goto-char-timer evil-avy-goto-char-timer)
   :config
   (setq avy-ignored-modes

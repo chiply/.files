@@ -276,7 +276,7 @@ If PATH has an extension, creates a file; otherwise creates a directory."
          )
     (concat
      (mapconcat
-      (lambda (s) (if (> (length s) 1) (substring s 0 2) (substring s 0 1)))
+      (lambda (s) (if (> (length s) 1) (substring s 0 2) s))
       path-split "/")
      "/" leaf-dir-name)))
 
