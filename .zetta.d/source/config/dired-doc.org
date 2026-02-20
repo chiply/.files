@@ -1,5 +1,0 @@
-#+TITLE: Documentation for /Users/charles.baker/.files/.zetta.d/source/extension/dired.el
-#+OPTIONS: toc:nil
-* Variables
-* Functions
-
