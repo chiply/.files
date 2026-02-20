@@ -11,6 +11,15 @@
      consult-project-extra-find
      :preview-key "C-="))
 
+  ;; Fallback for directories not recognized by project-find-functions.
+  ;; Must use with-eval-after-load since nested use-package :config
+  ;; may not reliably run with elpaca.
+  (with-eval-after-load 'consult-project-extra
+    (defun consult-project-extra--project-with-root (root)
+      "Return the project for a given project ROOT."
+      (or (project--find-in-directory root)
+          (cons 'transient root))))
+
   (defun consult-project-switch-project ()
     (interactive)
     (let ((default-directory (consult--read
@@ -37,7 +46,10 @@
 ;; TODO seems like this is under active development, just enabling,
 ;; but not using it yet
 (use-package ede
-  :ensure nil ;; builtin 
+  :ensure nil ;; builtin
   :demand t
   :config
-  (global-ede-mode))
+  (global-ede-mode)
+  ;; global-ede-mode replaces project-try-vc with project-try-ede in
+  ;; project-find-functions, breaking git project detection. Add it back.
+  (add-hook 'project-find-functions #'project-try-vc))

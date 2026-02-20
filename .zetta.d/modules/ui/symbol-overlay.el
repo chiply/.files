@@ -1,4 +1,5 @@
 (use-package symbol-overlay
+  :after transient
   :config
   (setq symbol-overlay-idle-time 0.05)
   (setq symbol-overlay-priority 90)

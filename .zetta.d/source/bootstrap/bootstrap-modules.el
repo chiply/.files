@@ -58,8 +58,8 @@ in the order they appear in the `zetta-modules!' declaration.")
     (completion . ("completion.el" "cape.el" "dabbrev.el" "recursion-indicator.el"
                    "helm.el" "marginalia.el" "orderless.el" "embark.el"
                    "embark-consult.el" "consult.el" "tap.el" "tap-block.el"
-                   "vertico.el" "prescient.el" "mono-complete.el" "consult-gh.el"
-                   "consult-lsp.el" "consult-dash.el" "consult-ls-git.el" "corfu.el"))
+                   "vertico.el" "corfu.el" "prescient.el" "mono-complete.el"
+                   "consult-gh.el" "consult-lsp.el" "consult-dash.el" "consult-ls-git.el"))
     (ui . ("display.el" "hud.el" "highlight-indent-guides.el" "ultra-scroll.el"
            "color-identifiers-mode.el" "volatile-highlights.el"
            "display-fill-column-indicator.el" "display-line-numbers.el"

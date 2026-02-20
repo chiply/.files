@@ -216,6 +216,9 @@ Run after theme changes to enforce consistent typography."
 ;; Re-apply on theme change
 (add-hook 'enable-theme-functions (lambda (_theme) (brushup)))
 
+;; Alias for backward compatibility (z-brushup → zetta-brushup)
+(defalias 'zetta-brushup 'brushup)
+
 (provide 'bootstrap-brushup)
 
 ;;; bootstrap-brushup.el ends here

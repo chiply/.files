@@ -86,7 +86,7 @@
     ;; icon-for commands
     ;; TODO separate this out
     (concat
-     (when repeat-in-progress "R")
+     (when (bound-and-true-p repeat-in-progress) "R")
      (let ((icon (zetta-line-tramp-icon))) (when icon "T"))
      (let ((icon (zetta-line-docker-icon))) (when icon "D"))
      (let ((icon (zetta-line-narrowed-icon))) (when icon "N"))
