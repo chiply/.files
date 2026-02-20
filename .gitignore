@@ -1,4 +1,6 @@
+# Emacs (may recreate this on shutdown if old session was running)
+.zetta.d/
+
 # Python
 __pycache__/
 .hypothesis/
-
