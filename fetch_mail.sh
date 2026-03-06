@@ -9,9 +9,9 @@ echo "Starting mail fetch..."
 start_time=$(date +"%Y-%m-%d %H:%M:%S")
 
 # Run programs in the background and redirect output to log files
-/usr/local/opt/isync/bin/mbsync  -V gmail-misterchiply > fetch_chiply.log 2>&1 &
-/usr/local/opt/isync/bin/mbsync  -V gmail-charliechristopherbaker > fetch_admin.log 2>&1 &
-/usr/local/opt/isync/bin/mbsync  -V gmail-charliebkr707 > fetch_main.log 2>&1 &
+/opt/homebrew/opt/isync/bin/mbsync  -V gmail-misterchiply > fetch_chiply.log 2>&1 &
+/opt/homebrew/opt/isync/bin/mbsync  -V gmail-charliechristopherbaker > fetch_admin.log 2>&1 &
+/opt/homebrew/opt/isync/bin/mbsync  -V gmail-charliebkr707 > fetch_main.log 2>&1 &
 
 # Wait for both programs to finish
 wait
