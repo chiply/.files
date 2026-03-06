@@ -20,8 +20,14 @@ def myfunc(mypath):
 paths = myfunc(f"{path_repo}/files")
 print(f"running on {paths}")
 
+home = os.path.expanduser('~')
+for path in paths:
+    target = f"{home}/{path}"
+    target_dir = os.path.dirname(target)
+    os.makedirs(target_dir, exist_ok=True)
+
 symlink_commands = [
-    f"ln -s -f {path_repo}/files/{path} {os.path.expanduser('~')}/{path}"
+    f"ln -s -f {path_repo}/files/{path} {home}/{path}"
     for path in paths
 ]
 

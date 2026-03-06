@@ -247,7 +247,7 @@ bindkey "^Xe" _expand_alias
 # ============================================================================
 # ALIASES
 # ============================================================================
-source ~/.aliases/index
+[[ -f ~/.aliases/index ]] && source ~/.aliases/index
 
 alias cat="bat --theme=GitHub --style=\"numbers,changes,header\""
 alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
@@ -268,7 +268,7 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-. "$HOME/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 source ~/.sh_utility_functions.sh
 . "$HOME/.local/share/../bin/env"
 
