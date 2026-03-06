@@ -11,6 +11,9 @@ setopt INC_APPEND_HISTORY     # write after each command, not on exit
 setopt HIST_IGNORE_ALL_DUPS   # deduplicate
 setopt HIST_REDUCE_BLANKS     # trim whitespace
 
+# disable flow control so C-s is available for keybinding
+stty -ixon
+
 # this script assumes things have already been bootstrapped
 export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew:$PATH
 
@@ -243,6 +246,22 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # Alias expansion keybinding
 bindkey "^Xe" _expand_alias
+
+# C-s → sesh picker (in tmux, handled by tmux directly; this is fallback outside tmux)
+_sesh_picker() {
+  zle -I
+  local session
+  session=$(sesh list -t -c -z 2>/dev/null | fzf --height 40% --reverse --border-label ' sesh ' --border --prompt '⚡  ')
+  zle -R
+  if [[ -n "$session" ]]; then
+    BUFFER="sesh connect \"$session\""
+    zle accept-line
+  else
+    zle reset-prompt
+  fi
+}
+zle -N _sesh_picker
+bindkey '^s' _sesh_picker
 
 # ============================================================================
 # ALIASES
