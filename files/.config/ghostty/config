@@ -1,0 +1,4 @@
+theme = Zenbones Light
+font-family = TerminessNerdFont
+font-size = 14
+command = "/bin/zsh"
