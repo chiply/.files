@@ -5,6 +5,9 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 mkdir -p ~/.tmux/themes
+mkdir -p ~/.config/tmux-powerline/themes
+mkdir -p ~/.config/tmux-powerline/segments
+mkdir -p ~/.config/gitmux
 
 touch ~/.localsecrets
 touch ~/.tokens
@@ -88,13 +91,28 @@ sudo installer -pkg AWSCLIV2.pkg -target /
 # tmuxinator: manage complex tmux sessions easily
 gem install tmuxinator
 
+# tmux plugin manager (TPM)
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+    git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+fi
+
+# install TPM plugins (non-interactive)
+"$HOME/.tmux/plugins/tpm/bin/install_plugins"
+
 # how-2
 npm install -g how-2
 
 
 
-# fonts for emacs
+# latex (for org-latex-preview)
+eval "$(/usr/libexec/path_helper)"
+sudo tlmgr update --self
+sudo tlmgr install dvipng dvisvgm
+
+# fonts
 brew install --cask font-terminus
+brew install --cask font-jetbrains-mono-nerd-font
+brew install --cask font-terminess-ttf-nerd-font
 
 # emacs
 chmod +x ~/.files/install_emacs_distros.sh && ~/.files/install_emacs_distros.sh
