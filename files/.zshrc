@@ -1,6 +1,16 @@
 source ~/.localsecrets
 source ~/.tokens
 
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt SHARE_HISTORY          # share history across tmux panes/sessions
+setopt APPEND_HISTORY         # append rather than overwrite
+setopt INC_APPEND_HISTORY     # write after each command, not on exit
+setopt HIST_IGNORE_ALL_DUPS   # deduplicate
+setopt HIST_REDUCE_BLANKS     # trim whitespace
+
 # this script assumes things have already been bootstrapped
 export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew:$PATH
 
