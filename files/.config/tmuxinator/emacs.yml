@@ -1,0 +1,13 @@
+name: emacs
+root: ~/
+
+windows:
+  - emacs:
+      layout: even-horizontal
+      panes:
+        - daemon: emacs --fg-daemon
+        - client: >-
+            while ! emacsclient -e '(+ 1 1)' >/dev/null 2>&1; do
+              sleep 0.5;
+            done;
+            emacsclient -n -c
