@@ -1,0 +1,36 @@
+name: fun
+root: ~/
+
+windows:
+  - matrix:
+      layout: main-vertical
+      panes:
+        - cmatrix: cmatrix -b -C white
+        - fortune: fortune | cowsay -f tux; echo ""; echo "Press enter for more..."; while read; do fortune | cowsay -f $(cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n1); echo ""; echo "Press enter for more..."; done
+
+  - aquarium:
+      panes:
+        - asciiquarium: asciiquarium
+
+  - pipes:
+      panes:
+        - pipes: pipes.sh -t 0 -p 5 -R
+
+  - fire:
+      layout: even-horizontal
+      panes:
+        - ascii-fire: aafire
+        - color-fire: cacafire
+
+  - trains:
+      panes:
+        - train: while true; do sl -F; sleep 2; done
+
+  - art:
+      layout: even-vertical
+      panes:
+        - banner: >-
+            toilet -f bigmono12 -F border --gay "HELLO"; echo "";
+            figlet -f slant "Just For Fun"; echo "";
+            toilet -f future "terminal vibes"
+        - sysinfo: fastfetch

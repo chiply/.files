@@ -8,6 +8,7 @@ mkdir -p ~/.tmux/themes
 mkdir -p ~/.config/tmux-powerline/themes
 mkdir -p ~/.config/tmux-powerline/segments
 mkdir -p ~/.config/gitmux
+mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
 
 touch ~/.localsecrets
 touch ~/.tokens
@@ -53,6 +54,14 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # symlink
 python ~/.files/main.py
 
+# ghostty config (macOS reads from Application Support, not XDG)
+ln -s -f ~/.files/ghostty/config "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+
+# ghostty cursor shaders
+if [ ! -d "$HOME/Library/Application Support/com.mitchellh.ghostty/shaders" ]; then
+    git clone https://github.com/sahaj-b/ghostty-cursor-shaders \
+        "$HOME/Library/Application Support/com.mitchellh.ghostty/shaders"
+fi
 
 # install bundle
 brew tap Homebrew/bundle
@@ -117,6 +126,17 @@ brew install --cask font-terminess-ttf-nerd-font
 # emacs
 chmod +x ~/.files/install_emacs_distros.sh && ~/.files/install_emacs_distros.sh
 
+# lolipop cursor animation (requires emacs-plus@31)
+if [ ! -d "$HOME/.zetta.d/source/lib/lolipop" ]; then
+    git clone https://github.com/RadioNoiseE/lolipop /tmp/lolipop
+    cd /tmp/lolipop
+    make EMACS_INCLUDE=/opt/homebrew/Cellar/emacs-plus@31/31.0.50/include
+    mkdir -p "$HOME/.zetta.d/source/lib/lolipop"
+    cp lolipop-mode.el lolipop-core.dylib "$HOME/.zetta.d/source/lib/lolipop/"
+    cd "$HOME/.files"
+    rm -rf /tmp/lolipop
+fi
+
 # zetta.d (emacs configuration)
 if [ -d "$HOME/.zetta.d" ]; then
     cd "$HOME/.zetta.d"
@@ -156,6 +176,38 @@ npm i mathjax
 
 # snowsql
 brew install --cask snowflake-snowsql
+
+# ubersicht widgets directory + simple-bar
+mkdir -p "$HOME/Library/Application Support/Übersicht/widgets"
+if [ ! -d "$HOME/Library/Application Support/Übersicht/widgets/simple-bar" ]; then
+    git clone https://github.com/Jean-Tinland/simple-bar \
+        "$HOME/Library/Application Support/Übersicht/widgets/simple-bar"
+fi
+
+# Patch top bar (remove widgets moved to bottom bar)
+chmod +x ~/.config/simple-bar-server/patch-top-bar.sh
+~/.config/simple-bar-server/patch-top-bar.sh
+
+# simple-bar-bottom (system stats bar)
+if [ ! -d "$HOME/Library/Application Support/Übersicht/widgets/simple-bar-bottom" ]; then
+    cp -r "$HOME/Library/Application Support/Übersicht/widgets/simple-bar" \
+        "$HOME/Library/Application Support/Übersicht/widgets/simple-bar-bottom"
+fi
+chmod +x ~/.config/simple-bar-server/patch-bottom-bar.sh
+~/.config/simple-bar-server/patch-bottom-bar.sh
+
+# simple-bar-server (event-driven refresh for simple-bar)
+npm install -g pm2
+if [ ! -d "$HOME/.simple-bar-server" ]; then
+    git clone https://github.com/Jean-Tinland/simple-bar-server.git "$HOME/.simple-bar-server"
+fi
+cp ~/.config/simple-bar-server/watch-focus.sh "$HOME/.simple-bar-server/watch-focus.sh"
+chmod +x "$HOME/.simple-bar-server/watch-focus.sh"
+cd "$HOME/.simple-bar-server" && npm install && npm run start
+pm2 start "$HOME/.simple-bar-server/watch-focus.sh" --name simple-bar-focus-watcher
+pm2 startup
+pm2 save
+cd "$HOME/.files"
 
 # k9s skins
 OUT="${XDG_CONFIG_HOME:-$HOME/Library/Application Support}/k9s/skins"

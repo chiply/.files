@@ -53,6 +53,10 @@ zinit ice wait'0' lucid atinit'
 '
 zinit light zdharma-continuum/null
 
+# zoxide (must init after compinit for Space-Tab interactive picker)
+zinit ice wait'0' lucid atload'eval "$(zoxide init zsh --cmd cd)"'
+zinit light zdharma-continuum/null
+
 # ============================================================================
 # PLUGINS (loaded with turbo mode - after prompt shows)
 # ============================================================================
@@ -117,6 +121,20 @@ if [[ ! -f ~/.zcompdump-kubectl ]] || [[ ~/.zcompdump-kubectl -ot $(which kubect
 fi
 zinit ice wait'1' lucid
 zinit snippet ~/.zcompdump-kubectl
+
+# kubectx/kubens completions
+zinit ice wait'1' lucid as'completion'
+zinit snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubectx.zsh
+
+zinit ice wait'1' lucid as'completion'
+zinit snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubens.zsh
+
+# stern completions (cached)
+if [[ ! -f ~/.zcompdump-stern ]] || [[ -x $(which stern) && ~/.zcompdump-stern -ot $(which stern) ]]; then
+  stern --completion zsh > ~/.zcompdump-stern 2>/dev/null
+fi
+zinit ice wait'1' lucid
+zinit snippet ~/.zcompdump-stern
 
 # AWS completion (deferred)
 zinit ice wait'1' lucid atload'
@@ -208,6 +226,40 @@ npx() {
 }
 
 # ============================================================================
+# FZF
+# ============================================================================
+export FZF_DEFAULT_OPTS="
+  --color=fg:#4d4d4c,bg:#ffffff,hl:#555555
+  --color=fg+:#1a1a1a,bg+:#e8e8e8,hl+:#333333
+  --color=info:#888888,prompt:#555555,pointer:#333333
+  --color=marker:#555555,spinner:#888888,header:#8e908c
+  --color=border:#d6d6d6,gutter:#ffffff,scrollbar:#d6d6d6
+  --color=separator:#e0e0e0
+  --border=rounded
+
+  --margin=0,1
+  --padding=0,1
+  --info=inline-right
+  --separator='─'
+  --scrollbar='│'
+  --ellipsis='…'
+  --highlight-line
+  --prompt='▸ '
+  --pointer='▸'
+  --marker='●'
+"
+
+export FZF_CTRL_T_OPTS="
+  --preview='bat --color=always --style=numbers --line-range=:200 {} 2>/dev/null || ls -la {} 2>/dev/null'
+  --preview-window='right:50%:border-left'
+"
+
+export FZF_ALT_C_OPTS="
+  --preview='ls -la {} 2>/dev/null'
+  --preview-window='right:40%:border-left'
+"
+
+# ============================================================================
 # FZF LAZY-LOADING
 # ============================================================================
 _load_fzf() {
@@ -247,6 +299,9 @@ export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # Alias expansion keybinding
 bindkey "^Xe" _expand_alias
 
+# Ctrl-Backspace → backward-kill-word
+bindkey '^H' backward-kill-word
+
 # C-s → sesh picker (in tmux, handled by tmux directly; this is fallback outside tmux)
 _sesh_picker() {
   zle -I
@@ -272,13 +327,19 @@ alias cat="bat --theme=GitHub --style=\"numbers,changes,header\""
 alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
 alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
 
+# Kubernetes aliases
+alias kctx="kubectx"
+alias kns="kubens"
+alias kubectl="kubecolor"
+alias kneat="kubectl-neat"
+
 # ============================================================================
 # ENVIRONMENT
 # ============================================================================
 export LSP_USE_PLISTS=true
 unset VIRTUAL_ENV
 
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$HOME/.local/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/Users/charles.baker/.local/share/pnpm"

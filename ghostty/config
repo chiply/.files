@@ -1,0 +1,10 @@
+theme = Zenbones Light
+font-family = "Terminess Nerd Font"
+font-size = 14
+background = #fafafa
+background-opacity = 0.9
+command = "/bin/zsh"
+cursor-style = block
+cursor-style-blink = true
+custom-shader = shaders/cursor_warp.glsl
+custom-shader-animation = always
