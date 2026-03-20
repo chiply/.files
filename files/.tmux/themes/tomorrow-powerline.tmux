@@ -4,45 +4,47 @@
 # Status bar segments are handled by tmux-powerline.
 # This file covers everything else: pane borders, window bg, messages, etc.
 #
-# Palette (Tomorrow Light):
+# Palette (Grayscale):
 #   bg        #ffffff
 #   bg-alt    #efefef
 #   bg-dim    #e0e0e0
 #   fg        #4d4d4c
-#   fg-dim    #8e908c (comment)
-#   red       #c82829
-#   orange    #f5871f
-#   yellow    #eab700
-#   green     #718c00
-#   aqua      #3e999f
-#   blue      #4271ae
-#   purple    #8959a8
+#   fg-dim    #8e908c
+#   accent    #555555
+#   mid       #888888
+#   border    #d6d6d6
 # ============================================================================
 
 # -- Window styles -----------------------------------------------------------
 
-setw -g window-style "bg=#f7f7f7"
-setw -g window-active-style "bg=#ffffff"
+setw -g window-style "bg=default"
+setw -g window-active-style "bg=default"
 
 # -- Pane borders ------------------------------------------------------------
 
 set -g pane-border-style "fg=#d6d6d6"
-set -g pane-active-border-style "fg=#4271ae"
+set -g pane-active-border-style "fg=#555555"
 set -g pane-border-status top
-set -g pane-border-format " #[fg=#4271ae,bold]#{pane_index}#[default,fg=#8e908c] #{pane_title} #[fg=#d6d6d6]#{pane_current_command} "
+set -g pane-border-format " #[fg=#555555,bold]#{pane_index}#[default,fg=#8e908c] #{pane_title} #[fg=#d6d6d6]#{pane_current_command} #{?window_zoomed_flag,#[fg=#555555 bold] ZOOM ,}"
 
 # -- Message bar -------------------------------------------------------------
 
-set -g message-style "bg=#4271ae,fg=#ffffff,bold"
-set -g message-command-style "bg=#3e999f,fg=#ffffff,bold"
+set -g message-style "bg=#555555,fg=#ffffff,bold"
+set -g message-command-style "bg=#888888,fg=#ffffff,bold"
 
 # -- Mode (copy mode highlight) ---------------------------------------------
 
-set -g mode-style "bg=#4271ae,fg=#ffffff"
-set -g copy-mode-current-match-style "bg=#f5871f,fg=#ffffff"
-set -g copy-mode-match-style "bg=#eab700,fg=#4d4d4c"
+set -g mode-style "bg=#555555,fg=#ffffff,bold"
+set -g copy-mode-current-match-style "bg=#333333,fg=#ffffff,bold"
+set -g copy-mode-match-style "bg=#cccccc,fg=#4d4d4c"
+
+# -- Popups ------------------------------------------------------------------
+
+set -g popup-style "bg=default"
+set -g popup-border-style "fg=#d6d6d6"
+set -g popup-border-lines rounded
 
 # -- Clock -------------------------------------------------------------------
 
-set -g clock-mode-colour "#4271ae"
+set -g clock-mode-colour "#555555"
 set -g clock-mode-style 24

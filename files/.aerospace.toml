@@ -1,0 +1,169 @@
+# AeroSpace tiling window manager
+# https://nikitabobko.github.io/AeroSpace/guide
+
+config-version = 2
+start-at-login = true
+
+# Mouse follows focused window
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Refresh simple-bar on workspace/focus changes
+exec-on-workspace-change = ['/bin/bash', '-c', 'curl -s "http://localhost:7776/aerospace/spaces/refresh?space=$AEROSPACE_FOCUSED_WORKSPACE"']
+
+# Normalization
+enable-normalization-flatten-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Layout
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+accordion-padding = 30
+
+# Gaps
+[gaps]
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 40
+outer.top = 36
+outer.right = 8
+
+# Main keybindings
+[mode.main.binding]
+
+# Command palette (Emacs popup)
+cmd-backspace = '''exec-and-forget APP=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true') && emacsclient -e "(progn (setq zetta-popup-previous-app \"$APP\") (zetta-popup-app-launcher))"'''
+cmd-shift-backspace = '''exec-and-forget APP=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true') && emacsclient -e "(progn (setq zetta-popup-previous-app \"$APP\") (zetta-command-palette))"'''
+alt-shift-c = '''exec-and-forget APP=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true') && emacsclient -e "(progn (setq zetta-popup-previous-app \"$APP\") (zetta-popup-org-capture))"'''
+cmd-shift-x = '''exec-and-forget APP=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true') && emacsclient -e "(progn (setq zetta-popup-previous-app \"$APP\") (zetta-popup-kill-ring))"'''
+cmd-shift-slash = '''exec-and-forget APP=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true') && emacsclient -e "(progn (setq zetta-popup-previous-app \"$APP\") (zetta-popup-omni-web))"'''
+
+
+# App switcher
+cmd-shift-g = 'exec-and-forget open -a Ghostty'
+cmd-shift-e = 'exec-and-forget open -a Emacs'
+cmd-shift-c = 'exec-and-forget open -a "Google Chrome"'
+cmd-shift-l = 'exec-and-forget open -a Logseq'
+cmd-shift-m = 'exec-and-forget open -a Messages'
+cmd-shift-n = 'exec-and-forget open -a Notes'
+cmd-shift-v = 'exec-and-forget open -a Vial'
+cmd-shift-s = 'exec-and-forget open -a Shottr'
+
+# Focus (vim-style)
+alt-h = ['focus left', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
+alt-j = ['focus down', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
+alt-k = ['focus up', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
+alt-l = ['focus right', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
+
+# Move windows
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Resize
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
+
+# Layout
+alt-f = 'fullscreen'
+alt-shift-f = 'macos-native-fullscreen'
+alt-t = 'layout floating tiling'
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+alt-e = 'balance-sizes'
+alt-r = 'flatten-workspace-tree'
+
+# Workspaces
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+
+# Move window to workspace
+alt-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
+alt-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
+alt-shift-3 = ['move-node-to-workspace 3', 'workspace 3']
+alt-shift-4 = ['move-node-to-workspace 4', 'workspace 4']
+alt-shift-5 = ['move-node-to-workspace 5', 'workspace 5']
+alt-shift-6 = ['move-node-to-workspace 6', 'workspace 6']
+
+# Workspace back-and-forth
+alt-tab = 'workspace-back-and-forth'
+
+# Focus monitor
+alt-shift-left = 'focus-monitor left'
+alt-shift-right = 'focus-monitor right'
+
+# Move window to monitor
+alt-ctrl-left = 'move-node-to-monitor left'
+alt-ctrl-right = 'move-node-to-monitor right'
+
+# Service mode
+alt-shift-semicolon = 'mode service'
+
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+b = ['balance-sizes', 'mode main']
+f = ['layout floating tiling', 'mode main']
+
+# Auto-alternate split direction (BSP behavior)
+[[on-window-detected]]
+check-further-callbacks = true
+run = 'split opposite'
+
+# Float Emacs command palette popup
+[[on-window-detected]]
+if.app-id = 'org.gnu.Emacs'
+if.window-title-regex-substring = 'command-palette'
+run = 'layout floating'
+
+# App-to-workspace rules
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'org.gnu.Emacs'
+if.during-aerospace-startup = true
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Terminal'
+run = 'move-node-to-workspace 3'
+
+# Float system apps
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.calculator'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.ActivityMonitor'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'today.vial'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.electron.dockerdesktop'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'tracesOf.Uebersicht'
+run = 'layout floating'

@@ -1,0 +1,15 @@
+name: sysadmin
+root: ~/
+
+windows:
+  - monitoring:
+      layout: tiled
+      panes:
+        - htop: htop
+        - btop: btop
+  - network:
+      panes:
+        - nettop: nettop
+  - disk:
+      panes:
+        - df: watch -n 30 df -h
