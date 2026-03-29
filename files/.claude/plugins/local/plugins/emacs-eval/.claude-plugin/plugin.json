@@ -1,0 +1,7 @@
+{
+  "name": "emacs-eval",
+  "description": "Evaluate Elisp in a running Emacs daemon via emacsclient. Supports ad hoc eval, file loading, byte-compilation, keybinding verification, and elpaca package management.",
+  "author": {
+    "name": "Charlie Holland"
+  }
+}

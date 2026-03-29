@@ -1,5 +1,5 @@
-source ~/.localsecrets
-source ~/.tokens
+#source ~/.localsecrets
+#source ~/.tokens
 
 # History
 HISTFILE=~/.zsh_history
@@ -30,6 +30,15 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 # ============================================================================
+# BANNER (random ASCII art on shell start)
+# ============================================================================
+_banner_dir="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/banner"
+if [[ -d "$_banner_dir" ]]; then
+  _banner_file=$(find -L "$_banner_dir" -type f -name '*.asc' | shuf -n 1)
+  [[ -n "$_banner_file" ]] && cat "$_banner_file"
+fi
+
+# ============================================================================
 # DEFERRED COMPINIT (runs after prompt shows)
 # ============================================================================
 # Skip global compinit on Ubuntu/Debian
@@ -50,8 +59,23 @@ zinit ice wait'0' lucid atinit'
   # Completion settings
   zstyle ":completion:*" completer _expand_alias _complete _ignored
   zstyle ":completion:*" regular true
+  zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"
+
+  # fzf-tab settings
+  zstyle ":fzf-tab:*" fzf-flags --color=fg:#4d4d4c,bg:#ffffff,hl:#555555,fg+:#1a1a1a,bg+:#e8e8e8,hl+:#333333,info:#888888,prompt:#555555,pointer:#333333,marker:#555555,spinner:#888888,header:#8e908c,border:#d6d6d6
+  zstyle ":fzf-tab:complete:cd:*" fzf-preview "eza --icons=auto -1 --color=always \$realpath"
+  zstyle ":fzf-tab:complete:ls:*" fzf-preview "eza --icons=auto -1 --color=always \$realpath"
+  zstyle ":fzf-tab:complete:cat:*" fzf-preview "bat --theme=GitHub --style=numbers --color=always --line-range :200 \$realpath 2>/dev/null"
+  zstyle ":fzf-tab:complete:bat:*" fzf-preview "bat --theme=GitHub --style=numbers --color=always --line-range :200 \$realpath 2>/dev/null"
+  zstyle ":fzf-tab:complete:vim:*" fzf-preview "bat --theme=GitHub --style=numbers --color=always --line-range :200 \$realpath 2>/dev/null"
+  zstyle ":fzf-tab:complete:export:*" fzf-preview "echo \$word"
+  zstyle ":fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*" fzf-preview "echo \${(P)word}"
 '
 zinit light zdharma-continuum/null
+
+# fzf-tab (must load after compinit)
+zinit ice wait'0' lucid
+zinit light Aloxaf/fzf-tab
 
 # zoxide (must init after compinit for Space-Tab interactive picker)
 zinit ice wait'0' lucid atload'eval "$(zoxide init zsh --cmd cd)"'
@@ -66,6 +90,12 @@ zinit light zsh-users/zsh-autosuggestions
 
 zinit ice wait'0' lucid
 zinit light zsh-users/zsh-syntax-highlighting
+
+zinit ice wait'0' lucid
+zinit light Automaat/zsh-clean-history
+
+zinit ice wait'0' lucid
+zinit light olets/zsh-abbr
 
 zinit ice wait'0' lucid
 zinit light jonmosco/kube-ps1
@@ -286,7 +316,12 @@ _fzf_file_widget() {
 zle -N _fzf_history_widget
 zle -N _fzf_file_widget
 bindkey '^R' _fzf_history_widget
-bindkey '^T' _fzf_file_widget
+# ^T now handled by television (see tv init below)
+
+# Edit command line in $EDITOR
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
 
 # ============================================================================
 # AUTOSUGGESTION SETTINGS
@@ -323,6 +358,10 @@ bindkey '^s' _sesh_picker
 # ============================================================================
 [[ -f ~/.aliases/index ]] && source ~/.aliases/index
 
+# Colorized man pages via bat
+export MANPAGER="sh -c 'col -bx | bat -l man -p --theme=GitHub'"
+
+alias ls="eza --icons=auto"
 alias cat="bat --theme=GitHub --style=\"numbers,changes,header\""
 alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
 alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
@@ -332,6 +371,9 @@ alias kctx="kubectx"
 alias kns="kubens"
 alias kubectl="kubecolor"
 alias kneat="kubectl-neat"
+
+# tmuxinator inside vterm (nested tmux, bypasses outer session)
+alias mux='TMUX= tmuxinator start'
 
 # ============================================================================
 # ENVIRONMENT
@@ -350,6 +392,10 @@ esac
 
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 source ~/.sh_utility_functions.sh
+
+# Television (fuzzy finder) - smart autocomplete on C-t (deferred after compinit)
+zinit ice wait'1' lucid atload'eval "$(tv init zsh)"'
+zinit light zdharma-continuum/null
 . "$HOME/.local/share/../bin/env"
 
 # ============================================================================
@@ -416,7 +462,36 @@ _pyenv_prompt() {
   fi
 }
 
-PROMPT=$'\n''%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(_git_prompt)'$'\n''$(_pyenv_prompt)$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(pwd)'$'\n'
+# --- Prompt switching: "classic" (custom) vs "starship" ---
+# Set PROMPT_STYLE in your environment or .zshenv to override default.
+# Toggle at runtime with: prompt-toggle
+PROMPT_STYLE="${PROMPT_STYLE:-starship}"
+
+_apply_classic_prompt() {
+  PROMPT=$'\n''%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(_git_prompt)'$'\n''$(_pyenv_prompt)$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(pwd)'$'\n'
+}
+
+_apply_starship_prompt() {
+  eval "$(starship init zsh)"
+}
+
+prompt-toggle() {
+  if [[ "$PROMPT_STYLE" == "starship" ]]; then
+    PROMPT_STYLE="classic"
+    _apply_classic_prompt
+    echo "Switched to classic prompt"
+  else
+    PROMPT_STYLE="starship"
+    _apply_starship_prompt
+    echo "Switched to starship prompt"
+  fi
+}
+
+if [[ "$PROMPT_STYLE" == "starship" ]]; then
+  _apply_starship_prompt
+else
+  _apply_classic_prompt
+fi
 
 # ============================================================================
 # VTERM (Emacs)

@@ -4,4 +4,4 @@ root: ~/
 attach: false
 
 windows:
-  - zetta: /opt/homebrew/opt/emacs-plus@31/bin/emacs --with-profile zetta --debug-init
+  - zetta: /opt/homebrew/bin/emacs --with-profile zetta --debug-init --fg-daemon

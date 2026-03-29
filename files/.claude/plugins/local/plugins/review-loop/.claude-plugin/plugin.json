@@ -1,0 +1,7 @@
+{
+  "name": "review-loop",
+  "description": "Two-phase code review iteration loop: local CodeRabbit CLI review, then remote CI + Copilot review. Runs autonomously end-to-end.",
+  "author": {
+    "name": "Charlie Holland"
+  }
+}

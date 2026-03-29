@@ -1,0 +1,7 @@
+{
+  "name": "ralph",
+  "description": "Ralph autonomous agent loop for PRD-driven development with subagent isolation and worktree management.",
+  "author": {
+    "name": "Charlie Holland"
+  }
+}
