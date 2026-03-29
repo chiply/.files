@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>org.asamk.signal-cli</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/signal-cli</string>
+        <string>-a</string>
+        <string>+19736538391</string>
+        <string>daemon</string>
+        <string>--receive-mode</string>
+        <string>on-connection</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/signal-cli.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/signal-cli.err</string>
+</dict>
+</plist>
