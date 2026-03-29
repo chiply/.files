@@ -5,7 +5,7 @@ windows:
   - emacs:
       layout: even-horizontal
       panes:
-        - daemon: emacs --fg-daemon
+        - daemon: /opt/homebrew/bin/emacs --with-profile zetta --debug-init --fg-daemon
         - client: >-
             while ! emacsclient -e '(+ 1 1)' >/dev/null 2>&1; do
               sleep 0.5;

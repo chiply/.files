@@ -1,0 +1,40 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "local",
+  "description": "Local plugins for this machine",
+  "owner": {
+    "name": "Charlie Holland"
+  },
+  "plugins": [
+    {
+      "name": "emacs-eval",
+      "description": "Evaluate Elisp in a running Emacs daemon via emacsclient",
+      "version": "0.1.0",
+      "author": {
+        "name": "Charlie Holland"
+      },
+      "source": "./plugins/emacs-eval",
+      "category": "development"
+    },
+    {
+      "name": "review-loop",
+      "description": "Two-phase code review loop: local CodeRabbit CLI + remote CI/Copilot review",
+      "version": "0.1.0",
+      "author": {
+        "name": "Charlie Holland"
+      },
+      "source": "./plugins/review-loop",
+      "category": "development"
+    },
+    {
+      "name": "ralph",
+      "description": "Ralph autonomous agent loop for PRD-driven development with subagent isolation and worktree management",
+      "version": "0.2.0",
+      "author": {
+        "name": "Charlie Holland"
+      },
+      "source": "./plugins/ralph",
+      "category": "development"
+    }
+  ]
+}

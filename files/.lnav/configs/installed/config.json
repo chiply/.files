@@ -1,0 +1,17 @@
+{
+    "$schema": "https://lnav.org/schemas/config-v1.schema.json",
+    "ui": {
+        "theme": "modus-operandi",
+        "keymap-defs": {
+            "default": {
+                "x3b": {
+                    "command": "",
+                    "alt-msg": "Use F2 for SQL prompt"
+                },
+                "f2": {
+                    "command": ":prompt sql"
+                }
+            }
+        }
+    }
+}

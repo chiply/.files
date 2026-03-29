@@ -1,0 +1,44 @@
+{
+    "$schema": "https://lnav.org/schemas/format-v1.schema.json",
+    "stern_log": {
+        "title": "Stern Kubernetes Logs",
+        "description": "JSON log format for stern (Kubernetes log tailing) with injected timestamp field",
+        "json": true,
+        "timestamp-field": "timestamp",
+        "timestamp-format": [
+            "%Y-%m-%dT%H:%M:%S.%f%z",
+            "%Y-%m-%dT%H:%M:%S%z"
+        ],
+        "body-field": "message",
+        "level-field": "level",
+        "level": {
+            "error": "(?i)error|fatal|panic|critical",
+            "warning": "(?i)warn(?:ing)?",
+            "info": "(?i)info",
+            "debug": "(?i)debug|trace"
+        },
+        "line-format": [
+            { "field": "timestamp", "max-width": 32 },
+            " ",
+            { "field": "namespace", "min-width": 6, "max-width": 20 },
+            "/",
+            { "field": "podName", "min-width": 8, "max-width": 40 },
+            "/",
+            { "field": "containerName", "min-width": 4, "max-width": 20 },
+            " ",
+            { "field": "level", "min-width": 5, "max-width": 8 },
+            " ",
+            { "field": "message" }
+        ],
+        "value": {
+            "namespace":     { "kind": "string", "identifier": true, "description": "Kubernetes namespace" },
+            "podName":       { "kind": "string", "identifier": true, "description": "Pod name" },
+            "containerName": { "kind": "string", "identifier": true, "description": "Container name" },
+            "nodeName":      { "kind": "string", "identifier": true, "hidden": true, "description": "Kubernetes node" },
+            "level":         { "kind": "string", "identifier": true, "description": "Log level" },
+            "message":       { "kind": "string", "description": "Log message body" },
+            "labels":        { "kind": "json", "hidden": true },
+            "annotations":   { "kind": "json", "hidden": true }
+        }
+    }
+}

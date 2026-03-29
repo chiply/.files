@@ -174,6 +174,26 @@ export GRAPHVIZ_DIR="$(brew --prefix graphviz)"
 # install mathjax
 npm i mathjax
 
+# signal-cli daemon (launch at login)
+mkdir -p ~/Library/LaunchAgents
+cp ~/.files/files/.config/signal-cli/signal-cli.plist ~/Library/LaunchAgents/org.asamk.signal-cli.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.asamk.signal-cli.plist 2>/dev/null
+
+# rotating wallpaper (every 15 minutes)
+mkdir -p "$HOME/Wallpapers"
+chmod +x ~/.config/wallpaper/rotate-wallpaper.sh
+chmod +x ~/.config/wallpaper/download-wallpapers.sh
+~/.config/wallpaper/download-wallpapers.sh
+cp ~/.files/files/.config/wallpaper/rotate-wallpaper.plist ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist 2>/dev/null
+
+# shottr screenshots directory
+mkdir -p "$HOME/Screenshots"
+defaults write cc.ffitch.shottr saveTo -string "$HOME/Screenshots"
+defaults write cc.ffitch.shottr afterGrabSave -bool true
+defaults write cc.ffitch.shottr afterGrabCopy -bool true
+defaults write cc.ffitch.shottr afterGrabShow -bool false
+
 # snowsql
 brew install --cask snowflake-snowsql
 

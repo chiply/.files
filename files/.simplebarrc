@@ -52,7 +52,7 @@
     "displayForFocusedSpace": false,
     "displayOnlyCurrent": false,
     "centered": false,
-    "showCurrentSpaceMode": false,
+    "showCurrentSpaceMode": true,
     "hideWindowTitle": false,
     "displayOnlyIcon": false,
     "expandAllProcesses": false,
