@@ -296,6 +296,8 @@ _load_fzf() {
   unfunction fzf _fzf_complete 2>/dev/null
   # Remove keybinding wrappers
   [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+  # fzf --zsh rebinds ^R to fzf-history-widget; restore atuin
+  bindkey '^R' atuin-search 2>/dev/null
 }
 
 # Lazy wrapper for fzf
@@ -304,18 +306,13 @@ fzf() {
   fzf "$@"
 }
 
-# Load fzf keybindings on first Ctrl-R or Ctrl-T
-_fzf_history_widget() {
-  _load_fzf
-  zle fzf-history-widget
-}
+# Load fzf keybindings on first Ctrl-T
 _fzf_file_widget() {
   _load_fzf
   zle fzf-file-widget
 }
-zle -N _fzf_history_widget
 zle -N _fzf_file_widget
-bindkey '^R' _fzf_history_widget
+# ^R now handled by atuin (see atuin init below)
 # ^T now handled by television (see tv init below)
 
 # Edit command line in $EDITOR
@@ -392,6 +389,9 @@ esac
 
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 source ~/.sh_utility_functions.sh
+
+# Atuin (shell history) - takes over C-r, keeps up-arrow as normal
+eval "$(atuin init zsh --disable-up-arrow)"
 
 # Television (fuzzy finder) - smart autocomplete on C-t (deferred after compinit)
 zinit ice wait'1' lucid atload'eval "$(tv init zsh)"'
