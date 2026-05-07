@@ -4,3 +4,15 @@
 # Python
 __pycache__/
 .hypothesis/
+
+# personal mail / news (kept locally, not tracked)
+fetch_mail.sh
+files/.newsrc
+files/.newsrc.eld
+
+# emacs annotate-mode runtime state
+annotations
+
+# generated keybinding reports (regenerated locally)
+keybinding_report.org
+keybinding_report.py

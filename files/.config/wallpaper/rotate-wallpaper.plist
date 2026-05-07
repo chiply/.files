@@ -7,7 +7,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/charlieholland/.config/wallpaper/rotate-wallpaper.sh</string>
+        <string>__HOME__/.config/wallpaper/rotate-wallpaper.sh</string>
     </array>
     <key>StartInterval</key>
     <integer>1800</integer>
