@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# resolve the directory containing this script so the repo can live anywhere
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Prompt for sudo password upfront and keep alive
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
@@ -52,10 +55,10 @@ curl -sSL https://install.python-poetry.org | python3 -
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # symlink
-python ~/.files/main.py
+python "$REPO_ROOT/main.py"
 
 # ghostty config (macOS reads from Application Support, not XDG)
-ln -s -f ~/.files/ghostty/config "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+ln -s -f "$REPO_ROOT/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
 
 # ghostty cursor shaders
 if [ ! -d "$HOME/Library/Application Support/com.mitchellh.ghostty/shaders" ]; then
@@ -70,7 +73,7 @@ brew tap Homebrew/bundle
 # brew bundle --file ~/.config/Brewfile dump
 brew bundle \
      --force --no-lock \
-     --file=~/.files/files/.config/Brewfile
+     --file="$REPO_ROOT/files/.config/Brewfile"
 # zinit (plugin manager for zsh - replaces oh-my-zsh)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
@@ -124,16 +127,16 @@ brew install --cask font-jetbrains-mono-nerd-font
 brew install --cask font-terminess-ttf-nerd-font
 
 # emacs
-chmod +x ~/.files/install_emacs_distros.sh && ~/.files/install_emacs_distros.sh
+chmod +x "$REPO_ROOT/install_emacs_distros.sh" && "$REPO_ROOT/install_emacs_distros.sh"
 
 # lolipop cursor animation (requires emacs-plus@31)
 if [ ! -d "$HOME/.zetta.d/source/lib/lolipop" ]; then
     git clone https://github.com/RadioNoiseE/lolipop /tmp/lolipop
     cd /tmp/lolipop
-    make EMACS_INCLUDE=/opt/homebrew/Cellar/emacs-plus@31/31.0.50/include
+    make EMACS_INCLUDE="$(brew --prefix emacs-plus@31)/include"
     mkdir -p "$HOME/.zetta.d/source/lib/lolipop"
     cp lolipop-mode.el lolipop-core.dylib "$HOME/.zetta.d/source/lib/lolipop/"
-    cd "$HOME/.files"
+    cd "$REPO_ROOT"
     rm -rf /tmp/lolipop
 fi
 
@@ -156,7 +159,7 @@ npm i -g svelte-language-server
 
 # nvm node
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 # download and sets current version of node
 nvm install node
@@ -175,16 +178,24 @@ export GRAPHVIZ_DIR="$(brew --prefix graphviz)"
 npm i mathjax
 
 # signal-cli daemon (launch at login)
+# set SIGNAL_PHONE in your environment (e.g. +15551234567) before running, or
+# skip this block if you don't use signal-cli
 mkdir -p ~/Library/LaunchAgents
-cp ~/.files/files/.config/signal-cli/signal-cli.plist ~/Library/LaunchAgents/org.asamk.signal-cli.plist
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.asamk.signal-cli.plist 2>/dev/null
+if [ -n "${SIGNAL_PHONE:-}" ]; then
+    sed "s|__SIGNAL_PHONE__|$SIGNAL_PHONE|g" \
+        "$REPO_ROOT/files/.config/signal-cli/signal-cli.plist" \
+        > ~/Library/LaunchAgents/org.asamk.signal-cli.plist
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.asamk.signal-cli.plist 2>/dev/null
+fi
 
 # rotating wallpaper (every 15 minutes)
 mkdir -p "$HOME/Wallpapers"
 chmod +x ~/.config/wallpaper/rotate-wallpaper.sh
 chmod +x ~/.config/wallpaper/download-wallpapers.sh
 ~/.config/wallpaper/download-wallpapers.sh
-cp ~/.files/files/.config/wallpaper/rotate-wallpaper.plist ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist
+sed "s|__HOME__|$HOME|g" \
+    "$REPO_ROOT/files/.config/wallpaper/rotate-wallpaper.plist" \
+    > ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist 2>/dev/null
 
 # shottr screenshots directory

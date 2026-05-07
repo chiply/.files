@@ -15,7 +15,7 @@ setopt HIST_REDUCE_BLANKS     # trim whitespace
 stty -ixon
 
 # this script assumes things have already been bootstrapped
-export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew:$PATH
+export PATH=$HOME/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # ============================================================================
 # ZINIT SETUP (replaces oh-my-zsh for faster startup)
@@ -233,7 +233,7 @@ pyenv() {
 }
 
 # NVM lazy-loading
-export NVM_DIR="$HOME/.config/nvm"
+export NVM_DIR="$HOME/.nvm"
 nvm() {
   unfunction nvm node npm npx 2>/dev/null
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -361,7 +361,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p --theme=GitHub'"
 alias ls="eza --icons=auto"
 alias cat="bat --theme=GitHub --style=\"numbers,changes,header\""
 alias bat="bat --theme=GitHub --style=\"numbers,changes,header\""
-alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
+[ -x /Applications/SnowSQL.app/Contents/MacOS/snowsql ] && alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
 
 # Kubernetes aliases
 alias kctx="kubectx"
@@ -381,7 +381,7 @@ unset VIRTUAL_ENV
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$HOME/.local/bin:$PATH"
 
 # pnpm
-export PNPM_HOME="/Users/redacted/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

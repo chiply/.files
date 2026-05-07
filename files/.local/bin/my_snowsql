@@ -13,8 +13,8 @@ def run_query(account, username, query, database, role):
     conn = snowflake.connector.connect(
         user=username,
         account=account,
-        database=database or 'EXAMPLE_DB',
-        role=role or 'EXAMPLE_ROLE',
+        database=database,
+        role=role,
         authenticator='externalbrowser',  # or 'sso' if you're using SSO directly
     )
 
