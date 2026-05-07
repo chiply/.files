@@ -24,7 +24,6 @@ The script asks for your `sudo` password upfront, then runs unattended for ~30 m
 - **Languages**: pyenv (3.10/3.11/3.12), Poetry, uv, nvm + Node, language servers (json, eslint, copilot, svelte)
 - **Misc**: lots of CLI tools listed in [`files/.config/Brewfile`](files/.config/Brewfile) — bat, fzf, ripgrep, eza, jq, gh, k9s, lazygit, magit-friendly Git tooling, etc.
 - **Background services**: signal-cli daemon, a wallpaper rotator, and a `pm2`-managed simple-bar focus watcher
-- **Claude Code plugins**: a few local plugins under `files/.claude/plugins/local/plugins/` (emacs-eval, ralph, review-loop)
 
 ## Layout
 
@@ -35,8 +34,7 @@ The script asks for your `sudo` password upfront, then runs unattended for ~30 m
 ├── install_emacs_distros.sh  # optional: install Doom/Spacemacs/Chemacs side-by-side
 ├── files/                    # everything in here is symlinked to $HOME
 │   ├── .zshrc, .tmux.conf, .aerospace.toml, ...
-│   ├── .config/Brewfile      # full package list
-│   └── .claude/plugins/local # bundled Claude Code plugins
+│   └── .config/Brewfile      # full package list
 ├── ghostty/config            # symlinked separately into Application Support
 └── LICENSE
 ```
@@ -62,7 +60,6 @@ If any of that isn't what you want, read through `bootstrap.sh` (it's a single ~
 - **Shell**: `files/.zshrc` is the entry point; aliases live in `files/.aliases/`
 - **Tmux**: `files/.tmux.conf`, themes under `files/.tmux/themes/`
 - **Tmuxinator projects**: `files/.config/tmuxinator/*.yml`
-- **Claude plugins**: `files/.claude/plugins/local/plugins/`
 
 ## Adding a new dotfile
 
