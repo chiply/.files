@@ -46,7 +46,6 @@ cmd-shift-c = 'exec-and-forget open -a "Vivaldi"'
 cmd-shift-l = 'exec-and-forget open -a Logseq'
 cmd-shift-m = 'exec-and-forget open -a Messages'
 cmd-shift-n = 'exec-and-forget open -a Notes'
-cmd-shift-v = 'exec-and-forget open -a Vial'
 cmd-shift-s = 'exec-and-forget open -a Shottr'
 
 # Focus (vim-style)
@@ -66,8 +65,11 @@ alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
 # Layout
-alt-f = ['fullscreen', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
-alt-shift-f = 'macos-native-fullscreen'
+# Was `alt-f` / `alt-shift-f`; moved to `alt-z` / `alt-shift-z`
+# so Emacs's `M-f' (evil-ts-obj next-thing) doesn't collide.
+# `z' for zoom -- matches macOS's green-button-is-zoom mnemonic.
+alt-z = ['fullscreen', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
+alt-shift-z = 'macos-native-fullscreen'
 alt-t = ['layout floating tiling', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
 alt-slash = ['layout tiles horizontal vertical', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
 alt-comma = ['layout accordion horizontal vertical', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
@@ -91,7 +93,8 @@ alt-shift-5 = ['move-node-to-workspace 5', 'workspace 5']
 alt-shift-6 = ['move-node-to-workspace 6', 'workspace 6']
 
 # Workspace back-and-forth
-alt-tab = 'workspace-back-and-forth'
+# `alt-tab` unbound -- conflicts with Emacs `M-TAB' (completion).
+# alt-tab = 'workspace-back-and-forth'
 
 # Focus monitor
 alt-shift-left = 'focus-monitor left'
