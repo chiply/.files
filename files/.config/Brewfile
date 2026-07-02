@@ -103,6 +103,15 @@ brew "starship"
 brew "gitmux"
 brew "zsh"
 brew "zsh-syntax-highlighting"
+# emacs-plus@31 links these at runtime but declares them build-time only, so
+# `brew autoremove` strips them and the `emacs` binary then fails to launch
+# ("Library not loaded: .../libjpeg.10.dylib", etc). Keep them explicit
+# (installed-on-request) so autoremove leaves them alone. gdk-pixbuf/librsvg
+# (also runtime deps) are already listed above.
+brew "jpeg"
+brew "zlib"
+brew "dbus"
+brew "tree-sitter"
 brew "d12frosted/emacs-plus/emacs-plus@31", args: ["with-imagemagick", "with-xwidgets", "with-dbus"]
 brew "isacikgoz/taps/tldr"
 brew "sebglazebrook/aliases/aliases"
