@@ -15,6 +15,10 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file t)
 
+;; async native-comp lint findings in third-party/built-in code are not
+;; actionable; log to *Warnings* without popping a window over the phone UI
+(setq native-comp-async-report-warnings-errors 'silent)
+
 ;; Packages: package.el + built-in use-package (emacs 29)
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
