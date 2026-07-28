@@ -22,9 +22,20 @@ if [ ! -f "$dir/.stignore-shared" ]; then
 fi
 [ -f "$dir/.stignore" ] || echo "#include .stignore-shared" > "$dir/.stignore"
 
-if syncthing cli config folders list | grep -qx "$id"; then
-    echo "syncthing folder '$id' already configured"
-else
-    syncthing cli config folders add --id "$id" --label "$label" --path "$dir"
-    echo "syncthing folder '$id' added at $dir"
-fi
+# The daemon may still be starting (brew services / systemd are async on a
+# fresh machine) — wait briefly, and degrade gracefully rather than fail
+# the whole bootstrap: registration is idempotent and can be re-run later.
+for _ in $(seq 1 15); do
+    if syncthing cli config folders list >/dev/null 2>&1; then
+        if syncthing cli config folders list | grep -qx "$id"; then
+            echo "syncthing folder '$id' already configured"
+        else
+            syncthing cli config folders add --id "$id" --label "$label" --path "$dir"
+            echo "syncthing folder '$id' added at $dir"
+        fi
+        exit 0
+    fi
+    sleep 1
+done
+echo "WARN: syncthing daemon not reachable; folder '$id' prepared on disk but not registered — re-run: st-ensure-folder $id $dir" >&2
+exit 0
