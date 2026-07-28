@@ -4,7 +4,9 @@
 # hub/README.org. Runs over the tailnet only.
 set -euo pipefail
 
-HUB="${HUB:-ubuntu@kb-hub.tail097edb.ts.net}"
+# "kb-hub" is an ssh alias each machine defines locally in ~/.ssh/config
+# (host/user stay out of this public repo)
+HUB="${HUB:-kb-hub}"
 SRC="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../../../hub" && pwd)"
 
 echo "deploying $SRC -> $HUB:syncthing-hub"
