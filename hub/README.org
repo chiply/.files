@@ -1,0 +1,158 @@
+#+title: Syncthing Hub — Oracle VPS provisioning
+#+date: [2026-07-26 Sun]
+
+Provisioning for the always-on sync hub described in
+=~/syncthing-migration.org=. One idempotent bootstrap script + systemd
+units. Re-running the script is always safe; if the VM dies, re-provision
+and re-pair Syncthing devices (every PC holds a full data replica).
+
+* Fresh setup from zero (new machine or new user)
+
+What this system is: one always-on Linux hub + any number of
+Mac/Windows/Linux/iOS/Android devices, all syncing a single Syncthing
+folder (=~/kb=, folder id =kb=). The hub also pulls Readwise highlights
+into =~/kb/readwise/= hourly and keeps a git timeline of the folder.
+
+Prerequisites:
+- This repo (=.files=) cloned; a Tailscale account (free tier);
+  a Readwise account + API token (optional — only for the highlights
+  pipeline); an Ubuntu VM or box for the hub (Oracle Always Free A1
+  works; ANY Debian-family machine does).
+
+Order of operations:
+1. Workstation (macOS): run =bootstrap.sh= (installs Syncthing via the
+   Brewfile and registers the =kb= folder via
+   =files/.local/bin/st-ensure-folder=). Install Tailscale and join the
+   tailnet.
+2. Hub: provision per the sections below (scp this dir, run
+   =bootstrap-hub.sh=, do the printed manual steps).
+3. Mobile: Tailscale app (enable VPN On Demand) + Synctrain (iOS) /
+   Syncthing-Fork (Android); pair with the hub; pin tailnet addresses
+   (=tcp://<name>.ts.net:22000=) on both sides of every edge.
+4. Pairing is ALWAYS manual (device identity is per-install, by design):
+   exchange device IDs, share folder id =kb=, accept on the other side.
+
+** Secrets policy
+
+NOTHING secret is version controlled. The only credential in the whole
+system is the Readwise token, which lives ONLY at
+=~/.config/readwise/token= (chmod 600) on the hub — outside the synced
+folder and outside this repo. Syncthing device keys and Tailscale node
+identities are per-machine state that never enter the repo either; a
+rebuilt machine simply generates fresh ones and re-pairs.
+
+** CI and deployment
+
+GitHub Actions (=.github/workflows/hub-ci.yml=) runs shellcheck over the
+deployable scripts and the unit tests in =hub/tests/= on every push/PR.
+Deployment is deliberately NOT automated: the hub is reachable only over
+the tailnet, so deploys run from a trusted workstation —
+
+#+begin_src sh
+scp -r ~/.files/hub <user>@<hub>:syncthing-hub
+ssh <user>@<hub> 'cd syncthing-hub && ./bootstrap-hub.sh'
+#+end_src
+
+(=bootstrap-hub.sh= is idempotent; re-running it IS the update mechanism.)
+
+* Why not Docker
+
+The hub is a long-lived stateful pet, not disposable cattle: it holds the
+synced data, Syncthing's device identity, the git timeline, and a
+persistent Emacs daemon with live buffers. Docker's one-process/ephemeral
+model fights all of that; Tailscale (esp. Tailscale SSH) and the
+SSH→tmux→emacsclient workflow fight container isolation; and Oracle gives
+a full VM anyway. An idempotent script over a plain VM is the same
+reproducibility with none of the friction.
+
+* Files
+
+| =bootstrap-hub.sh=          | idempotent provisioner (run on the VM)       |
+| =bin/readwise_sync.py=      | Readwise export API → org files; stdlib only |
+| =bin/notes-autocommit.sh=   | daily git snapshot of the notes tree         |
+| =units/emacs.service=       | persistent emacs daemon (user unit)          |
+| =units/readwise-sync.*=     | hourly Readwise pull (oneshot + timer)       |
+| =units/notes-git.*=         | daily git snapshot (oneshot + timer)         |
+| =seed/stignore-shared=      | ignore patterns, seeded INTO the synced folder |
+
+Ignore-pattern design: patterns live in =.stignore-shared= inside the
+folder, so they sync everywhere; each device's actual =.stignore= is one
+line — =#include .stignore-shared= (Syncthing never syncs =.stignore=
+itself, so the include is what each machine's bootstrap creates). Edit
+patterns once, every device follows.
+
+* Creating the Oracle instance (manual, console)
+
+1. Shape: =VM.Standard.A1.Flex= (Always Free ARM) — up to 4 OCPU / 24GB.
+   2 OCPU / 12GB is plenty; leave headroom under the free cap.
+2. Image: Ubuntu 24.04 (aarch64).
+3. Boot volume: size it generously NOW (up to the 200GB Always Free
+   total) — growing later is annoying.
+4. SSH key: paste your public key.
+5. IMPORTANT — reclamation: Oracle reclaims *idle* Always Free compute.
+   A mostly-idle sync hub is exactly the reclamation profile. Fix:
+   upgrade the account to Pay As You Go — usage within Always Free
+   limits still costs $0, but PAYG accounts are exempt from idle
+   reclamation. Do this or expect the hub to vanish some month.
+6. Networking: leave the VCN default (only 22 inbound). Everything —
+   SSH, Syncthing, mosh — rides the tailnet, so no public ports are
+   opened at any point. After =tailscale up --ssh= works, you can even
+   remove the public port-22 rule.
+
+* Provisioning
+
+This directory lives in the dotfiles repo (=~/.files/hub/=).
+
+#+begin_src sh
+scp -r ~/.files/hub ubuntu@<public-ip>:syncthing-hub
+ssh ubuntu@<public-ip> 'cd syncthing-hub && ./bootstrap-hub.sh'
+#+end_src
+
+Then the manual steps the script prints at the end:
+1. =sudo tailscale up --ssh= (browser auth; hub joins tailnet).
+2. Readwise token → =~/.config/readwise/token=, chmod 600
+   (from https://readwise.io/access_token).
+3. First pull: =readwise_sync.py --full=.
+4. Pair Syncthing devices via the GUI over an SSH tunnel
+   (=ssh -L 8384:127.0.0.1:8384=): add each device using the hub's
+   tailnet MagicDNS name (=tcp://<hub>:22000=), share =~/kb= as
+   folder id =kb=, enable *Staggered* file versioning on the hub side.
+
+* Notes / gotchas
+
+- Oracle's Ubuntu images ship on-host iptables that REJECT most inbound;
+  the bootstrap inserts an ACCEPT for =tailscale0= and persists it.
+  Without this, Syncthing/mosh over the tailnet silently fail.
+- =systemctl --user= immediately after first bootstrap may say "Failed to
+  connect to bus" — linger was *just* enabled; re-login or
+  =export XDG_RUNTIME_DIR=/run/user/$(id -u)=.
+- The readwise timer is a no-op (exit 0, message in journal) until the
+  token file exists, so the unit stays green pre-configuration.
+- Emacs here is stock =emacs-nox= (Ubuntu 24.04 → Emacs 29). Adapting
+  zetta.d for the hub is a separate task (migration doc Phase 5); the
+  daemon unit works with any config.
+- Output layout: one subfolder per origin under the output dir —
+  =podcasts/= (snipd), =web/= (reader/mobile_share/web_clipper),
+  =kindle/=, =command/=, =voicenotes/=, =supplementals/=. Mapping lives
+  in =SOURCE_DIRS= / =CATEGORY_DIRS= in the script; specific source wins,
+  category is the fallback, unknown categories get their own slug dir.
+- The org rendering lives in =render_org()= in =readwise_sync.py= —
+  tweak format there; files regenerate wholesale and idempotently
+  (written only on content change), so reformatting is safe: next
+  =--full= run rewrites everything in the new shape.
+- Incremental correctness: the export API returns only *changed*
+  highlights for =updatedAfter= queries, so the script re-fetches
+  affected books in full (via =ids=) before regenerating files. The
+  state timestamp is captured before fetching, so mid-run updates are
+  never missed. If =ids= filtering ever misbehaves, =--full= is the
+  safe rebuild.
+
+* Verification (maps to migration-doc phases)
+
+- [ ] =tailscale status= shows the hub; =ssh <hub>= works from laptop off-LAN.
+- [ ] =systemctl status syncthing@$USER= active; folder "kb" Up to Date.
+- [ ] =systemctl --user list-timers= shows readwise-sync + notes-git.
+- [ ] =readwise_sync.py --full= populates =~/kb/readwise/*.org=.
+- [ ] A highlight made today appears in org within ~1h (timer) + sync.
+- [ ] =emacsclient -t= from a phone SSH session opens the daemon.
+- [ ] =git -C ~/kb log= shows the initial snapshot; next day, an auto commit.

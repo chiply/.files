@@ -25,7 +25,9 @@ inner.horizontal = 8
 inner.vertical = 8
 outer.left = 8
 outer.bottom = 40
-outer.top = 36
+# 36 clears simple-bar; the notched built-in display already reserves the
+# menu-bar strip (simple-bar draws inside it), so only normal padding there
+outer.top = [{ monitor."built-in" = 8 }, 36]
 outer.right = 8
 
 # Main keybindings

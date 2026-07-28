@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Ensure a Syncthing folder is registered with the local daemon (idempotent).
+# Usage: st-ensure-folder <folder-id> <path> [label]
+#
+# Creates the directory if missing, registers the folder with the running
+# Syncthing, and gives it an include-style .stignore (patterns arrive via
+# the synced .stignore-shared). Device pairing/sharing stays manual —
+# device IDs are per-machine: GUI at http://localhost:8384.
+set -euo pipefail
+
+id="${1:?usage: st-ensure-folder <folder-id> <path> [label]}"
+dir="${2:?usage: st-ensure-folder <folder-id> <path> [label]}"
+label="${3:-$id}"
+
+mkdir -p "$dir"
+
+# include target must exist or Syncthing errors the folder; content syncs
+# in from peers later and identical bytes never conflict
+if [ ! -f "$dir/.stignore-shared" ]; then
+    seed="$(dirname "$(dirname "$(dirname "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")")")")/hub/seed/stignore-shared"
+    if [ -f "$seed" ]; then cp "$seed" "$dir/.stignore-shared"; else touch "$dir/.stignore-shared"; fi
+fi
+[ -f "$dir/.stignore" ] || echo "#include .stignore-shared" > "$dir/.stignore"
+
+if syncthing cli config folders list | grep -qx "$id"; then
+    echo "syncthing folder '$id' already configured"
+else
+    syncthing cli config folders add --id "$id" --label "$label" --path "$dir"
+    echo "syncthing folder '$id' added at $dir"
+fi

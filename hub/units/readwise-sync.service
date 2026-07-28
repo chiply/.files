@@ -1,0 +1,6 @@
+[Unit]
+Description=Readwise highlights -> org files
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/readwise_sync.py

@@ -1,0 +1,11 @@
+[Unit]
+Description=Emacs daemon (persistent editing sessions for SSH clients)
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/emacs --fg-daemon
+ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

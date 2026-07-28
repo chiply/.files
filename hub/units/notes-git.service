@@ -1,0 +1,6 @@
+[Unit]
+Description=Daily git snapshot of notes tree
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/notes-autocommit.sh
