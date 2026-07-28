@@ -6,6 +6,8 @@ Type=notify
 ExecStart=/usr/bin/emacs --fg-daemon
 ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
 Restart=on-failure
+# first start after a config deploy may install packages from MELPA
+TimeoutStartSec=300
 
 [Install]
 WantedBy=default.target
