@@ -54,6 +54,14 @@ install -m 0755 "$REPO_DIR/bin/readwise_sync.py" "$HOME/.local/bin/readwise_sync
 install -m 0755 "$REPO_DIR/bin/notes-autocommit.sh" "$HOME/.local/bin/notes-autocommit.sh"
 cp "$REPO_DIR"/units/*.service "$REPO_DIR"/units/*.timer "$HOME/.config/systemd/user/"
 
+msg "emacs + tmux + shell config"
+mkdir -p "$HOME/.emacs.d/backups" "$HOME/.emacs.d/autosaves"
+cp "$REPO_DIR/emacs/init.el" "$HOME/.emacs.d/init.el"
+cp "$REPO_DIR/tmux.conf" "$HOME/.tmux.conf"
+if ! grep -q "kb-hub shell additions" "$HOME/.bashrc"; then
+  cat "$REPO_DIR/bashrc-additions.sh" >> "$HOME/.bashrc"
+fi
+
 msg "git timeline repo (hub only; .git is in .stignore so it never syncs)"
 if [ ! -d "$SYNC_DIR/.git" ]; then
   git -C "$SYNC_DIR" init -b main
@@ -86,4 +94,7 @@ cat <<'EOF'
                    - on the HUB folder settings: File Versioning > Staggered
 5. If systemctl --user says "Failed to connect to bus": log out/in once
    (linger was just enabled), or export XDG_RUNTIME_DIR=/run/user/$(id -u).
+6. Emacs config deploys DO NOT auto-restart the daemon (that would kill
+   live editing sessions). Apply when convenient:
+   systemctl --user restart emacs
 EOF
