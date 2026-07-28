@@ -1,0 +1,9 @@
+// emacs droppings (autosave #f#, lockfiles .#f, backups f~)
+*~
+*#
+.#*
+// git timeline lives on the hub only
+.git
+// OS noise
+(?d).DS_Store
+(?d)Thumbs.db

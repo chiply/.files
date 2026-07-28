@@ -100,6 +100,9 @@ brew "eza"
 brew "rust"
 brew "sesh"
 brew "starship"
+# notes sync (see ~/syncthing-migration.org); restart_service keeps the
+# launchd agent running and bounces it only on install/upgrade
+brew "syncthing", restart_service: :changed
 brew "gitmux"
 brew "zsh"
 brew "zsh-syntax-highlighting"

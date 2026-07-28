@@ -1,0 +1,23 @@
+name: Hub CI
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Shellcheck deployable scripts
+        run: shellcheck hub/bootstrap-hub.sh hub/bin/notes-autocommit.sh files/.local/bin/st-ensure-folder
+      - name: Bash syntax check (mac bootstrap)
+        run: bash -n bootstrap.sh
+      - name: Python unit tests (readwise sync)
+        run: python3 -m unittest discover -s hub/tests -v

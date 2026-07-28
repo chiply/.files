@@ -74,6 +74,12 @@ brew tap Homebrew/bundle
 brew bundle \
      --force --no-lock \
      --file="$REPO_ROOT/files/.config/Brewfile"
+
+# syncthing folders (install/service via Brewfile; hub provisioning in hub/).
+# Registers folders with the local daemon idempotently — creates the dir if
+# missing, so this works on a fresh machine. Device pairing/sharing stays
+# manual in the GUI (localhost:8384); folder IDs are the rendezvous keys.
+"$REPO_ROOT/files/.local/bin/st-ensure-folder" kb "$HOME/kb"
 # zinit (plugin manager for zsh - replaces oh-my-zsh)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
@@ -228,17 +234,24 @@ chmod +x ~/.config/simple-bar-server/patch-bottom-bar.sh
 ~/.config/simple-bar-server/patch-bottom-bar.sh
 
 # simple-bar-server (event-driven refresh for simple-bar)
-npm install -g pm2
 if [ ! -d "$HOME/.simple-bar-server" ]; then
     git clone https://github.com/Jean-Tinland/simple-bar-server.git "$HOME/.simple-bar-server"
 fi
 cp ~/.config/simple-bar-server/watch-focus.sh "$HOME/.simple-bar-server/watch-focus.sh"
 chmod +x "$HOME/.simple-bar-server/watch-focus.sh"
-cd "$HOME/.simple-bar-server" && npm install && npm run start
-pm2 start "$HOME/.simple-bar-server/watch-focus.sh" --name simple-bar-focus-watcher
-pm2 startup
-pm2 save
+cd "$HOME/.simple-bar-server" && npm install
 cd "$HOME/.files"
+
+# launchd keeps the server and focus watcher alive (KeepAlive + RunAtLoad)
+sed "s|__HOME__|$HOME|g" \
+    "$REPO_ROOT/files/.config/simple-bar-server/simple-bar-server.plist" \
+    > ~/Library/LaunchAgents/com.zetta.simple-bar-server.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.zetta.simple-bar-server.plist 2>/dev/null
+
+sed "s|__HOME__|$HOME|g" \
+    "$REPO_ROOT/files/.config/simple-bar-server/simple-bar-focus-watcher.plist" \
+    > ~/Library/LaunchAgents/com.zetta.simple-bar-focus-watcher.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.zetta.simple-bar-focus-watcher.plist 2>/dev/null
 
 # k9s skins
 OUT="${XDG_CONFIG_HOME:-$HOME/Library/Application Support}/k9s/skins"
