@@ -8,6 +8,8 @@ set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SYNC_DIR="${SYNC_DIR:-$HOME/kb}"
+# systemctl --user over non-interactive ssh needs this set
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 
 msg() { printf '\n==> %s\n' "$*"; }
 
@@ -55,6 +57,11 @@ cp "$REPO_DIR"/units/*.service "$REPO_DIR"/units/*.timer "$HOME/.config/systemd/
 msg "git timeline repo (hub only; .git is in .stignore so it never syncs)"
 if [ ! -d "$SYNC_DIR/.git" ]; then
   git -C "$SYNC_DIR" init -b main
+fi
+# fresh machines have no git identity; scope one to this repo
+git -C "$SYNC_DIR" config user.name "kb-hub"
+git -C "$SYNC_DIR" config user.email "hub@localhost"
+if ! git -C "$SYNC_DIR" rev-parse HEAD >/dev/null 2>&1; then
   git -C "$SYNC_DIR" add -A
   git -C "$SYNC_DIR" commit -qm "initial snapshot" --allow-empty
 fi

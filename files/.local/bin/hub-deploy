@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Deploy hub/ from the dotfiles repo to the kb hub and re-run its
+# idempotent bootstrap. This is the entire update mechanism — see
+# hub/README.org. Runs over the tailnet only.
+set -euo pipefail
+
+HUB="${HUB:-ubuntu@kb-hub.tail097edb.ts.net}"
+SRC="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../../../hub" && pwd)"
+
+echo "deploying $SRC -> $HUB:syncthing-hub"
+scp -q -r "$SRC"/. "$HUB":syncthing-hub/
+ssh "$HUB" 'cd syncthing-hub && ./bootstrap-hub.sh'
