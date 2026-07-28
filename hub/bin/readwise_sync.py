@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""Sync Readwise highlights into org files (one file per book/source).
+"""Mirror Readwise highlights into org files (one file per book/source).
 
 Stdlib only. Designed to run hourly from a systemd timer on the hub.
 
-Incremental strategy: fetch highlights updated since the last run, then
-re-fetch the *complete* highlight set for each affected book (the
-incremental response contains only the changed highlights, so writing a
-file from it alone would drop the book's older highlights). Files are
-regenerated wholesale and only written when content changed, so output
-is deterministic and quiet for Syncthing/git.
-
-State: an ISO-8601 timestamp captured *before* fetching, so updates that
-land mid-run are re-fetched next time rather than missed.
+FULL-MIRROR mode: every run fetches the complete library (~9 requests
+at 843 books — trivially within rate limits) and makes the output tree
+exactly match it. Because each run sees everything, filename collisions
+are resolved globally: books with a unique source/author/title slug get
+clean names; only true twins carry an id suffix. Orphaned .org files
+(renamed titles, deleted books, scheme changes) are removed and empty
+dirs pruned — the readwise/ tree is strictly machine-owned. Non-.org
+files are never touched. Files are written only when content changed,
+so an unchanged library produces zero writes.
 """
 import argparse
 import datetime
@@ -28,7 +28,6 @@ API = "https://readwise.io/api/v2/export/"
 TOKEN_PATH = os.path.expanduser("~/.config/readwise/token")
 STATE_PATH = os.path.expanduser("~/.local/state/readwise-sync/last_sync")
 OUT_DIR = os.path.expanduser("~/kb/readwise")
-IDS_PER_REQUEST = 50
 HEADING_LEN = 70
 
 
@@ -111,6 +110,10 @@ def subdir_for(book):
     return CATEGORY_DIRS.get(cat, slugify(cat or "other", 20))
 
 
+def author_dir(book):
+    return slugify(book.get("author") or "unknown", 50)
+
+
 def org_safe_heading(text):
     # First non-empty line: for Snipd/article highlights it's a natural
     # title; whole-text collapse glued it to the body's first bullet.
@@ -144,6 +147,7 @@ def render_org(book):
     if book.get("author"):
         lines.append(f"#+author: {book['author']}")
     lines.append(f"#+filetags: :readwise:{category}:")
+    lines.append(f"#+readwise_id: {book.get('user_book_id')}")
     if book.get("source_url"):
         lines.append(f"#+source: {book['source_url']}")
     lines.append("")
@@ -179,11 +183,26 @@ def render_org(book):
     return "\n".join(lines).rstrip() + "\n"
 
 
-def write_book(out_dir, book):
-    fname = f"{book['user_book_id']}-{slugify(book.get('readable_title') or book.get('title'))}.org"
-    subdir = os.path.join(out_dir, subdir_for(book))
-    os.makedirs(subdir, exist_ok=True)
-    path = os.path.join(subdir, fname)
+def plan_paths(books):
+    """Map user_book_id -> relative output path, resolving collisions
+    globally: unique slugs get clean names, twins get an id suffix."""
+    groups = {}
+    for b in books:
+        key = (subdir_for(b), author_dir(b),
+               slugify(b.get("readable_title") or b.get("title")))
+        groups.setdefault(key, []).append(b)
+    plan = {}
+    for (src, auth, slug), members in groups.items():
+        for m in members:
+            fname = (f"{slug}.org" if len(members) == 1
+                     else f"{slug}-{m['user_book_id']}.org")
+            plan[m["user_book_id"]] = os.path.join(src, auth, fname)
+    return plan
+
+
+def write_book(out_dir, book, relpath):
+    path = os.path.join(out_dir, relpath)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     content = render_org(book)
     if os.path.exists(path):
         with open(path) as f:
@@ -194,11 +213,29 @@ def write_book(out_dir, book):
     return True
 
 
+def cleanup_orphans(out_dir, expected_relpaths):
+    """Remove .org files not in the expected set; prune empty dirs.
+    Never touches non-.org files."""
+    removed = 0
+    for root, _dirs, files in os.walk(out_dir, topdown=False):
+        for f in files:
+            if f.endswith(".org"):
+                rel = os.path.relpath(os.path.join(root, f), out_dir)
+                if rel not in expected_relpaths:
+                    os.remove(os.path.join(root, f))
+                    removed += 1
+        if root != out_dir and not os.listdir(root):
+            os.rmdir(root)
+    return removed
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--output", default=OUT_DIR, help="org output directory")
-    ap.add_argument("--state", default=STATE_PATH, help="last-sync state file")
-    ap.add_argument("--full", action="store_true", help="ignore state; export everything")
+    ap.add_argument("--state", default=STATE_PATH,
+                    help="last-run timestamp file (informational)")
+    ap.add_argument("--full", action="store_true",
+                    help="kept for compatibility; every run is a full mirror")
     args = ap.parse_args()
 
     token = load_token()
@@ -210,36 +247,22 @@ def main():
     os.makedirs(args.output, exist_ok=True)
     os.makedirs(os.path.dirname(args.state), exist_ok=True)
 
-    last_sync = None
-    if not args.full and os.path.exists(args.state):
-        with open(args.state) as f:
-            last_sync = f.read().strip() or None
-
     run_started = (
         datetime.datetime.now(datetime.timezone.utc)
         .replace(microsecond=0)
         .isoformat()
     )
 
-    written = 0
-    if last_sync:
-        changed_ids = [b["user_book_id"] for b in fetch_books(token, updated_after=last_sync)]
-        log(f"{len(changed_ids)} book(s) updated since {last_sync}")
-        for i in range(0, len(changed_ids), IDS_PER_REQUEST):
-            chunk = changed_ids[i : i + IDS_PER_REQUEST]
-            for book in fetch_books(token, ids=chunk):
-                written += write_book(args.output, book)
-    else:
-        log("full export")
-        count = 0
-        for book in fetch_books(token):
-            count += 1
-            written += write_book(args.output, book)
-        log(f"{count} book(s) in library")
+    books = list(fetch_books(token))
+    plan = plan_paths(books)
+    written = sum(
+        write_book(args.output, b, plan[b["user_book_id"]]) for b in books
+    )
+    removed = cleanup_orphans(args.output, set(plan.values()))
 
     with open(args.state, "w") as f:
         f.write(run_started + "\n")
-    log(f"{written} file(s) written; state -> {run_started}")
+    log(f"{len(books)} book(s); {written} written, {removed} orphan(s) removed")
     return 0
 
 

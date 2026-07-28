@@ -131,21 +131,27 @@ Then the manual steps the script prints at the end:
 - Emacs here is stock =emacs-nox= (Ubuntu 24.04 → Emacs 29). Adapting
   zetta.d for the hub is a separate task (migration doc Phase 5); the
   daemon unit works with any config.
-- Output layout: one subfolder per origin under the output dir —
+- Output layout: =<source>/<author>/<title-slug>.org= — source dirs are
   =podcasts/= (snipd), =web/= (reader/mobile_share/web_clipper),
-  =kindle/=, =command/=, =voicenotes/=, =supplementals/=. Mapping lives
-  in =SOURCE_DIRS= / =CATEGORY_DIRS= in the script; specific source wins,
-  category is the fallback, unknown categories get their own slug dir.
+  =kindle/=, =command/=, =voicenotes/=, =supplementals/= (mapping in
+  =SOURCE_DIRS= / =CATEGORY_DIRS=; specific source wins). Books whose
+  source/author/title slug collides (duplicate saves, truncation twins)
+  get a =-<id>= suffix; the readwise id is always in =#+readwise_id:=
+  frontmatter regardless.
+- FULL-MIRROR semantics: every run fetches the whole library and makes
+  the tree exactly match — collisions resolved globally, orphaned .org
+  files deleted, empty dirs pruned. The readwise/ tree is strictly
+  machine-owned: hand-renames don't stick and stray .org files are
+  garbage-collected (non-.org files are never touched). Scheme changes
+  need no manual cleanup: deploy + one run self-heals the tree.
 - The org rendering lives in =render_org()= in =readwise_sync.py= —
   tweak format there; files regenerate wholesale and idempotently
   (written only on content change), so reformatting is safe: next
   =--full= run rewrites everything in the new shape.
-- Incremental correctness: the export API returns only *changed*
-  highlights for =updatedAfter= queries, so the script re-fetches
-  affected books in full (via =ids=) before regenerating files. The
-  state timestamp is captured before fetching, so mid-run updates are
-  never missed. If =ids= filtering ever misbehaves, =--full= is the
-  safe rebuild.
+- API cost of full-mirror: ~9 paginated requests per run at 843 books —
+  far inside Readwise's limits (240/min base, 20/min strict); 429s are
+  handled by sleeping out Retry-After. =--full= and =--state= are kept
+  as no-op/informational for compatibility.
 
 * Verification (maps to migration-doc phases)
 

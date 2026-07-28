@@ -84,6 +84,12 @@ class SubdirTests(unittest.TestCase):
     def test_unknown_category_gets_slug_dir(self):
         self.assertEqual(rs.subdir_for({"source": "new", "category": "Weird Thing!"}), "weird-thing")
 
+    def test_author_dir(self):
+        self.assertEqual(rs.author_dir({"author": "The Knowledge Project with Shane Parrish"}),
+                         "the-knowledge-project-with-shane-parrish")
+        self.assertEqual(rs.author_dir({"author": None}), "unknown")
+        self.assertEqual(rs.author_dir({}), "unknown")
+
 
 class RenderTests(unittest.TestCase):
     def setUp(self):
@@ -96,6 +102,7 @@ class RenderTests(unittest.TestCase):
     def test_metadata_present(self):
         self.assertIn("#+title: Test Book: A Journey", self.out)
         self.assertIn("#+filetags: :readwise:podcasts:", self.out)
+        self.assertIn("#+readwise_id: 42", self.out)
         self.assertIn(":TAGS: tag1", self.out)
 
     def test_no_structure_leak(self):
@@ -103,13 +110,55 @@ class RenderTests(unittest.TestCase):
         self.assertEqual(top_level, ["* Highlights"])
 
 
+class PlanTests(unittest.TestCase):
+    def test_unique_title_gets_clean_name(self):
+        plan = rs.plan_paths([BOOK])
+        self.assertEqual(plan[42], os.path.join("podcasts", "testy-mctest",
+                                                "test-book-a-journey.org"))
+
+    def test_twins_both_get_id_suffix(self):
+        twin = dict(BOOK, user_book_id=43)
+        plan = rs.plan_paths([BOOK, twin])
+        self.assertEqual(plan[42], os.path.join("podcasts", "testy-mctest",
+                                                "test-book-a-journey-42.org"))
+        self.assertEqual(plan[43], os.path.join("podcasts", "testy-mctest",
+                                                "test-book-a-journey-43.org"))
+
+
 class WriteTests(unittest.TestCase):
-    def test_write_book_places_in_subdir_and_is_idempotent(self):
+    def test_write_book_is_idempotent(self):
         with tempfile.TemporaryDirectory() as tmp:
-            self.assertTrue(rs.write_book(tmp, BOOK))
-            path = os.path.join(tmp, "podcasts", "42-test-book-a-journey.org")
-            self.assertTrue(os.path.exists(path))
-            self.assertFalse(rs.write_book(tmp, BOOK))  # unchanged -> no write
+            rel = rs.plan_paths([BOOK])[42]
+            self.assertTrue(rs.write_book(tmp, BOOK, rel))
+            self.assertTrue(os.path.exists(os.path.join(tmp, rel)))
+            self.assertFalse(rs.write_book(tmp, BOOK, rel))  # unchanged -> no write
+
+
+class CleanupTests(unittest.TestCase):
+    def test_orphan_org_removed_others_untouched(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            rel = rs.plan_paths([BOOK])[42]
+            rs.write_book(tmp, BOOK, rel)
+            stray_org = os.path.join(tmp, "podcasts", "old-scheme", "stale.org")
+            keep_txt = os.path.join(tmp, "podcasts", "old-scheme", "notes.txt")
+            os.makedirs(os.path.dirname(stray_org))
+            open(stray_org, "w").close()
+            open(keep_txt, "w").close()
+            removed = rs.cleanup_orphans(tmp, {rel})
+            self.assertEqual(removed, 1)
+            self.assertFalse(os.path.exists(stray_org))
+            self.assertTrue(os.path.exists(keep_txt))      # non-.org survives
+            self.assertTrue(os.path.exists(os.path.join(tmp, rel)))
+
+    def test_empty_dirs_pruned(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            rel = rs.plan_paths([BOOK])[42]
+            rs.write_book(tmp, BOOK, rel)
+            stray = os.path.join(tmp, "web", "gone-author", "stale.org")
+            os.makedirs(os.path.dirname(stray))
+            open(stray, "w").close()
+            rs.cleanup_orphans(tmp, {rel})
+            self.assertFalse(os.path.exists(os.path.join(tmp, "web")))
 
 
 class SlugTests(unittest.TestCase):
