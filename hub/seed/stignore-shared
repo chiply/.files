@@ -7,3 +7,6 @@
 // OS noise
 (?d).DS_Store
 (?d)Thumbs.db
+// hywiki referent cache: derived per-machine state; each device rebuilds
+// its own — syncing it just churns directory mtimes on every device
+.hywiki.eld
