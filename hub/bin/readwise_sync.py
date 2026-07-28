@@ -150,10 +150,16 @@ def render_org(book):
     lines.append(f"#+readwise_id: {book.get('user_book_id')}")
     if book.get("source_url"):
         lines.append(f"#+source: {book['source_url']}")
+    if book.get("readwise_url"):
+        lines.append(f"#+readwise_url: {book['readwise_url']}")
     lines.append("")
     if book.get("document_note"):
         lines.append("* Document note")
         lines.append(org_safe_body(book["document_note"]))
+        lines.append("")
+    if book.get("summary"):
+        lines.append("* Summary")
+        lines.append(org_safe_body(book["summary"]))
         lines.append("")
     lines.append("* Highlights")
     for h in sorted(book.get("highlights", []), key=sort_key):
@@ -166,7 +172,15 @@ def render_org(book):
             # highlighted_at; date them by when they entered the library
             props.append(f":SAVED: [{h['created_at'][:10]}]")
         if h.get("location") is not None:
-            props.append(f":LOCATION: {h['location']}")
+            loc = h["location"]
+            if h.get("location_type") == "time_offset":
+                # seconds into the episode -> human timestamp
+                hh, rem = divmod(int(loc), 3600)
+                mm, ss = divmod(rem, 60)
+                stamp = f"{hh}:{mm:02d}:{ss:02d}" if hh else f"{mm}:{ss:02d}"
+                props.append(f":AT: {stamp}")
+            else:
+                props.append(f":LOCATION: {loc}")
         tags = [t["name"] for t in h.get("tags") or []]
         if tags:
             props.append(f":TAGS: {' '.join(tags)}")
