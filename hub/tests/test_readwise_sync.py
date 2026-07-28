@@ -22,13 +22,16 @@ BOOK = {
     "category": "podcasts",
     "source": "snipd",
     "source_url": "https://example.com/ep",
+    "readwise_url": "https://readwise.io/bookreview/42",
+    "summary": "An auto-generated summary of the episode.",
     "highlights": [
         {
             "id": 1,
             "text": "First Line Title\n\nBody line here\n* looks like an org heading",
             "note": "a note",
             "highlighted_at": "2024-01-02T03:04:05Z",
-            "location": 5,
+            "location": 374,
+            "location_type": "time_offset",
             "tags": [{"name": "tag1"}],
         },
         {
@@ -107,7 +110,22 @@ class RenderTests(unittest.TestCase):
 
     def test_no_structure_leak(self):
         top_level = [l for l in self.out.splitlines() if l.startswith("* ")]
-        self.assertEqual(top_level, ["* Highlights"])
+        self.assertEqual(top_level, ["* Summary", "* Highlights"])
+
+    def test_readwise_url_and_summary(self):
+        self.assertIn("#+readwise_url: https://readwise.io/bookreview/42", self.out)
+        self.assertIn("* Summary", self.out)
+        self.assertIn("  An auto-generated summary", self.out)
+
+    def test_time_offset_rendered_as_timestamp(self):
+        self.assertIn(":AT: 6:14", self.out)          # 374s
+        self.assertNotIn(":LOCATION: 374", self.out)
+        self.assertIn(":LOCATION: 1", self.out)        # plain location untouched
+
+    def test_time_offset_with_hours(self):
+        h = dict(BOOK["highlights"][0], location=3725)  # 1:02:05
+        out = rs.render_org(dict(BOOK, highlights=[h]))
+        self.assertIn(":AT: 1:02:05", out)
 
 
 class PlanTests(unittest.TestCase):
