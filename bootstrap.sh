@@ -66,6 +66,13 @@ if [ ! -d "$HOME/Library/Application Support/com.mitchellh.ghostty/shaders" ]; t
         "$HOME/Library/Application Support/com.mitchellh.ghostty/shaders"
 fi
 
+# iris config (macOS reads from Application Support, not XDG; point it at
+# ~/.config/iris, which main.py populates from files/.config/iris)
+if [ -d "$HOME/Library/Application Support/iris" ] && [ ! -L "$HOME/Library/Application Support/iris" ]; then
+    rm -rf "$HOME/Library/Application Support/iris"
+fi
+ln -s -f -n "$HOME/.config/iris" "$HOME/Library/Application Support/iris"
+
 # install bundle
 brew tap Homebrew/bundle
 

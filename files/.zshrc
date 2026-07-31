@@ -18,6 +18,61 @@ stty -ixon
 export PATH=$HOME/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # ============================================================================
+# IRIS (IntelliSense-style completion overlay, https://github.com/versenilvis/IRIS)
+# ============================================================================
+# Opt-in per session: `i` (or `iris`) enters an IRIS-wrapped shell, `exit` /
+# C-d leaves it. Set IRIS_AUTO=1 (e.g. in ~/.zshenv) to make every new
+# terminal an IRIS session instead. Config: ~/.config/iris/config.toml.
+# While inside IRIS, it owns Tab / Enter / arrows / C-r; other keys pass
+# through to zsh, and zsh-autosuggestions is skipped (see plugins below) so
+# its ghost text doesn't fight with IRIS's.
+if command -v iris >/dev/null 2>&1; then
+  alias i="iris"
+
+  # Shells in tmux panes inherit IRIS_* from an enclosing IRIS session, but
+  # IRIS can't see through the tmux server — drop the stale markers.
+  # (Mirrors the upstream `iris init zsh` hook.)
+  if [[ -n "$TMUX" && -n "$IRIS_PID" ]]; then
+    if ps -o comm= -p $PPID 2>/dev/null | grep -q "tmux"; then
+      unset IRIS_PID IRIS_IS_CHILD IRIS_FD
+    fi
+  fi
+
+  # Optional autostart (placed before zinit so nothing is initialized twice)
+  if [[ "$IRIS_AUTO" == "1" && -z "$IRIS_PID" && -z "$IRIS_RESCUE" \
+        && -z "$INSIDE_EMACS" && $- == *i* ]]; then
+    export IRIS_ACTIVE_SHELL="zsh"
+    exec iris
+  fi
+
+  # Inside an IRIS session: stream line buffer / cwd / exit codes to IRIS
+  # over its fd so suggestions track the real zsh state.
+  # (Mirrors the upstream `iris init zsh` hook.)
+  if [[ -n "$IRIS_PID" && -n "$IRIS_FD" ]]; then
+    _iris_send_lbuffer() {
+      print -u $IRIS_FD -N -r -- "$LBUFFER" 2>/dev/null
+    }
+    _iris_sync_cwd() {
+      print -u $IRIS_FD -N -r -- "IRIS_CWD:$PWD" 2>/dev/null
+    }
+    _iris_precmd() {
+      local iris_exit_code=$?
+      _iris_sync_cwd
+      print -u $IRIS_FD -N -r -- "IRIS_CMD_STOP:$iris_exit_code" 2>/dev/null
+    }
+    _iris_preexec() {
+      print -u $IRIS_FD -N -r -- "IRIS_CMD_START" 2>/dev/null
+    }
+    autoload -Uz add-zle-hook-widget
+    autoload -Uz add-zsh-hook
+    add-zle-hook-widget line-pre-redraw _iris_send_lbuffer
+    add-zsh-hook precmd _iris_precmd
+    add-zsh-hook preexec _iris_preexec
+    add-zsh-hook chpwd _iris_sync_cwd
+  fi
+fi
+
+# ============================================================================
 # ZINIT SETUP (replaces oh-my-zsh for faster startup)
 # ============================================================================
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -85,8 +140,11 @@ zinit light zdharma-continuum/null
 # PLUGINS (loaded with turbo mode - after prompt shows)
 # ============================================================================
 # Essential plugins - load slightly after prompt
-zinit ice wait'0' lucid
-zinit light zsh-users/zsh-autosuggestions
+# (autosuggestions skipped inside IRIS sessions: doubled ghost text)
+if [[ -z "$IRIS_PID" ]]; then
+  zinit ice wait'0' lucid
+  zinit light zsh-users/zsh-autosuggestions
+fi
 
 zinit ice wait'0' lucid
 zinit light zsh-users/zsh-syntax-highlighting
