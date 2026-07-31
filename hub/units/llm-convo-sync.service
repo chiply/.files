@@ -1,0 +1,6 @@
+[Unit]
+Description=ChatGPT share queue -> org files in kb
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/llm_convo_sync.py
