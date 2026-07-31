@@ -8,6 +8,9 @@ alias ei='emacsclient -t ~/kb/inbox.org'
 # manual readwise refresh: trigger the sync, wait out the run, show result
 alias rw='systemctl --user start readwise-sync.service && sleep 9 && journalctl --user -u readwise-sync.service -n 2 --no-pager -o cat'
 
+# manual llm-convo queue drain: converts queued ChatGPT share links now
+alias lc='~/.local/bin/llm_convo_sync.py'
+
 # Interactive SSH sessions land in the persistent tmux session, so a
 # dropped phone connection costs nothing — reconnect and resume.
 # (Ubuntu's default .bashrc returns early for non-interactive shells,
