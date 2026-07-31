@@ -1,7 +1,12 @@
 # shellcheck shell=bash
-# kb-hub shell additions (appended once by bootstrap-hub.sh; marker line)
+# kb-hub shell config. Deployed by bootstrap-hub.sh to ~/.kb-hub-shell.sh
+# and sourced from ~/.bashrc — edit HERE and hub-deploy; hub-side edits
+# get overwritten.
 alias e='emacsclient -t'
 alias ei='emacsclient -t ~/kb/inbox.org'
+
+# manual readwise refresh: trigger the sync, wait out the run, show result
+alias rw='systemctl --user start readwise-sync.service && sleep 9 && journalctl --user -u readwise-sync.service -n 2 --no-pager -o cat'
 
 # Interactive SSH sessions land in the persistent tmux session, so a
 # dropped phone connection costs nothing — reconnect and resume.

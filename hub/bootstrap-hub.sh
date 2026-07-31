@@ -58,8 +58,12 @@ msg "emacs + tmux + shell config"
 mkdir -p "$HOME/.emacs.d/backups" "$HOME/.emacs.d/autosaves"
 cp "$REPO_DIR/emacs/init.el" "$HOME/.emacs.d/init.el"
 cp "$REPO_DIR/tmux.conf" "$HOME/.tmux.conf"
-if ! grep -q "kb-hub shell additions" "$HOME/.bashrc"; then
-  cat "$REPO_DIR/bashrc-additions.sh" >> "$HOME/.bashrc"
+# shell config is a deployed file + a one-line source hook, so alias
+# updates propagate on every hub-deploy (an append-once block wouldn't)
+install -m 0644 "$REPO_DIR/bashrc-additions.sh" "$HOME/.kb-hub-shell.sh"
+if ! grep -q "kb-hub-shell" "$HOME/.bashrc"; then
+  # shellcheck disable=SC2016  # $HOME is meant to expand at source time
+  printf '\n# kb-hub-shell: aliases + tmux auto-attach (deployed file)\n[ -f "$HOME/.kb-hub-shell.sh" ] && . "$HOME/.kb-hub-shell.sh"\n' >> "$HOME/.bashrc"
 fi
 
 msg "git timeline repo (hub only; .git is in .stignore so it never syncs)"
