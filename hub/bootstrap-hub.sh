@@ -51,6 +51,7 @@ fi
 
 msg "scripts and systemd user units"
 install -m 0755 "$REPO_DIR/bin/readwise_sync.py" "$HOME/.local/bin/readwise_sync.py"
+install -m 0755 "$REPO_DIR/bin/llm_convo_sync.py" "$HOME/.local/bin/llm_convo_sync.py"
 install -m 0755 "$REPO_DIR/bin/notes-autocommit.sh" "$HOME/.local/bin/notes-autocommit.sh"
 cp "$REPO_DIR"/units/*.service "$REPO_DIR"/units/*.timer "$HOME/.config/systemd/user/"
 
@@ -83,7 +84,7 @@ sudo loginctl enable-linger "$USER"          # user units run without a login se
 sudo systemctl enable --now "syncthing@$USER"
 systemctl --user daemon-reload
 systemctl --user enable --now emacs.service
-systemctl --user enable --now readwise-sync.timer notes-git.timer
+systemctl --user enable --now readwise-sync.timer notes-git.timer llm-convo-sync.timer
 
 msg "done — remaining MANUAL steps"
 cat <<'EOF'

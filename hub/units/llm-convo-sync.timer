@@ -1,0 +1,10 @@
+[Unit]
+Description=Process queued ChatGPT share links every 15 minutes
+
+[Timer]
+OnCalendar=*:0/15
+RandomizedDelaySec=2m
+Persistent=true
+
+[Install]
+WantedBy=timers.target
