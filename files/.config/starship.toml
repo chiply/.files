@@ -1,1 +1,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
+
+# Show a badge while inside an IRIS session (IRIS_PID is set by the wrapper)
+[env_var.iris]
+variable = "IRIS_PID"
+format = "[● iris](bold fg:#555555) "

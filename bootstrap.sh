@@ -82,6 +82,10 @@ brew bundle \
      --force --no-lock \
      --file="$REPO_ROOT/files/.config/Brewfile"
 
+# iris light-mode build (upstream palette is dark-only; shadows brew's binary
+# via ~/bin — see install_iris_light.sh header for details/revert)
+bash "$REPO_ROOT/install_iris_light.sh"
+
 # syncthing folders (install/service via Brewfile; hub provisioning in hub/).
 # Registers folders with the local daemon idempotently — creates the dir if
 # missing, so this works on a fresh machine. Device pairing/sharing stays

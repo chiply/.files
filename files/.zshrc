@@ -526,7 +526,7 @@ _pyenv_prompt() {
 PROMPT_STYLE="${PROMPT_STYLE:-starship}"
 
 _apply_classic_prompt() {
-  PROMPT=$'\n''%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(_git_prompt)'$'\n''$(_pyenv_prompt)$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(pwd)'$'\n'
+  PROMPT=$'\n''${IRIS_PID:+[iris] }%n@%m'$'\n''${_cached_git_root:-$(basename $PWD)}:$(_git_prompt)'$'\n''$(_pyenv_prompt)$timeprompt$(date +%d.%m.%y-%H:%M:%S)'$'\n''$(pwd)'$'\n'
 }
 
 _apply_starship_prompt() {
