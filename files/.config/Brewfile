@@ -156,5 +156,23 @@ cask "font-jetbrains-mono-nerd-font"
 cask "font-terminess-ttf-nerd-font"
 cask "ubersicht"
 cask "vivaldi"
+cask "brave-browser"
+cask "firefox"
 cask "1password"
 cask "1password-cli"
+
+# ── emacs-mac (experimental trial) ──────────────────────────────────
+# Build deps for the jdtsmith emacs-mac fork (Emacs 30, retina-correct
+# images), run side-by-side with emacs-plus@31.  Gated on
+# INCLUDE_EMACS_MAC (files/.zshrc); build happens in
+# install_emacs_distros.sh.  tree-sitter@0.25: the Emacs 30 branch
+# needs the older tree-sitter ABI (keg-only; configure gets CFLAGS/
+# LDFLAGS pointing at it).
+if ENV["INCLUDE_EMACS_MAC"] == "t"
+  brew "autoconf"
+  brew "pkgconf"
+  brew "texinfo"
+  brew "libgccjit"
+  brew "librsvg"
+  brew "tree-sitter@0.25"
+end
