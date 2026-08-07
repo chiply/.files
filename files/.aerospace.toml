@@ -74,7 +74,8 @@ alt-z = ['fullscreen', 'exec-and-forget curl -s http://localhost:7776/aerospace/
 alt-shift-z = 'macos-native-fullscreen'
 alt-t = ['layout floating tiling', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
 alt-slash = ['layout tiles horizontal vertical', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
-alt-comma = ['layout accordion horizontal vertical', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
+# `alt-comma` unbound -- conflicts with Emacs `M-,' (xref-go-back). Accordion layout unused.
+# alt-comma = ['layout accordion horizontal vertical', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
 alt-e = ['balance-sizes', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
 alt-r = ['flatten-workspace-tree', 'exec-and-forget curl -s http://localhost:7776/aerospace/spaces/refresh']
 
