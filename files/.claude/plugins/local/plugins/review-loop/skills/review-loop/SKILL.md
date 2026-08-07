@@ -1,7 +1,7 @@
 ---
 name: review-loop
 description: Run when the user says "review loop", "run review-loop", or "run the review loop". Executes a two-phase autonomous code review — first local CodeRabbit CLI, then remote CI + Copilot review. Runs autonomously end-to-end.
-version: 0.3.0
+version: 0.5.0
 ---
 
 # Two-Phase Code Review Loop
@@ -9,15 +9,20 @@ version: 0.3.0
 Execute ALL steps below sequentially. Do NOT skip any step. Do NOT prompt the user
 between steps. Do NOT ask for confirmation. Run everything autonomously end-to-end.
 
-**OVERRIDE**: When this skill is active, you ARE authorized to commit, push, and create PRs
-without asking. The user has explicitly opted into autonomous execution by invoking /review-loop.
-Stage, commit, and push changes automatically as part of this workflow. Do NOT stop to
-show diffs or ask the user to review uncommitted changes. This overrides any default
-behavior around requiring user confirmation for git operations.
+**OVERRIDE**: When this skill is active, you ARE authorized to branch, stage, and commit
+LOCALLY without asking. The user has explicitly opted into autonomous execution by invoking
+/review-loop. Do NOT stop to show diffs or ask the user to review uncommitted changes. This
+overrides any default behavior around requiring user confirmation for local git operations.
+
+**EXCEPTION — pushing to GitHub**: Never push (or create a PR) without explicit user
+approval. Pushing triggers CI, which takes a long time and costs the user money. Ask once
+at Step 5; that single approval covers all subsequent pushes in this review cycle
+(Steps 6–8). If the user declines, finish with the local results only.
 
 The ONLY reasons to stop and ask the user are:
 1. 3 consecutive failures on the same CI issue.
 2. A required tool is not installed (see Step 1).
+3. Before the FIRST push to GitHub (Step 5) — always ask.
 
 Read the project's CLAUDE.md for project-specific commands (lint, test, compile, CI jobs,
 severity thresholds, max iterations, etc). Use these defaults if not specified:
@@ -94,6 +99,12 @@ Log any unresolved suggestions. Proceed to Step 5.
 
 ## STEP 5: Push and open PR
 
+**STOP — ask the user for permission before running anything in this step.** Pushing
+triggers billed CI. Summarize the local review results, then ask whether to push and
+open a PR. If the user declines, skip Steps 5–8 and output the Final Summary with
+local results only. If the user approves, that approval covers the re-pushes in
+Steps 6–8 for this review cycle — do not ask again.
+
 ```
 git push -u origin HEAD
 ```
@@ -114,11 +125,13 @@ If a CI check fails:
 3. If flaky/infra: `gh run rerun <run-id> --failed`
 4. If same check fails 3 times: STOP and ask user. This is the only valid reason to prompt.
 
-### 6b: Wait for Copilot review (one-time only)
+### 6b: Wait for Copilot review (first push only)
 
 Copilot reviews the PR once at creation. There is no reliable way to trigger re-reviews
 on subsequent pushes (no API exists and the "Run on each push" ruleset is unreliable).
-Therefore, only wait for and act on the **initial** Copilot review.
+Therefore, only wait for and act on the **initial** Copilot review — the one triggered
+by the first push that creates the PR. On subsequent pushes (Step 8), skip this step
+entirely.
 
 Poll for the Copilot review using:
 ```
@@ -128,7 +141,8 @@ gh api repos/{owner}/{repo}/pulls/{pr-number}/comments
 
 **Phase 1 — Wait for review to appear (up to 5 minutes):**
 Poll every 30 seconds. Look for a review from `copilot-pull-request-reviewer` in the
-reviews list. If no review appears after 5 minutes, proceed to Final Summary.
+reviews list. If no review appears after 5 minutes, assume Copilot is not configured
+for this repo and proceed to Final Summary. Do NOT block indefinitely.
 
 **Phase 2 — Wait for review to complete (no timeout):**
 Once a Copilot review is detected (even with an empty body or `PENDING` state), keep
@@ -151,7 +165,8 @@ If no actionable comments, proceed to Final Summary.
 1. Re-run Step 3 pre-flight checks.
 2. Re-run Step 4 local CodeRabbit review (full iteration loop).
 3. `git add -A && git commit -m "fix: address copilot feedback"` then `git push`.
-4. Wait for CI only (Step 6a). Do NOT wait for another Copilot review.
+4. Wait for CI only (Step 6a). Do NOT wait for another Copilot review — Copilot only
+   reviews on the first push. Subsequent pushes do not trigger new reviews.
 
 Stop when: CI passes AND CodeRabbit is clean, OR max iterations reached.
 
