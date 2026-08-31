@@ -1,8 +1,28 @@
 function install_lsp_server() {
-    local project_dir=$1
+    local project_dir=${1:-$PWD}
 
     echo "Installing LSP server in $project_dir"
-    cd "$project_dir" || exit
+    # subshell: don't move the caller's shell; builtin cd: bypass the
+    # zoxide cd wrapper, which frecency-jumps on nonexistent paths
+    (
+        builtin cd -- "$project_dir" || exit 1
+        pwd
+        rm -rf .venv
+        uv sync || exit 1
+        # NOTE using python-lsp-server as I've had issues with the pyright
+        # and basedpyright server getting interrupted (Cancelling
+        # textDocument/diagnostic(3112) in hook after-change-functions)
+        uv add --dev --upgrade debugpy ipython ruff python-lsp-server
+    )
+}
+
+# legacy variant for poetry-managed projects (pyproject.toml with
+# [tool.poetry] and no [project] table — uv sync can't read those)
+function install_lsp_server_poetry() {
+    local project_dir=${1:-$PWD}
+
+    echo "Installing LSP server in $project_dir"
+    builtin cd -- "$project_dir" || return 1
     pwd
     rm -rf .venv
     rm -rf poetry.lock
