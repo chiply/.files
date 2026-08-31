@@ -51,8 +51,13 @@ pyenv local
 # poetry
 curl -sSL https://install.python-poetry.org | python3 -
 
-# uv
+# uv — primary python toolchain (interpreters, venvs, packages);
+# pyenv/poetry above are kept for legacy projects only
 curl -LsSf https://astral.sh/uv/install.sh | sh
+# installer targets ~/.local/bin, which isn't on PATH yet in this shell
+export PATH="$HOME/.local/bin:$PATH"
+# pre-install the default interpreter (uv auto-downloads others on demand)
+uv python install 3.12
 
 # symlink
 python "$REPO_ROOT/main.py"
@@ -158,9 +163,15 @@ fi
 # TODO move this to Brewfile
 brew install npm
 npm install -g vscode-json-languageserver
+npm install -g typescript-language-server typescript
 npm install -g eslint
 npm install -g @github/copilot-language-server
 npm i -g svelte-language-server
+
+# sql language server: table/column completion in sql-mode buffers via
+# lsp-mode (wired up in ~/source_code/sql-practice/elisp/sql-practice-lsp.el,
+# which expects the binary at ~/go/bin/sqls — go install's default GOBIN)
+go install github.com/sqls-server/sqls@latest
 
 
 # nvm node
