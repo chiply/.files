@@ -132,10 +132,10 @@ eval "$(/usr/libexec/path_helper)"
 sudo tlmgr update --self
 sudo tlmgr install dvipng dvisvgm
 
-# fonts
-brew install --cask font-terminus
-brew install --cask font-jetbrains-mono-nerd-font
-brew install --cask font-terminess-ttf-nerd-font
+# fonts: declared in files/.config/Brewfile and installed by the
+# `brew bundle` call above -- including the full Nerd Fonts catalogue.
+# Two are load-bearing rather than cosmetic (the SVG chrome font and the
+# font the metric corrections derive from); see ~/.zetta.d/FONTS.org.
 
 # emacs
 chmod +x "$REPO_ROOT/install_emacs_distros.sh" && "$REPO_ROOT/install_emacs_distros.sh"
