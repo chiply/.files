@@ -159,6 +159,14 @@ else
     git clone https://github.com/chiply/.zetta.d.git "$HOME/.zetta.d"
 fi
 
+# claude code notification hooks
+# main.py already symlinked ~/.claude/claude-notify.sh; this merges the two
+# settings.json entries that invoke it.  settings.json itself stays untracked
+# because it also carries machine- and account-specific keys.  Placed here
+# because it needs jq (brew bundle, above) and the zetta-notify entry point
+# from .zetta.d (just above).
+"$REPO_ROOT/install_claude_hooks.sh"
+
 ## language servers (not all should be installed into global scope, eg python)
 # TODO move this to Brewfile
 brew install npm

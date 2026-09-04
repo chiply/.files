@@ -9,6 +9,7 @@ Personal dotfiles repository for bootstrapping macOS development environments.
 ├── bootstrap.sh              # Main setup script for new machines
 ├── main.py                   # Symlink generation script
 ├── install_emacs_distros.sh  # Emacs installation script
+├── install_claude_hooks.sh   # Merge Claude Code notification hooks into ~/.claude/settings.json
 ├── files/                    # Dotfiles to be symlinked to ~/
 │   ├── .zshrc                # Primary shell configuration
 │   ├── .aliases/             # Shell aliases
