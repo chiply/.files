@@ -134,8 +134,20 @@ produces an Emacs without GMP, GIF, JPEG or TIFF while reporting success.
 ./install_emacs_source.sh              # build the pinned revision (no-op if current)
 ./install_emacs_source.sh --bump       # move the pin to origin/master and rebuild
 ./install_emacs_source.sh --rebuild    # force a clean rebuild of the pinned revision
-EMACS_SRC_REVISION=<sha> ./install_emacs_source.sh --rebuild   # roll back
+./install_emacs_source.sh --rollback   # swap in the previous bundle (seconds)
+EMACS_SRC_REVISION=<sha> ./install_emacs_source.sh --rebuild   # any older revision
 ```
+
+`--rollback` matters because master is a moving target. Each build keeps the
+one it replaces as `EmacsSrc.app.prev`, so backing out a bad bump is a `mv`
+rather than another 45–70 minutes. It is a *swap*, not a discard — run it twice
+and you are back where you started, which makes it usable for A/B-ing a suspect
+revision. The pin moves with the bundle, so the next plain run doesn't
+helpfully rebuild the Emacs you just backed out of; commit
+`files/.config/emacs-src/revision` to make the rollback stick.
+
+Only one generation is kept (~400 MB). Anything older is a rebuild from the
+source tree via `EMACS_SRC_REVISION`.
 
 The revision is pinned in `files/.config/emacs-src/revision` and moved forward
 deliberately with `--bump` (aliased to `emacs-src-update`), so a fresh machine
@@ -143,8 +155,33 @@ reproduces the same Emacs and a bad master commit is one edit from a rollback.
 AOT native compilation makes a build take 45–70 minutes; set
 `EMACS_SRC_NATIVE_COMP=yes` for lazy compilation and a ~10 minute build.
 
+### Running it
+
+chemacs picks the config; the app bundle picks the binary. `~/.emacs` is
+chemacs, and nothing else competes for it (there is no `~/.emacs.el`,
+`~/.config/emacs` or `~/.emacs.d/init.el`), so every Emacs on the machine goes
+through it.
+
+```bash
+emacs-src                 # GUI, profile zetta-src
+emacs-src-daemon          # daemon on its own socket ("src")
+ecs                       # emacsclient -s src
+ecs -nw                   # ... in the terminal
+```
+
+Or without the aliases, which is the same thing spelled out:
+
+```bash
+open -a ~/Applications/EmacsSrc.app --args --with-profile zetta-src
+~/Applications/EmacsSrc.app/Contents/MacOS/Emacs --with-profile zetta-src
+```
+
+The socket name keeps `ecs` and the emacs-plus `emacsclient` from ever reaching
+the same daemon. First launch compiles ~340 packages under Emacs 32, so expect
+several minutes and a lot of warnings before the first frame settles.
+
 Aliases: `emacs-src`, `emacs-src-daemon` / `ecs`, `emacs-src-update`,
-`emacs-src-version`.
+`emacs-src-rollback`, `emacs-src-version`.
 
 ## Caveats
 

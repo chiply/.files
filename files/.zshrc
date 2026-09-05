@@ -52,6 +52,9 @@ if [ "$INCLUDE_EMACS_SRC" = "t" ]; then
     # move the pinned revision forward and rebuild (~45-70 min, AOT native comp)
     alias emacs-src-update='"$HOME/.files/install_emacs_source.sh" --bump'
     alias emacs-src-version='cat "$HOME/.local/state/emacs-src/build-info"'
+    # swap back to the previously built bundle (seconds, not a rebuild); the
+    # pin moves with it, so commit files/.config/emacs-src/revision to keep it
+    alias emacs-src-rollback='"$HOME/.files/install_emacs_source.sh" --rollback'
 fi
 
 # ============================================================================

@@ -24,6 +24,8 @@
 #   install_emacs_source.sh --bump       move the pin to origin/master and build
 #   install_emacs_source.sh --bump <sha> move the pin to <sha> and build
 #   install_emacs_source.sh --rebuild    rebuild the pinned revision from scratch
+#   install_emacs_source.sh --rollback   swap in the previous bundle (seconds,
+#                                        no rebuild) and move the pin with it
 #
 # Environment:
 #   EMACS_SRC_REVISION      one-off revision override; does not touch the pin
@@ -37,9 +39,14 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 SRC_DIR="$HOME/source_code/emacs"
 APP="$HOME/Applications/EmacsSrc.app"
+# One generation back, kept so a bad master commit is a seconds-long swap
+# rather than a 45-70 minute rebuild.  Only one generation: the source tree
+# and the pin cover anything older, and each bundle is ~400 MB.
+PREV_APP="$HOME/Applications/EmacsSrc.app.prev"
 REVISION_FILE="$REPO_ROOT/files/.config/emacs-src/revision"
 STATE_DIR="$HOME/.local/state/emacs-src"
 STATE_FILE="$STATE_DIR/build-info"
+PREV_STATE_FILE="$STATE_DIR/build-info.prev"
 UPSTREAM="https://github.com/emacs-mirror/emacs.git"
 
 NATIVE_COMP="${EMACS_SRC_NATIVE_COMP:-aot}"
@@ -93,6 +100,7 @@ die()  { printf '\033[1;31m==>\033[0m %s\n' "$*" >&2; exit 1; }
 
 BUMP=""
 FORCE_REBUILD=""
+ROLLBACK=""
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -104,28 +112,16 @@ while [ $# -gt 0 ]; do
                 *)     BUMP="$2"; shift ;;
             esac
             ;;
-        --rebuild) FORCE_REBUILD=t ;;
-        -h|--help) sed -n '3,32p' "${BASH_SOURCE[0]}"; exit 0 ;;
+        --rebuild)  FORCE_REBUILD=t ;;
+        --rollback) ROLLBACK=t ;;
+        -h|--help) sed -n '3,34p' "${BASH_SOURCE[0]}"; exit 0 ;;
         *) die "unknown argument: $1" ;;
     esac
     shift
 done
 
 # ---------------------------------------------------------------------------
-# Source tree
-# ---------------------------------------------------------------------------
-
-if [ ! -d "$SRC_DIR/.git" ]; then
-    say "cloning $UPSTREAM into $SRC_DIR"
-    mkdir -p "$(dirname "$SRC_DIR")"
-    git clone "$UPSTREAM" "$SRC_DIR"
-fi
-
-say "fetching upstream"
-git -C "$SRC_DIR" fetch --tags origin
-
-# ---------------------------------------------------------------------------
-# Revision: pinned in .files, bumped deliberately
+# The pin
 # ---------------------------------------------------------------------------
 
 read_pin() {
@@ -145,6 +141,65 @@ write_pin() {
 $1
 EOF
 }
+
+# ---------------------------------------------------------------------------
+# Rollback
+#
+# Swaps the installed bundle with the one generation kept beside it, so a bad
+# master commit costs seconds rather than a 45-70 minute rebuild.  It is a
+# swap rather than a discard: run it twice and you are back where you started,
+# which makes it usable for A/B-ing a suspect revision.
+#
+# The pin moves with the bundle.  Leaving it pointing at the revision just
+# rolled away from would make the next plain run rebuild exactly the bad Emacs
+# that was rolled back -- so the restored revision is written back to
+# files/.config/emacs-src/revision, and that file is then a normal commit.
+# ---------------------------------------------------------------------------
+
+if [ -n "$ROLLBACK" ]; then
+    [ -d "$PREV_APP" ] || die "nothing to roll back to: $PREV_APP does not exist.
+The previous bundle is kept from the second build onward, so there is no
+rollback target until you have bumped at least once."
+
+    OUTGOING="$(awk -F= '/^revision=/ {print $2}' "$STATE_FILE" 2>/dev/null)"
+    INCOMING="$(awk -F= '/^revision=/ {print $2}' "$PREV_STATE_FILE" 2>/dev/null)"
+
+    SWAP="$HOME/Applications/.EmacsSrc.app.swap"
+    rm -rf "$SWAP"
+    mv "$APP" "$SWAP"
+    mv "$PREV_APP" "$APP"
+    mv "$SWAP" "$PREV_APP"
+
+    if [ -f "$PREV_STATE_FILE" ]; then
+        mv "$STATE_FILE" "$STATE_DIR/.build-info.swap"
+        mv "$PREV_STATE_FILE" "$STATE_FILE"
+        mv "$STATE_DIR/.build-info.swap" "$PREV_STATE_FILE"
+    fi
+
+    [ -n "$INCOMING" ] && write_pin "$INCOMING"
+
+    say "rolled back to ${INCOMING:-unknown}"
+    say "the bundle rolled away from (${OUTGOING:-unknown}) is now $PREV_APP"
+    say "run --rollback again to swap back; commit $REVISION_FILE to keep it"
+    exit 0
+fi
+
+# ---------------------------------------------------------------------------
+# Source tree
+# ---------------------------------------------------------------------------
+
+if [ ! -d "$SRC_DIR/.git" ]; then
+    say "cloning $UPSTREAM into $SRC_DIR"
+    mkdir -p "$(dirname "$SRC_DIR")"
+    git clone "$UPSTREAM" "$SRC_DIR"
+fi
+
+say "fetching upstream"
+git -C "$SRC_DIR" fetch --tags origin
+
+# ---------------------------------------------------------------------------
+# Revision: pinned in .files, bumped deliberately
+# ---------------------------------------------------------------------------
 
 if [ -n "$BUMP" ]; then
     REVISION="$(git -C "$SRC_DIR" rev-parse "$BUMP^{commit}")" \
@@ -408,6 +463,21 @@ codesign --force --deep --sign - "$STAGING"
 # Install
 # ---------------------------------------------------------------------------
 
+# Rotate the outgoing bundle into the .prev slot so --rollback has a target.
+# Only when the revision actually changed: otherwise a couple of --rebuild runs
+# of the same commit would quietly overwrite the rollback target with a copy of
+# what is already installed, and the safety net would be gone exactly when a
+# bad bump needed it.
+OUTGOING_REV="$(built_revision)"
+if [ -d "$APP" ] && [ -n "$OUTGOING_REV" ] && [ "$OUTGOING_REV" != "$REVISION" ]; then
+    say "keeping $OUTGOING_REV as $PREV_APP"
+    rm -rf "$PREV_APP"
+    mv "$APP" "$PREV_APP"
+    if [ -f "$STATE_FILE" ]; then
+        mv "$STATE_FILE" "$PREV_STATE_FILE"
+    fi
+fi
+
 rm -rf "$APP"
 mv "$STAGING" "$APP"
 say "installed $APP"
@@ -421,6 +491,10 @@ native_comp=$NATIVE_COMP
 patches=$([ "${EMACS_SRC_SKIP_PATCHES:-}" = "t" ] && echo none || echo "${PATCH_NAMES[*]}")
 configure=${CONFIGURE_ARGS[*]}
 EOF
+
+if [ -d "$PREV_APP" ]; then
+    say "rollback target: $(awk -F= '/^revision=/ {print $2}' "$PREV_STATE_FILE" 2>/dev/null || echo unknown) (--rollback)"
+fi
 
 say "features: $("$APP/Contents/MacOS/Emacs" --batch --eval '(princ system-configuration-features)')"
 say "done -- launch with \`emacs-src\` (chemacs profile zetta-src)"
