@@ -1,3 +1,7 @@
+# Resolved before the cd's below: the sections of this script change
+# directory freely, so $0 is only usable relative to the original cwd.
+DISTROS_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 ######################################################################
 # chemacs
 ######################################################################
@@ -110,3 +114,43 @@ fi
 
 
 
+
+
+######################################################################
+# emacs from source (upstream master)
+#
+# A fourth chemacs variant, built from the GNU Emacs git tree by
+# install_emacs_source.sh.  Tracks master (32.0.50) because that is
+# where the canvas feature landed -- canvas is unconditional there,
+# no --with-canvas flag and no patch to apply.  The build reproduces
+# emacs-plus@31's feature set (same configure flags, same four NS
+# patches, same Info.plist and codesign post-processing) so switching
+# between the two is seamless.  Gated on INCLUDE_EMACS_SRC
+# (files/.zshrc); build deps come from the Brewfile's gated section.
+# Installs as ~/Applications/EmacsSrc.app -- never touches
+# /Applications/Emacs.app (the emacs-plus symlink).
+#
+# The revision is pinned in files/.config/emacs-src/revision and moved
+# forward deliberately with `--bump`, so a fresh machine reproduces
+# the same Emacs and a bad master commit is one edit from rollback.
+#
+# The chemacs profile "zetta-src" points at ~/.zetta-src.d, a separate
+# clone of the config, for the same reason zetta-mac does: elpaca
+# bytecode and native-lisp are per-Emacs-version, and mixing 32 with
+# the 31-compiled builds in ~/.zetta.d replays the 2026-07 version-skew
+# saga.  Package sources are seeded from ~/.zetta.d to skip re-cloning
+# ~340 repos.
+######################################################################
+if [ "${INCLUDE_EMACS_SRC}" = "t" ]; then
+    "$DISTROS_DIR/install_emacs_source.sh"
+
+    if [ ! -d ~/.zetta-src.d ]; then
+        git clone https://github.com/chiply/.zetta.d.git ~/.zetta-src.d
+        # seed package sources from the main checkout (big time-saver;
+        # builds still compile fresh under the source-built Emacs)
+        if [ -d ~/.zetta.d/elpaca/sources ]; then
+            mkdir -p ~/.zetta-src.d/elpaca
+            cp -R ~/.zetta.d/elpaca/sources ~/.zetta-src.d/elpaca/sources
+        fi
+    fi
+fi

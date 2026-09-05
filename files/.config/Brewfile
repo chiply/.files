@@ -441,3 +441,43 @@ cask "font-xiaolai-mono"
 cask "font-zed-mono"
 cask "font-zed-mono-nerd-font"
 cask "font-zed-sans"
+
+# ── emacs from source (upstream master) ─────────────────────────────
+# Build and runtime deps for install_emacs_source.sh, which compiles
+# GNU Emacs master (32.0.50, canvas) into ~/Applications/EmacsSrc.app
+# alongside emacs-plus@31.  Gated on INCLUDE_EMACS_SRC (files/.zshrc).
+#
+# Every one of these is already an emacs-plus@31 dependency, but most
+# are declared there as build-time only -- the same trap documented
+# above for jpeg/zlib: `brew autoremove` strips them and the binary
+# then fails to launch. Declaring them here (installed-on-request)
+# keeps EmacsSrc.app working even if emacs-plus@31 is ever removed.
+if ENV["INCLUDE_EMACS_SRC"] == "t"
+  # build
+  brew "autoconf"
+  brew "automake"
+  brew "texinfo"
+  brew "gnu-sed"
+  brew "gnu-tar"
+  brew "coreutils"
+  brew "grep"
+  brew "m4"
+  brew "xz"
+  brew "make"
+  brew "pkgconf"
+  # link-time and runtime
+  brew "gnutls"
+  brew "librsvg"
+  brew "little-cms2"
+  brew "webp"
+  brew "tree-sitter"
+  brew "imagemagick"
+  brew "sqlite"
+  brew "gmp"
+  brew "jpeg"
+  brew "zlib"
+  brew "dbus"
+  # native compilation
+  brew "libgccjit"
+  brew "gcc"
+end

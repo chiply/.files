@@ -1,0 +1,7 @@
+# Emacs revision built by install_emacs_source.sh.
+#
+# Pinned rather than tracking HEAD so a fresh machine reproduces this exact
+# Emacs, and so a bad master commit is one edit away from being rolled back.
+# Move it forward with `install_emacs_source.sh --bump` (or the emacs-src-update
+# alias), which rewrites this file -- then commit it like any other dotfile.
+1d836d5c595003f3218969c3f5500bec1adb51d4

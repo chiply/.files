@@ -12,4 +12,11 @@
  ;; version-skew saga).  Created by install_emacs_distros.sh when
  ;; INCLUDE_EMACS_MAC=t.
  ("zetta-mac" . ((user-emacs-directory . "~/.zetta-mac.d")))
+
+ ;; Emacs built from the upstream git tree (master, 32.0.50 -- the release
+ ;; where canvas landed).  Isolated for the same reason as zetta-mac: elpaca
+ ;; bytecode and native-lisp are per-Emacs-version, so 32 builds must never
+ ;; mix with the 31-compiled tree in ~/.zetta.d.  Created by
+ ;; install_emacs_distros.sh when INCLUDE_EMACS_SRC=t.
+ ("zetta-src" . ((user-emacs-directory . "~/.zetta-src.d")))
  )
