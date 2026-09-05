@@ -177,8 +177,30 @@ open -a ~/Applications/EmacsSrc.app --args --with-profile zetta-src
 ```
 
 The socket name keeps `ecs` and the emacs-plus `emacsclient` from ever reaching
-the same daemon. First launch compiles ~340 packages under Emacs 32, so expect
-several minutes and a lot of warnings before the first frame settles.
+the same daemon.
+
+**Do the package install first, headlessly.** zetta.d ships a `bin/zetta` CLI
+that installs packages, byte-compiles `modules/` and native-compiles
+`elpaca/builds/` in batch mode — don't leave that to the first GUI launch,
+where it happens behind a frame with no progress reporting:
+
+```bash
+cd ~/.zetta-src.d
+EMACS=~/Applications/EmacsSrc.app/Contents/MacOS/Emacs bin/zetta install
+EMACS=~/Applications/EmacsSrc.app/Contents/MacOS/Emacs bin/zetta test    # daemon smoke test
+EMACS=~/Applications/EmacsSrc.app/Contents/MacOS/Emacs bin/zetta doctor
+```
+
+`bin/zetta` takes the binary from `$EMACS` and derives its target directory
+from its own location, so running the copy in `~/.zetta-src.d` builds that
+tree. It passes `--init-directory` rather than going through chemacs —
+`--with-profile` matters only for the interactive launches above.
+
+Note `zetta install` purges `eln-cache/` first. That is deliberate and matters
+more here than elsewhere: Emacs prefers a matching `.eln` over the `.elc` on
+disk, so a stale native-compiled file from a different Emacs version silently
+shadows the correct one. `zetta test` runs on a PID-suffixed daemon
+(`zetta-test-$$`), so it never collides with the main one.
 
 Aliases: `emacs-src`, `emacs-src-daemon` / `ecs`, `emacs-src-update`,
 `emacs-src-rollback`, `emacs-src-version`.
