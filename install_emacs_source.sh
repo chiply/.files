@@ -452,6 +452,19 @@ if [ -d "$SITE_LISP" ] || mkdir -p "$SITE_LISP"; then
 (provide 'site-start)
 ;;; site-start.el ends here
 EOF
+
+    # Byte-compile it here, while the bundle is still unsigned.
+    #
+    # Resources/site-lisp is inside the signature for a self-contained build
+    # (emacs-plus escapes this by being --disable-ns-self-contained, so its
+    # site-lisp sits outside the app).  Anything that compiles Lisp on load --
+    # compile-angel, in this config -- would otherwise write site-start.elc
+    # into the sealed bundle on first launch and break the code signature,
+    # which is what the TCC permissions are keyed to.  Shipping a .elc that is
+    # already newer than the .el leaves nothing for it to do.
+    "$STAGING/Contents/MacOS/Emacs" -Q --batch \
+        --eval "(byte-compile-file \"$SITE_LISP/site-start.el\")" >/dev/null 2>&1 \
+        || warn "could not byte-compile site-start.el; the signature may break on first launch"
 fi
 
 touch "$STAGING"
