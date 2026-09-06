@@ -39,15 +39,15 @@ fi
 # Gates the from-source build of GNU Emacs master (32.0.50 -- the release
 # where canvas landed) alongside the emacs-plus@31 daily driver.  Consumed by
 # the Brewfile (build deps) and install_emacs_distros.sh, which delegates to
-# install_emacs_source.sh (build + ~/.zetta-src.d profile).  The build
+# install_emacs_source.sh.  Since 2026-09-06 this is the daily driver:
 # reproduces emacs-plus@31's feature set so the two are interchangeable.
 # Set to anything other than "t" to skip.
 export INCLUDE_EMACS_SRC=t
 if [ "$INCLUDE_EMACS_SRC" = "t" ]; then
     # GUI launch on the isolated chemacs profile
-    alias emacs-src='zemacs run src-latest --zetta-src'
+    alias emacs-src='zemacs run src-latest --zetta'
     # daemon + client on a separate socket, never colliding with the main daemon
-    alias emacs-src-daemon='zemacs run src-latest --zetta-src --daemon'
+    alias emacs-src-daemon='zemacs run src-latest --zetta --daemon'
     alias ecs='emacsclient -s src'
     # move the pinned revision forward and rebuild (~45-70 min, AOT native comp)
     alias emacs-src-update='"$HOME/.files/install_emacs_source.sh" --bump'

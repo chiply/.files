@@ -134,23 +134,14 @@ fi
 # forward deliberately with `--bump`, so a fresh machine reproduces
 # the same Emacs and a bad master commit is one edit from rollback.
 #
-# The chemacs profile "zetta-src" points at ~/.zetta-src.d, a separate
-# clone of the config, for the same reason zetta-mac does: elpaca
-# bytecode and native-lisp are per-Emacs-version, and mixing 32 with
-# the 31-compiled builds in ~/.zetta.d replays the 2026-07 version-skew
-# saga.  Package sources are seeded from ~/.zetta.d to skip re-cloning
-# ~340 repos.
+# No separate config profile: ~/.zetta.d is itself compiled under the
+# source build now (2026-09-06), so the source Emacs is the daily driver
+# on the "zetta" profile.  The isolated "zetta-src" profile existed only
+# for the side-by-side trial and was retired once the migration landed.
+# Consequence worth remembering: ~/.zetta.d's bytecode is Emacs 32, so
+# running emacs-plus 31 against it re-runs the 2026-07 version-skew
+# saga.  Use `zetta install' under the intended Emacs after switching.
 ######################################################################
 if [ "${INCLUDE_EMACS_SRC}" = "t" ]; then
     "$DISTROS_DIR/install_emacs_source.sh"
-
-    if [ ! -d ~/.zetta-src.d ]; then
-        git clone https://github.com/chiply/.zetta.d.git ~/.zetta-src.d
-        # seed package sources from the main checkout (big time-saver;
-        # builds still compile fresh under the source-built Emacs)
-        if [ -d ~/.zetta.d/elpaca/sources ]; then
-            mkdir -p ~/.zetta-src.d/elpaca
-            cp -R ~/.zetta.d/elpaca/sources ~/.zetta-src.d/elpaca/sources
-        fi
-    fi
 fi

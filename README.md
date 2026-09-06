@@ -102,11 +102,18 @@ Three Emacs builds can run side by side, each on its own
 mix — elpaca's bytecode and `native-lisp` output are per-Emacs-version, and
 sharing a config directory between versions corrupts both.
 
+Since 2026-09-06 `~/.zetta.d` is compiled by the **source build**, which is
+the daily driver. The isolated `zetta-src` profile existed only for the
+side-by-side trial and was retired once the migration landed. The
+consequence to remember: running `emacs-plus-31 --zetta` now loads Emacs-32
+bytecode into Emacs 31. If you switch a tree between builds, re-run
+`zetta install` under the Emacs you intend to use.
+
 | Build | Version | App | Profile / config | Gate |
 | --- | --- | --- | --- | --- |
-| `emacs-plus@31` | 31.x | `/Applications/Emacs.app` | `zetta` → `~/.zetta.d` | always |
+| `emacs-plus@31` | 31.x | `/Applications/Emacs.app` | (see caveat below) | always |
 | [emacs-mac](https://github.com/jdtsmith/emacs-mac) | 30.x | `~/Applications/EmacsMac.app` | `zetta-mac` → `~/.zetta-mac.d` | `INCLUDE_EMACS_MAC` |
-| from source | master (32.0.50) | `~/Applications/EmacsSrc.app` | `zetta-src` → `~/.zetta-src.d` | `INCLUDE_EMACS_SRC` |
+| from source | master (32.0.50) | `~/Applications/EmacsSrc.app` | `zetta` → `~/.zetta.d` (**daily driver**) | `INCLUDE_EMACS_SRC` |
 
 The gates are exported from `files/.zshrc`; each also brings in its build
 dependencies via a matching block in the Brewfile.
@@ -199,7 +206,7 @@ chemacs, and nothing else competes for it (there is no `~/.emacs.el`,
 through it.
 
 ```bash
-emacs-src                 # GUI, profile zetta-src
+emacs-src                 # GUI, profile zetta
 emacs-src-daemon          # daemon on its own socket ("src")
 ecs                       # emacsclient -s src
 ecs -nw                   # ... in the terminal
@@ -208,8 +215,8 @@ ecs -nw                   # ... in the terminal
 Or without the aliases, which is the same thing spelled out:
 
 ```bash
-open -a ~/Applications/EmacsSrc.app --args --with-profile zetta-src
-~/Applications/EmacsSrc.app/Contents/MacOS/Emacs --with-profile zetta-src
+open -a ~/Applications/EmacsSrc.app --args --with-profile zetta
+~/Applications/EmacsSrc.app/Contents/MacOS/Emacs --with-profile zetta
 ```
 
 The socket name keeps `ecs` and the emacs-plus `emacsclient` from ever reaching
@@ -221,14 +228,14 @@ that installs packages, byte-compiles `modules/` and native-compiles
 where it happens behind a frame with no progress reporting:
 
 ```bash
-cd ~/.zetta-src.d
+cd ~/.zetta.d
 EMACS=~/Applications/EmacsSrc.app/Contents/MacOS/Emacs bin/zetta install
 EMACS=~/Applications/EmacsSrc.app/Contents/MacOS/Emacs bin/zetta test    # daemon smoke test
 EMACS=~/Applications/EmacsSrc.app/Contents/MacOS/Emacs bin/zetta doctor
 ```
 
 `bin/zetta` takes the binary from `$EMACS` and derives its target directory
-from its own location, so running the copy in `~/.zetta-src.d` builds that
+from its own location, so running the copy in `~/.zetta.d` builds that
 tree. It passes `--init-directory` rather than going through chemacs —
 `--with-profile` matters only for the interactive launches above.
 
