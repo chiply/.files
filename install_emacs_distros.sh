@@ -144,4 +144,9 @@ fi
 ######################################################################
 if [ "${INCLUDE_EMACS_SRC}" = "t" ]; then
     "$DISTROS_DIR/install_emacs_source.sh"
+
+    # Rust dynamic module for the canvas API.  Needs the bundle to exist
+    # (it builds against the emacs-module.h shipped inside it), so it runs
+    # after the Emacs build rather than beside it.
+    "$DISTROS_DIR/install_emacs_canvas_rs.sh"
 fi

@@ -480,4 +480,10 @@ if ENV["INCLUDE_EMACS_SRC"] == "t"
   # native compilation
   brew "libgccjit"
   brew "gcc"
+  # Rust, for dynamic modules against the Emacs 32 canvas API (see
+  # install_emacs_canvas_rs.sh).  Already declared unconditionally above;
+  # repeated here so removing the ungated entry cannot silently break the
+  # module build.  bindgen's libclang comes from the Xcode command line
+  # tools, which bootstrap.sh installs.
+  brew "rust"
 end
