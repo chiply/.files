@@ -27,9 +27,9 @@ export PATH=$HOME/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/l
 export INCLUDE_EMACS_MAC=t
 if [ "$INCLUDE_EMACS_MAC" = "t" ]; then
     # GUI launch on the isolated chemacs profile
-    alias emacs-mac='open -a "$HOME/Applications/EmacsMac.app" --args --with-profile zetta-mac'
+    alias emacs-mac='zemacs run mac-latest --zetta-mac'
     # daemon + client on a separate socket, never colliding with the main daemon
-    alias emacs-mac-daemon='"$HOME/Applications/EmacsMac.app/Contents/MacOS/Emacs" --with-profile zetta-mac --daemon=mac'
+    alias emacs-mac-daemon='zemacs run mac-latest --zetta-mac --daemon'
     alias ecm='emacsclient -s mac'
 fi
 
@@ -45,9 +45,9 @@ fi
 export INCLUDE_EMACS_SRC=t
 if [ "$INCLUDE_EMACS_SRC" = "t" ]; then
     # GUI launch on the isolated chemacs profile
-    alias emacs-src='open -a "$HOME/Applications/EmacsSrc.app" --args --with-profile zetta-src'
+    alias emacs-src='zemacs run src-latest --zetta-src'
     # daemon + client on a separate socket, never colliding with the main daemon
-    alias emacs-src-daemon='"$HOME/Applications/EmacsSrc.app/Contents/MacOS/Emacs" --with-profile zetta-src --daemon=src'
+    alias emacs-src-daemon='zemacs run src-latest --zetta-src --daemon'
     alias ecs='emacsclient -s src'
     # move the pinned revision forward and rebuild (~45-70 min, AOT native comp)
     alias emacs-src-update='"$HOME/.files/install_emacs_source.sh" --bump'

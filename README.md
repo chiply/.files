@@ -111,6 +111,42 @@ sharing a config directory between versions corrupts both.
 The gates are exported from `files/.zshrc`; each also brings in its build
 dependencies via a matching block in the Brewfile.
 
+### Launching: zemacs
+
+chemacs answers *which config*; nothing answered *which Emacs*. With several
+vendors installed side by side, that meant a hand-written alias per
+build/profile pair, going stale on every upgrade. `files/bin/zemacs` is the
+layer above chemacs, and it **discovers** builds rather than listing them — so
+installing `emacs-plus@32` or bumping the source build makes a new command
+appear without editing anything.
+
+```bash
+emacs-src-latest --zetta         # newest source build, ~/.zetta.d
+emacs-plus-31 --zetta-mac -nw    # a specific build, in the terminal
+emacs-src-latest --zetta --daemon
+zemacs list                      # what is installed, and which profiles exist
+zemacs shims                     # regenerate the ~/bin/emacs-* commands
+```
+
+Commands are `emacs-<vendor>-<version>` plus a `-latest` alias per vendor
+(`emacs-src-latest`, `emacs-plus-latest`, `emacs-mac-latest`, and a bare
+`emacs-latest`). A `--<name>` matching a profile in `~/.emacs-profiles.el`
+becomes `--with-profile <name>`; everything else passes to Emacs untouched.
+
+These are **shims in `~/bin`, not shell aliases**, so they work from scripts,
+tmuxinator, AeroSpace and Alfred — not only in an interactive zsh. They are
+generated (the set depends on what is installed), marked with a header comment
+so regeneration only ever removes zemacs' own files, and rebuilt by
+`bootstrap.sh`. `ZEMACS_DRY_RUN=1` prints the command instead of running it.
+
+A bare `--daemon` gets the **vendor** as its socket name, not the build id, so
+`emacsclient -s src` keeps working after the source build moves 32 → 33.
+`zemacs client <build>` connects to the right one.
+
+Build discovery is cached in `~/.local/state/zemacs/builds.tsv` (probing a
+version means running each Emacs) and invalidates itself when a binary's mtime
+moves — which a bumped source build does, since it replaces its bundle.
+
 ### From-source build
 
 `install_emacs_source.sh` compiles the upstream git tree. It tracks `master`

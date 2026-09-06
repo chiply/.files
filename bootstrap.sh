@@ -140,6 +140,14 @@ sudo tlmgr install dvipng dvisvgm
 # emacs
 chmod +x "$REPO_ROOT/install_emacs_distros.sh" && "$REPO_ROOT/install_emacs_distros.sh"
 
+# zemacs shims: one command per installed Emacs build (emacs-src-latest,
+# emacs-plus-31, ...).  Generated rather than tracked, because the set depends
+# on what is actually installed on this machine.  Re-run `zemacs shims` after
+# installing or removing a build.
+if [ -x "$HOME/bin/zemacs" ]; then
+    "$HOME/bin/zemacs" shims
+fi
+
 # lolipop cursor animation (requires emacs-plus@31)
 if [ ! -d "$HOME/.zetta.d/source/lib/lolipop" ]; then
     git clone https://github.com/RadioNoiseE/lolipop /tmp/lolipop
