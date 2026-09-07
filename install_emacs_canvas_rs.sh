@@ -29,6 +29,7 @@ APP="$HOME/Applications/EmacsSrc.app"
 DEST="$HOME/.zetta.d/source/lib/canvas-rs"
 UPSTREAM="https://github.com/chiply/emacs-canvas-rs.git"
 
+warn() { printf "\033[1;33m==>\033[0m %s\n" "$*" >&2; }
 say() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
 die() { printf '\033[1;31m==>\033[0m %s\n' "$*" >&2; exit 1; }
 
@@ -57,6 +58,14 @@ EMACS_MODULE_H="$HEADER" cargo build --release
 # searched by `module-load'.
 mkdir -p "$DEST"
 cp target/release/libemacs_canvas_rs.dylib "$DEST/canvas-rs.so"
+
+# Re-sign after copying.  macOS caches a code signature against the path, so
+# overwriting a dylib that was previously loaded from here leaves the cached
+# signature describing the OLD bytes -- and the kernel then SIGKILLs any
+# process that dlopens it.  It presents as Emacs dying instantly with exit
+# 137 and no error at all, while the identical file under target/release
+# loads fine.  A fresh ad-hoc signature clears it.
+codesign --force --sign - "$DEST/canvas-rs.so" 2>/dev/null     || warn "could not re-sign the module; a rebuild may be SIGKILLed on load"
 say "installed $DEST/canvas-rs.so"
 
 "$APP/Contents/MacOS/Emacs" -Q --batch \
