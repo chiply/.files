@@ -1,0 +1,63 @@
+{
+  "name": "Zetta ANSI",
+  "base": "light-ansi",
+  "overrides": {
+    "claude": "ansi:blue",
+    "claudeShimmer": "ansi:blueBright",
+    "claudeBlue_FOR_SYSTEM_SPINNER": "ansi:blue",
+    "claudeBlueShimmer_FOR_SYSTEM_SPINNER": "ansi:blueBright",
+
+    "text": "ansi:black",
+    "inverseText": "ansi:white",
+    "subtle": "ansi:blackBright",
+    "inactive": "ansi:blackBright",
+    "inactiveShimmer": "ansi:white",
+    "suggestion": "ansi:blue",
+    "remember": "ansi:blue",
+    "background": "ansi:cyan",
+
+    "success": "ansi:green",
+    "error": "ansi:red",
+    "warning": "ansi:yellow",
+    "warningShimmer": "ansi:yellowBright",
+    "merged": "ansi:magenta",
+
+    "permission": "ansi:blue",
+    "permissionShimmer": "ansi:blueBright",
+    "autoAccept": "ansi:magenta",
+    "autoAcceptShimmer": "ansi:magentaBright",
+    "planMode": "ansi:cyan",
+    "fastMode": "ansi:red",
+    "fastModeShimmer": "ansi:redBright",
+    "effortUltra": "ansi:magenta",
+
+    "promptBorder": "ansi:white",
+    "promptBorderShimmer": "ansi:whiteBright",
+    "bashBorder": "ansi:magenta",
+    "skill": "ansi:magenta",
+    "ide": "ansi:blueBright",
+
+    "diffAdded": "ansi:green",
+    "diffRemoved": "ansi:red",
+    "diffAddedDimmed": "ansi:green",
+    "diffRemovedDimmed": "ansi:red",
+    "diffAddedWord": "ansi:greenBright",
+    "diffRemovedWord": "ansi:redBright",
+
+    "userMessageBackground": "ansi:white",
+    "userMessageBackgroundHover": "ansi:whiteBright",
+    "composerSidebarBackground": "ansi:white",
+    "bashMessageBackgroundColor": "ansi:whiteBright",
+    "memoryBackgroundColor": "ansi:white",
+    "selectionBg": "ansi:cyan",
+
+    "rate_limit_fill": "ansi:yellow",
+    "rate_limit_empty": "ansi:black",
+    "briefLabelYou": "ansi:blue",
+    "briefLabelClaude": "ansi:blue",
+    "professionalBlue": "ansi:blueBright",
+    "chromeYellow": "ansi:yellow",
+    "clawd_body": "ansi:blue",
+    "clawd_background": "ansi:black"
+  }
+}
