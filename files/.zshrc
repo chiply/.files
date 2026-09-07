@@ -541,3 +541,22 @@ if [[ "$INSIDE_EMACS" == 'vterm' ]] \
 && [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh ]]; then
   source ${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh
 fi
+
+# ============================================================================
+# GHOSTEL (Emacs)
+# ============================================================================
+# Ghostel hardcodes COLORTERM=truecolor, so anything that checks it emits
+# exact RGB and bypasses the 16-slot ANSI palette Emacs controls.  Dropping
+# it makes those programs fall back to indexed colours, which the Emacs
+# theme remaps onto the current canvas.
+#
+# The unset has to happen here rather than in Emacs: ghostel prepends its
+# own process-environment entries and the first match for a name wins, so
+# an ambient COLORTERM never reaches the shell.
+#
+# Toggled from Emacs with `zetta-ghostel-toggle-truecolor-clamp', which
+# sets the variable below.  Environment is fixed at exec, so it applies to
+# terminals started afterwards.
+if [[ "$INSIDE_EMACS" == 'ghostel' && -n "$ZETTA_GHOSTEL_NO_TRUECOLOR" ]]; then
+  unset COLORTERM
+fi
