@@ -1,13 +1,21 @@
 [Unit]
-Description=Emacs daemon (persistent editing sessions for SSH clients)
+Description=Emacs daemon (zetta, headless profile) for SSH clients
+# Skipped, not failed, until the cold build exists: starting an unbuilt
+# zetta would clone and build every package inside the daemon, time out
+# below, and loop under Restart=.  Meanwhile: systemctl --user start emacs-lean
+ConditionPathExists=%h/.zetta.d/elpaca/builds
 
 [Service]
 Type=notify
-ExecStart=/usr/bin/emacs --fg-daemon
+# Default socket, so `emacsclient -t` and the e/ei aliases are unchanged.
+ExecStart=/usr/bin/emacs --fg-daemon --init-directory=%h/.zetta.d
 ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
 Restart=on-failure
-# first start after a config deploy may install packages from MELPA
-TimeoutStartSec=300
+# READY=1 reaches systemd only when init finishes, and every module
+# loads interpreted on one core.  Provisional: measure (emacs-init-time)
+# after the cold build and set this to twice it (README, "Zetta on the
+# hub"); if it stays awkward, Type=simple drops the window entirely.
+TimeoutStartSec=900
 
 [Install]
 WantedBy=default.target

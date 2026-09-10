@@ -15,8 +15,24 @@ msg() { printf '\n==> %s\n' "$*"; }
 
 msg "base packages"
 sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
+# build-essential: the zetta config's tree-sitter grammars compile with
+# a C compiler at first use.  ripgrep and fd: the config's search paths
+# (consult-ripgrep, the (todo) corpus grep) call them unguarded.  The
+# apt list follows the headless profile: vterm and pdf-tools are not in
+# it, so cmake/libvterm/poppler stay out until one of them is.
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
-  emacs-nox tmux mosh git python3 curl ca-certificates iptables-persistent
+  emacs-nox tmux mosh git python3 curl ca-certificates iptables-persistent \
+  build-essential ripgrep fd-find
+# Ubuntu ships fd as fdfind (name clash with another package); the
+# config calls it by the usual name.
+mkdir -p "$HOME/.local/bin"
+ln -sfn "$(command -v fdfind)" "$HOME/.local/bin/fd"
+
+msg "timezone (the agenda computes 'today' from it; Oracle images boot in UTC)"
+HUB_TZ="${HUB_TZ:-America/New_York}"
+if [ "$(timedatectl show -p Timezone --value)" != "$HUB_TZ" ]; then
+  sudo timedatectl set-timezone "$HUB_TZ"
+fi
 
 msg "syncthing (official apt repo — distro version lags)"
 if [ ! -f /etc/apt/sources.list.d/syncthing.list ]; then
@@ -55,7 +71,29 @@ install -m 0755 "$REPO_DIR/bin/llm_convo_sync.py" "$HOME/.local/bin/llm_convo_sy
 install -m 0755 "$REPO_DIR/bin/notes-autocommit.sh" "$HOME/.local/bin/notes-autocommit.sh"
 cp "$REPO_DIR"/units/*.service "$REPO_DIR"/units/*.timer "$HOME/.config/systemd/user/"
 
-msg "emacs + tmux + shell config"
+msg "emacs: zetta (the daily-driver config, headless profile)"
+# Clone once; never pull here.  Updates are a deliberate step (README,
+# "Updating zetta"): git pull, a warm `bin/zetta build', then a restart
+# when no editing session is live.
+ZETTA_DIR="$HOME/.zetta.d"
+if [ ! -d "$ZETTA_DIR/.git" ]; then
+  git clone --quiet https://github.com/chiply/.zetta.d "$ZETTA_DIR"
+fi
+# The profile must be in place BEFORE anything loads init.el: bin/zetta
+# substitutes the full-profile example when ~/.zetta.el is missing, and
+# that profile wants a window system, SVG and a toolchain this box does
+# not have.  Never overwritten -- local edits to it are the owner's.
+if [ ! -f "$HOME/.zetta.el" ] && [ -f "$ZETTA_DIR/templates/zetta.headless.el" ]; then
+  cp "$ZETTA_DIR/templates/zetta.headless.el" "$HOME/.zetta.el"
+fi
+if [ ! -d "$ZETTA_DIR/elpaca/builds" ]; then
+  echo "    zetta is cloned but NOT built: emacs.service stays skipped until"
+  echo "    the cold build has run (manual step below)."
+fi
+
+msg "emacs: lean fallback init + tmux + shell config"
+# The lean init stays installed for emacs-lean.service (not enabled):
+# the editor to start by hand when zetta is broken.
 mkdir -p "$HOME/.emacs.d/backups" "$HOME/.emacs.d/autosaves"
 cp "$REPO_DIR/emacs/init.el" "$HOME/.emacs.d/init.el"
 cp "$REPO_DIR/tmux.conf" "$HOME/.tmux.conf"
@@ -102,4 +140,17 @@ cat <<'EOF'
 6. Emacs config deploys DO NOT auto-restart the daemon (that would kill
    live editing sessions). Apply when convenient:
    systemctl --user restart emacs
+7. zetta, first time only (hours, unattended; see README "Zetta on the hub"):
+   - ~/.private.el: create it by hand; a single ";;" line is enough
+     (the headless profile sets auth-sources to nil).
+   - cold build, in a tmux window:
+       nohup ~/.zetta.d/bin/zetta build > ~/zetta-build.log 2>&1 &
+     done when the log has ZETTA-OK and no ELPACA-FAILED line.
+   - seed per-machine state once the daemon is up:
+       emacsclient --eval '(org-id-update-id-locations (directory-files-recursively "~/kb" "\\.org\\'"'"'"))'
+       emacsclient --eval '(dolist (l (mapcar (quote car) treesit-language-source-alist)) (treesit-install-language-grammar l))'
+   - then: systemctl --user restart emacs
+   Until the build exists, emacs.service is skipped (ConditionPathExists);
+   start the lean editor meanwhile: systemctl --user start emacs-lean
+   and reach it with emacsclient -s lean -t.
 EOF

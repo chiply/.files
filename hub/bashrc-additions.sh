@@ -4,6 +4,14 @@
 # get overwritten.
 alias e='emacsclient -t'
 alias ei='emacsclient -t ~/kb/inbox.org'
+# the lean fallback daemon (emacs-lean.service, socket "lean")
+alias el='emacsclient -s lean -t'
+
+# Emacs enables 24-bit colour on a tty when the CLIENT's environment says
+# so; `emacsclient -t' inherits this shell's.  (tmux's terminal-features
+# alone tells Emacs nothing.)  Blink over mosh over tmux is the chain;
+# if colours come out wrong, unset this first.
+export COLORTERM=truecolor
 
 # manual readwise refresh: trigger the sync, wait out the run, show result
 alias rw='systemctl --user start readwise-sync.service && sleep 9 && journalctl --user -u readwise-sync.service -n 2 --no-pager -o cat'
