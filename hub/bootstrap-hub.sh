@@ -19,14 +19,24 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
 # a C compiler at first use.  ripgrep and fd: the config's search paths
 # (consult-ripgrep, the (todo) corpus grep) call them unguarded.  The
 # apt list follows the headless profile: vterm and pdf-tools are not in
-# it, so cmake/libvterm/poppler stay out until one of them is.
+# it, so cmake/libvterm/poppler stay out until one of them is.  graphviz
+# is `dot' for hywiki-graph, pandoc the org exporter's converter; both
+# cheap (2026-09-11 sheet).  mermaid-cli stays out: it needs node.
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
   emacs-nox tmux mosh git python3 curl ca-certificates iptables-persistent \
-  build-essential ripgrep fd-find
+  build-essential ripgrep fd-find graphviz pandoc
 # Ubuntu ships fd as fdfind (name clash with another package); the
 # config calls it by the usual name.
 mkdir -p "$HOME/.local/bin"
 ln -sfn "$(command -v fdfind)" "$HOME/.local/bin/fd"
+
+msg "UTF-8 locale (mosh-server refuses to start without a generated UTF-8 locale;"
+msg "  Blink reports that as 'mosh is not installed on the server')"
+if ! locale -a 2>/dev/null | grep -qi '^en_US\.utf-\?8$'; then
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+  sudo locale-gen en_US.UTF-8
+  sudo update-locale LANG=en_US.UTF-8
+fi
 
 msg "timezone (the agenda computes 'today' from it; Oracle images boot in UTC)"
 HUB_TZ="${HUB_TZ:-America/New_York}"
@@ -69,6 +79,9 @@ msg "scripts and systemd user units"
 install -m 0755 "$REPO_DIR/bin/readwise_sync.py" "$HOME/.local/bin/readwise_sync.py"
 install -m 0755 "$REPO_DIR/bin/llm_convo_sync.py" "$HOME/.local/bin/llm_convo_sync.py"
 install -m 0755 "$REPO_DIR/bin/notes-autocommit.sh" "$HOME/.local/bin/notes-autocommit.sh"
+# Run by hand, never here: builds Emacs 31 from source (README, "Emacs
+# from source").  Installed so the command is on PATH after a deploy.
+install -m 0755 "$REPO_DIR/install-emacs-source.sh" "$HOME/.local/bin/install-emacs-source.sh"
 cp "$REPO_DIR"/units/*.service "$REPO_DIR"/units/*.timer "$HOME/.config/systemd/user/"
 
 msg "emacs: zetta (the daily-driver config, headless profile)"

@@ -7,9 +7,18 @@ ConditionPathExists=%h/.zetta.d/elpaca/builds
 
 [Service]
 Type=notify
+# A user unit inherits systemd's minimal PATH, not the login shell's:
+# measured 2026-09-11, the daemon could not see ~/.local/bin, so `fd'
+# (the fdfind symlink the bootstrap makes) was invisible to consult and
+# dired while it worked in every shell.  /usr/local/bin first so the
+# source-built Emacs (install-emacs-source.sh) and its emacsclient win
+# over apt's once they exist; until then this resolves to /usr/bin.
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
 # Default socket, so `emacsclient -t` and the e/ei aliases are unchanged.
-ExecStart=/usr/bin/emacs --fg-daemon --init-directory=%h/.zetta.d
-ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+# `env' rather than a fixed binary: the same unit runs apt's emacs-nox
+# and the source build, whichever PATH finds first.
+ExecStart=/usr/bin/env emacs --fg-daemon --init-directory=%h/.zetta.d
+ExecStop=/usr/bin/env emacsclient --eval "(kill-emacs)"
 Restart=on-failure
 # READY=1 reaches systemd only when init finishes.  Measured 2026-09-11
 # after the cold build: emacs-init-time 3.7 s, restart-to-ready 9 s
