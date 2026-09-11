@@ -63,6 +63,10 @@ brew "pango"
 brew "librsvg"
 brew "libxml2"
 brew "lnav"
+# mosh-server for Blink/mosh sessions from the iPad/iPhone; Blink must be
+# given the full path /opt/homebrew/bin/mosh-server (sshd's non-interactive
+# shell has no Homebrew on PATH)
+brew "mosh"
 brew "mu"
 brew "mupdf"
 brew "node"
@@ -441,6 +445,11 @@ cask "font-xiaolai-mono"
 cask "font-zed-mono"
 cask "font-zed-mono-nerd-font"
 cask "font-zed-sans"
+# remote desktop host for Jump Desktop on the iPad/iPhone (Fluid over Tailscale);
+# the cask runs a pkg installer, so `brew bundle` will ask for sudo here
+cask "jump-desktop-connect"
+# Stream Deck desktop app: required host for Stream Deck Mobile on the iPad/iPhone (pkg installer, asks for sudo)
+cask "elgato-stream-deck"
 
 # ── emacs from source (upstream master) ─────────────────────────────
 # Build and runtime deps for install_emacs_source.sh, which compiles
