@@ -162,10 +162,22 @@ emacsclient --eval '(dolist (l (mapcar (quote car) treesit-language-source-alist
 emacsclient --eval '(emacs-init-time)'
 #+end_src
 
-Set =TimeoutStartSec= in =units/emacs.service= to twice the measured
-init time (900 s provisional) and redeploy.  Record here:
-- =emacs-init-time=: (not yet measured)
-- =TimeoutStartSec= chosen: 900 (provisional)
+Measured [2026-09-11], first cutover:
+- cold =bin/zetta build=: 63 min on 1 OCPU (packages 16 min, the rest
+  byte- and native-compile); =ZETTA-OK packages=195 modules=178=
+- =emacs-init-time=: 3.7 s; restart to =emacsclient= answering: 9 s
+- =TimeoutStartSec= chosen: 300 (the lean unit's old value; ample)
+- seeding: 18 org ids over 1076 files; grammars python, tsx,
+  typescript compiled (python needs the v0.23.6 pin for Emacs 29)
+
+Two per-machine traps found at the first start, both fixed upstream:
+- =~/kb/wiki/.hywiki.eld= is hywiki's cache and records ABSOLUTE
+  paths; a copy synced before it was ignored made =hywiki-directory=
+  a =/Users/...= path on the hub and hyperbole's config died creating
+  it.  The ignore rule exists; the stale copy was deleted by hand.
+- hyperbole's deferred require needs the real =ibuffer= loaded first
+  (the config's =core/ibuffer.el= file name satisfies
+  =eval-after-load "ibuffer"= early); zetta now loads it eagerly.
 
 ** Updating zetta
 

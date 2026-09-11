@@ -11,11 +11,12 @@ Type=notify
 ExecStart=/usr/bin/emacs --fg-daemon --init-directory=%h/.zetta.d
 ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
 Restart=on-failure
-# READY=1 reaches systemd only when init finishes, and every module
-# loads interpreted on one core.  Provisional: measure (emacs-init-time)
-# after the cold build and set this to twice it (README, "Zetta on the
-# hub"); if it stays awkward, Type=simple drops the window entirely.
-TimeoutStartSec=900
+# READY=1 reaches systemd only when init finishes.  Measured 2026-09-11
+# after the cold build: emacs-init-time 3.7 s, restart-to-ready 9 s
+# (the modules load byte-compiled).  300 s is the old lean unit's
+# window and leaves room for elpaca to rebuild a changed package at
+# start after a `git pull' that skipped `bin/zetta build'.
+TimeoutStartSec=300
 
 [Install]
 WantedBy=default.target
