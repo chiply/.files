@@ -18,13 +18,29 @@ stty -ixon
 export PATH=$HOME/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # ============================================================================
+# PROFILE
+# ============================================================================
+# `personal' (the default) or `work': set once in ~/.zshenv.local (sourced
+# by .zshenv before this file).  Read by main.py (the exclude manifest),
+# bootstrap.sh (the personal blocks), the Brewfile (the personal list) and
+# the gates below, whose defaults it flips.  See README.md, "Profiles".
+export DOTFILES_PROFILE="${DOTFILES_PROFILE:-personal}"
+if [ "$DOTFILES_PROFILE" = "work" ]; then
+    _gate_default=f
+else
+    _gate_default=t
+fi
+
+# ============================================================================
 # EMACS-MAC (experimental side-by-side trial)
 # ============================================================================
 # Gates the jdtsmith emacs-mac fork (Emacs 30, retina-correct image
 # rendering) alongside the emacs-plus@31 daily driver.  Consumed by
 # the Brewfile (build deps) and install_emacs_distros.sh (build +
-# ~/.zetta-mac.d profile).  Set to anything other than "t" to skip.
-export INCLUDE_EMACS_MAC=t
+# ~/.zetta-mac.d profile).  Set to anything other than "t" to skip.  A
+# value from ~/.zshenv.local wins; the default is t on the personal
+# profile and f at work.
+export INCLUDE_EMACS_MAC="${INCLUDE_EMACS_MAC:-$_gate_default}"
 if [ "$INCLUDE_EMACS_MAC" = "t" ]; then
     # GUI launch on the isolated chemacs profile
     alias emacs-mac='zemacs run mac-latest --zetta-mac'
@@ -41,8 +57,9 @@ fi
 # the Brewfile (build deps) and install_emacs_distros.sh, which delegates to
 # install_emacs_source.sh.  Since 2026-09-06 this is the daily driver:
 # reproduces emacs-plus@31's feature set so the two are interchangeable.
-# Set to anything other than "t" to skip.
-export INCLUDE_EMACS_SRC=t
+# Set to anything other than "t" to skip.  A value from ~/.zshenv.local
+# wins; the default is t on the personal profile and f at work.
+export INCLUDE_EMACS_SRC="${INCLUDE_EMACS_SRC:-$_gate_default}"
 if [ "$INCLUDE_EMACS_SRC" = "t" ]; then
     # GUI launch on the isolated chemacs profile
     alias emacs-src='zemacs run src-latest --zetta'
@@ -56,6 +73,7 @@ if [ "$INCLUDE_EMACS_SRC" = "t" ]; then
     # pin moves with it, so commit files/.config/emacs-src/revision to keep it
     alias emacs-src-rollback='"$HOME/.files/install_emacs_source.sh" --rollback'
 fi
+unset _gate_default
 
 # ============================================================================
 # ZINIT SETUP (replaces oh-my-zsh for faster startup)
