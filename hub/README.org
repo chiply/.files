@@ -182,6 +182,16 @@ Two per-machine traps found at the first start, both fixed upstream:
 
 ** Updating zetta
 
+A plain =git pull= cannot cross a history rewrite (the repository's
+history was rewritten on 2026-09-13 to remove leaked values; the same
+may happen again).  When =git pull= refuses with "refusing to merge
+unrelated histories" or diverged-branch errors, take the remote's copy:
+=git -C ~/.zetta.d fetch origin && git -C ~/.zetta.d reset --hard origin/main=
+-- after checking =git status= is clean, since a reset discards local
+edits.  The daemon needs no restart when the tracked content is
+unchanged.
+
+
 =hub-deploy= ships =hub/= only.  The config updates by hand:
 
 #+begin_src sh
