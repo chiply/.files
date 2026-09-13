@@ -40,6 +40,8 @@ brew "gh"
 brew "git"
 brew "git-extras"
 brew "git-delta"
+# secret scanner run by .githooks/pre-commit in this repo and in .zetta.d
+brew "gitleaks"
 brew "graphviz"
 brew "gobject-introspection"
 brew "howdoi"

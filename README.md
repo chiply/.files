@@ -79,6 +79,18 @@ If you fork this repo, the parts you'll most likely want to change before runnin
 - The Quick start clone URL above.
 - Tmuxinator project files under `files/.config/tmuxinator/` reference my project paths.
 
+## Secret scanning
+
+The tracked tree is public, so the repo ships a pre-commit hook that runs
+[gitleaks](https://github.com/gitleaks/gitleaks) over the staged changes
+(`.githooks/pre-commit`, configured by `.gitleaks.toml`). Activate it once per
+clone -- `brew bundle` installs the binary; without it the hook only prints a
+note:
+
+```bash
+git config core.hooksPath .githooks
+```
+
 ## Updating
 
 After the initial bootstrap, to pull in new dotfiles or package additions:

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Refuse a commit whose staged changes contain a secret.
+#
+# The tracked tree of this repo is public.  gitleaks scans the staged diff
+# against its default provider-token rules plus .gitleaks.toml at the root
+# (an allow-list for documented placeholders); --redact keeps any hit out
+# of the terminal.  Skipped with a note when the binary is absent:
+# brew install gitleaks (it is in files/.config/Brewfile).
+#
+# Activate once per clone:   git config core.hooksPath .githooks
+# Bypass deliberately with:  git commit --no-verify
+set -euo pipefail
+
+if command -v gitleaks >/dev/null 2>&1; then
+    if ! gitleaks git --pre-commit --staged --redact --no-banner --exit-code 1 . ; then
+        echo "pre-commit: gitleaks found a secret in the staged changes." >&2
+        echo "  Keep values in ~/.zshenv.local or the vault; the tracked files carry references and examples only." >&2
+        echo "  A documented placeholder can be allow-listed in .gitleaks.toml." >&2
+        exit 1
+    fi
+else
+    echo "pre-commit: gitleaks is not installed; the staged changes were NOT scanned for secrets (brew install gitleaks)." >&2
+fi
