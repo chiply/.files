@@ -6,7 +6,7 @@ Personal macOS dotfiles. Bootstraps a fresh machine with the tools, shell, termi
 
 This repo is shared as a reference; clone, fork, or just lift bits that are useful. macOS only.
 
-> ⚠️ **`bootstrap.sh` will silently replace any existing dotfiles in `$HOME`** (`.zshrc`, `.tmux.conf`, `.bash_profile`, …) with symlinks into this repo. If you already have configs you care about, back them up before running.
+> ⚠️ **`bootstrap.sh` replaces existing dotfiles in `$HOME`** (`.zshrc`, `.tmux.conf`, `.bash_profile`, …) with symlinks into this repo. A regular file found at a target is moved to `~/.dotfiles-backup/<timestamp>/` first, but read the plan (`python3 main.py --dry-run`) before running on a machine whose configs you care about.
 
 ## Quick start
 
@@ -18,10 +18,55 @@ cd ~/.files
 # without it, the signal-cli block is skipped silently.
 export SIGNAL_PHONE="+15551234567"
 
-./bootstrap.sh
+./bootstrap.sh                 # personal machine
+./bootstrap.sh --profile work  # employer-managed machine, see Profiles
 ```
 
 The script asks for your `sudo` password upfront, then runs unattended for ~30 minutes. It installs Xcode CLI tools, Homebrew, and a long list of CLI utilities and language toolchains.
+
+## Profiles
+
+Two profiles, `personal` (the default) and `work`, selected by
+`DOTFILES_PROFILE`. Set it once in `~/.zshenv.local` (untracked; `.zshenv`
+sources it before anything else) or pass `--profile work` to `bootstrap.sh`
+for the run. It is read by:
+
+- `main.py` — on `work`, the exclude manifest `profiles/work.exclude`
+  (gitignore-style globs relative to `files/`) keeps the personal mail
+  config, news reader, music daemon, Signal and wallpaper LaunchAgents and
+  the two personal-infrastructure scripts out of `$HOME`;
+- `bootstrap.sh` — the Syncthing folder for the notes tree (never at work:
+  a work `~/kb` is a local tree), the signal-cli, wallpaper and Aura frame
+  LaunchAgents and the snowsql cask (`INCLUDE_SNOWFLAKE=t` opts in) run on
+  `personal` only; on `work` the Emacs config gets
+  `templates/zetta.work.el` as `~/.zetta.el` before its first build;
+- `files/.config/Brewfile` — mail (isync, mu), mosh, the personal cloud CLI,
+  mpv/yt-dlp, syncthing, mpd/mpc and the remote-desktop and Stream Deck
+  hosts are personal only; the 1Password casks install on personal or with
+  `INCLUDE_OP=t` (an employer using 1Password installs its own);
+- `files/.zshrc` and `.zshenv` — the two Emacs build gates default to `f`
+  at work, and the linode wrapper (a personal 1Password item) is not
+  defined there.
+
+A work machine's whole `~/.zshenv.local`:
+
+```sh
+# work machine -- never the personal 1Password token
+export DOTFILES_PROFILE=work
+export INCLUDE_EMACS_MAC=f          # the experimental fork: personal only
+export INCLUDE_EMACS_SRC=f          # emacs-plus@31 on day one; flip to t later
+export INCLUDE_OTHER_DISTROS=f      # no Spacemacs/Doom/Prelude/Centaur
+# export GH_HOST=github.example.com # GitHub Enterprise, if any
+```
+
+`brew` filters its environment down to `HOMEBREW_*` variables before it reads
+a Brewfile, so `.zshenv`, `.zshrc` and `bootstrap.sh` export `HOMEBREW_`
+mirrors of the profile and the two build gates; a hand-run `brew bundle`
+from a shell that sourced them honours the profile.
+
+The reasoning behind the split, and the Emacs side of it, is in the
+[zetta.d](https://github.com/chiply/.zetta.d) repo: `work-profile.org` and
+`work-security-audit.org`.
 
 ## What gets installed
 
@@ -29,7 +74,7 @@ The script asks for your `sudo` password upfront, then runs unattended for ~30 m
 - **Terminal**: [Ghostty](https://ghostty.org/) with cursor shaders, plus Nerd Fonts (JetBrains Mono Nerd Font, Terminess, Terminus)
 - **Multiplexer**: tmux + [tmux-powerline](https://github.com/erikw/tmux-powerline), [tmuxinator](https://github.com/tmuxinator/tmuxinator), TPM (Tmux Plugin Manager) and a curated plugin list
 - **Window manager / status bar**: [AeroSpace](https://github.com/nikitabobko/AeroSpace), [simple-bar](https://www.jeantinland.com/toolbox/simple-bar/) (with a customised bottom bar), [JankyBorders](https://github.com/FelixKratz/JankyBorders)
-- **Editor**: Emacs 31 (via `emacs-plus@31`) configured by [zetta.d](https://github.com/chiply/.zetta.d), with TeX Live (`dvipng` / `dvisvgm`) and MathJax for `org-latex-preview`. `install_emacs_distros.sh` can additionally install Doom / Spacemacs / Chemacs side-by-side, plus two extra Emacs builds — see [Emacs variants](#emacs-variants).
+- **Editor**: Emacs 31 (via `emacs-plus@31`) configured by [zetta.d](https://github.com/chiply/.zetta.d), with TeX Live (`dvipng` / `dvisvgm`) and MathJax for `org-latex-preview`. `install_emacs_distros.sh` installs chemacs and, behind `INCLUDE_OTHER_DISTROS` (default `t`, `f` on the work profile), Doom / Spacemacs / Prelude / Centaur side-by-side, plus two extra Emacs builds behind their own gates — see [Emacs variants](#emacs-variants).
 - **Languages**: pyenv (3.10 / 3.11 / 3.12), Poetry, uv, nvm + Node, language servers (json, eslint, copilot, svelte)
 - **Misc CLI**: AWS CLI v2, `gh`, `k9s` (with catppuccin skins), `bat`, `fzf`, `ripgrep`, `eza`, `jq`, `lazygit`, and more — full list in [`files/.config/Brewfile`](files/.config/Brewfile)
 - **Background services**: signal-cli daemon (opt-in via `$SIGNAL_PHONE`), a wallpaper rotator, an Aura frame sync that emails new wallpapers to a frame (opt-in via `$AURA_FRAME_EMAIL`), and launchd-managed simple-bar refresh server + focus watcher
@@ -49,16 +94,17 @@ The script asks for your `sudo` password upfront, then runs unattended for ~30 m
 └── LICENSE
 ```
 
-`main.py` walks `files/` and creates `ln -s -f` symlinks at the matching paths under `$HOME`. Re-run it any time you add a new dotfile.
+`main.py` walks `files/` and symlinks each file to the matching path under `$HOME`; `python3 main.py --dry-run` prints the plan. A regular file already at a target is moved to `~/.dotfiles-backup/<timestamp>/` first (an MDM-provisioned `~/.zshrc` is not lost silently), `*.example` files are never linked, and on the `work` profile the paths in `profiles/work.exclude` are skipped. Re-run it any time you add a new dotfile.
 
 ## Bootstrap side-effects
 
 `bootstrap.sh` will:
 
-- create `~/.localsecrets`, `~/.tokens`, and (via the Emacs config) expect `~/.private.el` — these hold local secrets and are never committed
-- clone [`zetta.d`](https://github.com/chiply/.zetta.d) to `~/.zetta.d` for the Emacs setup
-- install LaunchAgents for `signal-cli`, the wallpaper rotator, the Aura frame sync (only if `$AURA_FRAME_EMAIL` is set), `simple-bar-server`, and the simple-bar focus watcher
-- create `~/Wallpapers` and `~/Screenshots`
+- expect `~/.zshenv.local` (profile, gates, and on a personal machine the 1Password service-account token) and, via the Emacs config, `~/.private.el` — both hold local secrets and are never committed
+- clone [`zetta.d`](https://github.com/chiply/.zetta.d) to `~/.zetta.d` for the Emacs setup, and on the `work` profile install its work template as `~/.zetta.el`
+- register the `kb` Syncthing folder (`personal` only)
+- install LaunchAgents for `signal-cli`, the wallpaper rotator and the Aura frame sync (`personal` only; the last two also need `$SIGNAL_PHONE` / `$AURA_FRAME_EMAIL` + `$AURA_MSMTP_ACCOUNT`), plus `simple-bar-server` and the simple-bar focus watcher on both profiles
+- create `~/Wallpapers` (`personal`) and `~/Screenshots`
 - run `defaults write` for Shottr screenshot preferences
 - install simple-bar into `~/Library/Application Support/Übersicht/widgets/`
 

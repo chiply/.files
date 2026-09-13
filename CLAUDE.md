@@ -6,21 +6,40 @@ Personal dotfiles repository for bootstrapping macOS development environments.
 
 ```
 .files/
-├── bootstrap.sh              # Main setup script for new machines
-├── main.py                   # Symlink generation script
-├── install_emacs_distros.sh  # Emacs installation script
+├── bootstrap.sh              # Main setup script for new machines (--profile work)
+├── main.py                   # Symlink generation script (manifest, backups, --dry-run)
+├── profiles/work.exclude     # files/ paths the work profile never links
+├── install_emacs_distros.sh  # Emacs installation script (INCLUDE_OTHER_DISTROS)
 ├── install_claude_hooks.sh   # Merge Claude Code notification hooks into ~/.claude/settings.json
+├── .githooks/pre-commit      # gitleaks over the staged changes (git config core.hooksPath .githooks)
+├── hub/                      # the kb-hub VPS (Linux; its own bootstrap)
 ├── files/                    # Dotfiles to be symlinked to ~/
-│   ├── .zshrc                # Primary shell configuration
-│   ├── .aliases/             # Shell aliases
+│   ├── .zshrc, .zshenv       # Shell configuration; .zshenv sources ~/.zshenv.local first
+│   ├── .aliases/             # Shell aliases (regular files; ~/.aliases links to the directory)
 │   ├── .config/              # Tool configurations (Brewfile, tmuxinator, etc.)
 │   └── .tmux/, .tmux.conf    # Tmux configuration
 ```
 
 ### Other Directories
 
-- `mcp_servers/` - MCP server configurations
-- `.github/` - GitHub workflows
+- `.github/` - GitHub workflows (`test_install.yml` runs the bootstrap on macos-latest, with a `profile` input on manual dispatch; `hub-ci.yml` lints the hub scripts)
+
+## Profiles
+
+`DOTFILES_PROFILE` is `personal` (default) or `work`, set in `~/.zshenv.local`
+or by `bootstrap.sh --profile work`.  On `work`, `main.py` skips the
+manifest paths, `bootstrap.sh` skips the personal blocks (Syncthing folder,
+signal-cli/wallpaper/Aura LaunchAgents, snowsql) and installs the Emacs
+config's work template, and the Brewfile skips its personal entries.  `brew`
+filters its environment, so the profile and the two Emacs build gates reach
+the Brewfile as `HOMEBREW_*` mirrors exported by `.zshenv`, `.zshrc` and
+`bootstrap.sh`.  README.md, "Profiles", has the per-file list and the work
+`~/.zshenv.local`.
+
+Never commit a value: the tracked tree is public and scanned by the
+pre-commit hook.  Personal files stay untracked (`files/.msmtprc`,
+`files/.newsrc*`, `fetch_mail.sh`); an example with example.com addresses
+stands in for the msmtp config.
 
 ## Bootstrap Process
 
@@ -28,11 +47,11 @@ Run `bootstrap.sh` on a new machine to:
 1. Install Xcode CLI tools, Homebrew
 2. Install uv (primary Python toolchain: interpreters, venvs, packages), pre-installing Python 3.12
 3. Install pyenv (3.10–3.12) and Poetry — legacy projects only
-4. Symlink dotfiles from `files/` to `~/`
+4. Symlink dotfiles from `files/` to `~/` (`python3 main.py`; the work manifest applies)
 5. Install Zinit (zsh plugin manager)
 6. Install tools (fzf, AWS CLI, tmuxinator)
 7. Install Emacs and language servers
-8. Clone zetta.d Emacs distribution to `~/.zetta.d`
+8. Clone zetta.d Emacs distribution to `~/.zetta.d` (work profile: install `templates/zetta.work.el` as `~/.zetta.el`)
 
 ---
 
