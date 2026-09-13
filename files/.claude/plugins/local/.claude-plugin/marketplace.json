@@ -35,6 +35,16 @@
       },
       "source": "./plugins/ralph",
       "category": "development"
+    },
+    {
+      "name": "bare-demo",
+      "description": "Generate a bare-Emacs (emacs -Q) install + config demo for an Emacs package, to verify no coupling to a personal config",
+      "version": "0.1.0",
+      "author": {
+        "name": "Charlie Holland"
+      },
+      "source": "./plugins/bare-demo",
+      "category": "development"
     }
   ]
 }

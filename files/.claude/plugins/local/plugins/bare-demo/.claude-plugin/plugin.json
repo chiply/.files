@@ -1,0 +1,7 @@
+{
+  "name": "bare-demo",
+  "description": "Generate a bare-Emacs (emacs -Q) install + config demo for an Emacs package, to verify it has no coupling to a personal config.",
+  "author": {
+    "name": "Charlie Holland"
+  }
+}
