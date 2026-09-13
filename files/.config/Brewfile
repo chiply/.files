@@ -90,6 +90,7 @@ brew "oci-cli" if personal        # the personal VPS's cloud
 brew "openssl@3"
 brew "pyenv-virtualenv"
 brew "pandoc"
+brew "typst"
 brew "pgcli"
 # sql-practice lab (~/source_code/sql-practice): DB engines + clients
 brew "duckdb"

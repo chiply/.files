@@ -124,9 +124,6 @@ if [ "${INCLUDE_EMACS_MAC}" = "t" ]; then
 fi
 
 
-
-
-
 ######################################################################
 # emacs from source (upstream master)
 #
