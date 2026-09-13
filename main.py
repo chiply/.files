@@ -10,8 +10,11 @@
 - A REGULAR file already at a target is moved to
   ~/.dotfiles-backup/<timestamp>/<path> before the link replaces it, so
   an MDM-provisioned ~/.zshrc is not lost silently (audit S8); an
-  existing symlink is replaced as before, and one that already points at
-  the right source is left alone.
+  existing symlink is replaced as before.  A target that already
+  resolves to its source -- a correct link, or a path through a linked
+  parent directory such as ~/.aliases -> files/.aliases -- is left alone
+  (writing a link there is how the alias files became links to
+  themselves, audit S10).
 - --dry-run prints the plan and changes nothing.
 """
 import argparse
@@ -85,10 +88,14 @@ def main(argv=None):
             counts["skipped-manifest"] += 1
             print(f"  skip     {rel}  (manifest: {pattern})")
             continue
+        if os.path.realpath(target) == os.path.realpath(source):
+            # Already this file: a symlink to it, or a path that reaches it
+            # through a linked parent directory (~/.aliases -> files/.aliases).
+            # In the second case the old `ln -s -f' wrote a self-referencing
+            # link INTO the repo -- the alias loop of 2026-03 (audit S10).
+            counts["kept"] += 1
+            continue
         if target.is_symlink():
-            if os.readlink(target) == str(source):
-                counts["kept"] += 1
-                continue
             counts["relinked"] += 1
             print(f"  relink   {rel}  (was -> {os.readlink(target)})")
             if not args.dry_run:
