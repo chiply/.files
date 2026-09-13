@@ -501,3 +501,18 @@ if [[ "$INSIDE_EMACS" == 'vterm' ]] \
 && [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh ]]; then
   source ${EMACS_VTERM_PATH}/etc/emacs-vterm-zsh.sh
 fi
+
+# ============================================================================
+# EMACS CLIENT
+# ============================================================================
+# `emacsclient -c -a ""` spawns a vanilla `emacs --daemon` when no daemon is
+# running — wrong profile, and on macOS the resulting frames don't register
+# with NSApplication (no app-switcher icon, broken focus). This function spawns
+# the same fg-daemon the tmuxinator workflow uses, then connects.
+ec() {
+  if ! emacsclient -e t >/dev/null 2>&1; then
+    (nohup /opt/homebrew/bin/emacs --with-profile zetta --fg-daemon >/dev/null 2>&1 &)
+    while ! emacsclient -e t >/dev/null 2>&1; do sleep 0.5; done
+  fi
+  emacsclient -c -n "$@"
+}
