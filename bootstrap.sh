@@ -3,6 +3,17 @@
 # resolve the directory containing this script so the repo can live anywhere
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Profile: `personal' (default) or `work' (an employer-managed machine).
+# Set DOTFILES_PROFILE in ~/.zshenv.local, or pass --profile work here;
+# the value is exported for main.py and the Brewfile, and `personal'
+# gates every block below that pairs the machine with personal accounts
+# or infrastructure (README.md, "Profiles"; work-profile.org Part 6.4).
+DOTFILES_PROFILE="${DOTFILES_PROFILE:-personal}"
+if [ "${1:-}" = "--profile" ]; then export DOTFILES_PROFILE="${2:?--profile needs a value}"; shift 2; fi
+export DOTFILES_PROFILE
+personal() { [ "$DOTFILES_PROFILE" != work ]; }
+echo "bootstrap: profile $DOTFILES_PROFILE"
+
 # Prompt for sudo password upfront and keep alive
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
@@ -12,9 +23,6 @@ mkdir -p ~/.config/tmux-powerline/themes
 mkdir -p ~/.config/tmux-powerline/segments
 mkdir -p ~/.config/gitmux
 mkdir -p "$HOME/Library/Application Support/com.mitchellh.ghostty"
-
-touch ~/.localsecrets
-touch ~/.tokens
 
 # macos thing - skip if already installed
 if ! xcode-select -p &>/dev/null; then
@@ -59,8 +67,8 @@ export PATH="$HOME/.local/bin:$PATH"
 # pre-install the default interpreter (uv auto-downloads others on demand)
 uv python install 3.12
 
-# symlink
-python "$REPO_ROOT/main.py"
+# symlink (reads DOTFILES_PROFILE: the work manifest skips the personal files)
+python3 "$REPO_ROOT/main.py"
 
 # ghostty config (macOS reads from Application Support, not XDG)
 ln -s -f "$REPO_ROOT/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
@@ -84,7 +92,12 @@ brew bundle \
 # Registers folders with the local daemon idempotently — creates the dir if
 # missing, so this works on a fresh machine. Device pairing/sharing stays
 # manual in the GUI (localhost:8384); folder IDs are the rendezvous keys.
-"$REPO_ROOT/files/.local/bin/st-ensure-folder" kb "$HOME/kb"
+# NEVER on the work profile: ~/kb there is a local tree, and pairing it
+# with the personal notes would carry work notes to personal devices
+# (work-security-audit.org S7).
+if personal; then
+    "$REPO_ROOT/files/.local/bin/st-ensure-folder" kb "$HOME/kb"
+fi
 # zinit (plugin manager for zsh - replaces oh-my-zsh)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME" ]; then
@@ -137,7 +150,13 @@ sudo tlmgr install dvipng dvisvgm
 # Two are load-bearing rather than cosmetic (the SVG chrome font and the
 # font the metric corrections derive from); see ~/.zetta.d/FONTS.org.
 
-# emacs
+# emacs.  The other four distributions (Spacemacs, Doom, Prelude, Centaur)
+# are behind INCLUDE_OTHER_DISTROS inside the script: t by default on the
+# personal profile, f at work; the emacs-mac and source builds keep their
+# own gates (files/.zshrc).
+if [ -z "${INCLUDE_OTHER_DISTROS:-}" ]; then
+    if personal; then export INCLUDE_OTHER_DISTROS=t; else export INCLUDE_OTHER_DISTROS=f; fi
+fi
 chmod +x "$REPO_ROOT/install_emacs_distros.sh" && "$REPO_ROOT/install_emacs_distros.sh"
 
 # zemacs shims: one command per installed Emacs build (emacs-src-latest,
@@ -165,6 +184,14 @@ if [ -d "$HOME/.zetta.d" ]; then
     git pull
 else
     git clone https://github.com/chiply/.zetta.d.git "$HOME/.zetta.d"
+fi
+# The profile must be in place BEFORE anything loads init.el: bin/zetta
+# substitutes the full-profile example when ~/.zetta.el is missing, and
+# the full profile builds and starts the personal apps.  Same rule as the
+# hub bootstrap; never overwritten, the file is the owner's.
+if ! personal && [ ! -f "$HOME/.zetta.el" ] && [ -f "$HOME/.zetta.d/templates/zetta.work.el" ]; then
+    cp "$HOME/.zetta.d/templates/zetta.work.el" "$HOME/.zetta.el"
+    echo "bootstrap: installed the work profile as ~/.zetta.el"
 fi
 
 # claude code notification hooks
@@ -214,39 +241,43 @@ npm i mathjax
 # set SIGNAL_PHONE in your environment (e.g. +15551234567) before running, or
 # skip this block if you don't use signal-cli
 mkdir -p ~/Library/LaunchAgents
-if [ -n "${SIGNAL_PHONE:-}" ]; then
+if personal && [ -n "${SIGNAL_PHONE:-}" ]; then
     sed "s|__SIGNAL_PHONE__|$SIGNAL_PHONE|g" \
         "$REPO_ROOT/files/.config/signal-cli/signal-cli.plist" \
         > ~/Library/LaunchAgents/org.asamk.signal-cli.plist
-    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.asamk.signal-cli.plist 2>/dev/null
+    launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/org.asamk.signal-cli.plist 2>/dev/null
 fi
 
-# rotating wallpaper (every 15 minutes)
-mkdir -p "$HOME/Wallpapers"
-chmod +x ~/.config/wallpaper/rotate-wallpaper.sh
-chmod +x ~/.config/wallpaper/download-wallpapers.sh
-~/.config/wallpaper/download-wallpapers.sh
-sed "s|__HOME__|$HOME|g" \
-    "$REPO_ROOT/files/.config/wallpaper/rotate-wallpaper.plist" \
-    > ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist 2>/dev/null
+# rotating wallpaper (every 15 minutes) and the Aura frame sync: personal
+# only (500 downloads, two LaunchAgents, mail through msmtp; the work
+# manifest does not even link files/.config/wallpaper).
+if personal; then
+    mkdir -p "$HOME/Wallpapers"
+    chmod +x ~/.config/wallpaper/rotate-wallpaper.sh
+    chmod +x ~/.config/wallpaper/download-wallpapers.sh
+    ~/.config/wallpaper/download-wallpapers.sh
+    sed "s|__HOME__|$HOME|g" \
+        "$REPO_ROOT/files/.config/wallpaper/rotate-wallpaper.plist" \
+        > ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist
+    launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist 2>/dev/null
 
-# aura frame sync (opt-in): emails new ~/Wallpapers images to an Aura frame
-# set BOTH AURA_FRAME_EMAIL (Aura app -> frame -> Settings -> Email to frame)
-# and AURA_MSMTP_ACCOUNT (msmtp account whose from= is your Aura login email),
-# e.g. in ~/.zshenv.local, before running. See files/.config/wallpaper/aura-sync.sh
-# There is no default account: an account name is a personal identifier.
-chmod +x ~/.config/wallpaper/aura-sync.sh
-if [ -n "${AURA_FRAME_EMAIL:-}" ] && [ -z "${AURA_MSMTP_ACCOUNT:-}" ]; then
-    echo "aura-sync: AURA_FRAME_EMAIL is set but AURA_MSMTP_ACCOUNT is not; skipping the LaunchAgent" >&2
-fi
-if [ -n "${AURA_FRAME_EMAIL:-}" ] && [ -n "${AURA_MSMTP_ACCOUNT:-}" ]; then
-    sed -e "s|__HOME__|$HOME|g" \
-        -e "s|__AURA_FRAME_EMAIL__|$AURA_FRAME_EMAIL|g" \
-        -e "s|__AURA_MSMTP_ACCOUNT__|$AURA_MSMTP_ACCOUNT|g" \
-        "$REPO_ROOT/files/.config/wallpaper/aura-sync.plist" \
-        > ~/Library/LaunchAgents/com.zetta.aura-sync.plist
-    launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/com.zetta.aura-sync.plist 2>/dev/null
+    # aura frame sync (opt-in): emails new ~/Wallpapers images to an Aura frame
+    # set BOTH AURA_FRAME_EMAIL (Aura app -> frame -> Settings -> Email to frame)
+    # and AURA_MSMTP_ACCOUNT (msmtp account whose from= is your Aura login email),
+    # e.g. in ~/.zshenv.local, before running. See files/.config/wallpaper/aura-sync.sh
+    # There is no default account: an account name is a personal identifier.
+    chmod +x ~/.config/wallpaper/aura-sync.sh
+    if [ -n "${AURA_FRAME_EMAIL:-}" ] && [ -z "${AURA_MSMTP_ACCOUNT:-}" ]; then
+        echo "aura-sync: AURA_FRAME_EMAIL is set but AURA_MSMTP_ACCOUNT is not; skipping the LaunchAgent" >&2
+    fi
+    if [ -n "${AURA_FRAME_EMAIL:-}" ] && [ -n "${AURA_MSMTP_ACCOUNT:-}" ]; then
+        sed -e "s|__HOME__|$HOME|g" \
+            -e "s|__AURA_FRAME_EMAIL__|$AURA_FRAME_EMAIL|g" \
+            -e "s|__AURA_MSMTP_ACCOUNT__|$AURA_MSMTP_ACCOUNT|g" \
+            "$REPO_ROOT/files/.config/wallpaper/aura-sync.plist" \
+            > ~/Library/LaunchAgents/com.zetta.aura-sync.plist
+        launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/com.zetta.aura-sync.plist 2>/dev/null
+    fi
 fi
 
 # shottr screenshots directory
@@ -256,8 +287,11 @@ defaults write cc.ffitch.shottr afterGrabSave -bool true
 defaults write cc.ffitch.shottr afterGrabCopy -bool true
 defaults write cc.ffitch.shottr afterGrabShow -bool false
 
-# snowsql
-brew install --cask snowflake-snowsql
+# snowsql: a previous job's tool, maybe the next's -- personal by default,
+# INCLUDE_SNOWFLAKE=t to opt in at work
+if personal || [ "${INCLUDE_SNOWFLAKE:-}" = t ]; then
+    brew install --cask snowflake-snowsql
+fi
 
 # ubersicht widgets directory + simple-bar
 mkdir -p "$HOME/Library/Application Support/Übersicht/widgets"
