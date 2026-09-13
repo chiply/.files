@@ -231,6 +231,24 @@ sed "s|__HOME__|$HOME|g" \
     > ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.zetta.rotate-wallpaper.plist 2>/dev/null
 
+# aura frame sync (opt-in): emails new ~/Wallpapers images to an Aura frame
+# set BOTH AURA_FRAME_EMAIL (Aura app -> frame -> Settings -> Email to frame)
+# and AURA_MSMTP_ACCOUNT (msmtp account whose from= is your Aura login email),
+# e.g. in ~/.zshenv.local, before running. See files/.config/wallpaper/aura-sync.sh
+# There is no default account: an account name is a personal identifier.
+chmod +x ~/.config/wallpaper/aura-sync.sh
+if [ -n "${AURA_FRAME_EMAIL:-}" ] && [ -z "${AURA_MSMTP_ACCOUNT:-}" ]; then
+    echo "aura-sync: AURA_FRAME_EMAIL is set but AURA_MSMTP_ACCOUNT is not; skipping the LaunchAgent" >&2
+fi
+if [ -n "${AURA_FRAME_EMAIL:-}" ] && [ -n "${AURA_MSMTP_ACCOUNT:-}" ]; then
+    sed -e "s|__HOME__|$HOME|g" \
+        -e "s|__AURA_FRAME_EMAIL__|$AURA_FRAME_EMAIL|g" \
+        -e "s|__AURA_MSMTP_ACCOUNT__|$AURA_MSMTP_ACCOUNT|g" \
+        "$REPO_ROOT/files/.config/wallpaper/aura-sync.plist" \
+        > ~/Library/LaunchAgents/com.zetta.aura-sync.plist
+    launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/com.zetta.aura-sync.plist 2>/dev/null
+fi
+
 # shottr screenshots directory
 mkdir -p "$HOME/Screenshots"
 defaults write cc.ffitch.shottr saveTo -string "$HOME/Screenshots"

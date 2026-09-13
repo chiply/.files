@@ -32,7 +32,7 @@ The script asks for your `sudo` password upfront, then runs unattended for ~30 m
 - **Editor**: Emacs 31 (via `emacs-plus@31`) configured by [zetta.d](https://github.com/chiply/.zetta.d), with TeX Live (`dvipng` / `dvisvgm`) and MathJax for `org-latex-preview`. `install_emacs_distros.sh` can additionally install Doom / Spacemacs / Chemacs side-by-side, plus two extra Emacs builds — see [Emacs variants](#emacs-variants).
 - **Languages**: pyenv (3.10 / 3.11 / 3.12), Poetry, uv, nvm + Node, language servers (json, eslint, copilot, svelte)
 - **Misc CLI**: AWS CLI v2, `gh`, `k9s` (with catppuccin skins), `bat`, `fzf`, `ripgrep`, `eza`, `jq`, `lazygit`, and more — full list in [`files/.config/Brewfile`](files/.config/Brewfile)
-- **Background services**: signal-cli daemon (opt-in via `$SIGNAL_PHONE`), a wallpaper rotator, and launchd-managed simple-bar refresh server + focus watcher
+- **Background services**: signal-cli daemon (opt-in via `$SIGNAL_PHONE`), a wallpaper rotator, an Aura frame sync that emails new wallpapers to a frame (opt-in via `$AURA_FRAME_EMAIL`), and launchd-managed simple-bar refresh server + focus watcher
 
 ## Layout
 
@@ -57,7 +57,7 @@ The script asks for your `sudo` password upfront, then runs unattended for ~30 m
 
 - create `~/.localsecrets`, `~/.tokens`, and (via the Emacs config) expect `~/.private.el` — these hold local secrets and are never committed
 - clone [`zetta.d`](https://github.com/chiply/.zetta.d) to `~/.zetta.d` for the Emacs setup
-- install LaunchAgents for `signal-cli`, the wallpaper rotator, `simple-bar-server`, and the simple-bar focus watcher
+- install LaunchAgents for `signal-cli`, the wallpaper rotator, the Aura frame sync (only if `$AURA_FRAME_EMAIL` is set), `simple-bar-server`, and the simple-bar focus watcher
 - create `~/Wallpapers` and `~/Screenshots`
 - run `defaults write` for Shottr screenshot preferences
 - install simple-bar into `~/Library/Application Support/Übersicht/widgets/`
@@ -253,7 +253,7 @@ Aliases: `emacs-src`, `emacs-src-daemon` / `ecs`, `emacs-src-update`,
 - macOS only. Developed on Apple Silicon; Intel should mostly work (`/opt/homebrew` and `/usr/local` are both on `PATH`) but isn't actively tested.
 - `bootstrap.sh` is idempotent for most steps but isn't guaranteed safe to run on a heavily-customised existing machine — it will overwrite symlinks and dotfiles under `$HOME`.
 - The Emacs config (`zetta.d`) lives in its own repo and has its own footprint (~270 package configurations, devdocs, tree-sitter binaries). If you only want the shell/tmux setup, comment out the emacs section near the bottom of `bootstrap.sh`.
-- `fetch_mail.sh` and `files/.newsrc*` are gitignored — those are personal to me and aren't part of the published config.
+- `fetch_mail.sh`, `files/.msmtprc` and `files/.newsrc*` are gitignored — those are personal to me and aren't part of the published config. `files/.msmtprc.example` shows the shape of the msmtp config: copy it to `~/.msmtprc` (mode 600) and fill in your accounts.
 
 ## License
 

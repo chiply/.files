@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.zetta.aura-sync</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>__HOME__/.config/wallpaper/aura-sync.sh</string>
+        <string>--limit</string>
+        <string>100</string>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>AURA_FRAME_EMAIL</key>
+        <string>__AURA_FRAME_EMAIL__</string>
+        <key>AURA_MSMTP_ACCOUNT</key>
+        <string>__AURA_MSMTP_ACCOUNT__</string>
+    </dict>
+    <!-- every 6h x 100 images stays under Gmail's ~500 messages/day SMTP cap -->
+    <key>StartInterval</key>
+    <integer>21600</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/aura-sync.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/aura-sync.err</string>
+</dict>
+</plist>
