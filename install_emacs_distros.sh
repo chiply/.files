@@ -1,6 +1,15 @@
+#!/bin/bash
 # Resolved before the cd's below: the sections of this script change
 # directory freely, so $0 is only usable relative to the original cwd.
 DISTROS_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# INCLUDE_OTHER_DISTROS gates the four distributions other than zetta
+# (Spacemacs, Doom, Prelude, Centaur): t installs them, anything else
+# skips them.  bootstrap.sh defaults it to t on the personal profile and
+# f at work (five Emacs distributions arriving uninvited on a managed
+# machine: work-security-audit.org S8).  chemacs stays: the profile
+# switcher every launcher goes through.
+INCLUDE_OTHER_DISTROS="${INCLUDE_OTHER_DISTROS:-t}"
 
 ######################################################################
 # chemacs
@@ -11,6 +20,7 @@ git clone https://github.com/plexus/chemacs.git && \
     ./install.sh
 
 
+if [ "$INCLUDE_OTHER_DISTROS" = "t" ]; then
 ######################################################################
 # spacemacs
 ######################################################################
@@ -49,7 +59,7 @@ fi
 
 
 ######################################################################
-# cetnaur
+# centaur
 ######################################################################
 if [ -d ~/.centaur.d ]; then
     cd ~/.centaur.d
@@ -57,6 +67,7 @@ if [ -d ~/.centaur.d ]; then
 else
     git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.centaur.d
 fi
+fi  # INCLUDE_OTHER_DISTROS
 
 
 ######################################################################
