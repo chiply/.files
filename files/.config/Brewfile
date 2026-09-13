@@ -1,3 +1,17 @@
+# Profile: `personal' (default) or `work' -- DOTFILES_PROFILE, set in
+# ~/.zshenv.local or by bootstrap.sh --profile.  The personal blocks below
+# pair the machine with personal accounts or infrastructure and are
+# skipped at work (README.md, "Profiles"; work-profile.org Part 6.5).
+#
+# `brew' filters the environment before running Ruby: only HOMEBREW_*
+# variables (and a short fixed list) reach this file -- measured
+# 2026-09-13 with `brew ruby': DOTFILES_PROFILE and INCLUDE_EMACS_MAC
+# arrive as nil, HOMEBREW_X as set.  .zshenv/.zshrc and bootstrap.sh
+# therefore export HOMEBREW_ mirrors of the three gates; the plain names
+# are read too, for a `brew bundle' invoked from a shell that skipped them.
+gate = lambda { |name, default| ENV.fetch("HOMEBREW_#{name}", ENV.fetch(name, default)) }
+personal = gate.call("DOTFILES_PROFILE", "personal") != "work"
+
 tap "felixkratz/formulae"
 tap "d12frosted/emacs-plus"
 tap "homebrew/bundle"
@@ -51,7 +65,7 @@ brew "hyperfine"
 brew "shared-mime-info"
 brew "libheif"
 brew "imagemagick"
-brew "isync"
+brew "isync" if personal          # mbsync: personal mail
 brew "ispell"
 brew "jid"
 brew "jq"
@@ -67,12 +81,12 @@ brew "libxml2"
 brew "lnav"
 # mosh-server for Blink/mosh sessions from the iPad/iPhone; Blink must be
 # given the full path /opt/homebrew/bin/mosh-server (sshd's non-interactive
-# shell has no Homebrew on PATH)
-brew "mosh"
-brew "mu"
+# shell has no Homebrew on PATH).  A remote-access surface: personal only.
+brew "mosh" if personal
+brew "mu" if personal             # mail indexer for mu4e
 brew "mupdf"
 brew "node"
-brew "oci-cli"
+brew "oci-cli" if personal        # the personal VPS's cloud
 brew "openssl@3"
 brew "pyenv-virtualenv"
 brew "pandoc"
@@ -104,8 +118,8 @@ brew "wmctrl"
 brew "wget"
 brew "yadm"
 brew "yq"
-brew "mpv"
-brew "yt-dlp"
+brew "mpv" if personal
+brew "yt-dlp" if personal
 brew "zoxide"
 brew "entr"
 brew "eza"
@@ -113,8 +127,9 @@ brew "rust"
 brew "sesh"
 brew "starship"
 # notes sync (see ~/syncthing-migration.org); restart_service keeps the
-# launchd agent running and bounces it only on install/upgrade
-brew "syncthing", restart_service: :changed
+# launchd agent running and bounces it only on install/upgrade.  Never at
+# work: the work ~/kb is a local tree (work-security-audit.org S7).
+brew "syncthing", restart_service: :changed if personal
 brew "gitmux"
 brew "zsh"
 brew "zsh-syntax-highlighting"
@@ -144,8 +159,8 @@ brew "just"
 brew "feh"
 brew "w3m"
 brew "macmon"
-brew "mpc"
-brew "mpd"
+brew "mpc" if personal
+brew "mpd" if personal
 brew "aalib"
 brew "asciiquarium"
 brew "cmatrix"
@@ -168,8 +183,9 @@ cask "ubersicht"
 cask "vivaldi"
 cask "brave-browser"
 cask "firefox"
-cask "1password"
-cask "1password-cli"
+# An employer that uses 1Password installs its own, or sets INCLUDE_OP=t.
+cask "1password" if personal || gate.call("INCLUDE_OP", "") == "t"
+cask "1password-cli" if personal || gate.call("INCLUDE_OP", "") == "t"
 
 # ── emacs-mac (experimental trial) ──────────────────────────────────
 # Build deps for the jdtsmith emacs-mac fork (Emacs 30, retina-correct
@@ -178,7 +194,7 @@ cask "1password-cli"
 # install_emacs_distros.sh.  tree-sitter@0.25: the Emacs 30 branch
 # needs the older tree-sitter ABI (keg-only; configure gets CFLAGS/
 # LDFLAGS pointing at it).
-if ENV["INCLUDE_EMACS_MAC"] == "t"
+if gate.call("INCLUDE_EMACS_MAC", "") == "t"
   brew "autoconf"
   brew "pkgconf"
   brew "texinfo"
@@ -448,10 +464,11 @@ cask "font-zed-mono"
 cask "font-zed-mono-nerd-font"
 cask "font-zed-sans"
 # remote desktop host for Jump Desktop on the iPad/iPhone (Fluid over Tailscale);
-# the cask runs a pkg installer, so `brew bundle` will ask for sudo here
-cask "jump-desktop-connect"
+# the cask runs a pkg installer, so `brew bundle` will ask for sudo here.
+# A remote-desktop HOST on a work laptop is not ours to install: personal only.
+cask "jump-desktop-connect" if personal
 # Stream Deck desktop app: required host for Stream Deck Mobile on the iPad/iPhone (pkg installer, asks for sudo)
-cask "elgato-stream-deck"
+cask "elgato-stream-deck" if personal
 
 # ── emacs from source (upstream master) ─────────────────────────────
 # Build and runtime deps for install_emacs_source.sh, which compiles
@@ -463,7 +480,7 @@ cask "elgato-stream-deck"
 # above for jpeg/zlib: `brew autoremove` strips them and the binary
 # then fails to launch. Declaring them here (installed-on-request)
 # keeps EmacsSrc.app working even if emacs-plus@31 is ever removed.
-if ENV["INCLUDE_EMACS_SRC"] == "t"
+if gate.call("INCLUDE_EMACS_SRC", "") == "t"
   # build
   brew "autoconf"
   brew "automake"

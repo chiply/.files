@@ -3,6 +3,8 @@
 # personal 1Password token there.  README.md, "Profiles".
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
 export DOTFILES_PROFILE="${DOTFILES_PROFILE:-personal}"
+# `brew' drops every non-HOMEBREW_* variable before it reads the Brewfile.
+export HOMEBREW_DOTFILES_PROFILE="$DOTFILES_PROFILE"
 
 # Linode CLI token (via 1Password) — lazy-loaded on first use to avoid
 # adding ~500ms to every shell startup.  Personal infrastructure: not

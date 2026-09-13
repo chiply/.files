@@ -84,6 +84,11 @@ brew tap Homebrew/bundle
 
 # brew bundle --file ~/.config/Brewfile --force cleanup
 # brew bundle --file ~/.config/Brewfile dump
+# `brew' filters the environment down to HOMEBREW_* before it reads the
+# Brewfile, so the profile and the two build gates travel as mirrors.
+export HOMEBREW_DOTFILES_PROFILE="$DOTFILES_PROFILE"
+export HOMEBREW_INCLUDE_EMACS_MAC="${INCLUDE_EMACS_MAC:-}"
+export HOMEBREW_INCLUDE_EMACS_SRC="${INCLUDE_EMACS_SRC:-}"
 brew bundle \
      --force --no-lock \
      --file="$REPO_ROOT/files/.config/Brewfile"

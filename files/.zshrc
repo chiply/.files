@@ -74,6 +74,10 @@ if [ "$INCLUDE_EMACS_SRC" = "t" ]; then
     alias emacs-src-rollback='"$HOME/.files/install_emacs_source.sh" --rollback'
 fi
 unset _gate_default
+# `brew' drops every non-HOMEBREW_* variable before it reads the Brewfile,
+# so the two gates reach its conditional blocks only through these mirrors.
+export HOMEBREW_INCLUDE_EMACS_MAC="$INCLUDE_EMACS_MAC"
+export HOMEBREW_INCLUDE_EMACS_SRC="$INCLUDE_EMACS_SRC"
 
 # ============================================================================
 # ZINIT SETUP (replaces oh-my-zsh for faster startup)
