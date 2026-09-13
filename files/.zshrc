@@ -18,6 +18,22 @@ stty -ixon
 export PATH=$HOME/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # ============================================================================
+# EMACS-MAC (experimental side-by-side trial)
+# ============================================================================
+# Gates the jdtsmith emacs-mac fork (Emacs 30, retina-correct image
+# rendering) alongside the emacs-plus@31 daily driver.  Consumed by
+# the Brewfile (build deps) and install_emacs_distros.sh (build +
+# ~/.zetta-mac.d profile).  Set to anything other than "t" to skip.
+export INCLUDE_EMACS_MAC=t
+if [ "$INCLUDE_EMACS_MAC" = "t" ]; then
+    # GUI launch on the isolated chemacs profile
+    alias emacs-mac='open -a "$HOME/Applications/EmacsMac.app" --args --with-profile zetta-mac'
+    # daemon + client on a separate socket, never colliding with the main daemon
+    alias emacs-mac-daemon='"$HOME/Applications/EmacsMac.app/Contents/MacOS/Emacs" --with-profile zetta-mac --daemon=mac'
+    alias ecm='emacsclient -s mac'
+fi
+
+# ============================================================================
 # ZINIT SETUP (replaces oh-my-zsh for faster startup)
 # ============================================================================
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"

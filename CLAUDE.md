@@ -25,8 +25,8 @@ Personal dotfiles repository for bootstrapping macOS development environments.
 
 Run `bootstrap.sh` on a new machine to:
 1. Install Xcode CLI tools, Homebrew
-2. Install Python (3.10, 3.11, 3.12) via pyenv
-3. Install Poetry and uv
+2. Install uv (primary Python toolchain: interpreters, venvs, packages), pre-installing Python 3.12
+3. Install pyenv (3.10–3.12) and Poetry — legacy projects only
 4. Symlink dotfiles from `files/` to `~/`
 5. Install Zinit (zsh plugin manager)
 6. Install tools (fzf, AWS CLI, tmuxinator)
