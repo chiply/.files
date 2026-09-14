@@ -7,6 +7,5 @@ export LSP_USE_PLISTS=true
 
 
 
-. "$HOME/.cargo/env"
-
-. "$HOME/.local/share/../bin/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"   # uv

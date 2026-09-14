@@ -4,15 +4,15 @@
 
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+command -v pyenv >/dev/null && eval "$(pyenv init -)"
 
-unexport VIRTUAL_ENV
+# `unexport' is not a bash builtin; drop the variable instead
+unset VIRTUAL_ENV
 
-
-source "$HOME/Library/Application Support/org.dystroy.broot/launcher/bash/br"
-
-source "$HOME/.config/broot/launcher/bash/br"
-
-. "$HOME/.cargo/env"
-
-. "$HOME/.local/share/../bin/env"
+# every optional tool below is sourced only when it is installed
+[ -f "$HOME/Library/Application Support/org.dystroy.broot/launcher/bash/br" ] && \
+  source "$HOME/Library/Application Support/org.dystroy.broot/launcher/bash/br"
+[ -f "$HOME/.config/broot/launcher/bash/br" ] && \
+  source "$HOME/.config/broot/launcher/bash/br"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"   # uv

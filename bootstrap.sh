@@ -33,8 +33,15 @@ if ! xcode-select -p &>/dev/null; then
     done
 fi
 
-# install brew (non-interactive)
+# install brew (non-interactive), then put it on THIS shell's PATH: on a fresh
+# machine nothing has done that yet, and every brew line below would fail with
+# "command not found" (measured on the first work-machine run, 2026-09-14;
+# the personal Mac and the CI runner already had brew on PATH, so it never
+# showed).  Apple Silicon installs to /opt/homebrew, Intel to /usr/local.
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if [ -x /opt/homebrew/bin/brew ]; then eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then eval "$(/usr/local/bin/brew shellenv)"
+else echo "bootstrap: Homebrew did not install; stopping" >&2; exit 1; fi
 brew update
 brew upgrade
 
@@ -79,8 +86,7 @@ if [ ! -d "$HOME/Library/Application Support/com.mitchellh.ghostty/shaders" ]; t
         "$HOME/Library/Application Support/com.mitchellh.ghostty/shaders"
 fi
 
-# install bundle
-brew tap Homebrew/bundle
+# brew bundle is part of Homebrew itself now; tapping homebrew/bundle errors.
 
 # brew bundle --file ~/.config/Brewfile --force cleanup
 # brew bundle --file ~/.config/Brewfile dump
