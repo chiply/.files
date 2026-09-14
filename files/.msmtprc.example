@@ -1,0 +1,35 @@
+# msmtp configuration -- SMTP send for mu4e/message-mode.  EXAMPLE.
+#
+# Copy to ~/.msmtprc (mode 600) and replace the example.com addresses.
+# The real file is untracked: it carries your addresses.  Account names
+# match the mbsync accounts in ~/.mbsyncrc and the `-a <account>' argument
+# that the message-send hook in ~/.private.el picks from the From: header.
+#
+# Passwords are app passwords read on demand through the `op' CLI (the
+# same source mbsync uses in PassCmd), so no secret lives in this file.
+
+# -- Defaults for all accounts ----------------------------------------
+defaults
+auth           on
+tls            on
+tls_starttls   on
+tls_trust_file /opt/homebrew/etc/ca-certificates/cert.pem
+logfile        ~/.msmtp.log
+
+# -- one account block per address ------------------------------------
+account personal
+host    smtp.example.com
+port    587
+from    you@example.com
+user    you@example.com
+passwordeval "op read 'op://Dev/Mail-personal/app-password'"
+
+account other
+host    smtp.example.org
+port    587
+from    other@example.org
+user    other@example.org
+passwordeval "op read 'op://Dev/Mail-other/app-password'"
+
+# Fallback when no -a is given (mu4e always passes -a via the hook).
+account default : personal

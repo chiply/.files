@@ -64,12 +64,16 @@ export TMUX_POWERLINE_SEG_WEATHER_LON="auto"
 # kubernetes_context.sh
 export TMUX_POWERLINE_SEG_KUBERNETES_CONTEXT_DISPLAY_MODE="name"
 export TMUX_POWERLINE_SEG_KUBERNETES_CONTEXT_SYMBOL="󱃾"
-export TMUX_POWERLINE_SEG_KUBERNETES_CONTEXT_SYMBOL_COLOUR="239"
+# NB: this one is interpolated as the WHOLE style body -- "#[${VAR}]" --
+# so it needs the "fg=" too.  The old bare "239" emitted "#[239]", which
+# is not a style tmux understands.
+export TMUX_POWERLINE_SEG_KUBERNETES_CONTEXT_SYMBOL_COLOUR="fg=colour7"
 
 # vpn.sh
 export TMUX_POWERLINE_SEG_VPN_DISPLAY_MODE="name"
 export TMUX_POWERLINE_SEG_VPN_SYMBOL="󱠾 "
-export TMUX_POWERLINE_SEG_VPN_SYMBOL_COLOUR="239"
+# NB: interpolated as "#[fg=colour${VAR}]", so this is a bare SLOT number.
+export TMUX_POWERLINE_SEG_VPN_SYMBOL_COLOUR="7"
 
 # hostname.sh
 export TMUX_POWERLINE_SEG_HOSTNAME_FORMAT="short"

@@ -5,8 +5,9 @@
 __pycache__/
 .hypothesis/
 
-# personal mail / news (kept locally, not tracked)
+# personal mail / news (kept locally, not tracked); files/.msmtprc.example is the shape
 fetch_mail.sh
+files/.msmtprc
 files/.newsrc
 files/.newsrc.eld
 

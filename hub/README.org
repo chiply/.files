@@ -70,7 +70,10 @@ reproducibility with none of the friction.
 | =bootstrap-hub.sh=          | idempotent provisioner (run on the VM)       |
 | =bin/readwise_sync.py=      | Readwise export API → org files; stdlib only |
 | =bin/notes-autocommit.sh=   | daily git snapshot of the notes tree         |
-| =units/emacs.service=       | persistent emacs daemon (user unit)          |
+| =units/emacs.service=       | persistent emacs daemon: zetta, default socket (user unit); PATH has ~/.local/bin and /usr/local/bin first |
+| =install-emacs-source.sh=   | Emacs 31.1 from source, no X (run by hand; see "Emacs from source") |
+| =units/emacs-lean.service=  | the lean fallback init on socket =lean=; installed, not enabled |
+| =emacs/init.el=             | the lean init (for emacs-lean.service)       |
 | =units/readwise-sync.*=     | hourly Readwise pull (oneshot + timer)       |
 | =units/notes-git.*=         | daily git snapshot (oneshot + timer)         |
 | =seed/stignore-shared=      | ignore patterns, seeded INTO the synced folder |
@@ -118,6 +121,180 @@ Then the manual steps the script prints at the end:
    tailnet MagicDNS name (=tcp://<hub>:22000=), share =~/kb= as
    folder id =kb=, enable *Staggered* file versioning on the hub side.
 
+* Zetta on the hub
+
+The daily-driver Emacs config (=~/.zetta.d=, public) runs here in its
+headless profile: no window system, no SVG, no secrets.  Research and
+plan: =~/.zetta.d/headless-zetta.org=.  The bootstrap clones the repo
+(never pulls), installs =templates/zetta.headless.el= as =~/.zetta.el=
+if that is missing, and installs two daemon units:
+
+- =emacs.service= — zetta on the default socket, so =e= / =ei= /
+  =emacsclient -t= are unchanged.  Skipped (=ConditionPathExists=) until
+  =~/.zetta.d/elpaca/builds= exists, so an unbuilt clone never starts a
+  package build inside the daemon.
+- =emacs-lean.service= — the old 59-line init on socket =lean=
+  (=el= alias, =emacsclient -s lean -t=).  Installed, not enabled; the
+  editor to start by hand when zetta is broken.
+
+** First build (once, hours, unattended)
+
+#+begin_src sh
+echo ';;' > ~/.private.el                       # no secrets on the hub
+tmux new-window -d 'nohup ~/.zetta.d/bin/zetta build > ~/zetta-build.log 2>&1'
+tail -f ~/zetta-build.log                         # done: ZETTA-OK, no ELPACA-FAILED
+systemctl --user start emacs                      # condition now holds
+#+end_src
+
+=bin/zetta build= is =install= without the ten-minute window and without
+the eln-cache purge: four hours, thirty-minute stall limit
+(=ZETTA_BUILD_TIMEOUT= / =ZETTA_BUILD_STALL= override).  The headless
+profile sets =native-comp-async-jobs-number= to 1, so the deferred
+native compilation of the first days leaves the one core usable.
+
+Then seed per-machine state, once:
+
+#+begin_src sh
+# org id index (id: links); the index file lives under ~/.zetta.d/.data/
+emacsclient --eval '(org-id-update-id-locations (directory-files-recursively "~/kb" "\\.org\\'"'"'"))'
+# tree-sitter grammars (gcc is on the box now)
+emacsclient --eval '(dolist (l (mapcar (quote car) treesit-language-source-alist)) (treesit-install-language-grammar l))'
+# size the unit's start window from a measured init
+emacsclient --eval '(emacs-init-time)'
+#+end_src
+
+Measured [2026-09-11], first cutover:
+- cold =bin/zetta build=: 63 min on 1 OCPU (packages 16 min, the rest
+  byte- and native-compile); =ZETTA-OK packages=195 modules=178=
+- =emacs-init-time=: 3.7 s; restart to =emacsclient= answering: 9 s
+- =TimeoutStartSec= chosen: 300 (the lean unit's old value; ample)
+- seeding: 18 org ids over 1076 files; grammars python, tsx,
+  typescript compiled (python needs the v0.23.6 pin for Emacs 29)
+
+Two per-machine traps found at the first start, both fixed upstream:
+- =~/kb/wiki/.hywiki.eld= is hywiki's cache and records ABSOLUTE
+  paths; a copy synced before it was ignored made =hywiki-directory=
+  a =/Users/...= path on the hub and hyperbole's config died creating
+  it.  The ignore rule exists; the stale copy was deleted by hand.
+- hyperbole's deferred require needs the real =ibuffer= loaded first
+  (the config's =core/ibuffer.el= file name satisfies
+  =eval-after-load "ibuffer"= early); zetta now loads it eagerly.
+
+** Updating zetta
+
+A plain =git pull= cannot cross a history rewrite (the repository's
+history was rewritten on 2026-09-13 to remove leaked values; the same
+may happen again).  When =git pull= refuses with "refusing to merge
+unrelated histories" or diverged-branch errors, take the remote's copy:
+=git -C ~/.zetta.d fetch origin && git -C ~/.zetta.d reset --hard origin/main=
+-- after checking =git status= is clean, since a reset discards local
+edits.  The daemon needs no restart when the tracked content is
+unchanged.
+
+
+=hub-deploy= ships =hub/= only.  The config updates by hand:
+
+#+begin_src sh
+git -C ~/.zetta.d status --short                        # expect nothing (see below)
+git -C ~/.zetta.d pull
+cp ~/.zetta.d/templates/zetta.headless.el ~/.zetta.el   # the profile is a COPY (see below)
+~/.zetta.d/bin/zetta build                              # warm: minutes
+systemctl --user restart emacs                          # when no session is live
+#+end_src
+
+=~/.zetta.el= is a copy of the template, made once by the bootstrap and
+never overwritten (it is the owner's file).  A pull that changes the
+template therefore changes nothing until the copy is refreshed --
+measured [2026-09-11]: the first warm build after PR #146 rebuilt the
+old profile (195 packages, 178 modules) because this step was
+missing.  The cp is safe exactly because the hub copy is not edited by
+hand: profile changes go through the repo and CI's nox row.
+
+Every module in the headless profile is loaded by CI's =emacs-nox= row
+(apt 29.3, the hub's own package) before it can reach =main=, so a
+green pull is expected to load here.
+
+A dirty =init.el= blocks the pull.  Seen [2026-09-11]: tramp saves its
+connection-local profiles through Customize, and with =custom-file=
+unset that rewrote the =custom-set-variables= block in =init.el= (a
+reflow, same data).  The headless profile now points =custom-file= at
+=.data/custom.el=, so this stops recurring; a checkout still carrying
+the old rewrite is reset with =git -C ~/.zetta.d checkout -- init.el=.
+
+The profile's module lists are the owner's keep-out sheet
+(=~/headless-hub-plan.org=, 2026-09-11 pass): edit the template in the
+repo, not =~/.zetta.el= on the hub, and the CI row proves the change
+before the pull and the cp.
+
+** Emacs from source (31.1, run by hand)
+
+apt's =emacs-nox= is 29.3.  The config is written against 31, and 31.1
+is a release now, so the hub can run it: =install-emacs-source.sh=
+(installed to =~/.local/bin= by the bootstrap, never run by it) builds
+the pinned tag with =--without-x= (so SVG stays absent and the
+capability predicates keep the chrome off), native compilation,
+tree-sitter, sqlite, gnutls and libsystemd (=Type=notify=), and
+installs under =/usr/local=.  apt's package stays: it is
+=emacs-lean.service='s Emacs and CI's floor row.  About an hour of
+compile on 1 OCPU, then the package rebuild the script prints (another
+hour), then a daemon restart -- =emacs.service= finds =emacs= through
+PATH with =/usr/local/bin= first, so the restart is the switch-over.
+
+#+begin_src sh
+tmux new-window -d 'install-emacs-source.sh > ~/emacs-build.log 2>&1'
+tail -f ~/emacs-build.log          # ends with the three next steps
+#+end_src
+
+Measured [2026-09-11], first run, 1 OCPU:
+- apt deps + configure + =make=: 22 min (native-comp =yes=, so no AOT
+  of Emacs's own Lisp; that compiles on demand into
+  =~/.zetta.d/eln-cache/31.1-.../= afterwards, one worker at a time)
+- package rebuild after =rm -rf elpaca/builds eln-cache=: 62 min,
+  =ZETTA-OK packages=210 modules=200= (one more package than on 29.3:
+  =repeatable= builds instead of the fallback)
+- restart: =emacs-init-time= 3.4 s; unit resolved =/usr/local/bin/emacs=
+  through PATH, no unit edit needed
+- two things the switch surfaced: (1) corfu warns that corfu-terminal
+  is not needed on 31 -- harmless, one line in =*Warnings*=, the
+  module stays until the profile gates it; (2) the python grammar had
+  been compiled at seeding time from an unpinned checkout (ABI 15,
+  before the v0.23.6 pin was pulled) and 31 refused it, as 29 had;
+  =treesit-install-language-grammar= rebuilt it (ABI 14, verified by
+  reading the =TSLanguage= version field with ctypes), and the daemon
+  needed a restart to see it -- a failed =dlopen= keeps the old
+  library mapped, so the same path reports the old ABI until then.
+
+What the upgrade changes by itself: consult-gh/consult-omni would
+build (still out: gh and web search are not hub work); the repeatable
+and treesit-tap fallbacks in zetta give way to the real thing; on 31,
+corfu and vertico-posframe use native tty child frames
+(corfu-terminal becomes redundant, stays harmless) and the ef-themes
+header-line faces apply.  Not changed: the python grammar's v0.23.6
+pin (libtree-sitter-dev is 0.20.8, grammar ABI 14 either way).
+
+** Terminal ergonomics (Phase C record)
+
+What is set: =COLORTERM=truecolor= in the shell (bashrc-additions),
+=terminal-features RGB= and =extended-keys on= in tmux.conf,
+=xterm-mouse-mode= and OSC 52 (=xterm-tmux-extra-capabilities= with
+=setSelection=) in the headless profile, =corfu-terminal= for
+completion popups on a 29/30 tty.  Outcomes from Blink, to fill in:
+
+| Item             | Tried                                            | Result    |
+|------------------+--------------------------------------------------+-----------|
+| 24-bit colour    | COLORTERM + terminal-features RGB                | untested  |
+| C-, leader       | extended-keys on, tmux 3.4                       | untested  |
+| =kj= chord       | 50 ms delay (template has the widener)           | untested  |
+| touch taps       | xterm-mouse-mode                                 | untested  |
+| clipboard        | OSC 52: setSelection in the profile, tmux 3.4 forwards it (set-clipboard external), Blink receives | untested |
+| completion popup | corfu-terminal (popon overlays)                  | untested  |
+
+The colour row has a precondition measured [2026-09-11]: the frame
+opened before the shell config carried =COLORTERM= reported 256
+colours (=tty-display-color-cells=), and the tmux server started in
+July had to be told about =terminal-features= (=tmux source
+~/.tmux.conf=, done).  So the test is a new shell, then a new =e=.
+
 * Notes / gotchas
 
 - Oracle's Ubuntu images ship on-host iptables that REJECT most inbound;
@@ -128,9 +305,13 @@ Then the manual steps the script prints at the end:
   =export XDG_RUNTIME_DIR=/run/user/$(id -u)=.
 - The readwise timer is a no-op (exit 0, message in journal) until the
   token file exists, so the unit stays green pre-configuration.
-- Emacs here is stock =emacs-nox= (Ubuntu 24.04 → Emacs 29). Adapting
-  zetta.d for the hub is a separate task (migration doc Phase 5); the
-  daemon unit works with any config.
+- Emacs here is stock =emacs-nox= (Ubuntu 24.04 → Emacs 29): no SVG,
+  no window system, no toolchain beyond the gcc the bootstrap installs.
+  The zetta config runs in its headless profile (section above); the
+  lean init is the fallback on a second socket.
+- The clock: Oracle images boot in Etc/UTC and user units inherit no
+  =TZ=, so the agenda's "today" was a UTC day.  The bootstrap sets the
+  system zone (=HUB_TZ=, default America/New_York).
 - Output layout: =<source>/<author>/<title-slug>.org= — source dirs are
   =podcasts/= (snipd), =web/= (reader/mobile_share/web_clipper),
   =kindle/=, =command/=, =voicenotes/=, =supplementals/= (mapping in

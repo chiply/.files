@@ -18,20 +18,66 @@ stty -ixon
 export PATH=$HOME/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # ============================================================================
+# PROFILE
+# ============================================================================
+# `personal' (the default) or `work': set once in ~/.zshenv.local (sourced
+# by .zshenv before this file).  Read by main.py (the exclude manifest),
+# bootstrap.sh (the personal blocks), the Brewfile (the personal list) and
+# the gates below, whose defaults it flips.  See README.md, "Profiles".
+export DOTFILES_PROFILE="${DOTFILES_PROFILE:-personal}"
+if [ "$DOTFILES_PROFILE" = "work" ]; then
+    _gate_default=f
+else
+    _gate_default=t
+fi
+
+# ============================================================================
 # EMACS-MAC (experimental side-by-side trial)
 # ============================================================================
 # Gates the jdtsmith emacs-mac fork (Emacs 30, retina-correct image
 # rendering) alongside the emacs-plus@31 daily driver.  Consumed by
 # the Brewfile (build deps) and install_emacs_distros.sh (build +
-# ~/.zetta-mac.d profile).  Set to anything other than "t" to skip.
-export INCLUDE_EMACS_MAC=t
+# ~/.zetta-mac.d profile).  Set to anything other than "t" to skip.  A
+# value from ~/.zshenv.local wins; the default is t on the personal
+# profile and f at work.
+export INCLUDE_EMACS_MAC="${INCLUDE_EMACS_MAC:-$_gate_default}"
 if [ "$INCLUDE_EMACS_MAC" = "t" ]; then
     # GUI launch on the isolated chemacs profile
-    alias emacs-mac='open -a "$HOME/Applications/EmacsMac.app" --args --with-profile zetta-mac'
+    alias emacs-mac='zemacs run mac-latest --zetta-mac'
     # daemon + client on a separate socket, never colliding with the main daemon
-    alias emacs-mac-daemon='"$HOME/Applications/EmacsMac.app/Contents/MacOS/Emacs" --with-profile zetta-mac --daemon=mac'
+    alias emacs-mac-daemon='zemacs run mac-latest --zetta-mac --daemon'
     alias ecm='emacsclient -s mac'
 fi
+
+# ============================================================================
+# EMACS FROM SOURCE (upstream master)
+# ============================================================================
+# Gates the from-source build of GNU Emacs master (32.0.50 -- the release
+# where canvas landed) alongside the emacs-plus@31 daily driver.  Consumed by
+# the Brewfile (build deps) and install_emacs_distros.sh, which delegates to
+# install_emacs_source.sh.  Since 2026-09-06 this is the daily driver:
+# reproduces emacs-plus@31's feature set so the two are interchangeable.
+# Set to anything other than "t" to skip.  A value from ~/.zshenv.local
+# wins; the default is t on the personal profile and f at work.
+export INCLUDE_EMACS_SRC="${INCLUDE_EMACS_SRC:-$_gate_default}"
+if [ "$INCLUDE_EMACS_SRC" = "t" ]; then
+    # GUI launch on the isolated chemacs profile
+    alias emacs-src='zemacs run src-latest --zetta'
+    # daemon + client on a separate socket, never colliding with the main daemon
+    alias emacs-src-daemon='zemacs run src-latest --zetta --daemon'
+    alias ecs='emacsclient -s src'
+    # move the pinned revision forward and rebuild (~45-70 min, AOT native comp)
+    alias emacs-src-update='"$HOME/.files/install_emacs_source.sh" --bump'
+    alias emacs-src-version='cat "$HOME/.local/state/emacs-src/build-info"'
+    # swap back to the previously built bundle (seconds, not a rebuild); the
+    # pin moves with it, so commit files/.config/emacs-src/revision to keep it
+    alias emacs-src-rollback='"$HOME/.files/install_emacs_source.sh" --rollback'
+fi
+unset _gate_default
+# `brew' drops every non-HOMEBREW_* variable before it reads the Brewfile,
+# so the two gates reach its conditional blocks only through these mirrors.
+export HOMEBREW_INCLUDE_EMACS_MAC="$INCLUDE_EMACS_MAC"
+export HOMEBREW_INCLUDE_EMACS_SRC="$INCLUDE_EMACS_SRC"
 
 # ============================================================================
 # ZINIT SETUP (replaces oh-my-zsh for faster startup)
@@ -519,16 +565,20 @@ if [[ "$INSIDE_EMACS" == 'vterm' ]] \
 fi
 
 # ============================================================================
-# EMACS CLIENT
+# GHOSTEL (Emacs)
 # ============================================================================
-# `emacsclient -c -a ""` spawns a vanilla `emacs --daemon` when no daemon is
-# running — wrong profile, and on macOS the resulting frames don't register
-# with NSApplication (no app-switcher icon, broken focus). This function spawns
-# the same fg-daemon the tmuxinator workflow uses, then connects.
-ec() {
-  if ! emacsclient -e t >/dev/null 2>&1; then
-    (nohup /opt/homebrew/bin/emacs --with-profile zetta --fg-daemon >/dev/null 2>&1 &)
-    while ! emacsclient -e t >/dev/null 2>&1; do sleep 0.5; done
-  fi
-  emacsclient -c -n "$@"
-}
+# Ghostel hardcodes COLORTERM=truecolor, so anything that checks it emits
+# exact RGB and bypasses the 16-slot ANSI palette Emacs controls.  Dropping
+# it makes those programs fall back to indexed colours, which the Emacs
+# theme remaps onto the current canvas.
+#
+# The unset has to happen here rather than in Emacs: ghostel prepends its
+# own process-environment entries and the first match for a name wins, so
+# an ambient COLORTERM never reaches the shell.
+#
+# Toggled from Emacs with `zetta-ghostel-toggle-truecolor-clamp', which
+# sets the variable below.  Environment is fixed at exec, so it applies to
+# terminals started afterwards.
+if [[ "$INSIDE_EMACS" == 'ghostel' && -n "$ZETTA_GHOSTEL_NO_TRUECOLOR" ]]; then
+  unset COLORTERM
+fi

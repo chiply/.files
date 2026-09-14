@@ -1,0 +1,11 @@
+# gitleaks configuration for .githooks/pre-commit and for scanning the
+# tree by hand: gitleaks dir . --redact --no-banner
+#
+# Default provider-token rules, extended.  1Password references
+# (op://Vault/Item/field) and the __PLACEHOLDER__ tokens in the plists are
+# not secrets; the default rules do not match them, so no allow-list entry
+# is needed today.  Add one here, with a comment saying what the string
+# is, if a documented placeholder ever trips a rule.
+
+[extend]
+useDefault = true

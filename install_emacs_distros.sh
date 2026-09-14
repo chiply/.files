@@ -1,3 +1,16 @@
+#!/bin/bash
+# Resolved before the cd's below: the sections of this script change
+# directory freely, so $0 is only usable relative to the original cwd.
+DISTROS_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# INCLUDE_OTHER_DISTROS gates the four distributions other than zetta
+# (Spacemacs, Doom, Prelude, Centaur): t installs them, anything else
+# skips them.  bootstrap.sh defaults it to t on the personal profile and
+# f at work (five Emacs distributions arriving uninvited on a managed
+# machine: work-security-audit.org S8).  chemacs stays: the profile
+# switcher every launcher goes through.
+INCLUDE_OTHER_DISTROS="${INCLUDE_OTHER_DISTROS:-t}"
+
 ######################################################################
 # chemacs
 ######################################################################
@@ -7,6 +20,7 @@ git clone https://github.com/plexus/chemacs.git && \
     ./install.sh
 
 
+if [ "$INCLUDE_OTHER_DISTROS" = "t" ]; then
 ######################################################################
 # spacemacs
 ######################################################################
@@ -45,7 +59,7 @@ fi
 
 
 ######################################################################
-# cetnaur
+# centaur
 ######################################################################
 if [ -d ~/.centaur.d ]; then
     cd ~/.centaur.d
@@ -53,6 +67,7 @@ if [ -d ~/.centaur.d ]; then
 else
     git clone --depth 1 https://github.com/seagle0128/.emacs.d.git ~/.centaur.d
 fi
+fi  # INCLUDE_OTHER_DISTROS
 
 
 ######################################################################
@@ -109,4 +124,37 @@ if [ "${INCLUDE_EMACS_MAC}" = "t" ]; then
 fi
 
 
+######################################################################
+# emacs from source (upstream master)
+#
+# A fourth chemacs variant, built from the GNU Emacs git tree by
+# install_emacs_source.sh.  Tracks master (32.0.50) because that is
+# where the canvas feature landed -- canvas is unconditional there,
+# no --with-canvas flag and no patch to apply.  The build reproduces
+# emacs-plus@31's feature set (same configure flags, same four NS
+# patches, same Info.plist and codesign post-processing) so switching
+# between the two is seamless.  Gated on INCLUDE_EMACS_SRC
+# (files/.zshrc); build deps come from the Brewfile's gated section.
+# Installs as ~/Applications/EmacsSrc.app -- never touches
+# /Applications/Emacs.app (the emacs-plus symlink).
+#
+# The revision is pinned in files/.config/emacs-src/revision and moved
+# forward deliberately with `--bump`, so a fresh machine reproduces
+# the same Emacs and a bad master commit is one edit from rollback.
+#
+# No separate config profile: ~/.zetta.d is itself compiled under the
+# source build now (2026-09-06), so the source Emacs is the daily driver
+# on the "zetta" profile.  The isolated "zetta-src" profile existed only
+# for the side-by-side trial and was retired once the migration landed.
+# Consequence worth remembering: ~/.zetta.d's bytecode is Emacs 32, so
+# running emacs-plus 31 against it re-runs the 2026-07 version-skew
+# saga.  Use `zetta install' under the intended Emacs after switching.
+######################################################################
+if [ "${INCLUDE_EMACS_SRC}" = "t" ]; then
+    "$DISTROS_DIR/install_emacs_source.sh"
 
+    # Rust dynamic module for the canvas API.  Needs the bundle to exist
+    # (it builds against the emacs-module.h shipped inside it), so it runs
+    # after the Emacs build rather than beside it.
+    "$DISTROS_DIR/install_emacs_canvas_rs.sh"
+fi

@@ -5,6 +5,15 @@ concurrency:
 
 on:
   workflow_dispatch:
+    inputs:
+      # The bootstrap runs on every push and PR with the personal profile;
+      # the work profile is exercised by hand from here (WP-F9), not as a
+      # second matrix entry (a full macOS bootstrap per PR is billed).
+      profile:
+        description: "DOTFILES_PROFILE for the run"
+        type: choice
+        options: [personal, work]
+        default: personal
   pull_request:
   push:
     branches:
@@ -13,6 +22,8 @@ on:
 jobs:
   bootstrap:
     runs-on: macos-latest
+    env:
+      DOTFILES_PROFILE: ${{ inputs.profile || 'personal' }}
     steps:
     - uses: actions/checkout@v4
     - run: cp -a $GITHUB_WORKSPACE ~/

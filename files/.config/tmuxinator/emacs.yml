@@ -1,13 +1,21 @@
 name: emacs
 root: ~/
 
+# Launches the from-source Emacs (32.x) via the zemacs shim rather than a
+# hardcoded binary path, so this keeps working when the build is bumped or
+# replaced -- `emacs-src-latest' always resolves to the newest source build.
+#
+# The socket is "src" (zemacs names a bare --fg-daemon after the vendor, not
+# the version, so it survives a version bump).  Both panes must agree on it:
+# a plain `emacsclient' would reach the DEFAULT socket and silently talk to
+# a different Emacs, or hang waiting for one that never appears.
 windows:
   - emacs:
       layout: even-horizontal
       panes:
-        - daemon: /opt/homebrew/bin/emacs --with-profile zetta --debug-init --fg-daemon
+        - daemon: emacs-src-latest --zetta --debug-init --fg-daemon
         - client: >-
-            while ! emacsclient -e '(+ 1 1)' >/dev/null 2>&1; do
+            while ! emacsclient -s src -e '(+ 1 1)' >/dev/null 2>&1; do
               sleep 0.5;
             done;
-            emacsclient -n -c
+            emacsclient -s src -n -c

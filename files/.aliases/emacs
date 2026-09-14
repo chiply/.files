@@ -1,1 +1,31 @@
-/Users/charlieholland/.files/files/.aliases/emacs
+####### emacs
+# `emacs' and `emacsclient' come from PATH (see files/bin/zemacs for
+# per-build launchers); the profile daemons below use the same binary.
+
+# emacs -Q
+alias qmacs="emacs --daemon=qmacs --with-profile qmacs"
+alias qc="emacsclient -c -s qmacs"
+
+# zetta
+alias zetta="emacs --daemon=zetta --with-profile zetta"
+alias zc="emacsclient -c -s zetta"
+
+# tera
+alias tera="emacs --daemon=tera --with-profile tera"
+alias terac="emacsclient -c -s tera"
+
+# spacemacs
+alias spacemacs="emacs --daemon=spacemacs --with-profile spacemacs"
+alias sc="emacsclient -c -s spacemacs"
+
+# doom
+alias doom-emacs="emacs --daemon=doom --with-profile doom"
+alias dc="emacsclient -c -s doom"
+
+# prelude
+alias prelude="emacs --daemon=prelude --with-profile prelude"
+alias pc="emacsclient -c -s prelude"
+
+# centaur
+alias centaur="emacs --daemon=centaur --with-profile centaur"
+alias cc="emacsclient -c -s centaur"

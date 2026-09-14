@@ -1,0 +1,13 @@
+# files/ paths the work profile never links into $HOME (work-profile.org
+# Part 6.2).  gitignore-style globs relative to files/, read by main.py
+# when DOTFILES_PROFILE=work; `personal' has no manifest.  A `#' starts
+# a comment.
+.msmtprc                     # personal mail (untracked; listed for a machine that has one)
+.msmtprc.example             # (*.example files are never linked anyway)
+.gnus.el                     # news reader
+.newsrc*                     # news reader state (untracked)
+.mpd/**                      # music daemon
+.config/signal-cli/**        # Signal LaunchAgent
+.config/wallpaper/**         # wallpaper rotation, Aura frame sync
+.local/bin/hub-deploy        # personal VPS
+.local/bin/st-ensure-folder  # Syncthing folder registration
