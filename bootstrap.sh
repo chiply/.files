@@ -112,8 +112,10 @@ export HOMEBREW_INCLUDE_EMACS_PLUS="${INCLUDE_EMACS_PLUS:-t}"
 { sed -nE 's/^tap "([^"]+)".*/\1/p' "$REPO_ROOT/files/.config/Brewfile"
   sed -nE 's/^(brew|cask) "([^/"]+\/[^/"]+)\/[^"]+".*/\2/p' "$REPO_ROOT/files/.config/Brewfile"
 } | sort -u | while IFS= read -r t; do
-    brew tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not tap $t" >&2
+    # trust FIRST: Homebrew 7 refuses to tap an untrusted tap ("Cannot tap ...:
+    # invalid syntax in tap!" -- measured 2026-09-14 on CI and locally)
     brew trust --tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not trust tap $t (brew trust)" >&2
+    brew tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not tap $t" >&2
 done
 if ! brew bundle --force --file="$REPO_ROOT/files/.config/Brewfile"; then
     critical "brew bundle (missing entries: $(brew bundle check --file="$REPO_ROOT/files/.config/Brewfile" --verbose 2>&1 | grep -vE '^Checking|satisfied' | tr '\n' ' ' | cut -c1-300))"
