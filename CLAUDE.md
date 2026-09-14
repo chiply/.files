@@ -7,6 +7,7 @@ Personal dotfiles repository for bootstrapping macOS development environments.
 ```
 .files/
 ├── bootstrap.sh              # Main setup script for new machines (--profile work)
+├── setup-work-machine.sh     # One-shot, e-mailable wrapper for an employer-managed Mac (source-built Emacs, no emacs-plus)
 ├── main.py                   # Symlink generation script (manifest, backups, --dry-run)
 ├── profiles/work.exclude     # files/ paths the work profile never links
 ├── install_emacs_distros.sh  # Emacs installation script (INCLUDE_OTHER_DISTROS)
@@ -30,7 +31,9 @@ Personal dotfiles repository for bootstrapping macOS development environments.
 or by `bootstrap.sh --profile work`.  On `work`, `main.py` skips the
 manifest paths, `bootstrap.sh` skips the personal blocks (Syncthing folder,
 signal-cli/wallpaper/Aura LaunchAgents, snowsql) and installs the Emacs
-config's work template, and the Brewfile skips its personal entries.  `brew`
+config's work template, and the Brewfile skips its personal entries.
+`INCLUDE_EMACS_PLUS=f` leaves the Homebrew Emacs out for a machine that runs
+the source build alone (the lolipop module is then skipped too).  `brew`
 filters its environment, so the profile and the two Emacs build gates reach
 the Brewfile as `HOMEBREW_*` mirrors exported by `.zshenv`, `.zshrc` and
 `bootstrap.sh`.  README.md, "Profiles", has the per-file list and the work

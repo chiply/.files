@@ -78,6 +78,10 @@ unset _gate_default
 # so the two gates reach its conditional blocks only through these mirrors.
 export HOMEBREW_INCLUDE_EMACS_MAC="$INCLUDE_EMACS_MAC"
 export HOMEBREW_INCLUDE_EMACS_SRC="$INCLUDE_EMACS_SRC"
+# INCLUDE_EMACS_PLUS=f (in ~/.zshenv.local) leaves the Homebrew Emacs out on a
+# machine that runs the source build alone.
+export INCLUDE_EMACS_PLUS="${INCLUDE_EMACS_PLUS:-t}"
+export HOMEBREW_INCLUDE_EMACS_PLUS="$INCLUDE_EMACS_PLUS"
 
 # ============================================================================
 # ZINIT SETUP (replaces oh-my-zsh for faster startup)

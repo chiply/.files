@@ -48,6 +48,12 @@ for the run. It is read by:
   at work, and the linode wrapper (a personal 1Password item) is not
   defined there.
 
+For a machine that runs the source-built Emacs alone, set `INCLUDE_EMACS_PLUS=f`
+as well: the Homebrew `emacs-plus@31` formula is skipped (its tap stays, the
+source build takes its NS patches from it), and `EMACS` should point at
+`~/Applications/EmacsSrc.app/Contents/MacOS/Emacs` so `bin/zetta` uses it.
+`setup-work-machine.sh` does all of this in one go -- see below.
+
 A work machine's whole `~/.zshenv.local`:
 
 ```sh
@@ -58,6 +64,23 @@ export INCLUDE_EMACS_SRC=f          # emacs-plus@31 on day one; flip to t later
 export INCLUDE_OTHER_DISTROS=f      # no Spacemacs/Doom/Prelude/Centaur
 # export GH_HOST=github.example.com # GitHub Enterprise, if any
 ```
+
+### One-shot setup of a work machine
+
+`setup-work-machine.sh` is self-contained (it clones this repo itself) and
+value-free, so it can travel by e-mail or be fetched from GitHub:
+
+```bash
+curl -fsSLo ~/setup-work-machine.sh https://raw.githubusercontent.com/chiply/.files/main/setup-work-machine.sh
+bash ~/setup-work-machine.sh --dry-run   # the plan
+bash ~/setup-work-machine.sh             # command-line tools, ~/.zshenv.local, clone, bootstrap --profile work,
+                                         # Emacs from source, ~/.private.el draft, hooks, bin/zetta install/doctor/test
+```
+
+It refuses to run on a machine whose `~/.zshenv.local` holds the personal vault
+token, never overwrites a file that exists, and can be re-run after a failure.
+`GH_HOST`, `INCLUDE_SNOWFLAKE=t`, `INCLUDE_OP=t` and `EMACS_SRC_NATIVE_COMP=yes`
+in its environment are honoured.
 
 `brew` filters its environment down to `HOMEBREW_*` variables before it reads
 a Brewfile, so `.zshenv`, `.zshrc` and `bootstrap.sh` export `HOMEBREW_`

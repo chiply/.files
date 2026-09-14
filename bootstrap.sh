@@ -89,6 +89,7 @@ brew tap Homebrew/bundle
 export HOMEBREW_DOTFILES_PROFILE="$DOTFILES_PROFILE"
 export HOMEBREW_INCLUDE_EMACS_MAC="${INCLUDE_EMACS_MAC:-}"
 export HOMEBREW_INCLUDE_EMACS_SRC="${INCLUDE_EMACS_SRC:-}"
+export HOMEBREW_INCLUDE_EMACS_PLUS="${INCLUDE_EMACS_PLUS:-t}"
 brew bundle \
      --force --no-lock \
      --file="$REPO_ROOT/files/.config/Brewfile"
@@ -172,8 +173,9 @@ if [ -x "$HOME/bin/zemacs" ]; then
     "$HOME/bin/zemacs" shims
 fi
 
-# lolipop cursor animation (requires emacs-plus@31)
-if [ ! -d "$HOME/.zetta.d/source/lib/lolipop" ]; then
+# lolipop cursor animation: a dynamic module built against emacs-plus@31's
+# headers, so only where that formula is installed (INCLUDE_EMACS_PLUS=t)
+if [ ! -d "$HOME/.zetta.d/source/lib/lolipop" ] && brew --prefix emacs-plus@31 >/dev/null 2>&1; then
     git clone https://github.com/RadioNoiseE/lolipop /tmp/lolipop
     cd /tmp/lolipop
     make EMACS_INCLUDE="$(brew --prefix emacs-plus@31)/include"
