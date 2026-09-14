@@ -21,10 +21,10 @@ PS1=$PS1'\[$(vterm_prompt_end)\]'
 
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+command -v pyenv >/dev/null && eval "$(pyenv init -)"
 
 
-unexport VIRTUAL_ENV
+unset VIRTUAL_ENV   # `unexport' is not a bash builtin
 
 export LSP_USE_PLISTS=true
 
@@ -52,6 +52,5 @@ fi
 # <<< conda initialize <<<
 
 
-. "$HOME/.cargo/env"
-
-. "$HOME/.local/share/../bin/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"   # uv

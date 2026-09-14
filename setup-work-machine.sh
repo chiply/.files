@@ -82,13 +82,17 @@ if [ -f "$HOME/.zshenv.local" ]; then note "exists, left alone"; else
 fi
 
 say "3. Clone .files"
-if [ -d "$FILES/.git" ]; then note "present: $(git -C "$FILES" rev-parse --short HEAD)"; else run git clone https://github.com/chiply/.files "$FILES"; fi
+if [ -d "$FILES/.git" ]; then
+  run git -C "$FILES" pull -q --ff-only origin main; note "present, updated: $(git -C "$FILES" rev-parse --short HEAD)"
+else run git clone https://github.com/chiply/.files "$FILES"; fi
 
 say "4. bootstrap.sh --profile work (Homebrew, dotfiles, the Emacs build, .zetta.d)"
 note "about 30 minutes plus the Emacs build; one sudo prompt at the start"
 if [ "$DRY" = 1 ]; then note "[dry-run] source ~/.zshenv.local && $FILES/bootstrap.sh --profile work"; else
-  # shellcheck disable=SC1091
-  set +u; source "$HOME/.zshenv.local"; set -u
+  set +u
+  # shellcheck source=/dev/null
+  source "$HOME/.zshenv.local"
+  set -u
   ( cd "$FILES" && ./bootstrap.sh --profile work )
 fi
 

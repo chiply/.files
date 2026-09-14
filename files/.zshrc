@@ -100,7 +100,8 @@ source "${ZINIT_HOME}/zinit.zsh"
 # ============================================================================
 _banner_dir="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/banner"
 if [[ -d "$_banner_dir" ]]; then
-  _banner_file=$(find -L "$_banner_dir" -type f -name '*.asc' | shuf -n 1)
+  # awk, not shuf: coreutils is only installed with the Emacs build gates
+  _banner_file=$(find -L "$_banner_dir" -type f -name '*.asc' | awk 'BEGIN{srand()} {a[NR]=$0} END{if (NR) print a[int(rand()*NR)+1]}')
   [[ -n "$_banner_file" ]] && cat "$_banner_file"
 fi
 
@@ -144,7 +145,7 @@ zinit ice wait'0' lucid
 zinit light Aloxaf/fzf-tab
 
 # zoxide (must init after compinit for Space-Tab interactive picker)
-zinit ice wait'0' lucid atload'eval "$(zoxide init zsh --cmd cd)"'
+zinit ice wait'0' lucid atload'command -v zoxide >/dev/null && eval "$(zoxide init zsh --cmd cd)"'
 zinit light zdharma-continuum/null
 
 # ============================================================================
@@ -457,12 +458,12 @@ esac
 source ~/.sh_utility_functions.sh
 
 # Atuin (shell history) - takes over C-r, keeps up-arrow as normal
-eval "$(atuin init zsh --disable-up-arrow)"
+command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
 
 # Television (fuzzy finder) - smart autocomplete on C-t (deferred after compinit)
-zinit ice wait'1' lucid atload'eval "$(tv init zsh)"'
+zinit ice wait'1' lucid atload'command -v tv >/dev/null && eval "$(tv init zsh)"'
 zinit light zdharma-continuum/null
-. "$HOME/.local/share/../bin/env"
+[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"   # uv
 
 # ============================================================================
 # PROMPT
@@ -538,7 +539,8 @@ _apply_classic_prompt() {
 }
 
 _apply_starship_prompt() {
-  eval "$(starship init zsh)"
+  # a machine whose brew bundle has not finished falls back to the classic prompt
+  if command -v starship >/dev/null; then eval "$(starship init zsh)"; else PROMPT_STYLE=classic; _apply_classic_prompt; fi
 }
 
 prompt-toggle() {

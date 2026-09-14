@@ -1,12 +1,11 @@
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+command -v pyenv >/dev/null && eval "$(pyenv init -)"
 
 export LSP_USE_PLISTS=true
 
 
 
 
-. "$HOME/.cargo/env"
-
-. "$HOME/.local/share/../bin/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"   # uv

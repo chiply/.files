@@ -14,9 +14,8 @@ personal = gate.call("DOTFILES_PROFILE", "personal") != "work"
 
 tap "felixkratz/formulae"
 tap "d12frosted/emacs-plus"
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
+# homebrew/core, homebrew/cask and homebrew/bundle are built into Homebrew
+# and no longer tappable; listing them made brew bundle fail on a fresh Mac.
 tap "isacikgoz/taps"
 tap "sebglazebrook/aliases"
 tap "xo/xo"
