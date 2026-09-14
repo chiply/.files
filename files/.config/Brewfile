@@ -143,7 +143,10 @@ brew "jpeg"
 brew "zlib"
 brew "dbus"
 brew "tree-sitter"
-brew "d12frosted/emacs-plus/emacs-plus@31", args: ["with-imagemagick", "with-xwidgets", "with-dbus"]
+# The Homebrew Emacs.  INCLUDE_EMACS_PLUS=f skips it on a machine that runs
+# the source build alone (the tap above stays: install_emacs_source.sh takes
+# its NS patches from it).  Default t.
+brew "d12frosted/emacs-plus/emacs-plus@31", args: ["with-imagemagick", "with-xwidgets", "with-dbus"] if gate.call("INCLUDE_EMACS_PLUS", "t") == "t"
 brew "isacikgoz/taps/tldr"
 brew "sebglazebrook/aliases/aliases"
 brew "hashicorp/tap/terraform-ls"
