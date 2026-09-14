@@ -189,9 +189,16 @@ if [ -z "${INCLUDE_OTHER_DISTROS:-}" ]; then
     if personal; then export INCLUDE_OTHER_DISTROS=t; else export INCLUDE_OTHER_DISTROS=f; fi
 fi
 chmod +x "$REPO_ROOT/install_emacs_distros.sh"
-"$REPO_ROOT/install_emacs_distros.sh" || critical "install_emacs_distros.sh (exit $?)"
-if [ "${INCLUDE_EMACS_SRC:-}" = t ] && [ ! -x "$HOME/Applications/EmacsSrc.app/Contents/MacOS/Emacs" ]; then
-    critical "the source-built Emacs is missing after install_emacs_source.sh"
+# Its exit status is the LAST section's: after the Emacs build it also builds
+# the optional canvas Rust module, whose failure must not read as a failed
+# Emacs.  The critical question is whether the Emacs bundle exists.
+"$REPO_ROOT/install_emacs_distros.sh" || echo "bootstrap: install_emacs_distros.sh ended with exit $? (see its output above; the Emacs bundle is checked next)" >&2
+if [ "${INCLUDE_EMACS_SRC:-}" = t ]; then
+    if [ -x "$HOME/Applications/EmacsSrc.app/Contents/MacOS/Emacs" ]; then
+        echo "bootstrap: source-built Emacs present: $("$HOME/Applications/EmacsSrc.app/Contents/MacOS/Emacs" --version 2>/dev/null | head -1)"
+    else
+        critical "the source-built Emacs is missing after install_emacs_source.sh (re-run: INCLUDE_EMACS_SRC=t $REPO_ROOT/install_emacs_source.sh 2>&1 | tee ~/emacs-src-build.log)"
+    fi
 fi
 
 # zemacs shims: one command per installed Emacs build (emacs-src-latest,
