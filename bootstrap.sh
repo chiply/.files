@@ -112,8 +112,10 @@ export HOMEBREW_INCLUDE_EMACS_PLUS="${INCLUDE_EMACS_PLUS:-t}"
 { sed -nE 's/^tap "([^"]+)".*/\1/p' "$REPO_ROOT/files/.config/Brewfile"
   sed -nE 's/^(brew|cask) "([^/"]+\/[^/"]+)\/[^"]+".*/\2/p' "$REPO_ROOT/files/.config/Brewfile"
 } | sort -u | while IFS= read -r t; do
-    brew tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not tap $t" >&2
+    # trust FIRST: Homebrew 7 refuses to tap an untrusted tap ("Cannot tap ...:
+    # invalid syntax in tap!" -- measured 2026-09-14 on CI and locally)
     brew trust --tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not trust tap $t (brew trust)" >&2
+    brew tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not tap $t" >&2
 done
 if ! brew bundle --force --file="$REPO_ROOT/files/.config/Brewfile"; then
     critical "brew bundle (missing entries: $(brew bundle check --file="$REPO_ROOT/files/.config/Brewfile" --verbose 2>&1 | grep -vE '^Checking|satisfied' | tr '\n' ' ' | cut -c1-300))"
@@ -189,9 +191,16 @@ if [ -z "${INCLUDE_OTHER_DISTROS:-}" ]; then
     if personal; then export INCLUDE_OTHER_DISTROS=t; else export INCLUDE_OTHER_DISTROS=f; fi
 fi
 chmod +x "$REPO_ROOT/install_emacs_distros.sh"
-"$REPO_ROOT/install_emacs_distros.sh" || critical "install_emacs_distros.sh (exit $?)"
-if [ "${INCLUDE_EMACS_SRC:-}" = t ] && [ ! -x "$HOME/Applications/EmacsSrc.app/Contents/MacOS/Emacs" ]; then
-    critical "the source-built Emacs is missing after install_emacs_source.sh"
+# Its exit status is the LAST section's: after the Emacs build it also builds
+# the optional canvas Rust module, whose failure must not read as a failed
+# Emacs.  The critical question is whether the Emacs bundle exists.
+"$REPO_ROOT/install_emacs_distros.sh" || echo "bootstrap: install_emacs_distros.sh ended with exit $? (see its output above; the Emacs bundle is checked next)" >&2
+if [ "${INCLUDE_EMACS_SRC:-}" = t ]; then
+    if [ -x "$HOME/Applications/EmacsSrc.app/Contents/MacOS/Emacs" ]; then
+        echo "bootstrap: source-built Emacs present: $("$HOME/Applications/EmacsSrc.app/Contents/MacOS/Emacs" --version 2>/dev/null | head -1)"
+    else
+        critical "the source-built Emacs is missing after install_emacs_source.sh (re-run: INCLUDE_EMACS_SRC=t $REPO_ROOT/install_emacs_source.sh 2>&1 | tee ~/emacs-src-build.log)"
+    fi
 fi
 
 # zemacs shims: one command per installed Emacs build (emacs-src-latest,
