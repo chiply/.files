@@ -24,8 +24,15 @@ jobs:
     runs-on: macos-latest
     env:
       DOTFILES_PROFILE: ${{ inputs.profile || 'personal' }}
+      # brew reads the Brewfile with a filtered environment: the mirror
+      HOMEBREW_DOTFILES_PROFILE: ${{ inputs.profile || 'personal' }}
     steps:
     - uses: actions/checkout@v4
     - run: cp -a $GITHUB_WORKSPACE ~/
     - run: |
         cd ~ && chmod +x .files/bootstrap.sh && .files/bootstrap.sh
+    # The bootstrap exits 1 on a critical failure since 2026-09-14; this
+    # step additionally asserts that every Brewfile entry for the profile
+    # is present, which a bundle that only printed errors used to hide.
+    - name: Every Brewfile entry installed
+      run: brew bundle check --file=$HOME/.files/files/.config/Brewfile --verbose

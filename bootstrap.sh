@@ -14,6 +14,13 @@ export DOTFILES_PROFILE
 personal() { [ "$DOTFILES_PROFILE" != work ]; }
 echo "bootstrap: profile $DOTFILES_PROFILE"
 
+# This script is deliberately not `set -e': many steps may fail harmlessly
+# on a given machine.  The steps that matter record their failure here
+# and the script exits 1 at the end, so CI and setup-work-machine.sh see
+# it (until 2026-09-14 a failed brew bundle or Emacs build passed CI).
+BOOTSTRAP_FAILED=()
+critical() { echo "bootstrap: CRITICAL STEP FAILED: $*" >&2; BOOTSTRAP_FAILED+=("$*"); }
+
 # Prompt for sudo password upfront and keep alive
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
@@ -88,17 +95,29 @@ fi
 
 # brew bundle is part of Homebrew itself now; tapping homebrew/bundle errors.
 
-# brew bundle --file ~/.config/Brewfile --force cleanup
+# brew bundle --file ~/.config/Brewfile cleanup --force
 # brew bundle --file ~/.config/Brewfile dump
 # `brew' filters the environment down to HOMEBREW_* before it reads the
-# Brewfile, so the profile and the two build gates travel as mirrors.
+# Brewfile, so the profile and the build gates travel as mirrors.
+# No --no-lock: Homebrew 7 rejects it (bundle has no lockfile any more).
 export HOMEBREW_DOTFILES_PROFILE="$DOTFILES_PROFILE"
 export HOMEBREW_INCLUDE_EMACS_MAC="${INCLUDE_EMACS_MAC:-}"
 export HOMEBREW_INCLUDE_EMACS_SRC="${INCLUDE_EMACS_SRC:-}"
 export HOMEBREW_INCLUDE_EMACS_PLUS="${INCLUDE_EMACS_PLUS:-t}"
-brew bundle \
-     --force --no-lock \
-     --file="$REPO_ROOT/files/.config/Brewfile"
+# Homebrew 7 loads formulae and casks from third-party taps only once the
+# tap is trusted (`brew trust`); a fresh machine has trusted nothing, so
+# the bundle would refuse aerospace, borders, k9s, mirrord, terraform-ls,
+# tldr and aliases.  Trust exactly the taps the Brewfile names -- its
+# `tap` lines and the org/tap/name references -- and nothing else.
+{ sed -nE 's/^tap "([^"]+)".*/\1/p' "$REPO_ROOT/files/.config/Brewfile"
+  sed -nE 's/^(brew|cask) "([^/"]+\/[^/"]+)\/[^"]+".*/\2/p' "$REPO_ROOT/files/.config/Brewfile"
+} | sort -u | while IFS= read -r t; do
+    brew tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not tap $t" >&2
+    brew trust --tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not trust tap $t (brew trust)" >&2
+done
+if ! brew bundle --force --file="$REPO_ROOT/files/.config/Brewfile"; then
+    critical "brew bundle (missing entries: $(brew bundle check --file="$REPO_ROOT/files/.config/Brewfile" --verbose 2>&1 | grep -vE '^Checking|satisfied' | tr '\n' ' ' | cut -c1-300))"
+fi
 
 # syncthing folders (install/service via Brewfile; hub provisioning in hub/).
 # Registers folders with the local daemon idempotently — creates the dir if
@@ -169,7 +188,11 @@ sudo tlmgr install dvipng dvisvgm
 if [ -z "${INCLUDE_OTHER_DISTROS:-}" ]; then
     if personal; then export INCLUDE_OTHER_DISTROS=t; else export INCLUDE_OTHER_DISTROS=f; fi
 fi
-chmod +x "$REPO_ROOT/install_emacs_distros.sh" && "$REPO_ROOT/install_emacs_distros.sh"
+chmod +x "$REPO_ROOT/install_emacs_distros.sh"
+"$REPO_ROOT/install_emacs_distros.sh" || critical "install_emacs_distros.sh (exit $?)"
+if [ "${INCLUDE_EMACS_SRC:-}" = t ] && [ ! -x "$HOME/Applications/EmacsSrc.app/Contents/MacOS/Emacs" ]; then
+    critical "the source-built Emacs is missing after install_emacs_source.sh"
+fi
 
 # zemacs shims: one command per installed Emacs build (emacs-src-latest,
 # emacs-plus-31, ...).  Generated rather than tracked, because the set depends
@@ -196,7 +219,7 @@ if [ -d "$HOME/.zetta.d" ]; then
     cd "$HOME/.zetta.d"
     git pull
 else
-    git clone https://github.com/chiply/.zetta.d.git "$HOME/.zetta.d"
+    git clone https://github.com/chiply/.zetta.d.git "$HOME/.zetta.d" || critical "git clone of .zetta.d"
 fi
 # The profile must be in place BEFORE anything loads init.el: bin/zetta
 # substitutes the full-profile example when ~/.zetta.el is missing, and
@@ -350,3 +373,10 @@ OUT="${XDG_CONFIG_HOME:-$HOME/Library/Application Support}/k9s/skins"
 mkdir -p "$OUT"
 curl -L https://github.com/catppuccin/k9s/archive/main.tar.gz | tar xz -C "$OUT" --strip-components=2 k9s-main/dist
 
+# ── summary ──────────────────────────────────────────────────────────
+if [ ${#BOOTSTRAP_FAILED[@]} -gt 0 ]; then
+    echo "bootstrap: FINISHED WITH ${#BOOTSTRAP_FAILED[@]} CRITICAL FAILURE(S):" >&2
+    printf '  - %s\n' "${BOOTSTRAP_FAILED[@]}" >&2
+    exit 1
+fi
+echo "bootstrap: finished, profile $DOTFILES_PROFILE, no critical failure"
