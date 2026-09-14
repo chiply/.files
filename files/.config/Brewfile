@@ -73,8 +73,7 @@ brew "lf"
 brew "libgccjit"
 brew "libmng"
 brew "libtool"
-# openscad is a cask now (the formula is gone); a hobby tool, personal only
-cask "openscad" if personal
+# cask "openscad" -- disabled upstream (fails the Gatekeeper check, 2026-09); a hobby tool, reinstate when it passes
 brew "pango"
 brew "librsvg"
 brew "libxml2"
@@ -391,7 +390,7 @@ cask "font-martian-mono-nerd-font"
 cask "font-meslo-lg-nerd-font"
 cask "font-miao-unicode"
 cask "font-miracode"
-cask "font-miriam-mono-clm"
+# cask "font-miriam-mono-clm" -- its download is dead upstream (failed on CI 2026-09-14); reinstate when it works
 cask "font-monaspace-nf"
 cask "font-monaspice-nerd-font"
 cask "font-monocraft"
