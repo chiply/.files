@@ -104,6 +104,17 @@ export HOMEBREW_DOTFILES_PROFILE="$DOTFILES_PROFILE"
 export HOMEBREW_INCLUDE_EMACS_MAC="${INCLUDE_EMACS_MAC:-}"
 export HOMEBREW_INCLUDE_EMACS_SRC="${INCLUDE_EMACS_SRC:-}"
 export HOMEBREW_INCLUDE_EMACS_PLUS="${INCLUDE_EMACS_PLUS:-t}"
+# Homebrew 7 loads formulae and casks from third-party taps only once the
+# tap is trusted (`brew trust`); a fresh machine has trusted nothing, so
+# the bundle would refuse aerospace, borders, k9s, mirrord, terraform-ls,
+# tldr and aliases.  Trust exactly the taps the Brewfile names -- its
+# `tap` lines and the org/tap/name references -- and nothing else.
+{ sed -nE 's/^tap "([^"]+)".*/\1/p' "$REPO_ROOT/files/.config/Brewfile"
+  sed -nE 's/^(brew|cask) "([^/"]+\/[^/"]+)\/[^"]+".*/\2/p' "$REPO_ROOT/files/.config/Brewfile"
+} | sort -u | while IFS= read -r t; do
+    brew tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not tap $t" >&2
+    brew trust --tap "$t" >/dev/null 2>&1 || echo "bootstrap: could not trust tap $t (brew trust)" >&2
+done
 if ! brew bundle --force --file="$REPO_ROOT/files/.config/Brewfile"; then
     critical "brew bundle (missing entries: $(brew bundle check --file="$REPO_ROOT/files/.config/Brewfile" --verbose 2>&1 | grep -vE '^Checking|satisfied' | tr '\n' ' ' | cut -c1-300))"
 fi
