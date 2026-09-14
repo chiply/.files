@@ -73,7 +73,8 @@ brew "lf"
 brew "libgccjit"
 brew "libmng"
 brew "libtool"
-brew "openscad"
+# openscad is a cask now (the formula is gone); a hobby tool, personal only
+cask "openscad" if personal
 brew "pango"
 brew "librsvg"
 brew "libxml2"
@@ -177,7 +178,7 @@ brew "toilet"
 brew "felixkratz/formulae/borders"
 cask "nikitabobko/tap/aerospace"
 cask "dash"
-cask "vial"
+# cask "vial" -- disabled upstream 2026-09-01 (fails the Gatekeeper check); reinstate when it passes again
 cask "homerow"
 cask "keycastr"
 cask "keyclu"
