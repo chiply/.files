@@ -32,6 +32,9 @@ brew "glib"
 brew "ijq"
 brew "pyenv"
 brew "pipx"
+# the pythons and template tmuxinator sessions
+brew "ipython"
+brew "jupyterlab"
 brew "cheat"
 brew "cmake"
 brew "ctop"
@@ -59,6 +62,7 @@ brew "graphviz"
 brew "gobject-introspection"
 brew "howdoi"
 brew "htop"
+brew "btop"                      # the sysadmin tmuxinator session
 brew "httpie"
 brew "hyperfine"
 brew "shared-mime-info"
@@ -110,6 +114,7 @@ brew "sox"
 brew "the_silver_searcher"
 brew "tmux"
 brew "tmuxp"
+brew "tmuxinator"                # the sessions in .config/tmuxinator (bootstrap used to gem-install it)
 brew "television"
 brew "tokei"
 brew "tree"
@@ -165,6 +170,7 @@ brew "macmon"
 brew "mpc" if personal
 brew "mpd" if personal
 brew "aalib"
+brew "libcaca"                   # cacafire, the fun tmuxinator session
 brew "asciiquarium"
 brew "cmatrix"
 brew "cowsay"

@@ -25,7 +25,8 @@ root: ~/
 # on_project_stop: command
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
-pre_window: source ~/envs/main/bin/activate
+# (guarded: the venv is a per-machine thing; without it the windows run on the Homebrew ipython/jupyter)
+pre_window: '[ -f ~/envs/main/bin/activate ] && source ~/envs/main/bin/activate'
 
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
