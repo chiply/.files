@@ -1,7 +1,8 @@
 name: zetta
 root: ~/
-
 attach: false
-
 windows:
-  - zetta: /opt/homebrew/bin/emacs --with-profile zetta --debug-init --fg-daemon
+  # The source build's daemon on socket "src" (zemacs names it after the
+  # vendor); connect with `emacsclient -s src -c`.  The emacs session is the
+  # same daemon plus a client window.
+  - zetta: emacs-src-latest --zetta --debug-init --fg-daemon

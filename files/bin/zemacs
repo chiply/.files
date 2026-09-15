@@ -24,12 +24,16 @@
 #   emacs-plus-31 --zetta-mac -nw     a specific build, in the terminal
 #   emacs-src-32 --zetta --daemon     daemon on socket "src-32"
 #
-# A `--<name>' that matches a profile in ~/.emacs-profiles.el becomes
-# `--with-profile <name>'; everything else is passed to Emacs untouched.
+# A `--<name>' that matches a profile in ~/.emacs-profiles.el selects that
+# profile.  On Emacs 29+ its directory goes along as `--init-directory <dir>',
+# which makes the directory's early-init.el and eln-cache the ones in use;
+# chemacs's `--with-profile <name>' still picks the init file, because Emacs
+# tries ~/.emacs (chemacs) before <dir>/init.el.  Everything else is passed
+# to Emacs untouched.
 
 set -euo pipefail
 
-PROFILES_FILE="$HOME/.emacs-profiles.el"
+PROFILES_FILE="${ZEMACS_PROFILES_FILE:-$HOME/.emacs-profiles.el}"   # override for tests
 STATE_DIR="$HOME/.local/state/zemacs"
 CACHE="$STATE_DIR/builds.tsv"
 SHIM_DIR="$HOME/bin"
@@ -123,6 +127,37 @@ profiles() {
     grep -oE '^\s*\("[A-Za-z0-9_.-]+"' "$PROFILES_FILE" | tr -d '(" \t'
 }
 
+# The directory of a profile that is ONLY a directory, else "".
+#
+# chemacs v1 (~/.emacs) sets `user-emacs-directory' from the init file --
+# after Emacs has already looked for early-init.el in ~/.emacs.d.  On the
+# personal Mac a hand-made ~/.emacs.d/early-init.el symlink papered over
+# that; a fresh machine had none, so zetta's JIT deny-list never applied,
+# the bootstrap was native-compiled from source in a bare worker, and the
+# second daemon start died with "void: compile-angel".  `--init-directory'
+# (Emacs 29+) sets the directory before early-init.el is looked up and puts
+# eln-cache under it, so the profile's early-init.el is honoured wherever
+# the profile is launched.  It does NOT replace chemacs: Emacs still tries
+# ~/.emacs before <dir>/init.el (startup.el), so `--with-profile' goes along
+# whenever chemacs is installed, and alone for a profile carrying any other
+# chemacs key (custom-file, server-name, env, straight-p).
+chemacs_installed() { [ -f "${ZEMACS_CHEMACS_INIT:-$HOME/.emacs}" ] && grep -q chemacs "${ZEMACS_CHEMACS_INIT:-$HOME/.emacs}"; }
+
+profile_dir() { # name -> directory, or "" when --with-profile alone is right
+    [ -f "$PROFILES_FILE" ] || return 0
+    local entry
+    entry="$(awk -v n="$1" '
+        $0 ~ "^[ \t]*\\(\"" n "\"" { on = 1; print; next }
+        on && $0 ~ /^[ \t]*\("/      { exit }
+        on && $0 !~ /^[ \t]*;/        { print }' "$PROFILES_FILE")"
+    [ -n "$entry" ] || return 0
+    grep -qE '\((custom-file|server-name|env|straight-p)[[:space:]]*\.' <<< "$entry" && return 0
+    local dir
+    dir="$(grep -oE 'user-emacs-directory[[:space:]]*\.[[:space:]]*"[^"]+"' <<< "$entry" \
+           | head -1 | sed -E 's/.*"([^"]+)"/\1/')"
+    printf '%s\n' "${dir/#\~/$HOME}"
+}
+
 # ---------------------------------------------------------------------------
 # Commands
 # ---------------------------------------------------------------------------
@@ -170,8 +205,15 @@ Known: $(builds | cut -f1 | tr '\n' ' ')
         [ "$arg" = "--fg" ] || passthru+=("$arg")
     done
 
+    # The profile: --init-directory on a build that takes it, plus chemacs's
+    # --with-profile whenever chemacs is installed (see profile_dir).
     local -a pre=()
-    [ -n "$profile" ] && pre=(--with-profile "$profile")
+    if [ -n "$profile" ]; then
+        local dir=""
+        [ "${ver%%.*}" -ge 29 ] 2>/dev/null && dir="$(profile_dir "$profile")"
+        [ -n "$dir" ] && pre+=(--init-directory="$dir")
+        if [ -z "$dir" ] || chemacs_installed; then pre+=(--with-profile "$profile"); fi
+    fi
 
     # A bare --daemon gets the VENDOR as its socket name, not the build id:
     # the socket then survives a version bump, so `emacsclient -s src' keeps
@@ -246,6 +288,6 @@ case "${1:-list}" in
     run)     shift; cmd_run "$@" ;;
     client)  shift; cmd_client "$@" ;;
     shims)   cmd_shims ;;
-    -h|--help) sed -n '3,28p' "${BASH_SOURCE[0]}" ;;
+    -h|--help) sed -n '3,32p' "${BASH_SOURCE[0]}" ;;
     *)       cmd_run "$@" ;;   # `zemacs src-latest --zetta' also works
 esac

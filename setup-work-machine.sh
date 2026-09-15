@@ -106,6 +106,7 @@ if [ "$DRY" = 0 ]; then
   grep -q "WORK profile" "$HOME/.zetta.el" || die "the ~/.zetta.el in place is not the work template; fix before installing packages"
   note "user config: $(sed -n 3p "$HOME/.zetta.el")"
   note "$(python3 "$FILES/main.py" --dry-run --profile work | tail -1)"
+  [ -L "$HOME/.emacs.d/early-init.el" ] || note "no ~/.emacs.d/early-init.el link: a Finder launch would skip zetta's early-init (the shims pass --init-directory and are fine); install_emacs_distros.sh makes it"
 fi
 
 say "6. ~/.private.el (work draft; no personal vault, no mail)"

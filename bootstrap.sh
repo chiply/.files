@@ -157,8 +157,8 @@ fi
 curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
 sudo installer -pkg AWSCLIV2.pkg -target /
 
-# tmuxinator: manage complex tmux sessions easily
-gem install tmuxinator
+# tmuxinator comes from the Brewfile: `gem install' ran under Apple's Ruby
+# 2.6 on a fresh Mac and failed on the system gem directory.
 
 # tmux plugin manager (TPM)
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then

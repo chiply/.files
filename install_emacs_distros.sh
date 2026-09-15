@@ -19,6 +19,23 @@ git clone https://github.com/plexus/chemacs.git && \
     cd chemacs && \
     ./install.sh
 
+# chemacs v1 sets `user-emacs-directory' from ~/.emacs, after Emacs has
+# already looked for early-init.el in ~/.emacs.d -- so a launch through
+# chemacs (Finder, `open -a`, a bare `emacs`) skips the profile's
+# early-init.el; for zetta that is the JIT deny-list on the bootstrap,
+# package.el off and the GC tuning, and without the deny-list the second
+# daemon start after an install dies with "void: compile-angel".  Link
+# zetta's in.  The zemacs shims pass --init-directory (Emacs 29+) and do
+# not need this; anything else does.  The target may not exist yet on a
+# first run (bootstrap.sh clones ~/.zetta.d after this script); Emacs
+# ignores a dangling early-init.el.
+mkdir -p ~/.emacs.d
+if [ -e ~/.emacs.d/early-init.el ] && [ ! -L ~/.emacs.d/early-init.el ]; then
+    echo "install_emacs_distros: ~/.emacs.d/early-init.el is a regular file; not replacing it with the zetta link" >&2
+else
+    ln -sfn ~/.zetta.d/early-init.el ~/.emacs.d/early-init.el
+fi
+
 
 if [ "$INCLUDE_OTHER_DISTROS" = "t" ]; then
 ######################################################################
