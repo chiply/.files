@@ -183,6 +183,11 @@ cask "keycastr"
 cask "keyclu"
 cask "basictex"
 cask "ubersicht"
+# the terminal the whole setup assumes: its config is linked and its shaders
+# cloned by bootstrap.sh, and .tmux.conf's C-, prefix needs its csi-u
+# extended keys (Terminal.app cannot send C-,; C-b is the fallback prefix).
+# Was never listed here -- installed by hand on the personal Mac.
+cask "ghostty"
 cask "vivaldi"
 cask "brave-browser"
 cask "firefox"
