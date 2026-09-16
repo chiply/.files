@@ -495,6 +495,17 @@ rm -rf "$APP"
 mv "$STAGING" "$APP"
 say "installed $APP"
 
+# Tell LaunchServices about the bundle, so that `open -a Emacs`, Spotlight
+# and the AeroSpace binding resolve the name.  A bundle moved into place
+# from a hidden staging directory is not seen until something opens it by
+# path; on the first work machine nothing ever had.
+LSREGISTER=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister
+if [ -x "$LSREGISTER" ]; then
+    "$LSREGISTER" -f "$APP" >/dev/null 2>&1 || warn "could not register $APP with LaunchServices"
+else
+    warn "lsregister not found; \`open -a Emacs\` may not resolve until the bundle is opened once by path"
+fi
+
 mkdir -p "$STATE_DIR"
 cat > "$STATE_FILE" <<EOF
 revision=$REVISION

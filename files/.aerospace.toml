@@ -43,7 +43,13 @@ cmd-shift-slash = '''exec-and-forget APP=$(osascript -e 'tell application "Syste
 
 # App switcher
 cmd-shift-g = 'exec-and-forget open -a Ghostty'
-cmd-shift-e = 'exec-and-forget open -a Emacs'
+# Emacs.  Not `open -a Emacs`: LaunchServices resolves the name, and it only
+# knows a bundle once something has opened it by path or Spotlight has indexed
+# it -- the source build in ~/Applications was neither on a fresh machine, so
+# the binding did nothing there (install_emacs_source.sh registers it now).
+# Focus the Emacs window that exists, wherever it is; with none, ask the
+# running daemon for a frame; with no daemon, launch the source build by path.
+cmd-shift-e = '''exec-and-forget PATH="/opt/homebrew/bin:$PATH"; id=$(aerospace list-windows --monitor all --app-bundle-id org.gnu.Emacs --format '%{window-id}' | head -n1); ec="$HOME/Applications/EmacsSrc.app/Contents/MacOS/bin/emacsclient"; if [ -n "$id" ]; then aerospace focus --window-id "$id"; elif [ -x "$ec" ] && "$ec" -s src -e t >/dev/null 2>&1; then "$ec" -s src -n -c; else open -a "$HOME/Applications/EmacsSrc.app" || open -a Emacs; fi'''
 cmd-shift-c = 'exec-and-forget open -a "Vivaldi"'
 cmd-shift-l = 'exec-and-forget open -a Logseq'
 cmd-shift-m = 'exec-and-forget open -a Messages'
