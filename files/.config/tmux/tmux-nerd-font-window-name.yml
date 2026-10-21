@@ -1,3 +1,15 @@
+# Window-name icons for joshmedeski/tmux-nerd-font-window-name.
+#
+# Only what differs from the plugin's bin/defaults.yml belongs here: the
+# shells, editors, git, docker, python, htop/btop and tmux itself take the
+# plugin's own icons.  They were listed here once, each as "" -- the file
+# was written by a tool that drops BMP private-use characters -- and an
+# empty entry is still an override: every one of them drew the fallback.
+#
+# The glyphs have to be real UTF-8 (the plugin reads this file with awk,
+# which decodes no "\uXXXX" escape).  After an edit, make sure none was
+# dropped on the way in -- this should print nothing:
+#   grep -n '^  .*: ""$' ~/.config/tmux/tmux-nerd-font-window-name.yml
 config:
   fallback-icon: "󰘔"
   multi-pane-icon: "󱒕"
@@ -5,21 +17,22 @@ config:
   icon-position: left
 
 icons:
-  zsh: ""
-  bash: ""
-  emacs: ""
-  nvim: ""
-  vim: ""
-  python: ""
-  python3: ""
   node: "󰎙"
-  docker: ""
   kubectl: "󱃾"
-  git: ""
-  htop: ""
-  btop: ""
   ssh: "󰣀"
   man: "󰂽"
   less: "󰂽"
-  tmux: ""
   claude: "󰚩"
+  # the native Claude Code binary reports itself with the suffix
+  claude.exe: "󰚩"
+  # the GUI binary and the client; the plugin only knows lowercase `emacs'
+  Emacs: ""
+  emacsclient: ""
+  # The plugin still ships these four from the Material Design range that
+  # Nerd Fonts 3 removed (U+F500-U+FD46).  Two of the old codepoints are
+  # Arabic presentation forms, so `terraform' drew an Arabic ligature.
+  # These are the nf-md glyphs from the range that exists (U+F0001+).
+  terraform: "󱁢"
+  ansible: "󱂚"
+  R: "󰟔"
+  vue: "󰡄"

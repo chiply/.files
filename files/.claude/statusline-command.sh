@@ -15,8 +15,11 @@ SHORTEN_MODEL=1    # 1 trims a trailing parenthetical: "Opus 5 (1M context)" -> 
 RATE_LIMIT_AT=50   # only show the 5h rate-limit segment at or above this %
 SESSION_MAX=24     # truncate session name to this many chars
 
-node_icon=""     # nerd-font nodejs glyph (starship default)
-git_icon=""      # nerd-font branch glyph (starship default)
+# Byte escapes, not the characters: both are BMP private-use glyphs, and
+# both were "" here -- dropped by the tool that wrote the file -- so the
+# line showed two spaces where each icon belongs.
+node_icon=$'\xee\x9c\x98'   # U+E718 nerd-font nodejs glyph (starship default)
+git_icon=$'\xee\x82\xa0'    # U+E0A0 nerd-font branch glyph (starship default)
 ESC=$'\033'
 
 input=$(cat)
