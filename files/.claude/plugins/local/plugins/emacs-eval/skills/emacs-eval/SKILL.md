@@ -272,3 +272,48 @@ The user's Emacs config uses these patterns that are relevant for eval:
 - **Guard patterns**: `(when (fboundp 'fn) ...)`, `(with-eval-after-load 'pkg ...)`
 
 When reloading modules, be aware that `use-package` with elpaca may not be idempotent -- the `:ensure` clause triggers package installation. For re-evaluation of already-loaded packages, it is often better to eval just the `:config` or `:init` body rather than the entire `use-package` form.
+
+## Remote: the kb-hub daemon (headless zetta)
+
+The same loop works against the headless zetta daemon on the kb-hub VPS,
+reached over Tailscale. Everything below is measured (2026-09-11).
+
+```bash
+ssh kb-hub 'export XDG_RUNTIME_DIR=/run/user/$(id -u); emacsclient --eval "<elisp>"' 2>&1
+```
+
+- **Socket**: the default one (`emacs.service` runs `--fg-daemon` with
+  `--init-directory=%h/.zetta.d`), so plain `emacsclient` works; no `-s`.
+  The lean fallback daemon, when started, is `-s lean`.
+- **Quoting**: the elisp sits inside the ssh single-quoted string, so use
+  double quotes around it and `(quote x)` instead of `'x`; for anything
+  longer, `scp` a script or `.el` file over and load that.
+- **The user's frame**: their `emacsclient -t` frame is the one with a
+  `tty` frame parameter. Read it with
+  `(with-selected-frame (car (seq-filter (lambda (f) (frame-parameter f 'tty)) (frame-list))) ...)`;
+  useful there: `(display-color-cells)` (256 means truecolor is not
+  reaching Emacs), `(getenv "COLORTERM" f)`, `window-system` (nil).
+- **Iterating on a module**: edit on the Mac, `scp` the file into the
+  hub's `~/.zetta.d/modules/...`, then
+  `emacsclient --eval '(zetta-load-config-file "cat/file.el")'`
+  (modules load from source, so no bytecode gets in the way). When it is
+  right: commit, PR, merge; then on the hub
+  `git -C ~/.zetta.d checkout -- . && git -C ~/.zetta.d pull` to drop
+  the scratch copies. Never leave the hub's tree dirty: `git pull`
+  refuses over modified files.
+- **Service**: `systemctl --user {status,start,restart} emacs`,
+  `journalctl --user -u emacs -f`. A restart kills the user's frame;
+  check `(seq-filter (lambda (b) (and (buffer-file-name b) (buffer-modified-p b))) (buffer-list))`
+  first. The unit is skipped (ConditionPathExists) until
+  `~/.zetta.d/elpaca/builds` exists.
+- **Heavy work goes to batch, not the daemon**: a long eval freezes the
+  user's frame. `emacs -Q --batch --init-directory=$HOME/.zetta.d` on
+  the hub for grammar builds and the like; `bin/zetta build` for
+  package work.
+- **Same interactive-prompt rule as the Mac**: anything that prompts or
+  enters an interactive mode blocks the daemon's command loop until the
+  user presses C-g in their frame.
+- **Capabilities differ from the Mac**: Emacs 29.3, no SVG (the
+  `zetta-module-conditions` predicate skips the SVG chrome), no window
+  system, 178 modules from `templates/zetta.headless.el`. Do not judge
+  brushup or theme output before confirming 24-bit colour in the frame.
