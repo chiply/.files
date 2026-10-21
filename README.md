@@ -98,7 +98,8 @@ The reasoning behind the split, and the Emacs side of it, is in the
 - **Multiplexer**: tmux + [tmux-powerline](https://github.com/erikw/tmux-powerline), [tmuxinator](https://github.com/tmuxinator/tmuxinator), TPM (Tmux Plugin Manager) and a curated plugin list
 - **Window manager / status bar**: [AeroSpace](https://github.com/nikitabobko/AeroSpace), [simple-bar](https://www.jeantinland.com/toolbox/simple-bar/) (with a customised bottom bar), [JankyBorders](https://github.com/FelixKratz/JankyBorders)
 - **Editor**: Emacs 31 (via `emacs-plus@31`) configured by [zetta.d](https://github.com/chiply/.zetta.d), with TeX Live (`dvipng` / `dvisvgm`) and MathJax for `org-latex-preview`. `install_emacs_distros.sh` installs chemacs and, behind `INCLUDE_OTHER_DISTROS` (default `t`, `f` on the work profile), Doom / Spacemacs / Prelude / Centaur side-by-side, plus two extra Emacs builds behind their own gates — see [Emacs variants](#emacs-variants).
-- **Languages**: pyenv (3.10 / 3.11 / 3.12), Poetry, uv, nvm + Node, language servers (json, eslint, copilot, svelte)
+- **Languages**: pyenv (3.10 / 3.11 / 3.12), Poetry, uv, nvm + Node, language servers (json, eslint, copilot, svelte), the Mermaid CLI (`mmdc`)
+- **Containers**: [OrbStack](https://orbstack.dev/) as the Docker engine (the `docker` CLI, compose and buildx come with it; open the app once to finish setup). Skipped on a machine that already has Docker Desktop.
 - **Misc CLI**: AWS CLI v2, `gh`, `k9s` (with catppuccin skins), `bat`, `fzf`, `ripgrep`, `eza`, `jq`, `lazygit`, and more — full list in [`files/.config/Brewfile`](files/.config/Brewfile)
 - **Background services**: signal-cli daemon (opt-in via `$SIGNAL_PHONE`), a wallpaper rotator, an Aura frame sync that emails new wallpapers to a frame (opt-in via `$AURA_FRAME_EMAIL`), and launchd-managed simple-bar refresh server + focus watcher
 

@@ -194,6 +194,14 @@ cask "ubersicht"
 # extended keys (Terminal.app cannot send C-,; C-b is the fallback prefix).
 # Was never listed here -- installed by hand on the personal Mac.
 cask "ghostty"
+# Docker: OrbStack is the engine.  The docker CLI, compose and buildx ship
+# inside the app (it links them on first launch -- open it once to finish
+# setup), so nothing else is needed for the zsh completions, the
+# abbreviations or the Emacs docker modules.  Was never listed here, which
+# left a fresh machine with no docker at all.  Skipped where Docker Desktop
+# was already installed by hand: two engines fight over the docker context
+# and the /usr/local/bin/docker link.
+cask "orbstack" unless File.exist?("/Applications/Docker.app")
 cask "vivaldi"
 cask "brave-browser"
 cask "firefox"
