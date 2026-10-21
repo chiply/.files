@@ -256,6 +256,13 @@ npm install -g eslint
 npm install -g @github/copilot-language-server
 npm i -g svelte-language-server
 
+# mermaid CLI (mmdc): ob-mermaid and mermaid-mode in .zetta.d shell out to
+# it, and ob-mermaid is not even loaded when mmdc is missing.  npm rather
+# than the Homebrew formula: that one installs with --ignore-scripts, so
+# puppeteer never downloads its chrome-headless-shell and mmdc cannot render
+# ("Could not find chrome-headless-shell" is the formula's own test).
+npm install -g @mermaid-js/mermaid-cli
+
 # sql language server: table/column completion in sql-mode buffers via
 # lsp-mode (wired up in ~/source_code/sql-practice/elisp/sql-practice-lsp.el,
 # which expects the binary at ~/go/bin/sqls — go install's default GOBIN)
