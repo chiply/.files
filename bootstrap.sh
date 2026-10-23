@@ -121,6 +121,24 @@ if ! brew bundle --force --file="$REPO_ROOT/files/.config/Brewfile"; then
     critical "brew bundle (missing entries: $(brew bundle check --file="$REPO_ROOT/files/.config/Brewfile" --verbose 2>&1 | grep -vE '^Checking|satisfied' | tr '\n' ' ' | cut -c1-300))"
 fi
 
+# emacs-lsp-booster (blahgeek): wraps an LSP server and hands Emacs elisp
+# bytecode instead of JSON; the zetta config (modules/tools/lsp.el) prepends
+# it to every local server command when the binary is on exec-path and runs
+# without it otherwise, so this is an optimisation, not a dependency.  No
+# Homebrew formula, and the macOS release binaries are unsigned, so it is
+# built from crates.io with the cargo the Brewfile's `rust' provides.
+# Pinned: the version the config was verified against (2026-10-23).  The
+# binary is checked by path -- ~/.cargo/bin is not on this shell's PATH.
+EMACS_LSP_BOOSTER_VERSION="0.2.1"
+if [[ ! -x "$HOME/.cargo/bin/emacs-lsp-booster" ]]; then
+    if command -v cargo >/dev/null; then
+        cargo install --locked --version "$EMACS_LSP_BOOSTER_VERSION" emacs-lsp-booster \
+            || critical "cargo install emacs-lsp-booster $EMACS_LSP_BOOSTER_VERSION"
+    else
+        critical "emacs-lsp-booster: cargo not found (Brewfile 'rust' missing?)"
+    fi
+fi
+
 # syncthing folders (install/service via Brewfile; hub provisioning in hub/).
 # Registers folders with the local daemon idempotently — creates the dir if
 # missing, so this works on a fresh machine. Device pairing/sharing stays
